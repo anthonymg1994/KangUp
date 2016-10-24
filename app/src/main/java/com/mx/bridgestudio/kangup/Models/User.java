@@ -4,16 +4,24 @@ package com.mx.bridgestudio.kangup.Models;
  * Created by BridgeStudio on 24/10/2016.
  */
 
-public class Socio {
+public class User {
     private int id;
-    private String firstName;
-    private String lastName;
+    private String FirstName;
+    private String LastName;
     private String cellphone;
     private String email;
-    private String brithdate;
     private String password;
-    private String foto;
+    private String status;
+    private int pay;
     private String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public int getId() {
         return id;
@@ -24,19 +32,19 @@ public class Socio {
     }
 
     public String getFirstName() {
-        return firstName;
+        return FirstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        FirstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return LastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        LastName = lastName;
     }
 
     public String getCellphone() {
@@ -55,14 +63,6 @@ public class Socio {
         this.email = email;
     }
 
-    public String getBrithdate() {
-        return brithdate;
-    }
-
-    public void setBrithdate(String brithdate) {
-        this.brithdate = brithdate;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -71,19 +71,19 @@ public class Socio {
         this.password = password;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getStatus() {
+        return status;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getPhoto() {
-        return photo;
+    public int getPay() {
+        return pay;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPay(int pay) {
+        this.pay = pay;
     }
 }

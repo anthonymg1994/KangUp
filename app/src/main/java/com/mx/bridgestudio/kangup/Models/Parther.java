@@ -4,24 +4,16 @@ package com.mx.bridgestudio.kangup.Models;
  * Created by BridgeStudio on 24/10/2016.
  */
 
-public class Usuario {
+public class Parther {
     private int id;
-    private String FirstName;
-    private String LastName;
+    private String firstName;
+    private String lastName;
     private String cellphone;
     private String email;
+    private String brithdate;
     private String password;
-    private String status;
-    private int pay;
+    private String foto;
     private String photo;
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 
     public int getId() {
         return id;
@@ -32,19 +24,19 @@ public class Usuario {
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getCellphone() {
@@ -63,6 +55,14 @@ public class Usuario {
         this.email = email;
     }
 
+    public String getBrithdate() {
+        return brithdate;
+    }
+
+    public void setBrithdate(String brithdate) {
+        this.brithdate = brithdate;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -71,19 +71,19 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getStatus() {
-        return status;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
-    public int getPay() {
-        return pay;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPay(int pay) {
-        this.pay = pay;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
