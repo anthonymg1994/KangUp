@@ -22,4 +22,11 @@
         app:headerLayout="@layout/nav_header_types"
         app:menu="@menu/activity_types_drawer" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        />
+
+
 </android.support.v4.widget.DrawerLayout>
