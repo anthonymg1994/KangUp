@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Views.TypesOfAutomobiles"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,9 +26,14 @@
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ForgotActivity"></activity>
-        <activity android:name=".Views.TypesOfAutomobiles" />
+        <activity android:name=".MainActivity" />
         <activity
-            android:name=".types"
+            android:name=".KindOfCar"
+            android:label="@string/title_activity_types"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="Controllers.BaseActivity"
             android:label="@string/title_activity_types"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

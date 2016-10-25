@@ -1,6 +1,11 @@
-package com.mx.bridgestudio.kangup;
+package com.mx.bridgestudio.kangup.Controllers;
+
+/**
+ * Created by USUARIO on 25/10/2016.
+ */
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -13,8 +18,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class types extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.mx.bridgestudio.kangup.R;
+
+
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,8 @@ public class types extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+
 
     @Override
     public void onBackPressed() {
