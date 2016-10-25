@@ -20,4 +20,5 @@
         completions."
     </string>
     <string name="title_activity_register">Registro</string>
+    <string name="title_activity_types">types</string>
 </resources>
