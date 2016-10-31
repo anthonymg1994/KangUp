@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup;
+package com.mx.bridgestudio.kangup.Views;
 
 import android.content.Context;
 import android.graphics.Bitmap;

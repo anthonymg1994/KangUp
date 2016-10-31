@@ -19,16 +19,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Views.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Views.RegisterActivity"
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ForgotActivity"></activity>
+        <activity android:name=".Views.ForgotActivity"></activity>
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".KindOfCar"
+            android:name=".Views.TypeOfCar"
             android:label="@string/title_activity_types"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 

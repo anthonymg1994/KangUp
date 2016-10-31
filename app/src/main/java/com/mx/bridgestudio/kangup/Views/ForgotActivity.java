@@ -1,7 +1,9 @@
-package com.mx.bridgestudio.kangup;
+package com.mx.bridgestudio.kangup.Views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.mx.bridgestudio.kangup.R;
 
 public class ForgotActivity extends AppCompatActivity {
 

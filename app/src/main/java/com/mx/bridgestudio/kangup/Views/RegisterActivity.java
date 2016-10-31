@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup;
+package com.mx.bridgestudio.kangup.Views;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.mx.bridgestudio.kangup.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
