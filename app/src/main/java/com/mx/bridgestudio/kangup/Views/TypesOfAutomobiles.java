@@ -1,6 +1,5 @@
 package com.mx.bridgestudio.kangup.Views;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorList;
-
 import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
 import com.mx.bridgestudio.kangup.Models.ListCar;
 import com.mx.bridgestudio.kangup.R;
@@ -31,8 +29,8 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_types);
-        lista = (ListView)findViewById(R.id.listView);
+        setContentView(R.layout.typeofcar);
+        //lista = (ListView)findViewById(R.id.listView1);
 
 
 

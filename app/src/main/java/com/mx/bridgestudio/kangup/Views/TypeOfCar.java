@@ -13,7 +13,11 @@ public class TypeOfCar extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.kindofcar);
+        setContentView(R.layout.typeofcar);
+
+
+
+
     }
     @Override
     public void onBackPressed() {
