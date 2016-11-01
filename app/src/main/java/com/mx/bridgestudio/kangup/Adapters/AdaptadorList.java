@@ -23,8 +23,8 @@ public class AdaptadorList extends ArrayAdapter<ListCar> {
     private ListCar[] objects;
     private View listView;
 
-    public AdaptadorList(Activity context, int e, ArrayList<ListCar> lista) {
-        super(context, R.layout.celltype, lista);
+    public AdaptadorList(Activity context, int e, ArrayList<ListCar> list) {
+        super(context, R.layout.celltype, list);
         // TODO Auto-generated constructor stub
         this.context = (Activity) context;
         this.lista = lista;

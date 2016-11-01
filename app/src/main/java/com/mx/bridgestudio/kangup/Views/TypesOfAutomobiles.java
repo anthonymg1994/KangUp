@@ -30,8 +30,8 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.typeofcar);
-        //lista = (ListView)findViewById(R.id.listView1);
-
+        lista = (ListView)findViewById(R.id.listView1);
+        fillList();
 
 
     }
@@ -46,16 +46,16 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
 
     }
     public void fillList(){
-         ListCar[] categorias = new ListCar[1];
+         ListCar[] categorias = new ListCar[2];
         categorias[0] = new ListCar(1,"Nombre","Descripccion");
 
         tipos.add(categorias[0]);
 
 
         adaptador = new AdaptadorList(this, R.layout.celltype, tipos);
-        list.setAdapter(adaptador);
-        list.setOnItemClickListener(this);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lista.setAdapter(adaptador);
+        lista.setOnItemClickListener(this);
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
