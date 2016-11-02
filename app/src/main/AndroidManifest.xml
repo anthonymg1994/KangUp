@@ -25,17 +25,23 @@
             android:name=".Views.RegisterActivity"
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Views.ForgotActivity"></activity>
+        <activity android:name=".Views.ForgotActivity" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".Views.TypeOfCar"
             android:label="@string/title_activity_types"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Controllers.BaseActivity"
             android:label="@string/title_activity_types"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Views.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
