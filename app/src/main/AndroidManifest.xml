@@ -27,10 +27,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Views.ForgotActivity"></activity>
         <activity android:name=".MainActivity" />
-        <activity
-            android:name=".Views.TypeOfCar"
-            android:label="@string/title_activity_types"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".Controllers.BaseActivity"

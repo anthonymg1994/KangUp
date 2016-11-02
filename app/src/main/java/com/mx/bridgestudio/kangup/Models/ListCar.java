@@ -8,6 +8,8 @@ public class ListCar {
     private int id;
     private String Name;
     private String Description;
+    private String image;
+
 
     public ListCar(){}
     public ListCar(int id,String Nombre,String Descripcion){
@@ -15,6 +17,7 @@ public class ListCar {
         this.Name=Nombre;
         this.Description=Descripcion;
     }
+
     public int getId() {
         return id;
     }
@@ -33,4 +36,6 @@ public class ListCar {
     public void setDescription(String description) {
         Description = description;
     }
+    public String getImage() {return image;}
+    public void setImage(String image) {this.image = image;}
 }

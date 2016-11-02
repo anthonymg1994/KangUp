@@ -21,13 +21,13 @@ import java.util.List;
  * Created by USUARIO on 24/10/2016.
  */
 
-public class TypesOfAutomobiles extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener {
+public class CarsXtype extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener {
 
-  //  private ListView lista;
-   // private ArrayList<ListCar> tipos = new ArrayList<ListCar>();
-   // private ArrayAdapter<ListCar> AdapterArray;
-   // private ListView list;
-   // private AdaptadorList adaptador;
+    //  private ListView lista;
+    // private ArrayList<ListCar> tipos = new ArrayList<ListCar>();
+    // private ArrayAdapter<ListCar> AdapterArray;
+    // private ListView list;
+    // private AdaptadorList adaptador;
     private String opcionSeleccionada="";
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
@@ -40,15 +40,15 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Tipos de autos");
         setSupportActionBar(toolbar);
-            // Obtener el Recycler
+        // Obtener el Recycler
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         recycler.setHasFixedSize(true);
-            // Usar un administrador para LinearLayout
+        // Usar un administrador para LinearLayout
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
-            // Crear un nuevo adaptador
+        // Crear un nuevo adaptador
         adapter = new AdaptadorType(items);
         recycler.setAdapter(adapter);
         fillList();
