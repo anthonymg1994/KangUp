@@ -26,5 +26,9 @@
     <string name="from_date">From Date</string>
     <string name="to_date">To Date</string>
 
+    <string-array name="countries_names">
+        <item>México</item>
+        <item>EUA</item>
+    </string-array>
 
 </resources>

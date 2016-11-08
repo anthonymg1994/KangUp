@@ -11,16 +11,14 @@
         <activity
             android:name=".Views.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Views.RegisterActivity"
             android:label="@string/title_activity_register" />
         <activity android:name=".Views.ForgotActivity" />
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".Views.TypeOfCar"
+            android:name=".Views.TypesOfAutomobiles"
             android:label="@string/title_activity_types"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -34,7 +32,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.PaymentActivity"></activity>
+        <activity
+            android:name=".Views.PaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Views.AddPaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

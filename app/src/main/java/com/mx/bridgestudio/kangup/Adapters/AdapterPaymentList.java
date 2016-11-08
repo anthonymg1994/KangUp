@@ -25,7 +25,7 @@ public class AdapterPaymentList extends ArrayAdapter<Payment> {
     private Payment[] objects;
     private View listView;
 
-    public AdapterPaymentList(Activity context, int e, ArrayList<Payment> list) {
+    public AdapterPaymentList(Activity context, ArrayList<Payment> list) {
         super(context, R.layout.payment_list, list);
         // TODO Auto-generated constructor stub
         this.context = (Activity) context;

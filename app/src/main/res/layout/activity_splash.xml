@@ -8,10 +8,10 @@
     tools:context="com.mx.bridgestudio.kangup.Views.SplashActivity">
 
     <ImageView
-        android:layout_width="368dp"
-        android:layout_height="551dp"
-        app:srcCompat="@drawable/splash"
-        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/side_nav_bar"
+        android:id="@+id/splash"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
