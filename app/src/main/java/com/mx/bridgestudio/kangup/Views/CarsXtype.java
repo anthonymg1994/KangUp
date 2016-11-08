@@ -22,31 +22,31 @@ import java.util.ArrayList;
  * Created by USUARIO on 24/10/2016.
  */
 
-public class TypesOfAutomobiles extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener {
+public class CarsXtype extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener {
 
-  //  private ListView lista;
-   // private ArrayList<ListCar> tipos = new ArrayList<ListCar>();
-   // private ArrayAdapter<ListCar> AdapterArray;
-   // private ListView list;
-   // private AdaptadorList adaptador;
+    //  private ListView lista;
+    // private ArrayList<ListCar> tipos = new ArrayList<ListCar>();
+    // private ArrayAdapter<ListCar> AdapterArray;
+    // private ListView list;
+    // private AdaptadorList adaptador;
     private String opcionSeleccionada="";
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
-   // private List items = new ArrayList();
+    // private List items = new ArrayList();
     ArrayList<ListCar> items= new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_types);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
-        toolbar.setTitle("Tipos de autos");
+        toolbar.setTitle("Modelos de autos");
         setSupportActionBar(toolbar);
-            // Obtener el Recycler
+        // Obtener el Recycler
 
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         recycler.setHasFixedSize(true);
-            // Usar un administrador para LinearLayout
+        // Usar un administrador para LinearLayout
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
@@ -56,7 +56,7 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(view.getContext(), "position = " +items.get(position).getName(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent().setClass(
-                                TypesOfAutomobiles.this, CarsXtype.class);
+                                CarsXtype.this, CatalogCar.class);
                         startActivity(intent);
                         finish();
                     }
@@ -66,7 +66,7 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
                     }
                 })
         );
-            // Crear un nuevo adaptador
+        // Crear un nuevo adaptador
         adapter = new AdaptadorType(items);
         recycler.setAdapter(adapter);
         fillList();
@@ -83,7 +83,7 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
     }
     public void fillList(){
         ListCar list = new ListCar();
-        list.setName( "Tipos de automoviles");
+        list.setName( "Modelos de automoviles");
         list.setDescription("Breve descripcion del tipo de automovil");
         list.setImage("R.drawable.auto");
 

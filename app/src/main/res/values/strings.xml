@@ -21,4 +21,10 @@
     </string>
     <string name="title_activity_register">Registro</string>
     <string name="title_activity_types">types</string>
+
+
+    <string name="from_date">From Date</string>
+    <string name="to_date">To Date</string>
+
+
 </resources>
