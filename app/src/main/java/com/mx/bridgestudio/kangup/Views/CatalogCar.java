@@ -20,6 +20,7 @@ public class CatalogCar extends BaseActivity {
     private int month;
     private int day;
     static final int DATE_DIALOG_ID = 999;
+    //probar otro date picker
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
