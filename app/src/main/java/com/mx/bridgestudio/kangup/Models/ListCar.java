@@ -1,5 +1,7 @@
 package com.mx.bridgestudio.kangup.Models;
 
+import android.content.Context;
+
 /**
  * Created by USUARIO on 25/10/2016.
  */
@@ -16,6 +18,9 @@ public class ListCar {
         this.id=id;
         this.Name=Nombre;
         this.Description=Descripcion;
+    }
+    public static int getImageId(Context context, String imageName) {
+        return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
     }
 
     public int getId() {

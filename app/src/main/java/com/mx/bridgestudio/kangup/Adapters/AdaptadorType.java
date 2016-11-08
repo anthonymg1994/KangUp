@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Adapters;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,11 @@ import com.mx.bridgestudio.kangup.R;
 
 import java.util.List;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 /**
  * Created by Anthony on 02/11/2016.
  */
 public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewHolder>  {
-    private List<Class> items;
+    private List<ListCar> items;
 
     public AdaptadorType(List<ListCar> items) {
         this.items = items;
@@ -33,6 +32,12 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
                 .inflate(R.layout.celltipo, viewGroup, false);
         return new AnimeViewHolder(v);
     }
+
+    public Resources getResources() {
+        Resources resources = null;
+        return resources;
+    }
+
     public static class AnimeViewHolder extends RecyclerView.ViewHolder {
         // Campos respectivos de un item
         public ImageView imagen;
@@ -48,7 +53,8 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
     @Override
     public void onBindViewHolder(AnimeViewHolder viewHolder, int i) {
        // viewHolder.imagen.setImageResource(items.get(i).getImage());
-        viewHolder.imagen.setImageResource(R.drawable.ic_menu_camera);
+
+        viewHolder.imagen.setImageResource(R.drawable.auto);
         viewHolder.nombre.setText(items.get(i).getName());
         viewHolder.descripcion.setText(String.valueOf(items.get(i).getDescription()));
     }

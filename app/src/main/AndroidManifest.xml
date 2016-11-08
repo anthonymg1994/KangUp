@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Views.TypesOfAutomobiles"
+            android:name=".Views.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,7 +28,7 @@
         <activity android:name=".Views.ForgotActivity"></activity>
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".Views.TypeOfCar"
+            android:name=".Views.TypesOfAutomobiles"
             android:label="@string/title_activity_types"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
@@ -36,13 +36,16 @@
             android:name=".Controllers.BaseActivity"
             android:label="@string/title_activity_types"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Views.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".Views.CarsXtype"
+            android:label="@string/title_activity_types"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity
+            android:name=".Views.CatalogCar"
+            android:label="@string/title_activity_types"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
@@ -15,7 +17,6 @@ import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by USUARIO on 24/10/2016.
@@ -32,15 +33,17 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
-    private List items = new ArrayList();
+   // private List items = new ArrayList();
+    ArrayList<ListCar> items= new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_types);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
         toolbar.setTitle("Tipos de autos");
         setSupportActionBar(toolbar);
             // Obtener el Recycler
+
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         recycler.setHasFixedSize(true);
             // Usar un administrador para LinearLayout
@@ -48,6 +51,21 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
         recycler.setLayoutManager(lManager);
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
+        recycler.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        Toast.makeText(view.getContext(), "position = " +items.get(position).getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent().setClass(
+                                TypesOfAutomobiles.this, CarsXtype.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
             // Crear un nuevo adaptador
         adapter = new AdaptadorType(items);
         recycler.setAdapter(adapter);
@@ -64,10 +82,13 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
 
     }
     public void fillList(){
-        items.add(new ListCar(R.drawable.ic_menu_camera, "Tipos de automoviles","Breve descripcion del tipo de automovil"));
-        items.add(new ListCar(R.drawable.ic_menu_camera, "Tipos de automoviles","Breve descripcion del tipo de automovil"));
-        items.add(new ListCar(R.drawable.ic_menu_camera, "Tipos de automoviles","Breve descripcion del tipo de automovil"));
-        items.add(new ListCar(R.drawable.ic_menu_camera, "Tipos de automoviles","Breve descripcion del tipo de automovil"));
+        ListCar list = new ListCar();
+        list.setName( "Tipos de automoviles");
+        list.setDescription("Breve descripcion del tipo de automovil");
+        list.setImage("R.drawable.auto");
 
+        for(int x=0;x<4;x++){
+            items.add(x,list);
+        }
     }
 }

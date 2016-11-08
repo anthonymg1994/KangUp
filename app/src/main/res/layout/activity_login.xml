@@ -6,6 +6,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:id="@+id/loginform_layout"
+    android:background="#ffffff"
     tools:context="com.mx.bridgestudio.kangup.Views.LoginActivity">
 
     <!-- Login progress -->
@@ -26,13 +27,13 @@
         app:layout_constraintLeft_toRightOf="parent" />
 
     <ImageView
-        android:layout_width="103dp"
-        android:layout_height="110dp"
+        android:layout_width="134dp"
+        android:layout_height="124dp"
         app:srcCompat="@android:drawable/sym_def_app_icon"
         android:id="@+id/logo"
         tools:layout_constraintTop_creator="1"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
@@ -47,14 +48,16 @@
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:singleLine="true"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
+
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="32dp"
         app:layout_constraintHorizontal_bias="0.4"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintTop_toBottomOf="@+id/logo"
         android:layout_height="45dp" />
 
@@ -65,46 +68,51 @@
         android:text="@string/action_sign_in"
         android:textStyle="bold"
         android:layout_weight="1"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
+        android:background="#0000cc"
+        android:textColor="#ffffff"
         app:layout_constraintTop_toBottomOf="@+id/password"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_bias="0.28" />
+        app:layout_constraintHorizontal_bias="0.26" />
 
     <Button
         android:text="Ingresar como invitado"
         android:layout_height="wrap_content"
         android:id="@+id/guest"
         android:layout_width="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
+        android:textSize="12sp"
+        android:background="#ffffff"
+        android:textColor="#4343ff"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/signin"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/signin"
-        android:textSize="12sp"
-        android:background="@android:color/background_light" />
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp" />
 
     <Button
         android:text="Registrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/register"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
+        android:textSize="12sp"
+        android:textColor="#4343ff"
+        android:background="#ffffff"
+        app:layout_constraintTop_toBottomOf="@+id/guest"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/guest"
-        android:textSize="12sp"
-        android:background="@android:color/background_light" />
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp" />
 
     <Button
         android:text="Contraseña?"
@@ -118,21 +126,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
         android:textSize="12sp"
+        android:textColor="#4343ff"
         app:layout_constraintTop_toBottomOf="@+id/register"
-        android:background="@android:color/background_light" />
+        android:background="#ffffff" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="0dp"
         android:id="@+id/password"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="32dp"
         app:layout_constraintHorizontal_bias="0.46"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/user"
+
         android:layout_height="45dp">
 
         <EditText
