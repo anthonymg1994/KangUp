@@ -85,8 +85,7 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
         ListCar list = new ListCar();
         list.setName( "Tipos de automoviles");
         list.setDescription("Breve descripcion del tipo de automovil");
-        list.setImage("R.drawable.auto");
-
+        list.setImage(1);
         for(int x=0;x<4;x++){
             items.add(x,list);
         }

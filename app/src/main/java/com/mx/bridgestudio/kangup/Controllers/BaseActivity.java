@@ -4,6 +4,7 @@ package com.mx.bridgestudio.kangup.Controllers;
  * Created by USUARIO on 25/10/2016.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.PaymentActivity;
+import com.mx.bridgestudio.kangup.Views.TypesOfAutomobiles;
 
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -76,19 +79,32 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.profile) {
+            Intent intent = new Intent().setClass(this, TypesOfAutomobiles.class);
+            startActivity(intent);
+        } else if (id == R.id.favorites) {
+            Intent intent = new Intent().setClass(this, TypesOfAutomobiles.class);
+            startActivity(intent);
+        } else if (id == R.id.record) {
+            Intent intent = new Intent().setClass(this, TypesOfAutomobiles.class);
+            startActivity(intent);
+        } else if (id == R.id.catalog) {
+            Intent intent = new Intent().setClass(this, TypesOfAutomobiles.class);
+            startActivity(intent);
+        } else if (id == R.id.payments) {
+            Intent intent = new Intent().setClass(this, PaymentActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.news) {
+            Intent intent = new Intent().setClass(this, TypesOfAutomobiles.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.politicas) {
+            Intent intent = new Intent().setClass(this, TypesOfAutomobiles.class);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent().setClass(this, TypesOfAutomobiles.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

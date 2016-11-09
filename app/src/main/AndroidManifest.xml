@@ -20,7 +20,15 @@
         <activity android:name=".Views.ForgotActivity" />
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".Views.TypeOfCar"
+            android:name=".Views.TypesOfAutomobiles"
+            android:label="@string/title_activity_types"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.CarsXtype"
+            android:label="@string/title_activity_types"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.CatalogCar"
             android:label="@string/title_activity_types"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -35,6 +43,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Views.PaymentActivity"></activity>
+        <activity android:name=".Views.RecyclerView_Activity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

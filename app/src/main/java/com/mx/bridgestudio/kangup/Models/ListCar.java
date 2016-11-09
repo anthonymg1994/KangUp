@@ -10,7 +10,7 @@ public class ListCar {
     private int id;
     private String Name;
     private String Description;
-    private String image;
+    private int image;
 
 
     public ListCar(){}
@@ -19,7 +19,7 @@ public class ListCar {
         this.Name=Nombre;
         this.Description=Descripcion;
     }
-    public static int getImageId(Context context, String imageName) {
+    public static int getImageId(Context context, int imageName) {
         return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
     }
 
@@ -41,6 +41,6 @@ public class ListCar {
     public void setDescription(String description) {
         Description = description;
     }
-    public String getImage() {return image;}
-    public void setImage(String image) {this.image = image;}
+    public int getImage() {return image;}
+    public void setImage(int image) {this.image = image;}
 }
