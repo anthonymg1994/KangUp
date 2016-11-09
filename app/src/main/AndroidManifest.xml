@@ -11,11 +11,13 @@
         <activity
             android:name=".Views.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Views.RegisterActivity"
-            android:label="@string/title_activity_register" />
-        <activity android:name=".Views.ForgotActivity" />
+            android:label="@string/title_activity_register"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Views.ForgotActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".MainActivity" />
         <activity
             android:name=".Views.TypesOfAutomobiles"
@@ -34,11 +36,12 @@
         </activity>
         <activity
             android:name=".Views.PaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.AddPaymentActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Views.AddPaymentActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+        <activity android:name=".Views.FavoriteActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

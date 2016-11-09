@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void handleMessage(Message msg) {
-            startActivity(new Intent(SplashActivity.this, PaymentActivity.class));
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
         }
     };
