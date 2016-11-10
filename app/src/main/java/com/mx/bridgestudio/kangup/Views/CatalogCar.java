@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,7 @@ import java.util.List;
  */
 
 public class CatalogCar extends BaseActivity implements View.OnClickListener {
+
     //UI References
     private DatePicker dpResult;
     final Calendar c = Calendar.getInstance();
@@ -41,6 +43,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
     private CardAdapter adapter;
     private List<ListCar> albumList;
+    private FloatingActionButton editCalendar;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -50,19 +53,28 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
         //setSupportActionBar(toolbar);
         initCollapsingToolbar();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        editCalendar = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
+        editCalendar.setOnClickListener(this);
+
         albumList = new ArrayList<>();
+        //adaptador de listcar
         adapter = new CardAdapter(this, albumList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
+        // 2 columnas
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
+        //Llenar arraylist de la clase
         prepareAlbums();
         try {
+            // Imagen top de vista catalogo
             Glide.with(this).load(R.drawable.top_catalogo).into((ImageView) findViewById(R.id.backdrop));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //calendario de disponibildad
         showDatePicker();
     }
     private void initCollapsingToolbar() {
@@ -91,7 +103,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
         });
     }
     /**
-     * Adding few albums for testing
+     * Datos de prueba para ejecucion
      */
     private void prepareAlbums() {
         int[] covers = new int[]{
@@ -109,6 +121,10 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
     }
     @Override
     public void onClick(View view) {
+        if(view.getId() == R.id.floatingActionButton2) {
+            showDatePicker();
+        }
+
     }
     /**
      * RecyclerView item decoration - give equal margin around grid item
@@ -190,4 +206,5 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
         datePickerDialog.setCancelable(false);
         datePickerDialog.show();
     }
+
 }
