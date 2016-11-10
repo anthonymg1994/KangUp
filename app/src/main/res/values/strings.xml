@@ -23,6 +23,7 @@
     <string name="title_activity_types">types</string>
     <string name="action_add_favourite">Add to Favourites</string>
     <string name="action_play_next">Play Next</string>
+    <string name="catalogo">Catalogo</string>
 
     <string name="from_date">From Date</string>
     <string name="to_date">To Date</string>

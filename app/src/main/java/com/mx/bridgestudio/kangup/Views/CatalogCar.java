@@ -37,7 +37,6 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
     private int year =  c.get(Calendar.YEAR);
     private int month = c.get(Calendar.MONTH);
     private int day = c.get(Calendar.DAY_OF_MONTH);
-    static final int DATE_DIALOG_ID = 999;
     boolean isOkayClicked = true;
     private RecyclerView recyclerView;
     private CardAdapter adapter;
@@ -49,39 +48,28 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.catalogcar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-
         initCollapsingToolbar();
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
         albumList = new ArrayList<>();
         adapter = new CardAdapter(this, albumList);
-
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-
         prepareAlbums();
-
         try {
             Glide.with(this).load(R.drawable.top_catalogo).into((ImageView) findViewById(R.id.backdrop));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         showDatePicker();
-
-
     }
     private void initCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        final CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(" ");
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         appBarLayout.setExpanded(true);
-
         // hiding & showing the title when toolbar expanded & collapsed
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
@@ -93,7 +81,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.app_name));
+                    collapsingToolbar.setTitle(getString(R.string.catalogo));
                     isShow = true;
                 } else if (isShow) {
                     collapsingToolbar.setTitle(" ");
@@ -102,7 +90,6 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
             }
         });
     }
-
     /**
      * Adding few albums for testing
      */
@@ -112,26 +99,21 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
                 R.drawable.auto,
                 R.drawable.auto,
                };
-
         ListCar a = new ListCar(1,"AUTO 1","13");
         albumList.add(a);
-
-        a = new ListCar(2,"AUTO 1","8");
+        a = new ListCar(2,"AUTO 2","8");
         albumList.add(a);
-
-        a = new ListCar(3,"AUTO 1","11");
+        a = new ListCar(3,"AUTO 3","11");
         albumList.add(a);
-
-
-
         adapter.notifyDataSetChanged();
     }
-
+    @Override
+    public void onClick(View view) {
+    }
     /**
      * RecyclerView item decoration - give equal margin around grid item
      */
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-
         private int spanCount;
         private int spacing;
         private boolean includeEdge;
@@ -146,11 +128,9 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             int position = parent.getChildAdapterPosition(view); // item position
             int column = position % spanCount; // item column
-
             if (includeEdge) {
                 outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
                 outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
                 if (position < spanCount) { // top edge
                     outRect.top = spacing;
                 }
@@ -164,7 +144,6 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
             }
         }
     }
-
     /**
      * Converting dp to pixel
      */
@@ -172,7 +151,6 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
-
     private void showDatePicker() {
         // TODO Auto-generated method stub
         DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
@@ -180,9 +158,9 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
             public void onDateSet(DatePicker view, int selectedYear,
                                   int selectedMonth, int selectedDay) {
                 if (isOkayClicked) {
-                    year =  selectedYear;
-                  month = selectedMonth;
-                  day = selectedDay;
+                      year =  selectedYear;
+                      month = selectedMonth;
+                      day = selectedDay;
                 }
                 isOkayClicked = false;
             }
@@ -206,16 +184,10 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == DialogInterface.BUTTON_POSITIVE) {
                             isOkayClicked = true;
-
                         }
                     }
                 });
         datePickerDialog.setCancelable(false);
         datePickerDialog.show();
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 }
