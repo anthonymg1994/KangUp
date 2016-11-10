@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +17,7 @@ import com.mx.bridgestudio.kangup.R;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
-    private Button add;
+    private Button add,avoid;
     private EditText card,mm,yy,cvv;
     private Spinner countries;
     private ImageButton camara;
@@ -39,6 +40,14 @@ public class AddPaymentActivity extends AppCompatActivity {
         }
 
         add  = (Button)findViewById(R.id.addBtn);
+        avoid  = (Button)findViewById(R.id.avoid);
+        avoid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(AddPaymentActivity.this, LoginActivity.class));
+            }
+        });
         card = (EditText) findViewById(R.id.cardNumber);
         mm = (EditText) findViewById(R.id.month);
         yy = (EditText) findViewById(R.id.year);
