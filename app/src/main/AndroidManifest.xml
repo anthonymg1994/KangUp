@@ -15,9 +15,10 @@
         <activity
             android:name=".Views.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Views.ForgotActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.ForgotActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".Views.TypesOfAutomobiles"
@@ -39,8 +40,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Views.AddPaymentActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Views.FavoriteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.FavoriteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Views.ProfileActivity"
+            android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
