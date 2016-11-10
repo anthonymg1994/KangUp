@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
 import com.mx.bridgestudio.kangup.Models.ListCar;
@@ -65,7 +66,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
         prepareAlbums();
 
         try {
-            Glide.with(this).load(R.drawable.cover).into((ImageView) findViewById(R.id.backdrop));
+            Glide.with(this).load(R.drawable.top_catalogo).into((ImageView) findViewById(R.id.backdrop));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -112,13 +113,13 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
                 R.drawable.auto,
                };
 
-        ListCar a = new ListCar(1,"True Romance","13");
+        ListCar a = new ListCar(1,"AUTO 1","13");
         albumList.add(a);
 
-        a = new ListCar(2,"Xscpae","8");
+        a = new ListCar(2,"AUTO 1","8");
         albumList.add(a);
 
-        a = new ListCar(3,"Maroon 5","11");
+        a = new ListCar(3,"AUTO 1","11");
         albumList.add(a);
 
 

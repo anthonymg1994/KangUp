@@ -43,8 +43,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Views.PaymentActivity"></activity>
-        <activity android:name=".Views.RecyclerView_Activity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

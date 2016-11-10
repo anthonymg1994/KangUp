@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Models.ListCar;
 import com.mx.bridgestudio.kangup.R;
 
@@ -60,7 +61,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         holder.count.setText(1+"adsd");
 
         // loading album cover using Glide library
-        Glide.with(mContext).load(album.getId()).into(holder.thumbnail);
+        //Revisar como funciona esta libreria para integrarle las imagens correspondientes a cada cardvies
+        Glide.with(mContext).load(R.drawable.auto).into(holder.thumbnail);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
