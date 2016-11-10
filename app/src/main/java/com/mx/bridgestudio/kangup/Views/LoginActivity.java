@@ -62,7 +62,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onClick(View v) {
                 // Perform action on click
                 finish();
-                startActivity(new Intent(LoginActivity.this, TypesOfAutomobiles.class));
+                //startActivity(new Intent(LoginActivity.this, TypesOfAutomobiles.class));
+                startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
             }
         });
         register = (Button)findViewById(R.id.register);

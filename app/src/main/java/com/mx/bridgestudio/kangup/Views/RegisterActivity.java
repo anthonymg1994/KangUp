@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.mx.bridgestudio.kangup.R;
@@ -15,6 +16,7 @@ import com.mx.bridgestudio.kangup.R;
 public class RegisterActivity extends AppCompatActivity {
 
     private ImageView imageViewRound;
+    private EditText editBirth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,14 @@ public class RegisterActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        imageViewRound=(ImageView)findViewById(R.id.photo);
+        imageViewRound=(ImageView)findViewById(R.id.imageProfile);
+        editBirth = (EditText) findViewById(R.id.editBirthday);
+        editBirth.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+
+            }
+        });
         
     }
 
