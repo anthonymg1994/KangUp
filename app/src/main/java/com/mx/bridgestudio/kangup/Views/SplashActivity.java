@@ -1,11 +1,13 @@
 package com.mx.bridgestudio.kangup.Views;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
 
+import com.mx.bridgestudio.kangup.MainActivity;
 import com.mx.bridgestudio.kangup.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -14,8 +16,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        handler.sendEmptyMessageDelayed(3000,3000);
 
+        getSupportActionBar().hide();
+
+        handler.sendEmptyMessageDelayed(3000,3000);
 
     }
 
