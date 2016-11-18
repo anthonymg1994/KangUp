@@ -78,8 +78,8 @@
             android:layout_marginStart="24dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/textBirth"
-            android:layout_marginTop="128dp" />
+            app:layout_constraintTop_toTopOf="@+id/textBirth"
+            android:layout_marginTop="104dp" />
 
         <EditText
             android:layout_width="237dp"
@@ -95,7 +95,8 @@
             app:layout_constraintTop_toBottomOf="@+id/editEmail"
             android:layout_marginStart="8dp"
             app:layout_constraintLeft_toRightOf="@+id/textAddress"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            app:layout_constraintHorizontal_bias="0.56" />
 
         <EditText
             android:layout_width="237dp"
@@ -111,8 +112,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="64dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.71"
-            android:layout_height="40dp" />
+            android:layout_height="40dp"
+            app:layout_constraintHorizontal_bias="0.71" />
 
         <EditText
             android:layout_width="237dp"
@@ -128,21 +129,8 @@
             app:layout_constraintLeft_toRightOf="@+id/textCity"
             android:layout_marginLeft="24dp"
             app:layout_constraintTop_toBottomOf="@+id/editAddress"
-            android:layout_marginTop="8dp" />
-
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_height="87dp"
-            android:layout_width="280dp"
-            android:layout_marginTop="56dp"
-            app:layout_constraintTop_toBottomOf="@+id/editCity"
-            android:layout_marginStart="16dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="16dp"
-            app:layout_constraintHorizontal_bias="0.95" />
+            android:layout_marginTop="8dp"
+            app:layout_constraintHorizontal_bias="0.56" />
 
         <EditText
             android:layout_width="237dp"
@@ -150,15 +138,42 @@
             android:inputType="phone"
             android:ems="10"
             android:id="@+id/editPhone"
+            android:text="Teléfono"
+            tools:layout_editor_absoluteY="312dp"
+            tools:layout_editor_absoluteX="110dp" />
+
+        <EditText
+            android:layout_width="238dp"
+            android:layout_height="40dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editBirth"
+            android:text="Fecha de nacimiento"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="16dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintLeft_toRightOf="@+id/textPhone"
-            android:layout_marginLeft="8dp"
+            app:layout_constraintHorizontal_bias="0.84"
+            android:layout_marginTop="56dp"
+            app:layout_constraintTop_toBottomOf="@+id/editCity" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar"
+            android:id="@+id/showCalendar"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintRight_toLeftOf="@+id/editBirth"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textPhone"
+            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/datePicker"
-            android:text="Teléfono" />
+            app:layout_constraintTop_toBottomOf="@+id/textBirth" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

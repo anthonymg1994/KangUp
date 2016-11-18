@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Views;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -45,5 +46,13 @@ public class FavoriteActivity extends AppCompatActivity implements AdapterView.O
         for(int x=0;x<3;x++){
             tipos.add(x,list);
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent setIntent = new Intent(this,LoginActivity.class);
+        startActivity(setIntent);
+        finish();
     }
 }

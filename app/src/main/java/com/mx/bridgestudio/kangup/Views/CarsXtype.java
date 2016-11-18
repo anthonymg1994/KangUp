@@ -2,10 +2,12 @@ package com.mx.bridgestudio.kangup.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -90,5 +92,18 @@ public class CarsXtype extends BaseActivity implements View.OnClickListener, Ada
         for(int x=0;x<4;x++){
             items.add(x,list);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent setIntent = new Intent(this,TypesOfAutomobiles.class);
+        startActivity(setIntent);
+        finish();
     }
 }

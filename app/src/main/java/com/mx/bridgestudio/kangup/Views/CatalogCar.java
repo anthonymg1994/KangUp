@@ -2,6 +2,7 @@ package com.mx.bridgestudio.kangup.Views;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -205,6 +206,13 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener {
                 });
         datePickerDialog.setCancelable(false);
         datePickerDialog.show();
+    }
+    @Override
+    public void onBackPressed()
+    {
+        Intent setIntent = new Intent(this,CarsXtype.class);
+        startActivity(setIntent);
+        finish();
     }
 
 }

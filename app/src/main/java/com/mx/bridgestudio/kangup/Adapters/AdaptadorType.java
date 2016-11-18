@@ -54,7 +54,7 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
     public void onBindViewHolder(AnimeViewHolder viewHolder, int i) {
        // viewHolder.imagen.setImageResource(items.get(i).getImage());
 
-        viewHolder.imagen.setImageResource(R.drawable.ic_menu_camera);
+        viewHolder.imagen.setImageResource(R.drawable.auto);
         viewHolder.nombre.setText(items.get(i).getName());
         viewHolder.descripcion.setText(String.valueOf(items.get(i).getDescription()));
     }
