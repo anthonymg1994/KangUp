@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Models.Favorite;
 import com.mx.bridgestudio.kangup.R;
@@ -34,8 +35,11 @@ public class ForgotActivity extends AppCompatActivity {
         recover.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                finish();
-                startActivity(new Intent(ForgotActivity.this, FavoriteActivity.class));
+                //finish();
+                //startActivity(new Intent(ForgotActivity.this, FavoriteActivity.class));
+                Toast msg = Toast.makeText(getBaseContext(),
+                        "Se ha mandado un correo con tu contraseña", Toast.LENGTH_SHORT);
+                msg.show();
             }
         });
     }

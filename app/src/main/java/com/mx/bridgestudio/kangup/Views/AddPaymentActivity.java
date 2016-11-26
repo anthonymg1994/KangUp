@@ -45,7 +45,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(AddPaymentActivity.this, LoginActivity.class));
+                startActivity(new Intent(AddPaymentActivity.this, PaymentActivity.class));
             }
         });
         card = (EditText) findViewById(R.id.cardNumber);

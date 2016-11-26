@@ -17,17 +17,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Controllers.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Payment;
+import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private ImageView imageViewRound;
-    private EditText editBirth;
-    private DatePicker datePicker;
-    private Calendar calendar;
+    private EditText name, lastname,mail,password;
     private Button next;
-    private int year, month, day;
+    private User u = new User();
+    private SqliteController sql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,58 +44,37 @@ public class RegisterActivity extends AppCompatActivity {
             //getSupportActionBar().set
         }
 
-        calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
+        name = (EditText)findViewById(R.id.name);
+        lastname = (EditText)findViewById(R.id.lastname);
+        mail = (EditText)findViewById(R.id.editEmail);
+        password = (EditText)findViewById(R.id.password);
 
         imageViewRound=(ImageView)findViewById(R.id.imageProfile);
         next = (Button) findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(RegisterActivity.this, AddPaymentActivity.class));
+                if(name.getText().toString().equals("") || lastname.getText().toString().equals("")
+                        || mail.getText().toString().equals("") || password.getText().toString().equals("") )
+                {
+                    Toast msg = Toast.makeText(getBaseContext(),
+                            "Faltan campos por llenar", Toast.LENGTH_SHORT);
+                    msg.show();
+                }
+                else{
+                    sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+                    sql.insertUsuario(name.getText().toString(),lastname.getText().toString(),"",mail.getText().toString(),"","",password.getText().toString(),1,"1");
+                    Toast msg = Toast.makeText(getBaseContext(),
+                            "Usuario registrado con éxito", Toast.LENGTH_SHORT);
+                    msg.show();
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(RegisterActivity.this, AddPaymentActivity.class));
+                }
+
             }
         });
     }
 
-    @SuppressWarnings("deprecation")
-    public void setDate(View view) {
-        showDialog(999);
-        Toast.makeText(getApplicationContext(), "ca",
-                Toast.LENGTH_SHORT)
-                .show();
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
-        if (id == 999) {
-            return new DatePickerDialog(this,
-                    myDateListener, year, month, day);
-        }
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener myDateListener = new
-            DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker arg0,
-                                      int arg1, int arg2, int arg3) {
-                    // TODO Auto-generated method stub
-                    // arg1 = year
-                    // arg2 = month
-                    // arg3 = day
-                    showDate(arg1, arg2+1, arg3);
-                }
-            };
-
-    private void showDate(int year, int month, int day) {
-        editBirth.setText(new StringBuilder().append(day).append("/")
-                .append(month).append("/").append(year));
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

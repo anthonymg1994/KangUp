@@ -27,7 +27,7 @@
 
     <string name="from_date">From Date</string>
     <string name="to_date">To Date</string>
-    <string name="cancel" >Cancelar</string>
+    <string name="cancel">Cancelar</string>
     <string name="staggeredgrid">stagge</string>
     <string name="horizontalrecyclerview">horizontal</string>
     <string name="backdrop_title">KangUp</string>

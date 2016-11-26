@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.ProgressDialog;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -18,6 +19,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -25,7 +27,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Controllers.SqliteController;
+import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
@@ -47,7 +52,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private ImageView logo;
-    private Button guest,register,forgot;
+    private Button guest,register,forgot,signin;
+
+    private User u = new User();
+    private SqliteController sql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +132,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String email = mEmailView.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
 
         boolean cancel = false;
         View focusView = null;
@@ -151,9 +159,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            //showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            mAuthTask.execute("");
         }
     }
 
@@ -162,41 +170,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return password.length() > 4;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -218,7 +191,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    private class UserLoginTask extends AsyncTask<String, Integer, Boolean> {
+
+        ProgressDialog progressDialog = null;
 
         private final String mEmail;
         private final String mPassword;
@@ -228,8 +203,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPassword = password;
         }
 
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.dialog);
+            progressDialog.setCancelable(false);
+            progressDialog.getWindow().clearFlags(
+                    WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        }
+
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Boolean doInBackground(String... strings) {
             // TODO: attempt authentication against a network service.
 
             try {
@@ -240,19 +225,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             // TODO: register the new account here.
+            sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+            u = sql.loginUsuario(mEmail,mPassword);
+
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
 
             if (success) {
-                finish();
-                Intent intent = new Intent().setClass(
-                        LoginActivity.this, TypesOfAutomobiles.class);
-                startActivity(intent);
+                if(mEmail.equals(u.getEmail()) && mPassword.equals(u.getPassword()))
+                {
+                    finish();
+                    Intent intent = new Intent().setClass(
+                            LoginActivity.this, CategoryActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast msg = Toast.makeText(getBaseContext(),
+                            "Datos incorrectos", Toast.LENGTH_SHORT);
+                    msg.show();
+                }
+
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -262,7 +262,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            showProgress(false);
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         }
     }
 }

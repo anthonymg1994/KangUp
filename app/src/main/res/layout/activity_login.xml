@@ -28,7 +28,7 @@
     <ImageView
         android:layout_width="134dp"
         android:layout_height="124dp"
-        app:srcCompat="@android:drawable/sym_def_app_icon"
+        app:srcCompat="@drawable/kangup"
         android:id="@+id/logo"
         tools:layout_constraintTop_creator="1"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,16 +57,17 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="32dp"
         app:layout_constraintHorizontal_bias="0.4"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@+id/logo"
-        android:layout_height="45dp" />
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_height="50dp" />
 
 
     <Button
         android:id="@+id/signin"
-        style="?android:textAppearanceSmall"
+        style="@android:style/TextAppearance.Material.Small"
         android:layout_height="wrap_content"
-        android:text="@string/action_sign_in"
+        android:text="Entrar"
         android:textStyle="bold"
         android:layout_weight="1"
         android:layout_marginEnd="32dp"
@@ -76,7 +77,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
-        android:background="#0000cc"
+        android:background="#29235b"
         android:textColor="#ffffff"
         app:layout_constraintTop_toBottomOf="@+id/password"
         android:layout_width="0dp"
@@ -89,8 +90,8 @@
         android:layout_width="wrap_content"
         android:textSize="12sp"
         android:background="@android:color/transparent"
-        android:textColor="#4343ff"
-        android:layout_marginTop="24dp"
+        android:textColor="#0034ff"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/signin"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -106,7 +107,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/register"
         android:textSize="12sp"
-        android:textColor="#4343ff"
+        android:textColor="#0034ff"
         android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@+id/guest"
         android:layout_marginStart="16dp"
@@ -128,7 +129,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
         android:textSize="12sp"
-        android:textColor="#4343ff"
+        android:textColor="#0034ff"
         app:layout_constraintTop_toBottomOf="@+id/register"
         android:background="@android:color/transparent" />
 
@@ -141,12 +142,12 @@
         android:layout_marginEnd="32dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="32dp"
-        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintHorizontal_bias="0.4"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/user"
         android:background="@android:drawable/editbox_background"
 
-        android:layout_height="45dp">
+        android:layout_height="50dp">
 
         <EditText
             android:id="@+id/passwordeye"
