@@ -36,6 +36,7 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
         list = (ListView)findViewById(R.id.listCategory);
         adaptador = new AdapterCategory(this,tipos);
         list.setAdapter(adaptador);
+        list.setOnClickListener((View.OnClickListener) this);
         fillList();
 
     }
@@ -53,7 +54,9 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        Intent setIntent = new Intent(this,CatalogCar.class);
+        startActivity(setIntent);
+        finish();
     }
 
     @Override

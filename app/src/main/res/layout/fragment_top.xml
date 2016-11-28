@@ -4,12 +4,6 @@
     android:id="@+id/fragment_top"
     class="com.mx.bridgestudio.kangup.Views.TopFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tabHost"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />
+
 
 </fragment>
