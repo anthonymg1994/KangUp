@@ -41,6 +41,7 @@ public class AndroidImageAdapter extends PagerAdapter {
         ImageView mImageView = new ImageView(mContext);
         mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mImageView.setImageResource(sliderImagesId[i]);
+        mImageView.setMaxHeight(150);
         ((ViewPager) container).addView(mImageView, 0);
         return mImageView;
     }

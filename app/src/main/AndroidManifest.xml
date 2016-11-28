@@ -58,8 +58,10 @@
             android:name=".Views.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Views.CategoryActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Views.CategoryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Views.DetalleActivity"></activity>
     </application>
 
 </manifest>
