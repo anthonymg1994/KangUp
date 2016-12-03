@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mx.bridgestudio.kangup.Models.ListCar;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.R;
 

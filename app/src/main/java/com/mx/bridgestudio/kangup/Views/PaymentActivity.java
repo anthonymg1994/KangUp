@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaymentList;
-import com.mx.bridgestudio.kangup.Models.ListCar;
 import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.R;
 

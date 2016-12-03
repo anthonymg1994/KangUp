@@ -128,5 +128,37 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="home_item">Menu</string>
+    <string-array name="nav_drawer_items">
+        <item>Perfil</item>
+        <item>Amigos</item>
+        <item>Busquedas</item>
+        <item>Agregar</item>
+        <item>Eliminar Sitio</item>
+        <item>Modificar Sitio</item>
+        <item>Favoritos</item>
+        <item>Salir</item>
+        <!-- <item>Third</item>
+        <item>Fourth</item>
+        <item>Fifth</item>
+        <item>Sixth</item> -->
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/favorite</item>
+        <item>@drawable/favorite</item>
+        <item>@drawable/favorite</item>
+        <item>@drawable/favorite</item>
+        <item>@drawable/favorite</item>
+        <item>@drawable/favorite</item>
+        <item>@drawable/favorite</item>
+        <item>@drawable/favorite</item>
+        <!--
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        -->
+
+    </array>
 
 </resources>

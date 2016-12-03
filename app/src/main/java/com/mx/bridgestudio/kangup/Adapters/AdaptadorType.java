@@ -5,10 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mx.bridgestudio.kangup.Models.ListCar;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.List;
@@ -43,11 +44,14 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
         public ImageView imagen;
         public TextView nombre;
         public TextView descripcion;
+        public ImageButton fav;
         public AnimeViewHolder(View v) {
             super(v);
             imagen = (ImageView) v.findViewById(R.id.image_type);
             nombre = (TextView) v.findViewById(R.id.name);
             descripcion = (TextView) v.findViewById(R.id.description);
+            fav = (ImageButton) v.findViewById(R.id.starButton);
+           // fav.setOnClickListener(this);
         }
     }
     @Override
@@ -55,8 +59,8 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
        // viewHolder.imagen.setImageResource(items.get(i).getImage());
 
         viewHolder.imagen.setImageResource(R.drawable.auto);
-        viewHolder.nombre.setText(items.get(i).getName());
-        viewHolder.descripcion.setText(String.valueOf(items.get(i).getDescription()));
+        viewHolder.nombre.setText(items.get(i).getModelo());
+        viewHolder.descripcion.setText(String.valueOf(items.get(i).getModelo()+" "+items.get(i).getAnio()));
     }
 
 }

@@ -17,7 +17,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Models.ListCar;
+import com.mx.bridgestudio.kangup.Models.Brand;
+import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class RecommendFragment extends Fragment {
     private RecyclerView recyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
     private CardAdapter adapter;
-    private List<ListCar> albumList;
+    private List<ListBrand> albumList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,8 +56,7 @@ public class RecommendFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        prepareAlbums();
-
+//
         try {
             // Imagen top de vista catalogo
             Glide.with(this).load(R.drawable.top_catalogo).into((ImageView) rootView.findViewById(R.id.backdrop));
@@ -75,18 +76,21 @@ public class RecommendFragment extends Fragment {
     /**
      * Datos de prueba para ejecucion
      */
-    private void prepareAlbums() {
-        int[] covers = new int[]{
+    private void prepareListBrands(Brand[] brand) {
+        int [] images = new int[]{
                 R.drawable.auto,
                 R.drawable.auto,
                 R.drawable.auto,
         };
-        ListCar a = new ListCar(1,"AUTO 1","13");
-        albumList.add(a);
-        a = new ListCar(2,"AUTO 2","8");
-        albumList.add(a);
-        a = new ListCar(3,"AUTO 3","11");
-        albumList.add(a);
+        ListBrand[] list = new ListBrand[brand.length];
+        for(int i = 0 ; i < brand.length ; i++){
+            list[i] = new ListBrand();
+            list[i].setId(brand[i].getId());
+            list[i].setName(brand[i].getNombre());
+            list[i].setId_categoria(brand[i].getId_categoria());
+            list[i].setImage(images[i]);
+            albumList.add(list[i]);
+        }
         adapter.notifyDataSetChanged();
     }
 

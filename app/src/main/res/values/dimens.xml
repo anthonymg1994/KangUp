@@ -8,10 +8,10 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="header_left_padding">16dp</dimen>
-    <dimen name="header_height">192dp</dimen>
+    <dimen name="header_height">152dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="perfil_image_size">64dp</dimen>
+    <dimen name="perfil_image_size">84dp</dimen>
     <dimen name="item_offset">10dp</dimen>
     <dimen name="detail_backdrop_height">250dp</dimen>
     <dimen name="backdrop_title">30dp</dimen>

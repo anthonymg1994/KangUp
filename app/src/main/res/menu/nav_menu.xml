@@ -5,41 +5,40 @@
         <item
             android:id="@+id/nav_home"
             android:checked="true"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/diconp"
             android:title="Perfil" />
         <item
             android:id="@+id/nav_productos"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/biconp"
             android:title="Catalogo" />
         <item
             android:id="@+id/nav_carrito"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/biconp"
             android:title="Historial" />
         <item
             android:id="@+id/nav_ordenes"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/on_pressed"
             android:title="Favoritos" />
         <item
             android:id="@+id/nav_facturas"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/biconpago"
             android:title="Pagos" />
         <item
             android:id="@+id/nav_facturas1"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/biconnoti"
             android:title="Noticias" />
 
         <!-- Sección de configuración -->
-        <item
-            android:id="@+id/configuration_section"
-            android:title="@string/home_item">
+        <item android:title="Otras">
             <menu>
+
                 <item
                     android:id="@+id/politicas"
-                    android:icon="@android:drawable/ic_lock_power_off"
+                    android:icon="@drawable/biconp"
                     android:title="Politicas" />
                 <item
-                    android:id="@+id/nav_log_out"
-                    android:icon="@android:drawable/ic_lock_power_off"
+                    android:id="@+id/logout"
+                    android:icon="@drawable/bicons"
                     android:title="Cerrar sesion" />
             </menu>
         </item>

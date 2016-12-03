@@ -12,8 +12,29 @@ public class User {
     private String email;
     private String password;
     private String status;
+    private String ciudad;
     private int pay;
+    private  String fnacimiento;
     private String photo;
+
+    public User(){
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getFnacimiento() {
+        return fnacimiento;
+    }
+
+    public void setFnacimiento(String fnacimiento) {
+        this.fnacimiento = fnacimiento;
+    }
 
     public String getPhoto() {
         return photo;

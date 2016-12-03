@@ -12,6 +12,24 @@ public class Vehicle {
     private int id_parther;
     private String description;
     private String specifications;
+    private int id_categoria;
+    private String marca;
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public int getId_categoria() {
+        return id_categoria;
+    }
+
+    public void setId_categoria(int id_categoria) {
+        this.id_categoria = id_categoria;
+    }
 
     public int getId() {
         return id;

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.Models.User;
@@ -27,9 +28,9 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView imageViewRound;
     private EditText name, lastname,mail,password;
     private Button next;
-    private User u = new User();
+    private User user = new User();
     private SqliteController sql;
-
+    webServices webs = new webServices();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +63,15 @@ public class RegisterActivity extends AppCompatActivity {
                     msg.show();
                 }
                 else{
-                    sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
-                    sql.insertUsuario(name.getText().toString(),lastname.getText().toString(),"",mail.getText().toString(),"","",password.getText().toString(),1,"1");
+                    user.setFirstName(name.getText().toString());
+                    user.setLastName(lastname.getText().toString());
+                    user.setEmail(mail.getText().toString());
+                    user.setPassword(password.getText().toString());
+
+
+                    webs.insertUser(RegisterActivity.this,user);
+                  //  sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+                   // sql.insertUsuario(name.getText().toString(),lastname.getText().toString(),"",mail.getText().toString(),"","",password.getText().toString(),1,"1");
                     Toast msg = Toast.makeText(getBaseContext(),
                             "Usuario registrado con éxito", Toast.LENGTH_SHORT);
                     msg.show();

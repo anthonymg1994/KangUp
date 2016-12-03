@@ -1,18 +1,13 @@
 package com.mx.bridgestudio.kangup.Adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.Models.Category;
-import com.mx.bridgestudio.kangup.Models.ListCar;
-import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
@@ -48,19 +43,19 @@ public class AdapterCategory extends ArrayAdapter<Category> {
             //txt = (TextView)item.findViewById(R.id.txtcat);
             if(arg0==0){
                 imgImg = (ImageView) item.findViewById(R.id.imageCateg);
-                imgImg.setImageResource(R.drawable.clasicos);
+                imgImg.setImageResource(R.drawable.limusinas);
             }
             if(arg0==1) {
                 imgImg = (ImageView) item.findViewById(R.id.imageCateg);
-                imgImg.setImageResource(R.drawable.limusinas);
+                imgImg.setImageResource(R.drawable.lujo);
             }
             if(arg0==2) {
                 imgImg = (ImageView) item.findViewById(R.id.imageCateg);
-                imgImg.setImageResource(R.drawable.suvs);
+                imgImg.setImageResource(R.drawable.clasicos);
             }
             if(arg0==3){
                 imgImg = (ImageView) item.findViewById(R.id.imageCateg);
-                imgImg.setImageResource(R.drawable.lujo);
+                imgImg.setImageResource(R.drawable.suvs);
             }
         }
         return item;

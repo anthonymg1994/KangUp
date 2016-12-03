@@ -1,40 +1,28 @@
 package com.mx.bridgestudio.kangup.Views;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.app.ProgressDialog;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
+import com.mx.bridgestudio.kangup.AsyncTask.Usuario.asyn;
 import com.mx.bridgestudio.kangup.Controllers.SqliteController;
+import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A login screen that offers login via email/password.
@@ -44,8 +32,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
-
+    private AsynkTaskUser mAuthTask = null;
+    webServices web = new webServices();
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -54,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private ImageView logo;
     private Button guest,register,forgot,signin;
 
-    private User u = new User();
+    private User user = new User();
     private SqliteController sql;
 
     @Override
@@ -160,8 +148,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute("");
+            user.setEmail(mEmailView.getText().toString());
+            user.setPassword(mPasswordView.getText().toString());
+            web.Login(this,user);
+            //new asyn(LoginActivity.this,user.getEmail(),user.getPassword()).execute();
         }
     }
 
@@ -190,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
-     */
+     *//*
     private class UserLoginTask extends AsyncTask<String, Integer, Boolean> {
 
         ProgressDialog progressDialog = null;
@@ -267,5 +257,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
     }
+    */
 }
 

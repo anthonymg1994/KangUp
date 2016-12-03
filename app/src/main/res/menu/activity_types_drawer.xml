@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/profile"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/biconp"
             android:title="Perfil" />
         <item
             android:id="@+id/favorites"
@@ -12,11 +12,11 @@
             android:title="Favoritos" />
         <item
             android:id="@+id/record"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/biconp"
             android:title="Historial" />
         <item
             android:id="@+id/catalog"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/biconp"
             android:title="Cátalogo" />
     </group>
 
@@ -24,19 +24,19 @@
         <menu>
             <item
                 android:id="@+id/payments"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/biconpago"
                 android:title="Pagos" />
             <item
                 android:id="@+id/news"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/biconnoti"
                 android:title="Noticias" />
             <item
                 android:id="@+id/politicas"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/biconp"
                 android:title="Politicas" />
             <item
                 android:id="@+id/logout"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/bicons"
                 android:title="Cerrar sesion" />
         </menu>
     </item>

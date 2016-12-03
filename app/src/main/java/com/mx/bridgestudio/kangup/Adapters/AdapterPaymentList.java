@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mx.bridgestudio.kangup.Models.ListCar;
 import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.R;
 

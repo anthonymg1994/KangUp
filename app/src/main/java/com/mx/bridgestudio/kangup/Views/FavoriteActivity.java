@@ -9,9 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
-import com.mx.bridgestudio.kangup.Adapters.AdapterPaymentList;
-import com.mx.bridgestudio.kangup.Models.ListCar;
-import com.mx.bridgestudio.kangup.Models.Payment;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
@@ -41,7 +39,7 @@ public class FavoriteActivity extends AppCompatActivity implements AdapterView.O
 
     public void fillList(){
         ListCar list = new ListCar();
-        list.setName( "Carro");
+        //list.setName( "Carro");
 
         for(int x=0;x<3;x++){
             tipos.add(x,list);

@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
@@ -22,12 +21,17 @@ import android.widget.DatePicker;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
-import com.mx.bridgestudio.kangup.Models.ListCar;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
+import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Models.Brand;
+import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
@@ -42,11 +46,15 @@ import it.neokree.materialtabs.MaterialTabListener;
  * Created by Anthony on 07/11/2016.
  */
 
-public class CatalogCar extends BaseActivity implements View.OnClickListener,MaterialTabListener {
+public class CatalogCar extends BaseActivity implements View.OnClickListener,OnDataSendToActivity {
+
+
+    //implements OnDataSendToActivity
+
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
-    ViewPagerAdapter androidAdapter;
+   // ViewPagerAdapter androidAdapter;
     //UI References
     private DatePicker dpResult;
     final Calendar c = Calendar.getInstance();
@@ -58,22 +66,41 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
     private RecyclerView recyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
     private CardAdapter adapter;
-    private List<ListCar> albumList;
-
+    private List<ListBrand> albumList;
+    private webServices webs = new webServices();
     private FloatingActionButton editCalendar;
+    private Brand brand = new Brand();
+    private Brand[] brands;
+    private ListBrand[]  list;
+    private int flag = 0;
+    private Brand[] obj1;
+    public static int flagDate = 0;
+
+
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.catalogcar);
+
+        Intent mIntent = getIntent();
+        brand.setId_categoria(CategoryActivity.opcionSeleccionada);
+
+        webs.brandByCategory(CatalogCar.this,CatalogCar.this,brand);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        toolbar.setTitle("Marcas");
 
         //tabs
-        tabHost = (MaterialTabHost) this.findViewById(R.id.tabHost);
-        viewPager = (ViewPager) this.findViewById(R.id.viewPager);
+      //  tabHost = (MaterialTabHost) this.findViewById(R.id.tabHost);
+      //  viewPager = (ViewPager) this.findViewById(R.id.viewPager);
 
+
+       // webs.brandByCategory(CatalogCar.this,brand);
         //adapter view
+        /*
         androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(androidAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -91,7 +118,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
                             .setTabListener(this)
             );
         }
-
+*/
         // 1. get a reference to recyclerView
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         // 2. set layoutManger
@@ -109,7 +136,6 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        prepareAlbums();
 
         try {
             // Imagen top de vista catalogo
@@ -124,29 +150,66 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
         editCalendar = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         editCalendar.setOnClickListener(this);
 
-
+        if(flagDate == 0){
         //calendario de disponibildad
         showDatePicker();
+
+        }
+
     }
 
     /**
      * Datos de prueba para ejecucion
      */
-    private void prepareAlbums() {
-        int[] covers = new int[]{
+    private void prepareListBrands(Brand[] brand) {
+        int [] images = new int[]{
                 R.drawable.auto,
                 R.drawable.auto,
                 R.drawable.auto,
         };
-        ListCar a = new ListCar(1,"AUTO 1","13");
-        albumList.add(a);
-        a = new ListCar(2,"AUTO 2","8");
-        albumList.add(a);
-        a = new ListCar(3,"AUTO 3","11");
-        albumList.add(a);
+        ListBrand[] list = new ListBrand[brand.length];
+        for(int i = 0 ; i < brand.length ; i++){
+            list[i] = new ListBrand();
+            list[i].setId(brand[i].getId());
+            list[i].setName(brand[i].getNombre());
+            list[i].setId_categoria(brand[i].getId_categoria());
+            list[i].setImage(images[i]);
+            albumList.add(list[i]);
+        }
+
         adapter.notifyDataSetChanged();
+
+
     }
 
+    @Override
+    public void sendData(Brand[] obj) {
+        Toast.makeText(this, "marcas"+obj.length, Toast.LENGTH_SHORT).show();
+        prepareListBrands(obj);
+        //obj1 = obj;
+    }
+
+
+/*
+    @Override
+    public void sendData(Brand[] brand) {
+        Toast.makeText(this, "string"+brand, Toast.LENGTH_SHORT).show();
+        for(int j = 0 ; j < brand.lenght() ; j ++){
+                list[j] = new ListBrand();
+                list[j].setNombre = brand[j].getName();
+
+        }
+            albumList.add(list);
+            adapter.notifyDataSetChanged();
+    }
+*/
+
+/*
+    @Override
+    public void sendData(String response) {
+        Toast.makeText(this, "string"+response, Toast.LENGTH_SHORT).show();
+    }
+*/
     /**
      * RecyclerView item decoration - give equal margin around grid item
      */
@@ -207,7 +270,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.catalogo));
+                    collapsingToolbar.setTitle("Marcas");
                     isShow = true;
                 } else if (isShow) {
                     collapsingToolbar.setTitle(" ");
@@ -224,7 +287,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
         }
 
     }
-
+/*
     @Override
     public void onTabSelected(MaterialTab materialTab) {
         viewPager.setCurrentItem(materialTab.getPosition());
@@ -239,8 +302,9 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
     public void onTabUnselected(MaterialTab materialTab) {
 
     }
-
+*/
     private void showDatePicker() {
+        flag = 1;
         // TODO Auto-generated method stub
         DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
             // when dialog box is closed, below method will be called.
@@ -273,6 +337,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == DialogInterface.BUTTON_POSITIVE) {
                             isOkayClicked = true;
+
                         }
                     }
                 });
@@ -282,29 +347,22 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
     @Override
     public void onBackPressed()
     {
-        Intent setIntent = new Intent(this,CarsXtype.class);
+        Intent setIntent = new Intent(this,CategoryActivity.class);
         startActivity(setIntent);
         finish();
     }
 
+    /*
     // view pager adapter
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        Fragment frag=null;
         public ViewPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
         public Fragment getItem(int num) {
-            switch (num){
-                case 0: frag = new TopFragment();
-                    return frag;
-                case 1: frag = new RecommendFragment();
-                    return frag;
-                case 2: frag = new LastFragment();
-                    return frag;
-                default: return null;
+
+               return new AndroidFragment();
             }
-        }
 
         @Override
         public int getCount() {
@@ -326,5 +384,5 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,Mat
             return tab;
         }
     }
-
+*/
 }

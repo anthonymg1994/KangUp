@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
-import com.mx.bridgestudio.kangup.Models.ListCar;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.R;
 
@@ -56,7 +56,7 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        Toast.makeText(view.getContext(), "position = " +items.get(position).getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "position = " +items.get(position).getModelo(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent().setClass(
                                 TypesOfAutomobiles.this, CarsXtype.class);
                         startActivity(intent);
@@ -83,15 +83,17 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
+
     public void fillList(){
         ListCar list = new ListCar();
-        list.setName( "Tipos de automoviles");
-        list.setDescription("Breve descripcion del tipo de automovil");
+        list.setModelo( "Tipos de automoviles");
+        list.setMarca("Breve descripcion del tipo de automovil");
         list.setImage(1);
         for(int x=0;x<4;x++){
             items.add(x,list);
         }
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -101,7 +103,7 @@ public class TypesOfAutomobiles extends BaseActivity implements View.OnClickList
     @Override
     public void onBackPressed()
     {
-        Intent setIntent = new Intent(this,LoginActivity.class);
+        Intent setIntent = new Intent(this,CarsXtype.class);
         startActivity(setIntent);
         finish();
     }

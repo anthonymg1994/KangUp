@@ -3,38 +3,43 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:checked="true"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/home_item" />
+            android:id="@+id/profile"
+            android:icon="@drawable/biconp"
+            android:title="Perfil" />
         <item
-            android:id="@+id/nav_productos"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/home_item" />
+            android:id="@+id/favorites"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Favoritos" />
         <item
-            android:id="@+id/nav_carrito"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/home_item" />
+            android:id="@+id/record"
+            android:icon="@drawable/biconp"
+            android:title="Historial" />
         <item
-            android:id="@+id/nav_ordenes"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/home_item" />
-        <item
-            android:id="@+id/nav_facturas"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/home_item" />
+            android:id="@+id/catalog"
+            android:icon="@drawable/biconp"
+            android:title="Cátalogo" />
 
         <!-- Sección de configuración -->
-        <item
-            android:id="@+id/configuration_section"
-            android:title="@string/home_item">
-            <menu>
-                <item
-                    android:id="@+id/nav_log_out"
-                    android:icon="@android:drawable/ic_lock_power_off"
-                    android:title="@string/home_item" />
-            </menu>
-        </item>
-    </group>
 
+    </group>
+    <item android:title="Otras">
+        <menu>
+            <item
+                android:id="@+id/payments"
+                android:icon="@drawable/biconpago"
+                android:title="Pagos" />
+            <item
+                android:id="@+id/news"
+                android:icon="@drawable/biconnoti"
+                android:title="Noticias" />
+            <item
+                android:id="@+id/politicas"
+                android:icon="@drawable/biconp"
+                android:title="Politicas" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/bicons"
+                android:title="Cerrar sesion" />
+        </menu>
+    </item>
 </menu>
