@@ -48,10 +48,6 @@ import it.neokree.materialtabs.MaterialTabListener;
 
 public class CatalogCar extends BaseActivity implements View.OnClickListener,OnDataSendToActivity {
 
-
-    //implements OnDataSendToActivity
-
-
     MaterialTabHost tabHost;
     ViewPager viewPager;
    // ViewPagerAdapter androidAdapter;
@@ -62,7 +58,6 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,OnD
     private int month = c.get(Calendar.MONTH);
     private int day = c.get(Calendar.DAY_OF_MONTH);
     boolean isOkayClicked = true;
-
     private RecyclerView recyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
     private CardAdapter adapter;
@@ -76,10 +71,6 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,OnD
     private Brand[] obj1;
     public static int flagDate = 0;
 
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -87,6 +78,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,OnD
 
         Intent mIntent = getIntent();
         brand.setId_categoria(CategoryActivity.opcionSeleccionada);
+
 
         webs.brandByCategory(CatalogCar.this,CatalogCar.this,brand);
 
@@ -96,8 +88,6 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,OnD
         //tabs
       //  tabHost = (MaterialTabHost) this.findViewById(R.id.tabHost);
       //  viewPager = (ViewPager) this.findViewById(R.id.viewPager);
-
-
        // webs.brandByCategory(CatalogCar.this,brand);
         //adapter view
         /*

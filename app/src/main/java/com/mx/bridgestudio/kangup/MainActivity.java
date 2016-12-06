@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.profile) {
+        if (id == R.id.nav_home) {
             Intent intent = new Intent().setClass(this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.favorites) {

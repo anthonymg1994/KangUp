@@ -1,10 +1,13 @@
 package com.mx.bridgestudio.kangup.Views;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,13 +23,14 @@ import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.MainActivity;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
 
-public class CategoryActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+public class CategoryActivity extends MainActivity implements AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener{
 
     private ListView list;
     private ArrayList<Category> tipos = new ArrayList<>();
@@ -43,14 +47,7 @@ public class CategoryActivity extends BaseActivity implements AdapterView.OnItem
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPageAndroid);
         AndroidImageAdapter adapterView = new AndroidImageAdapter(this);
         mViewPager.setAdapter(adapterView);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcateg);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"your icon was clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        
 
         list = (ListView)findViewById(R.id.listCategory);
         adaptador = new AdapterCategory(this,tipos);
@@ -115,6 +112,7 @@ public class CategoryActivity extends BaseActivity implements AdapterView.OnItem
         startActivity(setIntent);
         finish();
     }
+
 /*
     @Override
     public void sendData(Brand[] obj) {
@@ -123,4 +121,7 @@ public class CategoryActivity extends BaseActivity implements AdapterView.OnItem
         }
     }
     */
+
+
+
 }

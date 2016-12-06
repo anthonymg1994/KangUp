@@ -160,5 +160,6 @@
         -->
 
     </array>
+    <string name="title_activity_example">example</string>
 
 </resources>
