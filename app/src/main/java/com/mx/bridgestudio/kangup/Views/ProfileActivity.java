@@ -1,14 +1,17 @@
 package com.mx.bridgestudio.kangup.Views;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,18 +20,25 @@ import java.util.Calendar;
 
 import com.mx.bridgestudio.kangup.R;
 
-public class ProfileActivity extends AppCompatActivity implements
+public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {
 
     private ImageButton showCalendar;
     private EditText editBirth;
     private int mYear, mMonth, mDay;
     private int flag=0;
+    protected DrawerLayout mDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        //setContentView(R.layout.activity_profile);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflate your activity layout here!
+        mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        View contentView = inflater.inflate(R.layout.activity_profile, null, false);
+        mDrawer.addView(contentView, 0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

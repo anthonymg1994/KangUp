@@ -20,7 +20,7 @@ import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
 
-public class PaymentActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class PaymentActivity extends DrawerActivity implements AdapterView.OnItemClickListener {
 
     private ListView listPay;
     private ArrayList<Payment> tipos = new ArrayList<>();

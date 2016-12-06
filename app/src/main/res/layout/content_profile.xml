@@ -133,16 +133,6 @@
             app:layout_constraintHorizontal_bias="0.56" />
 
         <EditText
-            android:layout_width="237dp"
-            android:layout_height="40dp"
-            android:inputType="phone"
-            android:ems="10"
-            android:id="@+id/editPhone"
-            android:text="Teléfono"
-            tools:layout_editor_absoluteY="312dp"
-            tools:layout_editor_absoluteX="110dp" />
-
-        <EditText
             android:layout_width="238dp"
             android:layout_height="40dp"
             android:inputType="textPersonName"

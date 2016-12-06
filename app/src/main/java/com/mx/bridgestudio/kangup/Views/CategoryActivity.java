@@ -1,36 +1,29 @@
 package com.mx.bridgestudio.kangup.Views;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
-import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
 import com.mx.bridgestudio.kangup.Adapters.AndroidImageAdapter;
-import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
-import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.MainActivity;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
 
-public class CategoryActivity extends MainActivity implements AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener{
+public class CategoryActivity extends DrawerActivity implements AdapterView.OnItemClickListener{
 
     private ListView list;
     private ArrayList<Category> tipos = new ArrayList<>();
@@ -39,15 +32,30 @@ public class CategoryActivity extends MainActivity implements AdapterView.OnItem
     private Brand brand = new Brand();
     public static int opcionSeleccionada;
     AsyncBrands asyncTask;
+    protected DrawerLayout mDrawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
+        //setContentView(R.layout.activity_category);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflate your activity layout here!
+        mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        View contentView = inflater.inflate(R.layout.activity_category, null, false);
+        mDrawer.addView(contentView, 0);
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPageAndroid);
         AndroidImageAdapter adapterView = new AndroidImageAdapter(this);
         mViewPager.setAdapter(adapterView);
-        
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcateg);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"your icon was clicked",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         list = (ListView)findViewById(R.id.listCategory);
         adaptador = new AdapterCategory(this,tipos);
@@ -112,7 +120,6 @@ public class CategoryActivity extends MainActivity implements AdapterView.OnItem
         startActivity(setIntent);
         finish();
     }
-
 /*
     @Override
     public void sendData(Brand[] obj) {
@@ -121,7 +128,7 @@ public class CategoryActivity extends MainActivity implements AdapterView.OnItem
         }
     }
     */
-
-
-
+    protected int getLayoutId() {
+        return R.layout.activity_drawer;
+    }
 }

@@ -1,6 +1,7 @@
 package com.mx.bridgestudio.kangup.Views;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,44 +10,43 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
-import it.neokree.materialtabs.MaterialTabListener;
 
 /**
  * Created by Anthony on 07/11/2016.
  */
 
-public class CatalogCar extends BaseActivity implements View.OnClickListener,OnDataSendToActivity {
+public class CatalogCar extends DrawerActivity implements View.OnClickListener,OnDataSendToActivity {
+
+
+    //implements OnDataSendToActivity
+
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
@@ -58,6 +58,7 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,OnD
     private int month = c.get(Calendar.MONTH);
     private int day = c.get(Calendar.DAY_OF_MONTH);
     boolean isOkayClicked = true;
+
     private RecyclerView recyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
     private CardAdapter adapter;
@@ -70,15 +71,21 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,OnD
     private int flag = 0;
     private Brand[] obj1;
     public static int flagDate = 0;
+    protected DrawerLayout mDrawer;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.catalogcar);
+        //setContentView(R.layout.catalogcar);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflate your activity layout here!
+        mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        View contentView = inflater.inflate(R.layout.catalogcar, null, false);
+        mDrawer.addView(contentView, 0);
 
         Intent mIntent = getIntent();
         brand.setId_categoria(CategoryActivity.opcionSeleccionada);
-
 
         webs.brandByCategory(CatalogCar.this,CatalogCar.this,brand);
 
@@ -88,6 +95,8 @@ public class CatalogCar extends BaseActivity implements View.OnClickListener,OnD
         //tabs
       //  tabHost = (MaterialTabHost) this.findViewById(R.id.tabHost);
       //  viewPager = (ViewPager) this.findViewById(R.id.viewPager);
+
+
        // webs.brandByCategory(CatalogCar.this,brand);
         //adapter view
         /*

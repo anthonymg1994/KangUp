@@ -18,12 +18,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
-
-
 
     <application
         android:allowBackup="true"
@@ -42,7 +36,6 @@
         <activity
             android:name=".Views.ForgotActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity" />
         <activity
             android:name=".Views.TypesOfAutomobiles"
             android:label="@string/title_activity_types"
@@ -58,10 +51,6 @@
         <activity
             android:name=".Views.CatalogCar"
             android:permission="android.permission.INTERNET"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Controllers.BaseActivity"
-            android:label="@string/title_activity_types"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Views.SplashActivity">
             <intent-filter>
@@ -87,8 +76,9 @@
             android:name=".Views.CategoryActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Controllers.Paypal.Paypal"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Views.DrawerActivity"
+            android:label="@string/title_activity_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

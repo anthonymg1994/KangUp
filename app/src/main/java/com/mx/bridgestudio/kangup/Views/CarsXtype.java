@@ -1,6 +1,7 @@
 package com.mx.bridgestudio.kangup.Views;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,10 +15,8 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
  * Created by USUARIO on 24/10/2016.
  */
 
-public class CarsXtype extends BaseActivity implements View.OnClickListener,
+public class CarsXtype extends DrawerActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener,OnDataSendCarXtype {
 
     //  private ListView lista;
