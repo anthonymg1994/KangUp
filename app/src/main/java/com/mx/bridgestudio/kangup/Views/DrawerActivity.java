@@ -123,7 +123,7 @@ public class DrawerActivity extends AppCompatActivity
                 .setTitle("Cerrar sesion")
                 .setMessage("¿Desea cerrar sesión?")
                 .setIcon(R.drawable.ic_menu_manage)
-                .setPositiveButton("YES",
+                .setPositiveButton("Si",
                         new DialogInterface.OnClickListener() {
                             @TargetApi(11)
                             public void onClick(DialogInterface dialog, int id) {
@@ -133,7 +133,7 @@ public class DrawerActivity extends AppCompatActivity
                                 dialog.cancel();
                             }
                         })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @TargetApi(11)
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
