@@ -13,16 +13,17 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_height="55dp"
-        android:layout_width="55dp"
+        android:layout_height="85dp"
+        android:layout_width="85dp"
         app:layout_collapseMode="parallax"
         app:layout_collapseParallaxMultiplier="0.7"
         android:id="@+id/imageProfile"
         android:src="@drawable/perfil1"
         android:layout_alignParentTop="true"
+      
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
-        android:layout_gravity="left"
+        android:layout_gravity="center"
         />
 
     <TextView
@@ -30,12 +31,16 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Android Studio"
+        android:layout_gravity="center"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
         android:text="android.studio@android.com" />
 
 </LinearLayout>

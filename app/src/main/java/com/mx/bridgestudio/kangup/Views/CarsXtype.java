@@ -8,9 +8,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
@@ -23,6 +26,9 @@ import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.id.list;
 
 /**
  * Created by USUARIO on 24/10/2016.
@@ -42,6 +48,8 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
     private RecyclerView.LayoutManager lManager;
     private webServices webs = new webServices();
     private Vehicle vehicle = new Vehicle();
+    private EditText inputSearch;
+
 
     // private List items = new ArrayList();
     ArrayList<ListCar> items= new ArrayList<>();
@@ -49,9 +57,16 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_types);
+
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
+
+
         toolbar.setTitle(""+CardAdapter.marca);
         setSupportActionBar(toolbar);
+
 
         vehicle.setId_categoria(CategoryActivity.opcionSeleccionada);
         vehicle.setId_brand(CardAdapter.id_marca);
@@ -95,7 +110,6 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
         recycler.setAdapter(adapter);
 
     }
-
     @Override
     public void onClick(View v) {
 
@@ -140,14 +154,6 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
         Toast.makeText(this, "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
         fillList(obj);
     }
-    /*
-    @Override
-    public void sendData(Vehicle[] vehicle) {
-        Toast.makeText(this, "string"+response, Toast.LENGTH_SHORT).show();
-        for(int i = 0; i < vehicle.lenght(); i ++){
-            items.add(i,vehicle[i]);
-        }
-         adapter.notifyDataSetChanged();
-    }
-    */
+
+
 }

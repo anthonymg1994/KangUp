@@ -26,6 +26,7 @@
     <!-- Contenido Principal -->
 
     <!-- Menú Deslizante -->
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -33,7 +34,43 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
+
         app:menu="@menu/nav_menu" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:background="#000000"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/edittextid"
+            android:weightSum="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:hint="Your edit text"
+            android:background="#ffffff"
+            android:maxLines="3" />
+
+        <Button
+            android:id="@+id/buttonid"
+            android:weightSum="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Button" />
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>
 

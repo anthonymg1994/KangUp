@@ -43,7 +43,8 @@
         <activity
             android:name=".Views.CarsXtype"
             android:label="@string/title_activity_types"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".Views.DetalleActivity"
             android:label="@string/title_activity_types"
@@ -74,6 +75,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Views.CategoryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Controllers.Paypal.Paypal"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Views.DrawerActivity"
