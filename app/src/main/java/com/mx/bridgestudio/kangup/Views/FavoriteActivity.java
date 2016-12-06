@@ -1,8 +1,11 @@
 package com.mx.bridgestudio.kangup.Views;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,17 +17,24 @@ import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
 
-public class FavoriteActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class FavoriteActivity extends DrawerActivity implements AdapterView.OnItemClickListener {
 
     private ListView listFav;
     private ArrayList<ListCar> tipos = new ArrayList<>();
     private ArrayAdapter<ListCar> AdapterArray;
     private AdapterFavoriteList adaptador;
+    protected DrawerLayout mDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
+        //setContentView(R.layout.activity_favorite);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflate your activity layout here!
+        mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        View contentView = inflater.inflate(R.layout.activity_favorite, null, false);
+        mDrawer.addView(contentView, 0);
 
         listFav = (ListView)findViewById(R.id.listFav);
         adaptador = new AdapterFavoriteList(this,tipos);

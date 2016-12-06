@@ -160,5 +160,6 @@
         -->
 
     </array>
+    <string name="title_activity_drawer">DrawerActivity</string>
 
 </resources>

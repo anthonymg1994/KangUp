@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
-import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.R;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
  * Created by USUARIO on 24/10/2016.
  */
 
-public class TypesOfAutomobiles extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener {
+public class TypesOfAutomobiles extends DrawerActivity implements View.OnClickListener, AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener {
 
   //  private ListView lista;
    // private ArrayList<ListCar> tipos = new ArrayList<ListCar>();

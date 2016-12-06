@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Principal" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_pay"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Forma de pago" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Historial" />
+        <item
+            android:id="@+id/nav_favorite"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Favoritos" />
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Noticias" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_privacy"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Politicas" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Cerrar sesion" />
+        </menu>
+    </item>
+
+</menu>

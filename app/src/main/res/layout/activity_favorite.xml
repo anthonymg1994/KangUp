@@ -7,21 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.mx.bridgestudio.kangup.Views.FavoriteActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#29235b"
-        android:theme="?attr/actionBarTheme"
-        android:minHeight="?attr/actionBarSize"
-        android:id="@+id/toolbarFav"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Favoritos" />
-
     <ListView
         android:layout_width="344dp"
         android:layout_height="495dp"

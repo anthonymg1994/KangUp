@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
-import com.mx.bridgestudio.kangup.Controllers.BaseActivity;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DetalleActivity extends BaseActivity {
+public class DetalleActivity extends DrawerActivity {
 
 
     private static ViewPager mPager;
