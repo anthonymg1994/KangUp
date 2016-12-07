@@ -1,13 +1,15 @@
 package com.mx.bridgestudio.kangup.Views;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,11 +33,6 @@ import java.util.ArrayList;
 public class CarsXtype extends DrawerActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener,OnDataSendCarXtype {
 
-    //  private ListView lista;
-    // private ArrayList<ListCar> tipos = new ArrayList<ListCar>();
-    // private ArrayAdapter<ListCar> AdapterArray;
-    // private ListView list;
-    // private AdaptadorList adaptador;
     private String opcionSeleccionada="";
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
@@ -43,13 +40,21 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
     private webServices webs = new webServices();
     private Vehicle vehicle = new Vehicle();
 
+    protected DrawerLayout mDrawer;
     // private List items = new ArrayList();
     ArrayList<ListCar> items= new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_types);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
+        //setContentView(R.layout.content_types);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflate your activity layout here!
+        mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        View contentView = inflater.inflate(R.layout.content_types, null, false);
+        mDrawer.addView(contentView, 0);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(""+CardAdapter.marca);
         setSupportActionBar(toolbar);
 
@@ -61,6 +66,9 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
 
         // Obtener el Recycler
         CatalogCar.flagDate = 1;
+
+
+
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         recycler.setHasFixedSize(true);
         // Usar un administrador para LinearLayout
@@ -93,6 +101,7 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
         // Crear un nuevo adaptador
         adapter = new AdaptadorType(items);
         recycler.setAdapter(adapter);
+
 
     }
 
@@ -150,4 +159,6 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
          adapter.notifyDataSetChanged();
     }
     */
+
+
 }
