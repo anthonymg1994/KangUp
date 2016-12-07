@@ -6,4 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start"></android.support.v4.widget.DrawerLayout>
+    tools:openDrawer="start">
+
+    
+
+</android.support.v4.widget.DrawerLayout>

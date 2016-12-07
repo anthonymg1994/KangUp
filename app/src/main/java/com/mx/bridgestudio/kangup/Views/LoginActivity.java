@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.asyn;
+import com.mx.bridgestudio.kangup.Controllers.Paypal.Paypal;
 import com.mx.bridgestudio.kangup.Controllers.SqliteController;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.User;
@@ -75,7 +76,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onClick(View v) {
                 // Perform action on click
                 finish();
-                startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+             //   startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+                startActivity(new Intent(LoginActivity.this, Paypal.class));
             }
         });
 

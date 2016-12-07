@@ -1,15 +1,13 @@
 package com.mx.bridgestudio.kangup.Views;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,6 +31,11 @@ import java.util.ArrayList;
 public class CarsXtype extends DrawerActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener,NavigationView.OnNavigationItemSelectedListener,OnDataSendCarXtype {
 
+    //  private ListView lista;
+    // private ArrayList<ListCar> tipos = new ArrayList<ListCar>();
+    // private ArrayAdapter<ListCar> AdapterArray;
+    // private ListView list;
+    // private AdaptadorList adaptador;
     private String opcionSeleccionada="";
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
@@ -159,6 +162,8 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
          adapter.notifyDataSetChanged();
     }
     */
+
+
 
 
 }
