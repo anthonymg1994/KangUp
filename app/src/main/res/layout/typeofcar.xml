@@ -7,9 +7,32 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <include
-        layout="@layout/content_types"
-        android:id="@+id/tool" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_height="0dp"
+        android:layout_below="@+id/tabHost"
+        app:layout_constraintTop_toBottomOf="@+id/tabHost"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </android.support.v4.view.ViewPager>
+
+    <it.neokree.materialtabs.MaterialTabHost
+        android:id="@+id/tabHost"
+        android:layout_height="48dp"
+        app:accentColor="@color/white"
+        app:primaryColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="0dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintHorizontal_bias="0.0" />
 
 
 </android.support.constraint.ConstraintLayout>
