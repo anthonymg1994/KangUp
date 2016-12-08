@@ -1,10 +1,14 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
@@ -32,12 +36,21 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail{
     private int id_vehiculo = 0;
     private String nombre_vehiculo = "";
 
+    protected DrawerLayout mDrawer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
+       // setContentView(R.layout.activity_detalle);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflate your activity layout here!
+        mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        View contentView = inflater.inflate(R.layout.activity_detalle, null, false);
+        mDrawer.addView(contentView, 0);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Detalle de auto");
         setSupportActionBar(toolbar);
 

@@ -75,6 +75,7 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
     public static int flagDate = 0;
     protected DrawerLayout mDrawer;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
