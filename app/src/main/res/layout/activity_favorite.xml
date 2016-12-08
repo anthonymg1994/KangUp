@@ -5,7 +5,7 @@
     android:id="@+id/activity_favorite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mx.bridgestudio.kangup.Views.FavoriteActivity">
+    tools:context="com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity">
 
     <ListView
         android:layout_width="344dp"

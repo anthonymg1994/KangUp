@@ -1,7 +1,6 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Intent;
-import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;

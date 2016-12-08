@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Models.Favorite;
 import com.mx.bridgestudio.kangup.R;
 
 public class ForgotActivity extends AppCompatActivity {

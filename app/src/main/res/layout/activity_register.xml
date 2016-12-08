@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    android:orientation="horizontal"
-    tools:context="com.mx.bridgestudio.kangup.Views.RegisterActivity">
+    android:orientation="vertical"
+    tools:context="com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity">
+
 
 
     <android.support.v7.widget.Toolbar
@@ -27,14 +28,17 @@
         app:layout_constraintHorizontal_bias="0.0" />
 
     <ScrollView
-        android:layout_width="0dp"
+
         app:layout_constraintTop_toBottomOf="@+id/toolbarRegister"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:fillViewport="true"
+        android:fillViewport="false"
         android:id="@+id/scroll"
         app:layout_constraintHorizontal_bias="1.0"
-        android:layout_height="560dp">
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:isScrollContainer="true"
+        >
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -61,12 +65,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_height="80dp"
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:id="@+id/imageProfile"
                     android:src="@drawable/ic_menu_camera"
+                    android:layout_gravity="center"
                     android:layout_alignParentTop="true"
-                    android:layout_gravity="center">
+                    android:scaleType="centerCrop">
                 </ImageView>
             </android.support.v7.widget.CardView>
 
@@ -85,7 +90,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginLeft="16dp"
                 app:layout_constraintHorizontal_bias="0.33"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/cardImage" />
 
             <EditText
@@ -118,9 +123,9 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="16dp"
-                app:layout_constraintHorizontal_bias="0.33"
-                android:layout_marginTop="72dp"
-                app:layout_constraintTop_toBottomOf="@+id/lastname" />
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/lastname"
+                app:layout_constraintHorizontal_bias="0.37" />
 
             <EditText
                 android:layout_height="wrap_content"
@@ -129,7 +134,7 @@
                 android:id="@+id/password"
                 android:hint="Contraseña"
                 android:layout_width="328dp"
-                app:layout_constraintHorizontal_bias="0.33"
+                app:layout_constraintHorizontal_bias="0.37"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/editEmail"
                 android:layout_marginStart="16dp"
@@ -139,51 +144,36 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginRight="16dp" />
 
-            <TextView
-                android:text="Perfil"
-                android:layout_width="wrap_content"
+            <EditText
                 android:layout_height="wrap_content"
-                android:id="@+id/titleRegister"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
-                android:layout_marginStart="8dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/passwordr"
+                android:hint="Confirmar contraseña"
+                android:layout_width="328dp"
+                app:layout_constraintHorizontal_bias="0.37"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/password"
+                android:layout_marginStart="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
-                app:layout_constraintHorizontal_bias="0.03" />
-
-            <TextView
-                android:text="Cuenta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView5"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
-                app:layout_constraintHorizontal_bias="0.03"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/lastname" />
+                android:layout_marginRight="16dp" />
 
             <Button
                 android:text="Siguiente"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/next"
-                android:layout_marginStart="16dp"
+                android:background="#29235b"
+                android:textColor="#ffffff"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="16dp"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintTop_toBottomOf="@+id/password" />
+                app:layout_constraintHorizontal_bias="0.52"
+                android:layout_marginTop="8dp"
+                android:layout_alignParentBottom="true"
+                app:layout_constraintTop_toBottomOf="@+id/passwordr" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

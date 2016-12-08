@@ -11,7 +11,7 @@ import com.mx.bridgestudio.kangup.Controllers.DAO.DAOuser;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
 import org.json.JSONObject;
 

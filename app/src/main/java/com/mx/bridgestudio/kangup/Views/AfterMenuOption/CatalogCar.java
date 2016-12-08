@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -31,6 +31,8 @@ import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,7 +59,7 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
     private int year =  c.get(Calendar.YEAR);
     private int month = c.get(Calendar.MONTH);
     private int day = c.get(Calendar.DAY_OF_MONTH);
-    boolean isOkayClicked = true;
+    boolean isOkayClicked;
 
     private RecyclerView recyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -151,7 +153,7 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
 
         if(flagDate == 0){
         //calendario de disponibildad
-        showDatePicker();
+      showDatePicker();
 
         }
 
@@ -183,7 +185,7 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
 
     @Override
     public void sendData(Brand[] obj) {
-        Toast.makeText(this, "marcas"+obj.length, Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(this, "marcas"+obj.length, Toast.LENGTH_SHORT).show();
         prepareListBrands(obj);
         //obj1 = obj;
     }

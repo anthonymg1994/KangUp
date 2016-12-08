@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Controllers;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/loginform_layout"
     android:background="#ffffff"
-    tools:context="com.mx.bridgestudio.kangup.Views.LoginActivity">
+    tools:context="com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity">
 
     <!-- Login progress -->
     <ProgressBar
@@ -57,7 +57,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="32dp"
         app:layout_constraintHorizontal_bias="0.4"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="35dp"
         app:layout_constraintTop_toBottomOf="@+id/logo"
         style="@style/Widget.AppCompat.EditText"
         android:layout_height="50dp" />
@@ -76,12 +76,11 @@
         android:layout_marginStart="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:background="#29235b"
+        android:layout_marginTop="8dp"
         android:textColor="#ffffff"
+        android:background="@drawable/borderradio"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        android:layout_width="0dp"
-        app:layout_constraintHorizontal_bias="0.26" />
+        android:layout_width="match_parent" />
 
     <Button
         android:text="Ingresar como invitado"
@@ -145,19 +144,20 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="32dp"
         app:layout_constraintHorizontal_bias="0.4"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintTop_toBottomOf="@+id/user"
-        android:background="@android:drawable/editbox_background"
 
-        android:layout_height="50dp">
+        android:layout_height="62dp">
 
         <EditText
             android:id="@+id/passwordeye"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:background="@android:drawable/editbox_background"
+
             android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>

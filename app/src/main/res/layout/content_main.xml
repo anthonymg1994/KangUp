@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ececec"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.mx.bridgestudio.kangup.Views.CatalogCar"
+    tools:context="com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar"
     >
 
 

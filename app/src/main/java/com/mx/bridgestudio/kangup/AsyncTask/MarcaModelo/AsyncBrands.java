@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAObrand;
@@ -12,9 +11,7 @@ import com.mx.bridgestudio.kangup.Controllers.DAO.DAObrand;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Brand;
-import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.CatalogCar;
-import com.mx.bridgestudio.kangup.Views.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,7 +83,7 @@ public class AsyncBrands extends AsyncTask<String,Integer,String> {
         if(result.equals("0")){
             Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(mContext, "Bienvenido "+brands, Toast.LENGTH_SHORT).show();
+       //     Toast.makeText(mContext, "Bienvenido "+brands, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonarray = new JSONArray(result);

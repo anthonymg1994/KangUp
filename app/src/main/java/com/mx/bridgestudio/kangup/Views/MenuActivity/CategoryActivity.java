@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,6 +19,9 @@ import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.util.ArrayList;
 
@@ -55,6 +57,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
                 Toast.makeText(getApplicationContext(),"your icon was clicked",Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
         list = (ListView)findViewById(R.id.listCategory);

@@ -1,9 +1,8 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.widget.ListView;
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.util.ArrayList;
 

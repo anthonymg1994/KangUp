@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Controllers;
+package com.mx.bridgestudio.kangup.Controllers.SqlLite;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -17,7 +17,7 @@ import com.mx.bridgestudio.kangup.Models.User;
 public class SqliteController extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
-    private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellidos TEXT," +
+    private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellidos TEXT," +
             "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
 
     private User us [];
@@ -76,22 +76,52 @@ public class SqliteController extends SQLiteOpenHelper {
         db.close();
         return u;
     }
+    public User userById(){
+        int idd=0;
+        String nombre="";
+        String apellidos="";
+        String email="";
+        String password="";
+        User u = new User();
 
-    public void insertUsuario(String nom, String ap, String tel, String email, String fecha, String ciu, String pass, int form, String stat)
+        db = getReadableDatabase();
+        Cursor c=db.rawQuery("SELECT id,nombre,apellidos,email,password FROM Usuarios" ,null);
+        if(c.moveToFirst())
+        {
+            do{
+                idd = c.getInt(0);
+                nombre = c.getString(1);
+                apellidos = c.getString(2);
+                email = c.getString(3);
+                password = c.getString(4);
+            }while(c.moveToNext());
+        }
+        u.setId(idd);
+        u.setFirstName(nombre);
+        u.setLastName(apellidos);
+        u.setEmail(email);
+        u.setPassword(password);
+
+        db.close();
+        return u;
+    }
+
+    public void insertUsuario(User user)
     {
         db = getWritableDatabase();
         try{
-            SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (nombre,apellidos,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status) "+
-                    "VALUES (?,?,?,?,?,?,?,?,?)");
-            stmt.bindString(1, nom);
-            stmt.bindString(2, ap);
-            stmt.bindString(3, tel);
-            stmt.bindString(4, email);
-            stmt.bindString(5, fecha);
-            stmt.bindString(6, ciu);
-            stmt.bindString(7, pass);
-            stmt.bindLong(8, form);
-            stmt.bindString(9, stat);
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (id,nombre,apellidos,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status) "+
+                    "VALUES (?,?,?,?,?,?,?,?,?,?)");
+            stmt.bindLong(1,user.getId());
+            stmt.bindString(2, user.getFirstName());
+            stmt.bindString(3, user.getLastName());
+            stmt.bindString(4, user.getCellphone());
+            stmt.bindString(5, user.getEmail());
+            stmt.bindString(6, user.getFnacimiento());
+            stmt.bindString(7, user.getCiudad());
+            stmt.bindString(8, user.getPassword());
+            stmt.bindLong(9, user.getPay());
+            stmt.bindString(10, user.getStatus());
             stmt.execute();
         }
         catch (SQLiteConstraintException e){

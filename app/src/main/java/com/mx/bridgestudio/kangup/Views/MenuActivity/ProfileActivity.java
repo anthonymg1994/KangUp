@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -8,8 +8,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +17,7 @@ import android.widget.ImageButton;
 import java.util.Calendar;
 
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
 public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {

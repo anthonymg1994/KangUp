@@ -6,10 +6,15 @@ import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncVehiculosXmarca;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
+import com.mx.bridgestudio.kangup.AsyncTask.Viaje.historyByUser;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Model;
+import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 
@@ -33,6 +38,14 @@ public class webServices {
     public void AutosByMarca(OnDataSendCarXtype OnDataSendToActivity, Context context, Vehicle vehicle){
         new AsyncVehiculosXmarca(OnDataSendToActivity,context,vehicle).execute();
     }
+    public void historyByUser(OnDataSendHistory OnDataSendToActivity, Context context, User user){
+        new historyByUser(OnDataSendToActivity,context,user).execute();
+    }
+
+    public void DetailVehicle(OnDataSendDetail OnDataSendToDetail, Context context, Vehicle vehicle){
+        new AsyncDetailAuto(OnDataSendToDetail,context,vehicle).execute();
+    }
+
 /*
     public void Noticias(Context context, News news){
         new AsyncNews(context,news).execute();

@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
@@ -18,12 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
-import com.mx.bridgestudio.kangup.AsyncTask.Usuario.asyn;
 import com.mx.bridgestudio.kangup.Controllers.Paypal.Paypal;
-import com.mx.bridgestudio.kangup.Controllers.SqliteController;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
 /**
  * A login screen that offers login via email/password.
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private Button guest,register,forgot,signin;
 
     private User user = new User();
-    private SqliteController sql;
+    private SqliteController sql = new SqliteController(this,"kangup",null,1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // Perform action on click
                 finish();
              //   startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
-                startActivity(new Intent(LoginActivity.this, Paypal.class));
+                startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
             }
         });
 

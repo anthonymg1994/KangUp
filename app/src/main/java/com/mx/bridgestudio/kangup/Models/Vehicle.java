@@ -15,6 +15,17 @@ public class Vehicle {
     private int id_categoria;
     private String marca;
 
+    private String status;
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getMarca() {
         return marca;
     }

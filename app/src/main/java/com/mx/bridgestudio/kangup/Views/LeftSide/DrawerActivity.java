@@ -1,13 +1,10 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.LeftSide;
 
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,11 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Models.Category;
-import com.mx.bridgestudio.kangup.Models.Favorite;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.ProfileActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,7 +95,9 @@ public class DrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_pay) {
 
         } else if (id == R.id.nav_history) {
-
+            Intent setIntent = new Intent(this, HistoryActivity.class);
+            startActivity(setIntent);
+            finish();
         } else if (id == R.id.nav_favorite) {
             Intent setIntent = new Intent(this, FavoriteActivity.class);
             startActivity(setIntent);

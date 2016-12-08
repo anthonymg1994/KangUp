@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo;
+package com.mx.bridgestudio.kangup.AsyncTask.Viaje;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,11 +6,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOviajes;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
+import com.mx.bridgestudio.kangup.Models.RoadTrip;
+import com.mx.bridgestudio.kangup.Models.User;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,34 +21,33 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by USUARIO on 02/12/2016.
+ * Created by USUARIO on 07/12/2016.
  */
 
-public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
+public class historyByUser extends AsyncTask<String,Integer,String> {
     private JSONObject responseJson;
     private ProgressDialog progressDialog;
     private HttpURLConnection httpURLConnection;
     private String param1;
     private String param2;
     URL url;
-    private Vehicle[] arrayVehiculos;
-    private Vehicle vehicle = new Vehicle();
-    private String svehiculos;
+    private RoadTrip[] arrayViajes;
+    private User user = new User();
+    private String sviajes;
     private webServices services = new webServices();
-    private DAOVehiculo Dvehiculo = new DAOVehiculo();
-
-    public OnDataSendCarXtype SendToActivity;//Call back interface
+    private DAOviajes Dviajes = new DAOviajes();
+    public OnDataSendHistory SendToActivity;//Call back interface
 
 
     Context mContext;
 
     private boolean flag = false;
 
-    public AsyncVehiculosXmarca(OnDataSendCarXtype SendToActivity,Context context,Vehicle vehicle) {
+    public historyByUser(OnDataSendHistory SendToActivity, Context context, User user) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
-        this.vehicle = vehicle;
+        this.user = user;
 
     }
 
@@ -55,12 +55,12 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
     protected String doInBackground(String... params) {
 
         try {
-            svehiculos = Dvehiculo.getVehiclesByBrand(vehicle);
+            sviajes = Dviajes.getHistoryByUser(user);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return svehiculos;
+        return sviajes;
     }
 
     @Override
@@ -82,26 +82,26 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
         if(result.equals("0")){
             Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
         }else{
-      //      Toast.makeText(mContext, "Bienvenido "+vehicle, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Bienvenido "+user, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                arrayVehiculos = new Vehicle[jsonarray.length()];
+                arrayViajes = new RoadTrip[jsonarray.length()];
 
                 for (int i = 0; i < jsonarray.length(); i++) {
-                    arrayVehiculos[i] = new Vehicle();
+                    arrayViajes[i] = new RoadTrip();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    arrayVehiculos[i].setId(jsonobject.getInt("id"));
-                    arrayVehiculos[i].setMarca(jsonobject.getString("Marca"));
-                    arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
-                    arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
+                    arrayViajes[i].setId(jsonobject.getInt("id"));
+                    arrayViajes[i].setMarca(jsonobject.getString("Marca"));
+                    arrayViajes[i].setFecha(jsonobject.getString("fecha"));
+                    arrayViajes[i].setTotal(jsonobject.getString("total"));
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(mContext, CarsXtype.class);
-            SendToActivity.sendData(arrayVehiculos);
+            Intent intent = new Intent(mContext, HistoryActivity.class);
+            SendToActivity.sendDataHistory(arrayViajes);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 
@@ -113,3 +113,4 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
     }
 
 }
+

@@ -12,7 +12,52 @@ public class RoadTrip {
     private String time;
     private String km;
     private String total;
+    private String Marca;
+    private String Modelo;
+    private String year;
+    private String fecha;
+    private int image;
 
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public String getMarca() {
+        return Marca;
+    }
+
+    public void setMarca(String marca) {
+        Marca = marca;
+    }
+
+    public String getModelo() {
+        return Modelo;
+    }
+
+    public void setModelo(String modelo) {
+        Modelo = modelo;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
     public int getId() {
         return id;

@@ -5,14 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOuser;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
-import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +32,8 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
     private ProgressDialog progressDialog;
     private View rootLayout;
     private Context context;
-
+    private SqliteController sql;
+    private User u = new User();
 
 
     private User user;
@@ -77,7 +77,13 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
             progressDialog.dismiss();
         }
        if(result && user.getFirstName()!= null){
-            Toast.makeText(mContext, "Bienvenido  "+user.getFirstName(), Toast.LENGTH_SHORT).show();
+       //     Toast.makeText(mContext, "Bienvenido  "+user.getFirstName(), Toast.LENGTH_SHORT).show();
+           sql = new SqliteController(mContext, "kangup",null, 1);
+           sql.Connect();
+          sql.insertUsuario(user);
+            sql.Close();
+
+
             Intent intent = new Intent().setClass(
                     mContext,CategoryActivity.class);
             mContext.startActivity(intent);

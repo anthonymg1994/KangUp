@@ -17,11 +17,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.CarsXtype;
-import com.mx.bridgestudio.kangup.Views.CatalogCar;
-import com.mx.bridgestudio.kangup.Views.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 
 import java.util.List;
 

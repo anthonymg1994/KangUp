@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.content.Intent;
 import android.os.Handler;

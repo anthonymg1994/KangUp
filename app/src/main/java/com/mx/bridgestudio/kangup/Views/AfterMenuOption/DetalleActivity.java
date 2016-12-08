@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -7,16 +7,18 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DetalleActivity extends DrawerActivity {
+public class DetalleActivity extends DrawerActivity implements OnDataSendDetail{
 
 
     private static ViewPager mPager;
@@ -27,6 +29,8 @@ public class DetalleActivity extends DrawerActivity {
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
     private webServices webs = new webServices();
     private Vehicle vehicle = new Vehicle();
+    private int id_vehiculo = 0;
+    private String nombre_vehiculo = "";
 
 
     @Override
@@ -36,6 +40,9 @@ public class DetalleActivity extends DrawerActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
         toolbar.setTitle("Detalle de auto");
         setSupportActionBar(toolbar);
+
+        id_vehiculo = CarsXtype.id_vehiculo;
+        nombre_vehiculo = CarsXtype.nombre_vehiculo;
 
 
         //webs.DetalleAuto(Vehicle vehicle);
@@ -119,4 +126,8 @@ public class DetalleActivity extends DrawerActivity {
         finish();
     }
 
+    @Override
+    public void sendData(Vehicle obj) {
+
+    }
 }

@@ -1,8 +1,7 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,18 +13,29 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.datePickerDialog;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by USUARIO on 24/10/2016.
@@ -45,8 +55,15 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
     private RecyclerView.LayoutManager lManager;
     private webServices webs = new webServices();
     private Vehicle vehicle = new Vehicle();
-
+    public static int id_vehiculo = 0;
+    public static String nombre_vehiculo = "";
     protected DrawerLayout mDrawer;
+    private ImageButton changeDate;
+    private TextView date;
+    private datePickerDialog dialog = new datePickerDialog(this);
+    private ArrayList<Integer> rDate = new ArrayList<Integer>();
+
+
     // private List items = new ArrayList();
     ArrayList<ListCar> items= new ArrayList<>();
     @Override
@@ -59,7 +76,11 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.content_types, null, false);
         mDrawer.addView(contentView, 0);
+        changeDate = (ImageButton) findViewById(R.id.changeDate);
+        changeDate.setOnClickListener(this);
 
+        date = (TextView) findViewById(R.id.date);
+        date.setText("Verifica disponibilidad");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(""+CardAdapter.marca);
         setSupportActionBar(toolbar);
@@ -86,11 +107,13 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
                 new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(view.getContext(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
-                       // int opcionSeleccionada = items.get(position).getId();
+                       int opcionSeleccionada = items.get(position).getId();
                         Intent intent = new Intent().setClass(
                                 CarsXtype.this, DetalleActivity.class);
                         //vehicle.setId(opcionSeleccionada);
                         //webs.DetalleAuto(CarsXtype.this, vehicle);
+                        id_vehiculo = opcionSeleccionada;
+                        nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
                         startActivity(intent);
                         finish();
                     }
@@ -113,7 +136,28 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
+        if(v.getId() == R.id.changeDate){
+            rDate = dialog.showDatePicker();
 
+            //asignar a textview fecha seleccionada en datepickerDialog y verificar de que selecciono algo
+
+            if(rDate.isEmpty()){
+
+            }else{
+                String dateString = rDate.get(0).toString() +"/"+ rDate.get(1).toString()+"/"+ rDate.get(2).toString();
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy");
+                Date convertedDate = new Date();
+                try {
+                    convertedDate = dateFormat.parse(dateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String dconvertd = dateFormat.format(convertedDate);
+
+                date.setText(dconvertd);
+            }
+        }
     }
 
     @Override
@@ -152,7 +196,7 @@ public class CarsXtype extends DrawerActivity implements View.OnClickListener,
 
     @Override
     public void sendData(Vehicle[] obj) {
-        Toast.makeText(this, "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
         fillList(obj);
     }
     /*
