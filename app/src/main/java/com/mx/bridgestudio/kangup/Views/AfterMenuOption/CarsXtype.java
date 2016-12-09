@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.Views;
+package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,6 +31,8 @@ import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
 import java.util.ArrayList;
@@ -107,6 +110,12 @@ public class CarsXtype extends DrawerActivity implements
         Intent setIntent = new Intent(this,CatalogCar.class);
         startActivity(setIntent);
         finish();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_drawer_drawer, menu);
+        return true;
     }
 
 

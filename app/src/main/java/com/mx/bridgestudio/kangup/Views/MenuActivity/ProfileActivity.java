@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import java.util.Calendar;
 
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
@@ -23,10 +25,12 @@ public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {
 
     private ImageButton showCalendar;
-    private EditText editBirth;
+    private EditText editBirth,email,address,city,cellphone;
     private int mYear, mMonth, mDay;
     private int flag=0;
     protected DrawerLayout mDrawer;
+    private SqliteController sql;
+    private User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,11 @@ public class ProfileActivity extends DrawerActivity implements
         showCalendar.setOnClickListener(this);
 
         editBirth = (EditText)findViewById(R.id.editBirth);
+        email = (EditText)findViewById(R.id.editEmail);
+        address = (EditText)findViewById(R.id.editAddress);
+        city = (EditText)findViewById(R.id.editCity);
+     //   cellphone = (EditText)findViewById(R.id.ed);
+
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +89,31 @@ public class ProfileActivity extends DrawerActivity implements
                 }
             }
         });
-    }
 
+
+
+        sql = new SqliteController(ProfileActivity.this, "kangup",null, 1);
+        sql.Connect();
+        //user = sql.user();
+        getInformationUser(user = sql.user());
+        sql.Close();
+
+    }
+    private void getInformationUser(User user){
+        editBirth = (EditText)findViewById(R.id.editBirth);
+        email = (EditText)findViewById(R.id.editEmail);
+        address = (EditText)findViewById(R.id.editAddress);
+        city = (EditText)findViewById(R.id.editCity);
+
+        editBirth.setText(user.getFnacimiento());
+        email.setText(user.getEmail());
+        //Agregar a bd un campo de domicilio
+        //Cambiar ciudad por domicilio get
+        address.setText(user.getCiudad());
+        city.setText(user.getCiudad());
+        //Agregar getPhotoByUser
+
+    }
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.showCalendar)

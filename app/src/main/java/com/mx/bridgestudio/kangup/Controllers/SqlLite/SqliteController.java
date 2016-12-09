@@ -76,7 +76,7 @@ public class SqliteController extends SQLiteOpenHelper {
         db.close();
         return u;
     }
-    public User userById(){
+    public User user(){
         int idd=0;
         String nombre="";
         String apellidos="";

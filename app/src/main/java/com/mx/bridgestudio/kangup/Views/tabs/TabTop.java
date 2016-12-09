@@ -20,12 +20,12 @@ import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.CarsXtype;
-import com.mx.bridgestudio.kangup.Views.CatalogCar;
-import com.mx.bridgestudio.kangup.Views.CategoryActivity;
-import com.mx.bridgestudio.kangup.Views.DetalleActivity;
-import com.mx.bridgestudio.kangup.Views.RecyclerItemClickListener;
-import com.mx.bridgestudio.kangup.Views.TypesOfAutomobiles;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
+import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.TypesOfAutomobiles;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,8 @@ public class TabTop extends Fragment implements OnDataSendCarXtype {
     private RecyclerView.LayoutManager lManager;
     private webServices webs = new webServices();
     private Vehicle vehicle = new Vehicle();
-
+    public static int id_vehiculo = 0;
+    public static String nombre_vehiculo = "";
     ArrayList<ListCar> items= new ArrayList<>();
 
     //Context context,act;
@@ -80,8 +81,12 @@ public class TabTop extends Fragment implements OnDataSendCarXtype {
                 new RecyclerItemClickListener(getActivity(), recycler ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(getActivity(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
-                        // int opcionSeleccionada = items.get(position).getId();
+                        int opcionSeleccionada = items.get(position).getId();
                         Intent intent = new Intent(getActivity(), DetalleActivity.class);
+                        id_vehiculo = opcionSeleccionada;
+                        nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
+
+
                         TabTop.this.startActivity(intent);
                         //finish();
                     }

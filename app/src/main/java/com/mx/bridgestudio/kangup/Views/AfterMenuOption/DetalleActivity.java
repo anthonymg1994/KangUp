@@ -16,6 +16,7 @@ import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -54,8 +55,8 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail{
         toolbar.setTitle("Detalle de auto");
         setSupportActionBar(toolbar);
 
-        id_vehiculo = CarsXtype.id_vehiculo;
-        nombre_vehiculo = CarsXtype.nombre_vehiculo;
+        id_vehiculo = TabTop.id_vehiculo;
+        nombre_vehiculo = TabTop.nombre_vehiculo;
 
 
         //webs.DetalleAuto(Vehicle vehicle);
