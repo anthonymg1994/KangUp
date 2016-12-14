@@ -11,20 +11,31 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
+import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
+import com.mx.bridgestudio.kangup.Models.Lists.ListViaje;
+import com.mx.bridgestudio.kangup.Models.User;
+import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.util.ArrayList;
 
-public class FavoriteActivity extends DrawerActivity implements AdapterView.OnItemClickListener {
+public class FavoriteActivity extends DrawerActivity implements AdapterView.OnItemClickListener,OnDataSendFavorites {
 
     private ListView listFav;
     private ArrayList<ListCar> tipos = new ArrayList<>();
     private ArrayAdapter<ListCar> AdapterArray;
     private AdapterFavoriteList adaptador;
     protected DrawerLayout mDrawer;
+    private webServices webs = new webServices();
+    private SqliteController sql;
+    private User user = new User();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +51,15 @@ public class FavoriteActivity extends DrawerActivity implements AdapterView.OnIt
         listFav = (ListView)findViewById(R.id.listFav);
         adaptador = new AdapterFavoriteList(this,tipos);
         listFav.setAdapter(adaptador);
-        fillList();
+
+        sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+        sql.Connect();
+        user = sql.user();
+        sql.Close();
+
+
+        webs.favsByUser(FavoriteActivity.this,FavoriteActivity.this,user);
+
     }
 
     @Override
@@ -48,13 +67,23 @@ public class FavoriteActivity extends DrawerActivity implements AdapterView.OnIt
 
     }
 
-    public void fillList(){
-        ListCar list = new ListCar();
-        //list.setName( "Carro");
+    public void fillList(Vehicle[] vehicles){
+        ListCar[] list = new ListCar[vehicles.length];
+        for(int i = 0 ; i < vehicles.length ; i++){
+            list[i] = new ListCar();
+            list[i].setId(vehicles[i].getId());
+            list[i].setMarca(vehicles[i].getMarca());
+            list[i].setModelo(vehicles[i].getModel());
+            list[i].setAnio(vehicles[i].getYear());
+            // list[i].setFecha(listCar[i].getFecha());
+            //list[i].setTotal(listCar[i].getTotal());
+            //Cmbiar por imagen del servidor
+            list[i].setImage(1);
 
-        for(int x=0;x<3;x++){
-            tipos.add(x,list);
+            tipos.add(i,list[i]);
         }
+        adaptador.notifyDataSetChanged();
+
     }
 
     @Override
@@ -63,5 +92,10 @@ public class FavoriteActivity extends DrawerActivity implements AdapterView.OnIt
         Intent setIntent = new Intent(this,LoginActivity.class);
         startActivity(setIntent);
         finish();
+    }
+
+    @Override
+    public void sendDataFavorites(Vehicle[] obj) {
+        fillList(obj);
     }
 }

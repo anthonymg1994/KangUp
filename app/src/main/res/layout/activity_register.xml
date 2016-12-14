@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity">
@@ -22,10 +22,10 @@
         android:theme="?attr/actionBarTheme"
         app:navigationIcon="?android:attr/homeAsUpIndicator"
         tools:layout_editor_absoluteY="0dp"
-        android:layout_width="0dp"
+        android:layout_width="384dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="1.0" />
 
     <ScrollView
 
@@ -34,15 +34,15 @@
         app:layout_constraintRight_toRightOf="parent"
         android:fillViewport="false"
         android:id="@+id/scroll"
-        app:layout_constraintHorizontal_bias="1.0"
-        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0.51"
         android:layout_width="0dp"
         android:isScrollContainer="true"
-        >
+        android:layout_height="495dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom">
 
             <android.support.v7.widget.CardView
                 android:elevation="15dp"
@@ -164,14 +164,14 @@
             <Button
                 android:text="Siguiente"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:id="@+id/next"
                 android:background="#29235b"
                 android:textColor="#ffffff"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.52"
-                android:layout_marginTop="8dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="48dp"
                 android:layout_alignParentBottom="true"
                 app:layout_constraintTop_toBottomOf="@+id/passwordr" />
         </android.support.constraint.ConstraintLayout>

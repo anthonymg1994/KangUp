@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import java.io.FileNotFoundException;
 import android.os.Environment;
@@ -55,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String userChoosenTask;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
 
 
     webServices webs = new webServices();
@@ -168,10 +172,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Take Photo"))
                 {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
+                    checkPermission();
+                    // Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
                 }
                 else if (options[item].equals("Choose from Gallery"))
                 {
@@ -244,6 +247,62 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 imageViewRound.setImageBitmap(thumbnail);
             }
         }
+    }
+
+    private void checkPermission() {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
+            Toast.makeText(this, "This version is not Android 6 or later " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+
+        } else {
+
+            int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.CAMERA);
+
+            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(new String[] {Manifest.permission.CAMERA},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+
+                Toast.makeText(this, "Requesting permissions", Toast.LENGTH_LONG).show();
+
+            }else if (hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED){
+
+                Toast.makeText(this, "The permissions are already granted ", Toast.LENGTH_LONG).show();
+                openCamera();
+
+            }
+
+        }
+
+        return;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if(REQUEST_CODE_ASK_PERMISSIONS == requestCode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "OK Permissions granted ! :-) " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+                openCamera();
+            } else {
+                Toast.makeText(this, "Permissions are not granted ! :-( " + Build.VERSION.SDK_INT, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+
+    private void openCamera() {
+
+     //   textView.setText("Thanks !!!");
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+        startActivityForResult(intent, 1);
+        //startActivity(intent);
+
     }
 
 

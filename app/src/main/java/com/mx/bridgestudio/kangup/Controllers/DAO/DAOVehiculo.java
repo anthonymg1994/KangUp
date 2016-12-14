@@ -45,12 +45,12 @@ public class DAOVehiculo {
             httpURLConnection.setDoOutput(true);
             httpURLConnection.connect();
             JSONObject jsonParam = new JSONObject();
-            jsonParam.put("id_marca",String.valueOf(vehicle.getId_brand()));
-            jsonParam.put("id_categoria",String.valueOf(vehicle.getId_categoria()));
+            jsonParam.put("id_marca", String.valueOf(vehicle.getId_brand()));
+            jsonParam.put("id_categoria", String.valueOf(vehicle.getId_categoria()));
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -62,23 +62,22 @@ public class DAOVehiculo {
         try {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            if(httpURLConnection.getResponseCode() == 500)
+            if (httpURLConnection.getResponseCode() == 500)
                 return "0";
             int statusCode = httpURLConnection.getResponseCode();
             InputStream is = null;
             if (statusCode >= 200 && statusCode < 400) {
                 // Create an InputStream in order to extract the response object
                 is = httpURLConnection.getInputStream();
-            }
-            else {
+            } else {
                 is = httpURLConnection.getErrorStream();
             }
-            if(reader != null) {
+            if (reader != null) {
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
                 reader.close();
-            }else
+            } else
                 response = null;
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,7 +106,7 @@ public class DAOVehiculo {
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -117,14 +116,14 @@ public class DAOVehiculo {
         String line;
         StringBuffer response = new StringBuffer();
         try {
-            System.out.println("RESPONSE CODE: " +httpURLConnection.getResponseCode());
+            System.out.println("RESPONSE CODE: " + httpURLConnection.getResponseCode());
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            if(reader != null) {
+            if (reader != null) {
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
                 reader.close();
-            }else
+            } else
                 response = null;
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,9 +135,9 @@ public class DAOVehiculo {
         vehicle = setsVehicle(objVehicle);
 
 
-
         return vehicle;
     }
+
     public Brand sets(JSONObject obj) throws JSONException {
         Brand brand = new Brand();
         brand.setId(obj.getInt("id"));
@@ -147,20 +146,81 @@ public class DAOVehiculo {
 
         return brand;
     }
+
     public Vehicle setsVehicle(JSONObject obj) throws JSONException {
         Vehicle vehicle = new Vehicle();
         vehicle.setId(obj.getInt("id"));
         vehicle.setMarca(obj.getString("Marca"));
         vehicle.setModel(obj.getString("Modelo"));
         vehicle.setYear(obj.getString("year"));
-       // vehicle.setId_brand(obj.getString("id_brand"));
+        // vehicle.setId_brand(obj.getString("id_brand"));
         ///vehicle.setId_categoria(obj.getString("id_categoria"));
-       // vehicle.setId_parther(obj.getString("Socio"));
+        // vehicle.setId_parther(obj.getString("Socio"));
         //apellidos vehicle.setId_parther(obj.getString("apellidos"));
-       // vehicle.setDescription(obj.getString("descripcion"));
-       // vehicle.setSpecifications(obj.getInt("especificaciones"));
+         vehicle.setDescription(obj.getString("descripcion"));
+         vehicle.setSpecifications(obj.getString("especificaciones"));
         //vehicle.setStatus(obj.getString("status"));
 
         return vehicle;
+    }
+
+    public String getFavorites(User user) throws JSONException {
+        ProgressDialog progressDialog;
+        HttpURLConnection httpURLConnection = null;
+        InputStream in = null;
+
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL("http://kangup.com.mx/index.php/favoritos");
+            //cambiar nombre de metodo de vehiculos
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(10000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.connect();
+            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("id_usuario", String.valueOf(user.getId()));
+            OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
+            os.write(jsonParam.toString());
+            os.flush();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String line;
+        StringBuffer response = new StringBuffer();
+        try {
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            if (httpURLConnection.getResponseCode() == 500)
+                return "0";
+            int statusCode = httpURLConnection.getResponseCode();
+            InputStream is = null;
+            if (statusCode >= 200 && statusCode < 400) {
+                // Create an InputStream in order to extract the response object
+                is = httpURLConnection.getInputStream();
+            } else {
+                is = httpURLConnection.getErrorStream();
+            }
+            if (reader != null) {
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+            } else
+                response = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        httpURLConnection.disconnect();
+
+
+        return response.toString();
     }
 }

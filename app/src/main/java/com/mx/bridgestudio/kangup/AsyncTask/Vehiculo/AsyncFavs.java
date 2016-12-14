@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo;
+package com.mx.bridgestudio.kangup.AsyncTask.Vehiculo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,23 +7,28 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
+import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by USUARIO on 02/12/2016.
+ * Created by USUARIO on 09/12/2016.
  */
 
-public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
+public class AsyncFavs  extends AsyncTask<String,Integer,String> {
     private JSONObject responseJson;
     private ProgressDialog progressDialog;
     private HttpURLConnection httpURLConnection;
@@ -32,22 +37,23 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
     URL url;
     private Vehicle[] arrayVehiculos;
     private Vehicle vehicle = new Vehicle();
-    private String svehiculos;
+    private String objVehicle;
+    private User user = new User();
     private webServices services = new webServices();
-    private DAOVehiculo Dvehiculo = new DAOVehiculo();
+    private DAOVehiculo Dvehicle = new DAOVehiculo();
 
-    public OnDataSendCarXtype SendToActivity;//Call back interface
+    public OnDataSendFavorites SendToActivity;//Call back interface
 
 
     Context mContext;
 
     private boolean flag = false;
 
-    public AsyncVehiculosXmarca(OnDataSendCarXtype SendToActivity,Context context,Vehicle vehicle) {
+    public AsyncFavs(OnDataSendFavorites SendToActivity, Context context, User user) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
-        this.vehicle = vehicle;
+        this.user = user;
 
     }
 
@@ -55,12 +61,12 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
     protected String doInBackground(String... params) {
 
         try {
-            svehiculos = Dvehiculo.getVehiclesByBrand(vehicle);
+            objVehicle = Dvehicle.getFavorites(user);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return svehiculos;
+        return objVehicle;
     }
 
     @Override
@@ -76,12 +82,12 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        if(progressDialog.isShowing()){
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        if(result.equals("0")){
-            Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
-        }else{
+        if (result.equals("0")) {
+            Toast.makeText(mContext, "Vuelve a intentarlo" + result, Toast.LENGTH_SHORT).show();
+        } else {
             //      Toast.makeText(mContext, "Bienvenido "+vehicle, Toast.LENGTH_SHORT).show();
 
             try {
@@ -101,12 +107,11 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
                 e.printStackTrace();
             }
             Intent intent = new Intent(mContext, CarsXtype.class);
-            SendToActivity.sendData(arrayVehiculos);
+            SendToActivity.sendDataFavorites(arrayVehiculos);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 
             //  mContext.startActivity(intent);
-
 
 
         }

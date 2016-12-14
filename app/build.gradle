@@ -39,4 +39,10 @@ dependencies {
     compile 'it.neokree:MaterialTabs:0.11'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.paypal.sdk:paypal-android-sdk:2.15.1'
+    compile 'com.github.mttkay.memento:memento:0.2'
+
+    // pulls in dependency for APT
+
+
+
 }
