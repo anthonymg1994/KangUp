@@ -25,7 +25,7 @@
 
         <ImageView
             android:id="@+id/image_type"
-            android:paddingTop="10px"
+
             android:scaleType="centerCrop"
 
             android:contentDescription=""
