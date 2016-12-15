@@ -1,10 +1,12 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +44,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
     private webServices webs = new webServices();
     private SqliteController sql;
     private User user = new User();
+    private ArrayList<String> addres = new ArrayList<>();
 
 
     private Button reservar,bAdd;
@@ -61,7 +65,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
         mDrawer.addView(contentView, 0);
 
 
-        reservar = (Button) findViewById(R.id.creservar);
+        reservar = (Button) findViewById(R.id.button8);
         reservar.setOnClickListener(this);
 
         bDate = (ImageButton) findViewById(R.id.imageButtonCalendar);
@@ -75,17 +79,22 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
 
         listPaquetes = (ListView) findViewById(R.id.listViewPaquetes);
         listRutas = (ListView) findViewById(R.id.listViewRuta);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                addres );
+
+        listRutas.setAdapter(arrayAdapter);
+    }
 
 
 
 
        // webs.favsByUser(Reservacion.this,Reservacion.this,user);
 
-    }
-
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.creservar){
+        if(v.getId() == R.id.button8){
             //confirmar reservacion
         }
         if(v.getId() == R.id.imageButtonCalendar){
@@ -96,6 +105,36 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
         }
         if(v.getId() == R.id.addruta){
             //Agregar origenes y destinos
+            showChangeLangDialog();
         }
+    }
+
+    public void showChangeLangDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.reservacion_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText origen = (EditText) dialogView.findViewById(R.id.origentxt);
+        final EditText destino = (EditText) dialogView.findViewById(R.id.destinotxt);
+
+        dialogBuilder.setTitle("Nueva ruta");
+        dialogBuilder.setMessage("Introduzca su nueva ruta:");
+        dialogBuilder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //do something with edt.getText().toString();
+                //com.mx.bridgestudio.kangup.Models.Reservacion res = new com.mx.bridgestudio.kangup.Models.Reservacion();
+                String ruta= "Origen: "+ origen.getText().toString() + "\n" + "Destino: " + destino.getText().toString();
+                addres.add(ruta);
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+                dialog.dismiss();
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
     }
 }

@@ -17,7 +17,9 @@
         android:layout_height="56dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:text="Completa la informacion para la reservacion"
@@ -25,15 +27,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView5"
         android:textSize="14sp"
-        tools:layout_editor_absoluteX="67dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp" />
 
     <Button
         android:text="Confirmar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/creservar"
+        android:id="@+id/button8"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -46,25 +53,43 @@
         android:layout_height="34dp"
         app:srcCompat="@android:drawable/ic_menu_my_calendar"
         android:id="@+id/imageButtonCalendar"
-        tools:layout_editor_absoluteY="138dp"
-        tools:layout_editor_absoluteX="150dp" />
+        app:layout_constraintRight_toLeftOf="@+id/hora"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/fecha"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.96" />
 
     <TextView
         android:text="Hora :"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView7"
-        tools:layout_editor_absoluteY="113dp"
-        tools:layout_editor_absoluteX="267dp" />
+        tools:layout_editor_absoluteY="149dp"
+        android:layout_marginEnd="176dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="176dp" />
 
     <TextView
         android:text="Fecha :"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView6"
-        tools:layout_editor_absoluteX="93dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintRight_toLeftOf="@+id/textView7"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintBottom_toTopOf="@+id/fecha"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:layout_width="122dp"
@@ -74,9 +99,9 @@
         android:ems="10"
         android:id="@+id/hora"
         android:textSize="14sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:layout_editor_absoluteX="206dp" />
+        tools:layout_editor_absoluteX="192dp"
+        android:layout_marginTop="72dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
         android:layout_width="110dp"
@@ -85,12 +110,12 @@
         android:text="dd/mm/yy"
         android:ems="10"
         android:id="@+id/fecha"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        android:textAppearance="@style/TextAppearance.AppCompat" />
+        android:layout_marginLeft="32dp"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:layout_marginTop="72dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <ListView
         android:layout_width="0dp"
@@ -104,32 +129,41 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/textView12"
         android:id="@+id/listViewPaquetes"
-        app:layout_constraintHorizontal_bias="0.54" />
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintBottom_toTopOf="@+id/button8"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.060000002" />
 
     <ListView
         android:layout_width="0dp"
         android:layout_height="65dp"
-        tools:layout_editor_absoluteY="262dp"
         android:id="@+id/listViewRuta"
         android:layout_marginStart="40dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="40dp"
         android:layout_marginEnd="40dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="40dp" />
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <ImageButton
         android:layout_width="41dp"
         android:layout_height="34dp"
         app:srcCompat="@android:drawable/ic_lock_idle_alarm"
         android:id="@+id/imageButtonTime"
-        android:layout_marginEnd="40dp"
+        app:layout_constraintHorizontal_bias="0.16"
+        android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/hora"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.95"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:text="Agrega paquetes a tu reservacion :"
@@ -142,7 +176,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.3"
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/listViewRuta" />
 
@@ -155,14 +189,11 @@
         android:layout_marginEnd="40dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/fecha"
         android:id="@+id/linearLayout2"
-        app:layout_constraintBottom_toTopOf="@+id/listViewRuta"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.25"
         android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp">
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/hora">
 
         <TextView
             android:text="Ruta (s)"

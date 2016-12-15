@@ -40,7 +40,9 @@ dependencies {
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.paypal.sdk:paypal-android-sdk:2.15.1'
     compile 'com.github.mttkay.memento:memento:0.2'
-
+    compile ('com.mapbox.mapboxsdk:mapbox-android-geocoder:1.0.0@aar'){
+        transitive=true
+    }
     // pulls in dependency for APT
 
 
