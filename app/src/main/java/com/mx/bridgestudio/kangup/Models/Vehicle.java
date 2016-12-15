@@ -1,10 +1,12 @@
 package com.mx.bridgestudio.kangup.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by USUARIO on 24/10/2016.
  */
 
-public class Vehicle {
+public class Vehicle implements Serializable {
     private int id;
     private String model;
     private String year;

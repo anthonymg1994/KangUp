@@ -20,6 +20,10 @@ public class SqliteController extends SQLiteOpenHelper {
     private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellidos TEXT," +
             "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
 
+    private String Memento ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellidos TEXT," +
+            "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
+
+
     private User us [];
 
     public SqliteController(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -77,31 +81,22 @@ public class SqliteController extends SQLiteOpenHelper {
         return u;
     }
     public User user(){
-        int idd=0;
-        String nombre="";
-        String apellidos="";
-        String email="";
-        String password="";
         User u = new User();
-
         db = getReadableDatabase();
-        Cursor c=db.rawQuery("SELECT id,nombre,apellidos,email,password FROM Usuarios" ,null);
+        Cursor c=db.rawQuery("SELECT id,nombre,apellidos,email,password,ciudad,fecha_nacimiento,telefono FROM Usuarios" ,null);
         if(c.moveToFirst())
         {
             do{
-                idd = c.getInt(0);
-                nombre = c.getString(1);
-                apellidos = c.getString(2);
-                email = c.getString(3);
-                password = c.getString(4);
+                u.setId(c.getInt(0));
+                u.setFirstName(c.getString(1));
+                u.setLastName(c.getString(2));
+                u.setEmail(c.getString(3));
+                u.setPassword(c.getString(4));
+                u.setCiudad(c.getString(5));
+                u.setFnacimiento(c.getString(6));
+                u.setCellphone(c.getString(7));
             }while(c.moveToNext());
         }
-        u.setId(idd);
-        u.setFirstName(nombre);
-        u.setLastName(apellidos);
-        u.setEmail(email);
-        u.setPassword(password);
-
         db.close();
         return u;
     }

@@ -1,15 +1,18 @@
 package com.mx.bridgestudio.kangup.Controllers.ServiciosWeb;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncVehiculosXmarca;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncFavs;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.historyByUser;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Models.Brand;
@@ -45,7 +48,11 @@ public class webServices {
     public void DetailVehicle(OnDataSendDetail OnDataSendToDetail, Context context, Vehicle vehicle){
         new AsyncDetailAuto(OnDataSendToDetail,context,vehicle).execute();
     }
+    public void  favsByUser(OnDataSendFavorites OnDataSendFavorites, Context context, User user){
 
+        new AsyncFavs(OnDataSendFavorites,context,user).execute();
+
+    }
 /*
     public void Noticias(Context context, News news){
         new AsyncNews(context,news).execute();

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class AdapterFavoriteList extends ArrayAdapter<ListCar> {
 
     Activity context;
-    private ArrayList<Payment> lista;
+    private ArrayList<ListCar> list;
     private ListCar[] objects;
     private View listView;
 
@@ -30,7 +30,7 @@ public class AdapterFavoriteList extends ArrayAdapter<ListCar> {
         super(context, R.layout.favorite_list, list);
         // TODO Auto-generated constructor stub
         this.context = (Activity) context;
-        this.lista = lista;
+        this.list = list;
     }
 
     @Override
@@ -46,6 +46,9 @@ public class AdapterFavoriteList extends ArrayAdapter<ListCar> {
             imgImg = (ImageView)item.findViewById(R.id.imageCar);
             img = (ImageButton) item.findViewById(R.id.starButton);
             TextView Nnom = (TextView) item.findViewById(R.id.titleCar);
+            Nnom.setText("" + list.get(arg0).getModelo()+ " " + list.get(arg0).getAnio());
+            imgImg.setImageResource(R.drawable.auto);
+
 
         }
         return item;

@@ -35,8 +35,11 @@ import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import it.neokree.materialtabs.MaterialTabHost;
@@ -56,12 +59,8 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
    // ViewPagerAdapter androidAdapter;
     //UI References
     private DatePicker dpResult;
-    final Calendar c = Calendar.getInstance();
-    private int year =  c.get(Calendar.YEAR);
-    private int month = c.get(Calendar.MONTH);
-    private int day = c.get(Calendar.DAY_OF_MONTH);
     boolean isOkayClicked;
-
+    private int mYear, mMonth, mDay;
     private RecyclerView recyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
     private CardAdapter adapter;
@@ -95,40 +94,11 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Marcas");
-
-        //tabs
-      //  tabHost = (MaterialTabHost) this.findViewById(R.id.tabHost);
-      //  viewPager = (ViewPager) this.findViewById(R.id.viewPager);
-
-
-       // webs.brandByCategory(CatalogCar.this,brand);
-        //adapter view
-        /*
-        androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(androidAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int tabposition) {
-                tabHost.setSelectedNavigationItem(tabposition);
-            }
-        });
-
-        //for tab position
-        for (int i = 0; i < androidAdapter.getCount(); i++) {
-            tabHost.addTab(
-                    tabHost.newTab()
-                            .setText(androidAdapter.getPageTitle(i))
-                            .setTabListener(this)
-            );
-        }
-*/
         // 1. get a reference to recyclerView
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         // 2. set layoutManger
         //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         albumList = new ArrayList<>();
-
         //adaptador de listcar
         adapter = new CardAdapter(this, albumList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
@@ -153,11 +123,6 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         editCalendar = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         editCalendar.setOnClickListener(this);
 
-        if(flagDate == 0){
-        //calendario de disponibildad
-      showDatePicker();
-
-        }
 
     }
 
@@ -191,28 +156,6 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         prepareListBrands(obj);
         //obj1 = obj;
     }
-
-
-/*
-    @Override
-    public void sendData(Brand[] brand) {
-        Toast.makeText(this, "string"+brand, Toast.LENGTH_SHORT).show();
-        for(int j = 0 ; j < brand.lenght() ; j ++){
-                list[j] = new ListBrand();
-                list[j].setNombre = brand[j].getName();
-
-        }
-            albumList.add(list);
-            adapter.notifyDataSetChanged();
-    }
-*/
-
-/*
-    @Override
-    public void sendData(String response) {
-        Toast.makeText(this, "string"+response, Toast.LENGTH_SHORT).show();
-    }
-*/
     /**
      * RecyclerView item decoration - give equal margin around grid item
      */
@@ -294,67 +237,11 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.floatingActionButton2) {
-            showDatePicker();
+          ///  showDatePicker();
         }
 
     }
-/*
-    @Override
-    public void onTabSelected(MaterialTab materialTab) {
-        viewPager.setCurrentItem(materialTab.getPosition());
-    }
 
-    @Override
-    public void onTabReselected(MaterialTab materialTab) {
-
-    }
-
-    @Override
-    public void onTabUnselected(MaterialTab materialTab) {
-
-    }
-*/
-    private void showDatePicker() {
-        flag = 1;
-        // TODO Auto-generated method stub
-        DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-            // when dialog box is closed, below method will be called.
-            public void onDateSet(DatePicker view, int selectedYear,
-                                  int selectedMonth, int selectedDay) {
-                if (isOkayClicked) {
-                      year =  selectedYear;
-                      month = selectedMonth;
-                      day = selectedDay;
-                }
-                isOkayClicked = false;
-            }
-        };
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                CatalogCar.this, datePickerListener, year,
-                month, day);
-        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
-                getString(R.string.cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == DialogInterface.BUTTON_NEGATIVE) {
-                            dialog.cancel();
-                            isOkayClicked = false;
-                        }
-                    }
-                });
-        datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == DialogInterface.BUTTON_POSITIVE) {
-                            isOkayClicked = true;
-
-                        }
-                    }
-                });
-        datePickerDialog.setCancelable(false);
-        datePickerDialog.show();
-    }
     @Override
     public void onBackPressed()
     {

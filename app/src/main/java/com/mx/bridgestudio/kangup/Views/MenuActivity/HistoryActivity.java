@@ -66,10 +66,9 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         sql.Connect();
         user = sql.user();
         sql.Close();
+
+
         webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
-
-
-
 
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);

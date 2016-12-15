@@ -1,9 +1,12 @@
 package com.mx.bridgestudio.kangup.Views.tabs;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,25 +17,34 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
-import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
+import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.TypesOfAutomobiles;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
  * Created by Isaac on 06/12/2016.
  */
 
-public class TabTop extends Fragment implements OnDataSendCarXtype {
+public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDetail {
 
     private String opcionSeleccionada="";
     private RecyclerView recycler;
@@ -81,12 +93,13 @@ public class TabTop extends Fragment implements OnDataSendCarXtype {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(getActivity(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
-                        Intent intent = new Intent(getActivity(), DetalleActivity.class);
+                        //Intent intent = new Intent(getActivity(), DetalleActivity.class);
                         id_vehiculo = opcionSeleccionada;
                         nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
+                        vehicle.setId(id_vehiculo);
+                        webs.DetailVehicle(TabTop.this,getActivity(),vehicle);
 
-
-                        TabTop.this.startActivity(intent);
+                      //  TabTop.this.startActivity(intent);
                         //finish();
                     }
 
@@ -129,4 +142,9 @@ public class TabTop extends Fragment implements OnDataSendCarXtype {
         fillList(obj);
     }
 
+
+    @Override
+    public void sendData(Vehicle obj) {
+        vehicle = obj;
+    }
 }

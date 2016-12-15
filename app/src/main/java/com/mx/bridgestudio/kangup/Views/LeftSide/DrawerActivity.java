@@ -13,7 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
@@ -22,10 +25,17 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.ProfileActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
+import org.w3c.dom.Text;
+
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     protected DrawerLayout drawer;
+    private TextView name,email;
+    private SqliteController sql;
+    private User user = new User();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(getLayoutId());
@@ -39,12 +49,18 @@ public class DrawerActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        //name = (TextView) findViewById(R.id.name);
+        //email = (TextView) findViewById(R.id.email);
+
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.bringToFront();
         drawer.requestLayout();
+
+      //  getInformation();
     }
 
     @Override
@@ -145,4 +161,14 @@ public class DrawerActivity extends AppCompatActivity
                 }).show();
     }
 
+    public void getInformation(){
+        sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+        sql.Connect();
+        user = sql.user();
+        sql.Close();
+
+    //    name.setText(user.getFirstName() +" "+ user.getLastName());
+     //   email.setText(user.getEmail());
+
+    }
 }

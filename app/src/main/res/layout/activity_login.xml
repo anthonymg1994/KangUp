@@ -80,7 +80,7 @@
         android:textColor="#ffffff"
         android:background="@drawable/borderradio"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        android:layout_width="match_parent" />
+        android:layout_width="0dp" />
 
     <Button
         android:text="Ingresar como invitado"

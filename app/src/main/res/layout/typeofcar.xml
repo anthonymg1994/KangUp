@@ -7,45 +7,18 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#29235b"
-        android:theme="?attr/actionBarTheme"
-        android:minHeight="?attr/actionBarSize"
-        android:id="@+id/toolbarcateg"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:title="Categorías"
-        app:navigationIcon="@drawable/appmenu" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_height="0dp"
-        android:layout_below="@+id/tabHost"
-        app:layout_constraintTop_toBottomOf="@+id/tabHost"
-        android:visibility="visible"
-        android:layout_width="0dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-    </android.support.v4.view.ViewPager>
-
     <it.neokree.materialtabs.MaterialTabHost
         android:id="@+id/tabHost"
         android:layout_height="48dp"
         app:accentColor="@color/white"
         app:primaryColor="@color/colorPrimaryDark"
-        android:layout_below="@+id/toolbarcateg"
+        android:layout_below="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginTop="56dp" />
+        android:layout_marginTop="56dp"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <LinearLayout android:id="@+id/footer" android:layout_width="0dp"
         android:layout_height="wrap_content" android:orientation="horizontal"
@@ -54,16 +27,44 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingTop="1dip">
+        >
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/bordercalendarr"
+            app:srcCompat="@android:drawable/ic_lock_idle_alarm"
+            android:id="@+id/changeHour"
+
+            android:layout_weight="0.23"
+            android:elevation="0dp"
+            android:tint="@color/white" />
 
 
 
         <TextView
-            android:text="Lunes 17 de diciembre"
+            android:text="hh : mm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/hour"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textAlignment="center"
+            android:background="#10000000"
+            android:layout_gravity="center" />
+
+
+
+
+        <TextView
+            android:text="dd / mm / yy"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/date"
-            android:layout_weight="1"
+            android:layout_weight="0.80"
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="#ffffff"
@@ -83,6 +84,20 @@
 
 
     </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_height="412dp"
+        android:layout_below="@+id/tabHost"
+        app:layout_constraintTop_toBottomOf="@+id/tabHost"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/footer">
+
+    </android.support.v4.view.ViewPager>
 
 
 </android.support.constraint.ConstraintLayout>

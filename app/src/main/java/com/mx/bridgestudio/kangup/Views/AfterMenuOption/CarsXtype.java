@@ -1,5 +1,7 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -20,6 +22,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
@@ -35,7 +42,13 @@ import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
+import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -46,12 +59,15 @@ import it.neokree.materialtabs.MaterialTabListener;
  */
 
 public class CarsXtype extends DrawerActivity implements
-        AdapterView.OnItemClickListener,MaterialTabListener {
+        AdapterView.OnItemClickListener,MaterialTabListener, View.OnClickListener {
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
     ViewPagerAdapterTab androidAdapter;
+    private int mYear, mMonth, mDay,mHour, mMinute;
 
+    private ImageButton time,date;
+    private TextView hora,fecha;
     protected DrawerLayout mDrawer;
     // private List items = new ArrayList();
 
@@ -79,6 +95,16 @@ public class CarsXtype extends DrawerActivity implements
         //tab host
         tabHost = (MaterialTabHost)findViewById(R.id.tabHost);
         viewPager = (ViewPager)findViewById(R.id.viewPager);
+        time = (ImageButton) findViewById(R.id.changeHour);
+        time.setOnClickListener(this);
+
+        date = (ImageButton) findViewById(R.id.changeDate);
+        date.setOnClickListener(this);
+
+        hora = (TextView) findViewById(R.id.hour);
+        fecha = (TextView) findViewById(R.id.date);
+
+
 
         //adapter view
         androidAdapter = new ViewPagerAdapterTab(getSupportFragmentManager(), CarsXtype.this);
@@ -140,6 +166,16 @@ public class CarsXtype extends DrawerActivity implements
     public void onTabUnselected(MaterialTab tab) {
 
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.changeDate){
+            showDialogCalendar();
+        }
+        if(v.getId() == R.id.changeHour){
+            showDialogTime();
+        }
+    }
     /*
     @Override
     public void sendData(Vehicle[] vehicle) {
@@ -150,6 +186,60 @@ public class CarsXtype extends DrawerActivity implements
          adapter.notifyDataSetChanged();
     }
     */
+    private void showDialogCalendar(){
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        Date parseDate = null;
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+                        String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        try {
+                            parseDate = dateFormat.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
+                        String finalString = dateFormat1.format(parseDate);
+
+
+                        fecha.setText(""+finalString);
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+
+    }
+    private void showDialogTime(){
+
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+
+                        hora.setText(hourOfDay + ":" + minute);
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+    }
 
     // view pager adapter
     private class ViewPagerAdapterTab extends FragmentStatePagerAdapter {
@@ -163,11 +253,11 @@ public class CarsXtype extends DrawerActivity implements
         public Fragment getItem(int num) {
             switch (num){
                 case 0: fragment = new TabTop();
-                        break;
+                    break;
                 case 1: fragment = new TabTop();
-                        break;
+                    break;
                 case 2: fragment = new TabTop();
-                        break;
+                    break;
             }
             return fragment;
         }
@@ -183,18 +273,17 @@ public class CarsXtype extends DrawerActivity implements
             switch (tabposition)
             {
                 case 0: tab = "Top";
-                            break;
+                    break;
                 case 1: tab = "Recomendados";
-                            break;
+                    break;
                 case 2: tab="Más votados";
-                           break;
+                    break;
                 default: tab ="";
             }
             return tab;
         }
 
     }
-
 
 
 
