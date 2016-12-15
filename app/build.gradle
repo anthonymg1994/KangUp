@@ -39,4 +39,30 @@ dependencies {
     compile 'it.neokree:MaterialTabs:0.11'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     compile 'com.paypal.sdk:paypal-android-sdk:2.15.1'
+
+    compile libraries.lombok
+    compile libraries.dagger_compiler
+    provided libraries.lombok
+    compile libraries.guava
+    compile libraries.timber
+    compile libraries.butterknife
+    compile libraries.picasso
+    compile libraries.android_support
+    compile libraries.recycler
+    compile libraries.cardview
+    compile libraries.dagger
+    compile libraries.jetbrains
+    compile libraries.edittext
+    compile(libraries.paytouch_full) {
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'org.jetbrains', module: 'annotations'
+    }
+    compile(libraries.paytouch_widget) {
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'org.jetbrains', module: 'annotations'
+    }
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('libs/payu-java-sdk-1.1.4.jar')
+    compile 'io.conekta:conektasdk:2.0'
 }

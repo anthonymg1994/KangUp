@@ -64,7 +64,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
 
         sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
         sql.Connect();
-        user = sql.userById();
+        user = sql.user();
         sql.Close();
         webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
 

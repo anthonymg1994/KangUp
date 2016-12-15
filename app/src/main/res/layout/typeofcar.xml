@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#29235b"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/toolbarcateg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:title="Categorías"
+        app:navigationIcon="@drawable/appmenu" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_height="0dp"
@@ -26,13 +39,13 @@
         android:layout_height="48dp"
         app:accentColor="@color/white"
         app:primaryColor="@color/colorPrimaryDark"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbarcateg"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="0dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="56dp" />
 
     <LinearLayout android:id="@+id/footer" android:layout_width="0dp"
         android:layout_height="wrap_content" android:orientation="horizontal"

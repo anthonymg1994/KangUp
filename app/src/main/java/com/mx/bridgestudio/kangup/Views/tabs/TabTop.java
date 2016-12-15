@@ -15,17 +15,16 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
+import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
-import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.TypesOfAutomobiles;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+
 
 import java.util.ArrayList;
 
