@@ -31,7 +31,7 @@
                     android:layout_height="42dp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/kangup"
-                    android:id="@+id/catalogo"
+                    android:id="@+id/catalogoToolbar"
                     android:scaleType="centerCrop"
                     android:background="@android:color/transparent" />
                 <TextView
@@ -69,7 +69,7 @@
                     app:srcCompat="@drawable/kangup"
                     android:scaleType="centerCrop"
                     android:background="@android:color/transparent"
-                    android:id="@+id/pagos" />
+                    android:id="@+id/historialToolbar" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                     android:layout_height="42dp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/kangup"
-                    android:id="@+id/favoritos"
+                    android:id="@+id/favoritosToolbar"
                     android:scaleType="centerCrop"
                     android:background="@android:color/transparent" />
 
@@ -134,7 +134,7 @@
                     android:layout_height="42dp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/kangup"
-                    android:id="@+id/noticias"
+                    android:id="@+id/noticiasToolbar"
                     android:scaleType="centerCrop"
                     android:background="@android:color/transparent" />
 

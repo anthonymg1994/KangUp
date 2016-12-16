@@ -9,12 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterViaje;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.History;
 import com.mx.bridgestudio.kangup.Models.Lists.ListViaje;
 import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
@@ -40,6 +42,9 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     ArrayList<ListViaje> items= new ArrayList<>();
     private SqliteController sql;
     private User user = new User();
+
+    //toolbardown
+    private ImageButton catalogo,noticias,favoritos,historial;
 
 
     @Override
@@ -87,7 +92,31 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         adapter = new AdapterViaje(items);
         recycler.setAdapter(adapter);
 
-
+        catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(HistoryActivity.this, CategoryActivity.class));
+            }
+        });
+        noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(HistoryActivity.this, FavoriteActivity.class));
+            }
+        });
+        historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(HistoryActivity.this, HistoryActivity.class));
+            }
+        });
 
 
     }

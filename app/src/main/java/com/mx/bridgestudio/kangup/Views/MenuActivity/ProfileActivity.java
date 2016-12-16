@@ -3,7 +3,9 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.renderscript.ScriptGroup;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
@@ -45,6 +47,10 @@ public class ProfileActivity extends DrawerActivity implements
     private  Toolbar toolbar;
     private User user = new User();
     Tools tol;
+
+    //toolbardown
+    private ImageButton catalogo,noticias,favoritos,historial;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +131,32 @@ public class ProfileActivity extends DrawerActivity implements
         //user = sql.user();
         getInformationUser(user = sql.user());
         sql.Close();
+
+        catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(ProfileActivity.this, CategoryActivity.class));
+            }
+        });
+        noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(ProfileActivity.this, FavoriteActivity.class));
+            }
+        });
+        historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(ProfileActivity.this, HistoryActivity.class));
+            }
+        });
 
     }
 
