@@ -6,8 +6,13 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <permission
+
         android:name="com.crayonlion.cinemas.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
@@ -113,6 +118,16 @@
             android:name=".Views.LeftSide.DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAI4PGKAtAXvMTvvcEfMj8sE9AI90OaKyg" />
+
     </application>
 
 </manifest>

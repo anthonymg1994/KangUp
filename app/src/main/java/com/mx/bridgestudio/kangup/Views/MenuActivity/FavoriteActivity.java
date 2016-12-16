@@ -10,15 +10,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.Category;
+import com.mx.bridgestudio.kangup.Models.Favorite;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.Lists.ListViaje;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
@@ -34,7 +39,9 @@ public class FavoriteActivity extends DrawerActivity implements AdapterView.OnIt
     private webServices webs = new webServices();
     private SqliteController sql;
     private User user = new User();
-
+    private Vehicle vehicle = new Vehicle();
+    private String opcionSeleccionada ="";
+    private DAOVehiculo Dvehicle = new DAOVehiculo();
 
 
     @Override
@@ -57,6 +64,21 @@ public class FavoriteActivity extends DrawerActivity implements AdapterView.OnIt
         user = sql.user();
         sql.Close();
 
+
+        listFav.setOnItemClickListener(this);
+        listFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+                                    long arg3) {
+                /*
+                Intent intent = new Intent(CategoryActivity.this, CatalogCar.class);
+                //SendToActivity.sendData(arrayBrands);
+                intent.putExtra("option",brand.getId_categoria());
+                startActivity(intent);
+                */
+//                webs.brandByCategory(CategoryActivity.this,CategoryActivity.this,brand);
+            }
+        });
 
         webs.favsByUser(FavoriteActivity.this,FavoriteActivity.this,user);
 

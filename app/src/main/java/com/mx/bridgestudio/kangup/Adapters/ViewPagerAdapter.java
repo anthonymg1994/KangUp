@@ -29,7 +29,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         TabTop tab1 = null;
-        
+
         if(position == 0) // if the position is 0 we are returning the First tab
         {
             tab1 = new TabTop();
@@ -51,5 +51,5 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return NumbOfTabs;
     }
-    
+
 }

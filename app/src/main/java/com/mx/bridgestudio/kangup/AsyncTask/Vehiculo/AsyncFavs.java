@@ -15,6 +15,7 @@ import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,13 +101,14 @@ public class AsyncFavs  extends AsyncTask<String,Integer,String> {
                     arrayVehiculos[i].setId(jsonobject.getInt("id"));
                     arrayVehiculos[i].setMarca(jsonobject.getString("Marca"));
                     arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
+                    arrayVehiculos[i].setSpecifications(jsonobject.getString("especificaciones"));
                     arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(mContext, CarsXtype.class);
+            Intent intent = new Intent(mContext, FavoriteActivity.class);
             SendToActivity.sendDataFavorites(arrayVehiculos);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);

@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,13 +22,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
+import com.mx.bridgestudio.kangup.Adapters.PlacesAutoCompleteAdapter;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 
 import java.util.ArrayList;
@@ -116,6 +121,25 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
         dialogBuilder.setView(dialogView);
 
         final EditText origen = (EditText) dialogView.findViewById(R.id.origentxt);
+        origen.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Intent setIntent = new Intent(Reservacion.this,PlacesAutoCompleteActivity.class);
+                startActivity(setIntent);
+
+            }
+        });
+
         final EditText destino = (EditText) dialogView.findViewById(R.id.destinotxt);
 
         dialogBuilder.setTitle("Nueva ruta");
