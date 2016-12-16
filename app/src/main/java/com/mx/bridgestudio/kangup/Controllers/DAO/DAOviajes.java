@@ -37,7 +37,7 @@ public class DAOviajes {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/history");
+            URL url = new URL("http://kangup.com.mx/index.php/historial");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(10000);
             httpURLConnection.setRequestMethod("POST");
@@ -45,7 +45,7 @@ public class DAOviajes {
             httpURLConnection.setDoOutput(true);
             httpURLConnection.connect();
             JSONObject jsonParam = new JSONObject();
-            jsonParam.put("id_categoria",String.valueOf(user.getId()));
+            jsonParam.put("id_usuario",String.valueOf(user.getId()));
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();

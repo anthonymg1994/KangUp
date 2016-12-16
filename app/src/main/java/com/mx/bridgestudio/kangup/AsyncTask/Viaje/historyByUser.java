@@ -91,10 +91,12 @@ public class historyByUser extends AsyncTask<String,Integer,String> {
                 for (int i = 0; i < jsonarray.length(); i++) {
                     arrayViajes[i] = new RoadTrip();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    arrayViajes[i].setId(jsonobject.getInt("id"));
+                    arrayViajes[i].setId(jsonobject.getInt("ID"));
                     arrayViajes[i].setMarca(jsonobject.getString("Marca"));
-                    arrayViajes[i].setFecha(jsonobject.getString("fecha"));
-                    arrayViajes[i].setTotal(jsonobject.getString("total"));
+                    arrayViajes[i].setModelo(jsonobject.getString("Modelo"));
+                    arrayViajes[i].setYear(jsonobject.getString("Anio"));
+                    arrayViajes[i].setFecha(jsonobject.getString("Fecha"));
+                    arrayViajes[i].setTotal(jsonobject.getString("Total"));
                 }
 
             } catch (JSONException e) {
