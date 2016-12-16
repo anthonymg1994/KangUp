@@ -1,9 +1,13 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,6 +43,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.mx.bridgestudio.kangup.R.id.viewPager;
+
 public class DetalleActivity extends DrawerActivity implements OnDataSendDetail, View.OnClickListener {
 
 
@@ -58,7 +65,11 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     private Button vermas, reservar;
     private TextView modelo, descripcion;
     Vehicle car = new Vehicle();
-
+    Dialog dialogo;
+    ArrayList<String> images = new ArrayList<String>();
+    SlidingImage_Adapter s;
+    ViewPager page;
+    CirclePageIndicator indicator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +78,10 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
       //  webs.DetailVehicle(this,this,vehicle);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
+
+
+        //dialog.setTitle();
+
 
 
 
@@ -83,7 +98,6 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Detalle de automovil");
         setSupportActionBar(toolbar);
-
 
         vermas = (Button)findViewById(R.id.vermas);
         vermas.setOnClickListener(this);
@@ -116,17 +130,61 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     }
 
 
+    public void showChangeLangDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.fragment_page, null);
+        dialogBuilder.setView(dialogView);
+
+
+ page = (ViewPager) dialogView.findViewById(R.id.pagerId);
+      indicator = (CirclePageIndicator)
+              dialogView.findViewById(R.id.indicator);
+
+
+init();
+        dialogBuilder.setTitle("Galeria de imagenes");
+        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+                dialog.dismiss();
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+    }
+
     public List<ListEspecificaciones> fill_with_data() {
 
         List<ListEspecificaciones> data = new ArrayList<>();
+        ArrayList<String> onlySpec = new ArrayList<String>();
+        int flag = 0;
 
+        String especificaciones = car.getSpecifications();
+        //validar espacios
+        String[] items = especificaciones.split(",");
+
+        for (String item : items)
+        {
+            flag ++;
+            onlySpec.add(item);
+            System.out.println("item = " + item);
+        }
+        ListEspecificaciones list = new ListEspecificaciones();
+        for (int i = 0; i < onlySpec.size() ; i ++){
+
+            list.setId_image(R.drawable.detalle_autoa);
+            list.setNombre(onlySpec.get(i));
+            data.add(i,list);
+        }
+        /*
         data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 1"));
         data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 2"));
         data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
         data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 1"));
         data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 2"));
         data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
-
+*/
         return data;
     }
     public void FillField(Vehicle car){
@@ -134,26 +192,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         descripcion.setText(car.getDescription());
     }
 
-    private void init(Vehicle vehicle) {
-        for(int i=0;i<IMAGES.length;i++)
-            ImagesArray.add(IMAGES[i]);
 
-      //  mPager = (ViewPager) findViewById(R.id.pager);
-
-
-       // mPager.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
-
-
-
-        //indicator.setViewPager(mPager);
-
-        final float density = getResources().getDisplayMetrics().density;
-
-//Set circle indicator radius
-
-
-
-    }
     @Override
     public void onBackPressed()
     {
@@ -164,7 +203,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
 
     @Override
     public void sendData(Vehicle obj) {
-        init(obj);
+      //  init(obj);
     }
 
     @Override
@@ -174,8 +213,69 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
                 startActivity(setIntent);
                 finish();
             }
-    }
+        if(v.getId() == R.id.vermas){
 
+            showChangeLangDialog();
+        }
+    }
+    private void init() {
+        for(int i=0;i<IMAGES.length;i++)
+            ImagesArray.add(IMAGES[i]);
+
+
+
+        page.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
+
+
+
+        indicator.setViewPager(page);
+
+        final float density = getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+        indicator.setRadius(5 * density);
+
+        NUM_PAGES =IMAGES.length;
+
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                page.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+
+        // Pager listener over indicator
+        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+
+            }
+
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
+            }
+        });
+
+    }
     public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.MyViewHolder> {
 
 
@@ -234,7 +334,6 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
             return horizontalList.size();
         }
     }
-
 
 
 
