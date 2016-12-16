@@ -120,8 +120,6 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
 
         initCollapsingToolbar();
 
-        editCalendar = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
-        editCalendar.setOnClickListener(this);
 
 
     }
@@ -236,9 +234,7 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.floatingActionButton2) {
-          ///  showDatePicker();
-        }
+
 
     }
 

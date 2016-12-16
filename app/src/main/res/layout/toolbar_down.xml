@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/toolbardown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@android:color/holo_orange_light"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/layout_catalogo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                android:layout_marginStart="40dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="40dp">
+
+                <ImageButton
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/kangup"
+                    android:id="@+id/catalogo"
+                    android:scaleType="centerCrop"
+                    android:background="@android:color/transparent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Catalogo"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:id="@+id/catalogoTxt" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_historial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="40dp"
+                android:layout_marginStart="40dp"
+                app:layout_constraintLeft_toRightOf="@+id/layout_favoritos"
+                android:layout_marginLeft="40dp"
+                app:layout_constraintHorizontal_bias="0.51">
+
+                <ImageButton
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/kangup"
+                    android:scaleType="centerCrop"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/pagos" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Historial"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:id="@+id/historialTxt"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/layout_favoritos"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="40dp"
+                app:layout_constraintLeft_toRightOf="@+id/layout_noticias"
+                android:layout_marginLeft="40dp">
+
+                <ImageButton
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/kangup"
+                    android:id="@+id/favoritos"
+                    android:scaleType="centerCrop"
+                    android:background="@android:color/transparent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Favoritos"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:id="@+id/favoritosTxt"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/layout_noticias"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="40dp"
+                app:layout_constraintLeft_toRightOf="@+id/layout_catalogo"
+                android:layout_marginLeft="40dp"
+                app:layout_constraintVertical_bias="1.0">
+
+                <ImageButton
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/kangup"
+                    android:id="@+id/noticias"
+                    android:scaleType="centerCrop"
+                    android:background="@android:color/transparent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Noticias"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:id="@+id/noticiasTxt"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>

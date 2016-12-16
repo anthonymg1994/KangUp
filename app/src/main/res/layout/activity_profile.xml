@@ -92,4 +92,10 @@
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/edit" />
 
+    <include
+        android:layout_height="wrap_content"
+        layout="@layout/toolbar_down"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"/>
+
 </android.support.design.widget.CoordinatorLayout>
