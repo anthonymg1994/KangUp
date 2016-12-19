@@ -48,7 +48,7 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
         public AnimeViewHolder(View v) {
             super(v);
             imagen = (ImageView) v.findViewById(R.id.image_type);
-            nombre = (TextView) v.findViewById(R.id.name);
+            nombre = (TextView) v.findViewById(R.id.namedrawer);
             descripcion = (TextView) v.findViewById(R.id.description);
             fav = (ImageButton) v.findViewById(R.id.starButton);
            // fav.setOnClickListener(this);

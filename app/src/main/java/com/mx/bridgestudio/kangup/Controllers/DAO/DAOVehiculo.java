@@ -39,7 +39,7 @@ public class DAOVehiculo {
             URL url = new URL("http://kangup.com.mx/index.php/vehiculos");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setConnectTimeout(10000);
+            httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setDoOutput(true);
@@ -176,7 +176,7 @@ public class DAOVehiculo {
             URL url = new URL("http://kangup.com.mx/index.php/favoritos");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setConnectTimeout(10000);
+            httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setDoOutput(true);

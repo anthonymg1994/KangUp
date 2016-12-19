@@ -59,11 +59,15 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         mDrawer.addView(contentView, 0);
 
 
+
+
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         recycler.setHasFixedSize(true);
         // Usar un administrador para LinearLayout
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
+
+
 
 
 
@@ -74,6 +78,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
 
 
         webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
+
 
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
@@ -87,6 +92,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                         // do whatever
                     }
                 })
+
         );
         // Crear un nuevo adaptador
         adapter = new AdapterViaje(items);
@@ -140,6 +146,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
             list[i].setImage(1);
             items.add(i,list[i]);
         }
+
         adapter.notifyDataSetChanged();
 
 

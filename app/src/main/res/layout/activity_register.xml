@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/name"
+                android:id="@+id/namedrawer"
                 android:hint="Nombre"
                 tools:ignore="MissingConstraints"
                 android:layout_marginEnd="16dp"
@@ -109,7 +109,7 @@
                 android:layout_marginRight="16dp"
                 app:layout_constraintHorizontal_bias="0.33"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
+                app:layout_constraintTop_toBottomOf="@+id/namedrawer" />
 
             <EditText
                 android:layout_height="wrap_content"

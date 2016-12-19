@@ -1,7 +1,6 @@
 package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,12 +13,9 @@ import android.os.Bundle;
 import java.io.FileNotFoundException;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +24,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,15 +32,10 @@ import java.io.IOException;
 
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Controllers.Utility;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.AddPaymentActivity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -76,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //getSupportActionBar().set
         }
 
-        name = (EditText)findViewById(R.id.name);
+        name = (EditText)findViewById(R.id.namedrawer);
         lastname = (EditText)findViewById(R.id.lastname);
         mail = (EditText)findViewById(R.id.editEmail);
         password = (EditText)findViewById(R.id.password);
