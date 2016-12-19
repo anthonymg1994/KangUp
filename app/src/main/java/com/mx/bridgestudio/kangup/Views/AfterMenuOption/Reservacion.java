@@ -51,7 +51,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
     private SqliteController sql;
     private User user = new User();
     private ArrayList<String> addres = new ArrayList<>();
-
+    private EditText fecha,hora;
+    private com.mx.bridgestudio.kangup.Models.Reservacion re;
 
     private Button reservar,bAdd;
     private ImageButton bDate,bTime;
@@ -72,7 +73,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
         mDrawer.addView(contentView, 0);
 
 
-        reservar = (Button) findViewById(R.id.button8);
+        reservar = (Button) findViewById(R.id.confirmarButton);
         reservar.setOnClickListener(this);
 
         bDate = (ImageButton) findViewById(R.id.imageButtonCalendar);
@@ -119,6 +120,13 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
             }
         });
 
+        fecha = (EditText)findViewById(R.id.fecha);
+        hora = (EditText)findViewById(R.id.hora);
+        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+        re = sql.getReservacion();
+        fecha.setText(re.getDate());
+        hora.setText(re.getHourI());
+
     }
 
 
@@ -128,7 +136,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.button8){
+        if(v.getId() == R.id.confirmarButton){
             //confirmar reservacion
         }
         if(v.getId() == R.id.imageButtonCalendar){

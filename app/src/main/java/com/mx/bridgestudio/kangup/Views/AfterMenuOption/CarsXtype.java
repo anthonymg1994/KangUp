@@ -34,6 +34,7 @@ import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Adapters.ViewPagerAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
@@ -73,6 +74,8 @@ public class CarsXtype extends DrawerActivity implements
     private ImageButton time,date;
     private TextView hora,fecha;
     protected DrawerLayout mDrawer;
+
+    private SqliteController sql;
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
@@ -245,7 +248,9 @@ public class CarsXtype extends DrawerActivity implements
                         }
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
                         String finalString = dateFormat1.format(parseDate);
+                        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
 
+                        sql.updateReservacionFecha(finalString);
 
                         fecha.setText(""+finalString);
 
@@ -271,8 +276,11 @@ public class CarsXtype extends DrawerActivity implements
                                           int minute) {
 
                         hora.setText(hourOfDay + ":" + minute + " " + pm);
+                        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                        sql.updateReservacionHora(hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, false);
+
         timePickerDialog.show();
     }
 
