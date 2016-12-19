@@ -14,6 +14,7 @@ import android.os.Bundle;
 import java.io.FileNotFoundException;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -58,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-
 
 
     webServices webs = new webServices();

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -78,6 +79,7 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
         }
        if(result && user.getFirstName()!= null){
        //     Toast.makeText(mContext, "Bienvenido  "+user.getFirstName(), Toast.LENGTH_SHORT).show();
+         
            sql = new SqliteController(mContext, "kangup",null, 1);
            sql.Connect();
           sql.insertUsuario(user);

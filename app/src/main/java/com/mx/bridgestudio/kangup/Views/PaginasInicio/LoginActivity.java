@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -42,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private ImageView logo;
     private Button guest,register,forgot,signin;
-
+CoordinatorLayout coordinatorLayout;
     private User user = new User();
     private SqliteController sql = new SqliteController(this,"kangup",null,1);
 
@@ -51,6 +53,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.snackbarCoordinatorLayout);
+
+
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user);
 
         logo = (ImageView)findViewById(R.id.logo);
@@ -152,7 +157,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //showProgress(true);
             user.setEmail(mEmailView.getText().toString());
             user.setPassword(mPasswordView.getText().toString());
+            Snackbar.make(coordinatorLayout, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
             web.Login(this,user);
+
             //new asyn(LoginActivity.this,user.getEmail(),user.getPassword()).execute();
         }
     }

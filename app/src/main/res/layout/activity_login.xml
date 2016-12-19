@@ -161,5 +161,14 @@
             android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/snackbarCoordinatorLayout"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/register"
+        app:layout_constraintLeft_toLeftOf="@+id/register"
+        app:layout_constraintRight_toRightOf="@+id/register">
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </android.support.constraint.ConstraintLayout>
