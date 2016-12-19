@@ -33,6 +33,7 @@ import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoC
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
     private ImageButton bDate,bTime;
     private ListView listPaquetes,listRutas;
 
-
+    //toolbardown
+    private ImageButton catalogo,noticias,favoritos,historial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,33 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
                 addres );
 
         listRutas.setAdapter(arrayAdapter);
+
+        catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(Reservacion.this, CategoryActivity.class));
+            }
+        });
+        noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(Reservacion.this, FavoriteActivity.class));
+            }
+        });
+        historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(Reservacion.this, HistoryActivity.class));
+            }
+        });
+
     }
 
 
