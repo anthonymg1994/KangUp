@@ -30,7 +30,7 @@
         android:gravity="left"
         android:paddingBottom="4dp"
         android:id="@+id/username"
-        android:layout_above="@+id/email"
+        android:layout_above="@+id/emaildrawer"
         android:layout_alignLeft="@+id/profile_image"
         android:layout_alignStart="@+id/profile_image" />
 
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Akash.bangad93@gmail.com"
-        android:id="@+id/email"
+        android:id="@+id/emaildrawer"
         android:gravity="left"
         android:layout_marginBottom="8dp"
         android:textSize="14sp"

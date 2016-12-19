@@ -64,7 +64,7 @@ public class CarsXtype extends DrawerActivity implements
     MaterialTabHost tabHost;
     ViewPager viewPager;
     ViewPagerAdapterTab androidAdapter;
-    private int mYear, mMonth, mDay,mHour, mMinute;
+    private int mYear, mMonth, mDay,mHour, mMinute,pm;
 
     private ImageButton time,date;
     private TextView hora,fecha;
@@ -82,7 +82,7 @@ public class CarsXtype extends DrawerActivity implements
         View contentView = inflater.inflate(R.layout.typeofcar, null, false);
         mDrawer.addView(contentView, 0);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcateg);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(""+CardAdapter.marca);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,6 +226,7 @@ public class CarsXtype extends DrawerActivity implements
         final Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
+        pm = c.get(Calendar.AM_PM);
 
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
@@ -235,7 +236,7 @@ public class CarsXtype extends DrawerActivity implements
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
 
-                        hora.setText(hourOfDay + ":" + minute);
+                        hora.setText(hourOfDay + ":" + minute + " " + pm);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();

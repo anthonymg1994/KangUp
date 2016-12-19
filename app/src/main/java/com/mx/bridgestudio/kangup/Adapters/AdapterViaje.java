@@ -57,7 +57,7 @@ public class AdapterViaje extends RecyclerView.Adapter<AdapterViaje.AnimeViewHol
 
         public AnimeViewHolder(View v) {
             super(v);
-            imagen = (ImageView) v.findViewById(R.id.image_type);
+            imagen = (ImageView) v.findViewById(R.id.imageProfile);
             marca = (TextView) v.findViewById(R.id.ModeloCar);
             fecha = (TextView) v.findViewById(R.id.fecha);
             total = (TextView) v.findViewById(R.id.total);
@@ -74,7 +74,7 @@ public class AdapterViaje extends RecyclerView.Adapter<AdapterViaje.AnimeViewHol
         viewHolder.imagen.setImageResource(R.drawable.auto);
         viewHolder.marca.setText(items.get(i).getMarca()+" "+items.get(i).getModelo()+" "+items.get(i).getYear()+" ");
         viewHolder.fecha.setText(items.get(i).getFecha());
-        viewHolder.total.setText(items.get(i).getTotal());
+        viewHolder.total.setText("$ " +items.get(i).getTotal());
     }
 
 }

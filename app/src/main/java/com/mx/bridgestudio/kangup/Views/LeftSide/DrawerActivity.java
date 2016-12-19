@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
@@ -24,8 +26,6 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.ProfileActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
-
-import org.w3c.dom.Text;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,18 +49,27 @@ public class DrawerActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        //name = (TextView) findViewById(R.id.name);
-        //email = (TextView) findViewById(R.id.email);
 
+
+
+        //ivCloseDrawer = (ImageView) lV.findViewById(R.id.imageView);
+
+       // ivCloseDrawer.setOnClickListener(new View.OnClickListener()
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.bringToFront();
+
+        View header = navigationView.inflateHeaderView(R.layout.nav_header_drawer);
+
+        name = (TextView) header.findViewById(R.id.namedrawer);
+        email = (TextView) header.findViewById(R.id.emaildrawer);
+
         drawer.requestLayout();
 
-      //  getInformation();
+        getInformation();
     }
 
     @Override
@@ -167,8 +176,10 @@ public class DrawerActivity extends AppCompatActivity
         user = sql.user();
         sql.Close();
 
-    //    name.setText(user.getFirstName() +" "+ user.getLastName());
-     //   email.setText(user.getEmail());
+
+
+        name.setText(user.getFirstName() +" "+ user.getLastName());
+        email.setText(user.getEmail());
 
     }
 }

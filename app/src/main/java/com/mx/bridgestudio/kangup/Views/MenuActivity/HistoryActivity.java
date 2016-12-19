@@ -59,11 +59,15 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         mDrawer.addView(contentView, 0);
 
 
+
+
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         recycler.setHasFixedSize(true);
         // Usar un administrador para LinearLayout
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
+
+
 
 
 
@@ -142,6 +146,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
             list[i].setImage(1);
             items.add(i,list[i]);
         }
+
         adapter.notifyDataSetChanged();
 
 
