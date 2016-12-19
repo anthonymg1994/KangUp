@@ -70,6 +70,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
 
         webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
 
+
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
@@ -82,6 +83,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                         // do whatever
                     }
                 })
+
         );
         // Crear un nuevo adaptador
         adapter = new AdapterViaje(items);
