@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +29,9 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
     private AdapterPaymentList adaptador;
     private AlertDialog alertTypePayment;
     public static int type=0;
+
+    //toolbardown
+    private ImageButton catalogo,noticias,favoritos,historial;
 
     CharSequence[] values = {"Tarjeta de débito/crédito","Tiendas de conveniencia"};
 
@@ -55,6 +59,32 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
                 CreateAlertDialogWithRadioButtonGroup() ;
+            }
+        });
+
+        catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
+            }
+        });
+        noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(PaymentActivity.this, FavoriteActivity.class));
+            }
+        });
+        historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(PaymentActivity.this, HistoryActivity.class));
             }
         });
     }
@@ -101,7 +131,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
-            startActivity(new Intent(PaymentActivity.this, TypesOfAutomobiles.class));
+            startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

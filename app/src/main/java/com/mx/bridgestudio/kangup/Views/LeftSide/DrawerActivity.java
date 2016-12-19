@@ -21,6 +21,7 @@ import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.ProfileActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
@@ -109,7 +110,9 @@ public class DrawerActivity extends AppCompatActivity
             finish();
             // Handle the camera action
         } else if (id == R.id.nav_pay) {
-
+            Intent setIntent = new Intent(this, PaymentActivity.class);
+            startActivity(setIntent);
+            finish();
         } else if (id == R.id.nav_history) {
             Intent setIntent = new Intent(this, HistoryActivity.class);
             startActivity(setIntent);

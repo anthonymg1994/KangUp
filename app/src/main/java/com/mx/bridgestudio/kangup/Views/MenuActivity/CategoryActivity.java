@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +36,9 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     public static int opcionSeleccionada;
     AsyncBrands asyncTask;
     protected DrawerLayout mDrawer;
+
+    //toolbardown
+    private ImageButton catalogo,noticias,favoritos,historial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,32 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         });
 
         fillList();
+
+        catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CategoryActivity.this, CategoryActivity.class));
+            }
+        });
+        noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CategoryActivity.this, FavoriteActivity.class));
+            }
+        });
+        historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CategoryActivity.this, HistoryActivity.class));
+            }
+        });
 
     }
 
