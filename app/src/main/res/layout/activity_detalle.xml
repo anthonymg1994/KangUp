@@ -24,169 +24,128 @@
         app:layout_constraintHorizontal_bias="0.0" />
 
 
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="156dp"
+        app:srcCompat="@drawable/auto"
+        android:id="@+id/imageView2"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:text="Fotos"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:id="@+id/vermas"
+        android:textSize="9sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintHorizontal_bias="1.0" />
+
     <LinearLayout
         android:background="#ffffff"
-        android:layout_height="0dp"
         android:orientation="vertical"
-        android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintHorizontal_bias="0.46"
-        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/linearLayout34"
+        android:gravity="left"
+        app:layout_constraintTop_toBottomOf="@+id/vermas"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/include"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/reservarr"
+        android:layout_height="200dp">
 
-        <ImageView
+        <TextView
+            android:text=""
+            android:layout_height="wrap_content"
+            android:id="@+id/modelo"
+            android:textSize="18sp"
+            android:textColor="#ffa500"
+            android:textAlignment="textStart"
             android:layout_width="match_parent"
-            android:layout_height="156dp"
-            app:srcCompat="@drawable/auto"
-            android:id="@+id/imageView2"
-            android:scaleType="centerCrop"
+            tools:layout_editor_absoluteX="187dp"
+            tools:layout_editor_absoluteY="81dp" />
 
-            tools:layout_constraintRight_creator="1"
+        <TextView
+            android:layout_height="wrap_content"
+            android:id="@+id/descripcion"
+            tools:text=""
+            android:text=""
+
+            android:layout_width="match_parent"
+            tools:layout_editor_absoluteY="56dp"
+            tools:layout_editor_absoluteX="195dp" />
+
+        <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Especificaciones"
+            tools:text="Especificaciones"
+            android:textSize="18sp"
+            android:textColor="#ffa500"
+            tools:layout_editor_absoluteY="111dp"
+            tools:layout_editor_absoluteX="0dp"
+            android:textAlignment="textStart" />
+
+
+        <RelativeLayout
+            android:layout_height="77dp"
+            android:id="@+id/relativeLayout"
+            tools:layout_editor_absoluteY="83dp"
+            android:layout_width="match_parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:layout_constraintLeft_creator="1"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0">
 
-        <LinearLayout
-            android:background="#ffffff"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:id="@+id/linearLayout3"
-            tools:layout_editor_absoluteY="393dp"
-            tools:layout_editor_absoluteX="0dp"
-            android:gravity="left">
-
-            <Button
-                android:text="Fotos"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:id="@+id/vermas"
-                android:textSize="9sp"
-                tools:layout_editor_absoluteY="369dp"
-                tools:layout_editor_absoluteX="25dp"
-                android:layout_gravity="end" />
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:background="#ffffff"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:id="@+id/linearLayout34"
-            tools:layout_editor_absoluteY="393dp"
-            tools:layout_editor_absoluteX="0dp"
-            android:gravity="left">
-
-            <TextView
-                android:text=""
-                android:layout_height="wrap_content"
-                android:id="@+id/modelo"
-                android:textSize="18sp"
-                android:textColor="#ffa500"
-                android:textAlignment="textStart"
-                android:layout_width="match_parent"
-                tools:layout_editor_absoluteX="187dp"
-                tools:layout_editor_absoluteY="81dp" />
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:id="@+id/descripcion"
-                tools:text=""
-                android:text=""
-
-                android:layout_width="match_parent"
-                tools:layout_editor_absoluteY="56dp"
-                tools:layout_editor_absoluteX="195dp" />
-
-            <TextView
-                android:text=""
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/horizontal_recycler_view"
+                android:background="#ffffff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/Especificaciones"
-                tools:text="Especificaciones"
-                android:textSize="18sp"
-                android:textColor="#ffa500"
-                tools:layout_editor_absoluteY="111dp"
-                tools:layout_editor_absoluteX="0dp"
-                android:textAlignment="textStart" />
-
-
-            <RelativeLayout
-                android:layout_height="77dp"
-                android:id="@+id/relativeLayout"
-                tools:layout_editor_absoluteY="83dp"
-                android:layout_width="match_parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintHorizontal_bias="0.0">
+                tools:layout_editor_absoluteX="184dp"
+                tools:layout_editor_absoluteY="126dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:background="#ffffff"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/horizontal_recycler_view"
                     android:background="#ffffff"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layout_editor_absoluteX="184dp"
                     tools:layout_editor_absoluteY="126dp" />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:background="#ffffff"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/horizontal_recycler_view"
-                        android:background="#ffffff"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:layout_editor_absoluteX="184dp"
-                        tools:layout_editor_absoluteY="126dp" />
 
 
-                </LinearLayout>
-            </RelativeLayout>
-
-
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:background="#ffffff"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:id="@+id/linearLayout5"
-            tools:layout_editor_absoluteY="393dp"
-            tools:layout_editor_absoluteX="0dp"
-            android:gravity="bottom|left"
-            android:layout_gravity="bottom">
-
-            <Button
-                android:text="Reservar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/reservarr"
-                android:textSize="14sp"
-                tools:layout_editor_absoluteY="369dp"
-                tools:layout_editor_absoluteX="25dp"
-                android:layout_gravity="bottom|end"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/white"
-                android:textStyle="normal|bold" />
-        </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
+
+    <Button
+        android:text="Reservar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/reservarr"
+        android:textSize="14sp"
+        android:layout_gravity="bottom|end"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toTopOf="@+id/include"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <include
         android:layout_height="wrap_content"

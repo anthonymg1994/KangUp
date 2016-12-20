@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,10 @@ import com.mx.bridgestudio.kangup.Models.ListEspecificaciones;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -70,6 +75,10 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     SlidingImage_Adapter s;
     ViewPager page;
     CirclePageIndicator indicator;
+
+    //toolbardown
+    private ImageButton catalogo,noticias,favoritos,historial;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +122,32 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(DetalleActivity.this, LinearLayoutManager.HORIZONTAL, false);
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
         horizontal_recycler_view.setAdapter(horizontalAdapter);
+
+        catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(DetalleActivity.this, CategoryActivity.class));
+            }
+        });
+        noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(DetalleActivity.this, FavoriteActivity.class));
+            }
+        });
+        historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(DetalleActivity.this, HistoryActivity.class));
+            }
+        });
 
 
         fillFields(car);

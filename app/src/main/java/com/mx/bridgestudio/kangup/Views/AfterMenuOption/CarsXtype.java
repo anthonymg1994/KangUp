@@ -34,12 +34,17 @@ import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Adapters.ViewPagerAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
 import org.w3c.dom.Text;
@@ -69,6 +74,12 @@ public class CarsXtype extends DrawerActivity implements
     private ImageButton time,date;
     private TextView hora,fecha;
     protected DrawerLayout mDrawer;
+
+    private SqliteController sql;
+
+    //toolbardown
+    private ImageButton catalogo,noticias,favoritos,historial;
+
     // private List items = new ArrayList();
 
     @Override
@@ -103,6 +114,32 @@ public class CarsXtype extends DrawerActivity implements
 
         hora = (TextView) findViewById(R.id.hour);
         fecha = (TextView) findViewById(R.id.date);
+
+        catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CarsXtype.this, CategoryActivity.class));
+            }
+        });
+        noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CarsXtype.this, FavoriteActivity.class));
+            }
+        });
+        historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CarsXtype.this, HistoryActivity.class));
+            }
+        });
 
 
 
@@ -211,7 +248,9 @@ public class CarsXtype extends DrawerActivity implements
                         }
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
                         String finalString = dateFormat1.format(parseDate);
+                        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
 
+                        sql.updateReservacionFecha(finalString);
 
                         fecha.setText(""+finalString);
 
@@ -237,8 +276,11 @@ public class CarsXtype extends DrawerActivity implements
                                           int minute) {
 
                         hora.setText(hourOfDay + ":" + minute + " " + pm);
+                        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                        sql.updateReservacionHora(hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, false);
+
         timePickerDialog.show();
     }
 

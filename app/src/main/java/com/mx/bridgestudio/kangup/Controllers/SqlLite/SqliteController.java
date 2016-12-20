@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.hardware.camera2.params.StreamConfigurationMap;
 
+import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.Models.User;
 
 /**
@@ -23,6 +24,10 @@ public class SqliteController extends SQLiteOpenHelper {
     private String Memento ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellidos TEXT," +
             "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
 
+    private String reservacion ="CREATE TABLE Reservacion(id INTEGER, fecha TEXT, hora TEXT);";
+
+    private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";
+
 
     private User us [];
 
@@ -33,6 +38,8 @@ public class SqliteController extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CrearUsuarios);
+        db.execSQL(reservacion);
+        db.execSQL(insertReservation);
     }
 
     @Override
@@ -125,4 +132,48 @@ public class SqliteController extends SQLiteOpenHelper {
         }
         db.close();
     }
+
+    public void updateReservacionFecha(String fecha)
+    {
+        db = getWritableDatabase();
+        try{
+            String actualizar= "Update Reservacion set fecha='"+fecha+"', Where id=1";
+            db.execSQL(actualizar);
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
+        db.close();
+    }
+
+    public void updateReservacionHora(String hora)
+    {
+        db = getWritableDatabase();
+        try{
+            String actualizar= "Update Reservacion set hora='"+hora+"', Where id=1";
+            db.execSQL(actualizar);
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
+        db.close();
+    }
+
+    public Reservacion getReservacion(){
+        Reservacion r = new Reservacion();
+        db = getReadableDatabase();
+        Cursor c=db.rawQuery("SELECT fecha,hora FROM Reservacion ",null);
+        if(c.moveToFirst())
+        {
+            do{
+                r.setDate(c.getString(1));
+                r.setHourI(c.getString(2));
+            }while(c.moveToNext());
+        }
+        db.close();
+        return r;
+    }
+
 }
