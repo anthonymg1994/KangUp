@@ -5,8 +5,9 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical" >
+    android:background="@drawable/backall"
+    android:orientation="vertical"
+    >
 
 
     <LinearLayout
@@ -14,7 +15,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-     >
+        android:background="@drawable/backall"
+
+        >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pagerId"

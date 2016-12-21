@@ -2,8 +2,9 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,25 +13,18 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Category;
-import com.mx.bridgestudio.kangup.Models.Favorite;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
-import com.mx.bridgestudio.kangup.Models.Lists.ListViaje;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
-import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
 import java.util.ArrayList;
 
@@ -123,6 +117,8 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setColorFilter(ContextCompat.getColor(FavoriteActivity.this,R.color.colorAccent));
+
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

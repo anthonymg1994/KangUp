@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -26,17 +27,12 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
-import com.mx.bridgestudio.kangup.Models.SampleDivider;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
 import java.text.ParseException;
@@ -110,6 +106,8 @@ public class CarsXtype extends DrawerActivity implements
         fecha = (TextView) findViewById(R.id.date);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(CarsXtype.this,R.color.colorAccent));
+
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

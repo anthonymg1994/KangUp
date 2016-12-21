@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -37,7 +38,6 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +120,8 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         recyclerView.setAdapter(adapter);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(CatalogCar.this,R.color.colorAccent));
+
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

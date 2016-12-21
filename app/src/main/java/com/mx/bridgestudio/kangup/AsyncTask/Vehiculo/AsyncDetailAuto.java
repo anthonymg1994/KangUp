@@ -8,19 +8,11 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAObrand;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
-import com.mx.bridgestudio.kangup.Models.screenAsync;
-import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -119,7 +111,6 @@ public class AsyncDetailAuto extends AsyncTask<String,Integer,Vehicle> implement
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("value", objVehicle);
-
             intent.putExtras(bundle);
             mContext.startActivity(intent);
 
