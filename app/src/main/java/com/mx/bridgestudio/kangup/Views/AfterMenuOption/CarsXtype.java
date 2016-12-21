@@ -93,7 +93,7 @@ public class CarsXtype extends DrawerActivity implements
         View contentView = inflater.inflate(R.layout.typeofcar, null, false);
         mDrawer.addView(contentView, 0);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcars);
         toolbar.setTitle(""+CardAdapter.marca);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,6 +328,8 @@ public class CarsXtype extends DrawerActivity implements
 
     }
 
-
+    protected int getLayoutId() {
+        return R.layout.activity_drawer;
+    }
 
 }

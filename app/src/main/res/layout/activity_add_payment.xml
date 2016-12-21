@@ -66,7 +66,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/cardNumber"
-        app:layout_constraintBottom_toTopOf="@+id/countries"
+        app:layout_constraintBottom_toTopOf="@+id/formas"
         android:layout_marginBottom="24dp" />
 
     <EditText
@@ -97,12 +97,12 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/cardNumber"
-        app:layout_constraintBottom_toTopOf="@+id/countries"
+        app:layout_constraintBottom_toTopOf="@+id/formas"
         android:layout_marginBottom="24dp" />
 
     <Spinner
         android:layout_height="48dp"
-        android:id="@+id/countries"
+        android:id="@+id/formas"
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/year"
         android:layout_marginStart="16dp"
@@ -120,7 +120,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/addBtn"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/countries"
+        app:layout_constraintTop_toBottomOf="@+id/formas"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -15,20 +15,33 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaymentList;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOFormasPago;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
+import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
+import com.mx.bridgestudio.kangup.Models.Lists.ListPaymentForm;
 import com.mx.bridgestudio.kangup.Models.Payment;
+import com.mx.bridgestudio.kangup.Models.PaymentForm;
+import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
 import java.util.ArrayList;
 
-public class PaymentActivity extends DrawerActivity implements AdapterView.OnItemClickListener {
+public class PaymentActivity extends DrawerActivity implements AdapterView.OnItemClickListener,OnDataSendPaymentFormsUser {
 
     private ListView listPay;
-    private ArrayList<Payment> tipos = new ArrayList<>();
+    private ArrayList<ListPaymentForm> tipos = new ArrayList<>();
     private ArrayAdapter<Payment> AdapterArray;
     private AdapterPaymentList adaptador;
     private AlertDialog alertTypePayment;
     public static int type=0;
+
+    private webServices webs = new webServices();
+    private DAOFormasPago Dpay = new DAOFormasPago();
+    private PaymentForm pa = new PaymentForm();
+    private SqliteController sql;
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
@@ -52,7 +65,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         listPay = (ListView)findViewById(R.id.listPayment);
         adaptador = new AdapterPaymentList(this,tipos);
         listPay.setAdapter(adaptador);
-        fillList();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FabAdd);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +100,16 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                 startActivity(new Intent(PaymentActivity.this, HistoryActivity.class));
             }
         });
+
+        sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+        sql.Connect();
+        User user = new User();
+        user = sql.user();
+        pa.setId_usuario(user.getId());
+        sql.Close();
+
+        webs.getFormaPagoByUser(PaymentActivity.this,this,pa);
+
     }
 
     @Override
@@ -137,12 +160,26 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         return super.onOptionsItemSelected(item);
     }
 
-    public void fillList(){
-        Payment list = new Payment();
-        list.setFormsofpayment( "Tipos de pago");
+    public void fillList(PaymentForm[] pay){
+        ListPaymentForm[] list = new ListPaymentForm[pay.length];
+        for(int i = 0 ; i < pay.length ; i++){
+            list[i] = new ListPaymentForm();
+            list[i].setId(pay[i].getId());
+            list[i].setId_usuario(pay[i].getId_usuario());
+            list[i].setId_forma_pago(pay[i].getId_forma_pago());
+            list[i].setTipoPago(pay[i].getTipoPago());
+            list[i].setNum_cuenta(pay[i].getNum_cuenta());
+            list[i].setMes_venc(pay[i].getMes_venc());
+            list[i].setAnio_venc(pay[i].getAnio_venc());
+            list[i].setCvv(pay[i].getCvv());
 
-        for(int x=0;x<1;x++){
-            tipos.add(x,list);
+            tipos.add(i,list[i]);
         }
+        adaptador.notifyDataSetChanged();
+    }
+
+    @Override
+    public void sendDataPaymentFormsUser(PaymentForm[] obj) {
+        fillList(obj);
     }
 }

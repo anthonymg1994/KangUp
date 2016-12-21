@@ -60,6 +60,8 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:textAlignment="textStart" />
+
+
         <TextView
             android:id="@+id/description"
             android:text="Description"

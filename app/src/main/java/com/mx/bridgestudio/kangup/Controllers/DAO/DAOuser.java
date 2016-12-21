@@ -88,7 +88,7 @@ public class DAOuser {
             httpURLConnection.setDoOutput(true);
             httpURLConnection.connect();
             JSONObject jsonParam = new JSONObject();
-            jsonParam.put("id",user.getId());
+            //jsonParam.put("id",user.getId());
             jsonParam.put("nombre",user.getFirstName());
             jsonParam.put("apellidos",user.getLastName());
             jsonParam.put("telefono",user.getCellphone());

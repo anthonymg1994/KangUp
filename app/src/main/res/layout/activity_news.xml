@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_news"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="#29235b"
+        app:layout_collapseMode="pin"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        tools:layout_editor_absoluteY="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/newsRecycler" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="0dp"
+        android:id="@+id/newsRecycler"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintBottom_toTopOf="@+id/include6"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <include
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        layout="@layout/toolbar_down"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/include6" />
+
+</android.support.constraint.ConstraintLayout>
