@@ -105,7 +105,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         car=(Vehicle)bundle.getSerializable("value");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Detalle de automovil");
+        toolbar.setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
         setSupportActionBar(toolbar);
 
         vermas = (Button)findViewById(R.id.vermas);

@@ -7,7 +7,7 @@ package com.mx.bridgestudio.kangup.Models;
 public class Package {
     private int id;
     private int id_vehicle;
-    private String total;
+    private double total;
 
 
     public int getId() {
@@ -26,11 +26,11 @@ public class Package {
         this.id_vehicle = id_vehicle;
     }
 
-    public String getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 }

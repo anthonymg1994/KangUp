@@ -62,14 +62,19 @@ public class ProfileActivity extends DrawerActivity implements
         View contentView = inflater.inflate(R.layout.activity_profile, null, false);
         mDrawer.addView(contentView, 0);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+        sql.Connect();
+        user = sql.user();
+        sql.Close();
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(user.getFirstName()+ " " +user.getLastName());
 
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);
 //Arreglar cuando selccione edittext solo salg dialg y se esconda teclado
         editBirth = (TextView)findViewById(R.id.editBirth);
-
+        cellphone = (EditText) findViewById(R.id.editText);
         email = (EditText)findViewById(R.id.editEmail);
         address = (EditText)findViewById(R.id.editAddress);
         city = (EditText)findViewById(R.id.editCity);
@@ -109,20 +114,6 @@ public class ProfileActivity extends DrawerActivity implements
             }
         });
 
-        final ConstraintLayout c = (ConstraintLayout) findViewById(R.id.cons);
-        AppBarLayout appBarLayout = (AppBarLayout)findViewById(R.id.app_bar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if(appBarLayout.getTop() >= -160) {
-                    //card.set
-                    c.setVisibility(View.VISIBLE);
-                } else {
-                    //card.setAlpha(1);
-                    c.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
 
 
 
@@ -213,6 +204,9 @@ public class ProfileActivity extends DrawerActivity implements
 
         if(!user.getCiudad().equals("null"))
             city.setText(user.getCiudad());
+
+        if(!user.getCellphone().equals("null"))
+            cellphone.setText(user.getCellphone());
         //Agregar getPhotoByUser
 
     }
