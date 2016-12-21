@@ -42,7 +42,7 @@ public class ForgotActivity extends AppCompatActivity {
         }
 
         email = (EditText) findViewById(R.id.emailForgot);
-
+        email.setHintTextColor(getResources().getColor(R.color.white));
         recover = (Button)findViewById(R.id.recover);
         recover.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
