@@ -64,7 +64,8 @@
         style="@style/Widget.AppCompat.EditText"
         android:layout_height="45dp"
         android:textColor="#ffffff"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="17sp" />
 
 
     <Button
@@ -85,14 +86,15 @@
         android:background="@drawable/button_borderyellow"
         app:layout_constraintTop_toBottomOf="@+id/password"
         android:textAllCaps="false"
-        android:layout_width="0dp" />
+        android:layout_width="0dp"
+        android:textSize="18sp" />
 
     <Button
         android:text="Ingresar como invitado"
         android:layout_height="wrap_content"
         android:id="@+id/guest"
         android:layout_width="wrap_content"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textAllCaps="false"
         android:textColor="#FFCC00"
         android:background="@android:color/transparent"
@@ -137,7 +139,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textColor="#FFCC00"
         android:background="@android:color/transparent"
         android:layout_marginTop="8dp"
@@ -154,6 +156,7 @@
         android:layout_marginRight="50dp"
         android:layout_marginTop="4dp"
         android:hint="@string/prompt_password"
+
         app:layout_constraintTop_toBottomOf="@+id/user"
         android:textAlignment="center"
         android:gravity="center_vertical|center_horizontal|center"
@@ -163,13 +166,13 @@
             android:id="@+id/passwordeye"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:background="@drawable/buttons_alpha"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:background="@drawable/buttons_alpha"
             android:textColor="#ffffff"
             android:singleLine="true"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textSize="17sp" />
 
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.CoordinatorLayout

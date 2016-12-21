@@ -3,6 +3,7 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,16 +15,15 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterViaje;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
+import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.History;
 import com.mx.bridgestudio.kangup.Models.Lists.ListViaje;
 import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
-import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 
@@ -116,6 +116,8 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setColorFilter(ContextCompat.getColor(HistoryActivity.this,R.color.colorAccent));
+
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
