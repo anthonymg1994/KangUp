@@ -44,6 +44,7 @@ import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
@@ -124,6 +125,13 @@ public class CarsXtype extends DrawerActivity implements
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CarsXtype.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override

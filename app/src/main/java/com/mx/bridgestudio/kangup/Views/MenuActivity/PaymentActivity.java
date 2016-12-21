@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaymentList;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOFormasPago;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
+import com.mx.bridgestudio.kangup.Controllers.Paypal.Paypal;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
@@ -84,6 +85,13 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(PaymentActivity.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +140,8 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                 {
                     case 0:
                         finish();
-                        startActivity(new Intent(PaymentActivity.this, AddPaymentActivity.class));
+                        //startActivity(new Intent(PaymentActivity.this, AddPaymentActivity.class));
+                        startActivity(new Intent(PaymentActivity.this, Paypal.class));
                         type=1;
                         break;
                     case 1:

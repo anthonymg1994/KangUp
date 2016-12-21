@@ -145,6 +145,7 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
 
     @Override
     public void sendData(Vehicle obj) {
+
         vehicle = obj;
     }
 }

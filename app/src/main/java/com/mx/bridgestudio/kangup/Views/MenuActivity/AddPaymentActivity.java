@@ -16,9 +16,12 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.CCUtils;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
+import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
@@ -28,7 +31,7 @@ public class AddPaymentActivity extends AppCompatActivity {
     private ImageButton camara;
 
     private int value=0;
-    private String cvvPattern = "/^[0-9]{3,4}$/";
+    private String cvvPattern = "^([0-9]{3,4})$";
     private String numberPattern = "[0-9]*";
 
     private webServices webs = new webServices();
@@ -41,6 +44,7 @@ public class AddPaymentActivity extends AppCompatActivity {
     public String colors[] = {"Tarjeta de debito","Tarjeta de credito"};
 
     private boolean flag = true;
+    private SqliteController sql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +92,14 @@ public class AddPaymentActivity extends AppCompatActivity {
                                                 pay.setCvv(cvv.getText().toString());
 
                                                 pay.setId_forma_pago(value);
+
+                                                sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+                                                sql.Connect();
+                                                User user = new User();
+                                                user = sql.user();
+                                                sql.Close();
+
+                                                pay.setId_usuario(user.getId());
 
                                                 webs.insertFormaPago(AddPaymentActivity.this,pay);
                                                 Toast msg = Toast.makeText(getBaseContext(),
@@ -188,6 +200,13 @@ public class AddPaymentActivity extends AppCompatActivity {
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(AddPaymentActivity.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override

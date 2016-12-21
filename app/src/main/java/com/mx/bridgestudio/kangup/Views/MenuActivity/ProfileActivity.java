@@ -132,6 +132,13 @@ public class ProfileActivity extends DrawerActivity implements
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(ProfileActivity.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
