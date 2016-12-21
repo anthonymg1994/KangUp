@@ -101,7 +101,8 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         webs.brandByCategory(CatalogCar.this,CatalogCar.this,brand);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Marcas");
+        //toolbar.setTitle("Marcas");
+        getSupportActionBar().setTitle("Marcas");
 
         //drw.setNameToolbar("Marcas");
         // 1. get a reference to recyclerView

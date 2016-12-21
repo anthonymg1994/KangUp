@@ -88,6 +88,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
         mDrawer.addView(contentView, 0);
 
         //drw.setNameToolbar("Reservacion");
+        getSupportActionBar().setTitle("Reservacion");
 
 
         reservar = (Button) findViewById(R.id.confirmarButton);

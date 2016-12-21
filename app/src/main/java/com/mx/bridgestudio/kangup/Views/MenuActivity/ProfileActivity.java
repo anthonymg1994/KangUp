@@ -69,8 +69,9 @@ public class ProfileActivity extends DrawerActivity implements
         sql.Close();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(user.getFirstName()+ " " +user.getLastName());
+        //toolbar.setTitle(user.getFirstName()+ " " +user.getLastName());
         //drw.setNameToolbar(user.getFirstName()+ " " +user.getLastName());
+        getSupportActionBar().setTitle(user.getFirstName()+ " " +user.getLastName());
 
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);

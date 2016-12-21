@@ -59,6 +59,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarPay);
         setSupportActionBar(toolbar);
         //drw.setNameToolbar("Metodos de pago");
+        getSupportActionBar().setTitle("Metodos de pago");
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){

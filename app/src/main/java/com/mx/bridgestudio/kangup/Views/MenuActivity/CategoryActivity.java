@@ -56,6 +56,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_category, null, false);
+
         mDrawer.addView(contentView, 0);
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPageAndroid);
@@ -69,6 +70,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             }
         });
 
+        getSupportActionBar().setTitle("Categorias");
 
 
         list = (ListView)findViewById(R.id.listCategory);

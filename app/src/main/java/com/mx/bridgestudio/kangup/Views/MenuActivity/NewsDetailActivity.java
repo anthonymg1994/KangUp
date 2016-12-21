@@ -86,6 +86,8 @@ public class NewsDetailActivity extends DrawerActivity {
         desc.setText(NewsActivity.desc);
         //drw.setNameToolbar(NewsActivity.titulo);
 
+        getSupportActionBar().setTitle(NewsActivity.titulo);
+
 
     }
 }

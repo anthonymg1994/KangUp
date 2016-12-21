@@ -36,6 +36,9 @@ public class DrawerActivity extends AppCompatActivity
     private SqliteController sql;
     private User user = new User();
 
+    public static int flag=0;
+    public static String title="";
+
     Toolbar toolbar;
 
 
@@ -46,6 +49,7 @@ public class DrawerActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

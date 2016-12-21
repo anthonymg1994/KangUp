@@ -81,17 +81,8 @@ public class CarsXtype extends DrawerActivity implements
         View contentView = inflater.inflate(R.layout.typeofcar, null, false);
         mDrawer.addView(contentView, 0);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcars);
-        toolbar.setTitle(""+CardAdapter.marca);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"your icon was clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
-        setSupportActionBar(toolbar);
-
         //drw.setNameToolbar(""+CardAdapter.marca);
+        getSupportActionBar().setTitle(""+CardAdapter.marca);
 
         //tab host
         tabHost = (MaterialTabHost)findViewById(R.id.tabHost);

@@ -69,7 +69,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         recycler.setLayoutManager(lManager);
 
 
-
+        getSupportActionBar().setTitle("Historial de viajes");
 
 
         sql = new SqliteController(getApplicationContext(), "kangup",null, 1);

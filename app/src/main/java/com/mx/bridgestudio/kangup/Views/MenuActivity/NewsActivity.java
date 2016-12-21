@@ -59,10 +59,8 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         View contentView = inflater.inflate(R.layout.activity_news, null, false);
         mDrawer.addView(contentView, 0);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Noticias");
-        setSupportActionBar(toolbar);
        // drw.setNameToolbar("Noticias");
+        getSupportActionBar().setTitle("Noticias");
 
         webs.getAllNews(NewsActivity.this,this);
 

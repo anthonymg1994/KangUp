@@ -69,6 +69,8 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         adaptador = new AdapterFavoriteList(this,tipos);
         listFav.setAdapter(adaptador);
 
+        getSupportActionBar().setTitle("Favoritos");
+
         sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
         sql.Connect();
         user = sql.user();

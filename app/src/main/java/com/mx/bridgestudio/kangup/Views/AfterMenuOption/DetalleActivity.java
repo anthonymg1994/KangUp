@@ -24,6 +24,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
@@ -100,9 +101,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
 
         car=(Vehicle)bundle.getSerializable("value");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
-        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
 
         vermas = (Button)findViewById(R.id.vermas);
         vermas.setOnClickListener(this);

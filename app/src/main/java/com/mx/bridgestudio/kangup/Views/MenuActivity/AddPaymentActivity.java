@@ -60,6 +60,8 @@ public class AddPaymentActivity extends AppCompatActivity {
         //getSupportActionBar().hide();
         //drw.setNameToolbar("Agregar metodos de pago");
 
+        getSupportActionBar().setTitle("Agregar metodos de pago");
+
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
