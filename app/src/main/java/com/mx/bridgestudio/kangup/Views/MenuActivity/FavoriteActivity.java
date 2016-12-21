@@ -56,6 +56,8 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
+    private DrawerActivity drw = new DrawerActivity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,8 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_favorite, null, false);
         mDrawer.addView(contentView, 0);
+
+        //drw.setNameToolbar("Favoritos");
 
         listFav = (ListView)findViewById(R.id.listFav);
         adaptador = new AdapterFavoriteList(this,tipos);

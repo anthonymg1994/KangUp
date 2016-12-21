@@ -1,6 +1,7 @@
 package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,7 @@ import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
@@ -46,6 +48,8 @@ public class AddPaymentActivity extends AppCompatActivity {
     private boolean flag = true;
     private SqliteController sql;
 
+    private DrawerActivity drw = new DrawerActivity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarAddPay);
         setSupportActionBar(toolbar);
         //getSupportActionBar().hide();
+        //drw.setNameToolbar("Agregar metodos de pago");
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){

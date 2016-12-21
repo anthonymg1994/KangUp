@@ -50,6 +50,7 @@ public class ProfileActivity extends DrawerActivity implements
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
+    private DrawerActivity drw = new DrawerActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class ProfileActivity extends DrawerActivity implements
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(user.getFirstName()+ " " +user.getLastName());
+        //drw.setNameToolbar(user.getFirstName()+ " " +user.getLastName());
 
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);

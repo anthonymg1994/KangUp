@@ -46,6 +46,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
+    private DrawerActivity drw = new DrawerActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         View contentView = inflater.inflate(R.layout.activity_history, null, false);
         mDrawer.addView(contentView, 0);
 
-
+        //drw.setNameToolbar("Historial");
 
 
         recycler = (RecyclerView) findViewById(R.id.recycler_view);

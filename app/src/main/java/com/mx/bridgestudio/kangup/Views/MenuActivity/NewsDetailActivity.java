@@ -25,6 +25,8 @@ public class NewsDetailActivity extends DrawerActivity {
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
+    private DrawerActivity drw =  new DrawerActivity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,7 @@ public class NewsDetailActivity extends DrawerActivity {
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_news_detail, null, false);
         mDrawer.addView(contentView, 0);
+
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +84,7 @@ public class NewsDetailActivity extends DrawerActivity {
 
         title.setText(NewsActivity.titulo);
         desc.setText(NewsActivity.desc);
+        //drw.setNameToolbar(NewsActivity.titulo);
 
 
     }

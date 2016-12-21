@@ -80,6 +80,8 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
     public static int flagDate = 0;
     protected DrawerLayout mDrawer;
 
+    private DrawerActivity drw = new DrawerActivity();
+
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
@@ -102,6 +104,8 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Marcas");
+
+        //drw.setNameToolbar("Marcas");
         // 1. get a reference to recyclerView
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         // 2. set layoutManger

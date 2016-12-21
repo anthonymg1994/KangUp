@@ -77,6 +77,7 @@ public class CarsXtype extends DrawerActivity implements
     protected DrawerLayout mDrawer;
 
     private SqliteController sql;
+    private DrawerActivity drw = new DrawerActivity();
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
@@ -103,6 +104,8 @@ public class CarsXtype extends DrawerActivity implements
             }
         });
         setSupportActionBar(toolbar);
+
+        //drw.setNameToolbar(""+CardAdapter.marca);
 
         //tab host
         tabHost = (MaterialTabHost)findViewById(R.id.tabHost);

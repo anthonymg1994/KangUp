@@ -89,6 +89,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
     Calendar time = Calendar.getInstance();
     DAOReservaciones dao = new DAOReservaciones();
 
+    private DrawerActivity drw = new DrawerActivity();
+
 
     //toolbardown
     private ImageButton catalogo, favoritos, historial;
@@ -103,6 +105,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_reservacion, null, false);
         mDrawer.addView(contentView, 0);
+
+        //drw.setNameToolbar("Reservacion");
 
 
         reservar = (Button) findViewById(R.id.confirmarButton);

@@ -36,13 +36,15 @@ public class DrawerActivity extends AppCompatActivity
     private SqliteController sql;
     private User user = new User();
 
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(getLayoutId());
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -185,5 +187,9 @@ public class DrawerActivity extends AppCompatActivity
         name.setText(user.getFirstName() +" "+ user.getLastName());
         email.setText(user.getEmail());
 
+    }
+
+    public void setNameToolbar(String name){
+        toolbar.setTitle(name);
     }
 }

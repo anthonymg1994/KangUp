@@ -51,6 +51,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
+    private DrawerActivity drw = new DrawerActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Noticias");
         setSupportActionBar(toolbar);
+       // drw.setNameToolbar("Noticias");
 
         webs.getAllNews(NewsActivity.this,this);
 

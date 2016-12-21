@@ -77,6 +77,8 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     ViewPager page;
     CirclePageIndicator indicator;
 
+    private DrawerActivity drw = new DrawerActivity();
+
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
@@ -108,6 +110,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
         setSupportActionBar(toolbar);
+        //drw.setNameToolbar(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
 
         vermas = (Button)findViewById(R.id.vermas);
         vermas.setOnClickListener(this);

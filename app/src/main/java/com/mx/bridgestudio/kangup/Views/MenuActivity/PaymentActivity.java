@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.graphics.drawable.DrawableWrapper;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +47,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
+    private DrawerActivity drw = new DrawerActivity();
 
     CharSequence[] values = {"Tarjeta de débito/crédito","Tiendas de conveniencia"};
 
@@ -56,6 +58,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarPay);
         setSupportActionBar(toolbar);
+        //drw.setNameToolbar("Metodos de pago");
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){

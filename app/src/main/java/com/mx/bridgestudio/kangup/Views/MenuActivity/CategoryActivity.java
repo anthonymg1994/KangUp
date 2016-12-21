@@ -40,6 +40,8 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
+    private DrawerActivity drw =  new DrawerActivity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             }
         });
 
+        //drw.setNameToolbar("Categorias");
 
 
         list = (ListView)findViewById(R.id.listCategory);
