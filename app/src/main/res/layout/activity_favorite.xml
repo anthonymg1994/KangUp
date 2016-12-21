@@ -5,7 +5,8 @@
     android:id="@+id/activity_favorite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity">
+    tools:context="com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity"
+    android:background="#000000">
 
     <ListView
         android:layout_width="0dp"
@@ -16,7 +17,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintBottom_toTopOf="@+id/include3"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="52dp" />
+        android:layout_marginTop="52dp"
+        />
 
     <include
         android:layout_height="wrap_content"

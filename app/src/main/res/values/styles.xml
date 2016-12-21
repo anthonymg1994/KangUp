@@ -26,4 +26,7 @@
     <style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
 </resources>

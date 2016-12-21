@@ -169,10 +169,11 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
 
 
     public void showChangeLangDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this,AlertDialog.);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.fragment_page, null);
-        dialogView.setBackground("");
+
+
         dialogBuilder.setView(dialogView);
 
 
