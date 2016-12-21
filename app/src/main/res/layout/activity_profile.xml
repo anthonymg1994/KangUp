@@ -32,28 +32,11 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="110dp"
-        app:layout_collapseMode="parallax"
-        app:layout_collapseParallaxMultiplier="0.7"
-        android:id="@+id/imageProfile"
-        android:src="@drawable/perfil1"
-        android:scaleType="centerCrop"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13"
-        android:layout_height="110dp" />
 
     <include
         layout="@layout/content_profile"
         android:layout_height="398dp"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:id="@+id/include6"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
@@ -66,17 +49,6 @@
         android:layout_marginTop="4dp"
         app:layout_constraintTop_toBottomOf="@+id/imageProfile" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/edit"
-        tools:layout_editor_absoluteX="984dp"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <include
         android:layout_height="wrap_content"
         layout="@layout/toolbar_down"
@@ -85,6 +57,35 @@
         app:layout_constraintBottom_toBottomOf="@+id/include6"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/include6"
-        app:layout_constraintRight_toRightOf="@+id/include6" />
+        app:layout_constraintRight_toRightOf="@+id/include6"
+        tools:layout_constraintRight_creator="1" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/wrap"
+        android:layout_height="0dp"
+        android:baselineAligned="true"
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:background="#000000"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        app:layout_constraintBottom_toTopOf="@+id/include6"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="110dp"
+            android:id="@+id/imageProfile"
+            android:src="@drawable/perfil1"
+            android:scaleType="centerCrop"
+            android:layout_height="110dp"
+            tools:layout_editor_absoluteY="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
