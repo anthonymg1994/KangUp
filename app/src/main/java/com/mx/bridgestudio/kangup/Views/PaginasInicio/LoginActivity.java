@@ -1,17 +1,25 @@
 package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
+import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -20,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Paypal.Paypal;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
@@ -43,11 +52,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private ImageView logo;
+    private TextInputLayout txt;
     private Button guest,register,forgot,signin;
 CoordinatorLayout coordinatorLayout;
     private User user = new User();
     private SqliteController sql = new SqliteController(this,"kangup",null,1);
-
+    private Control control = new Control();
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +67,7 @@ CoordinatorLayout coordinatorLayout;
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.snackbarCoordinatorLayout);
 
 
+    control.changeColorStatusBar(LoginActivity.this);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user);
         mEmailView.setHintTextColor(getResources().getColor(R.color.white));
         logo = (ImageView)findViewById(R.id.logo);

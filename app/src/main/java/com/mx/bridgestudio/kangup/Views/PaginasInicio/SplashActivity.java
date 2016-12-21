@@ -1,19 +1,25 @@
 package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.R;
 
 public class SplashActivity extends AppCompatActivity {
+    private Control control = new Control();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        control.changeColorStatusBar(SplashActivity.this);
 
         getSupportActionBar().hide();
 

@@ -67,10 +67,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         name = (EditText)findViewById(R.id.namedrawer);
+        name.setHintTextColor(getResources().getColor(R.color.white));
         lastname = (EditText)findViewById(R.id.lastname);
+        lastname.setHintTextColor(getResources().getColor(R.color.white));
         mail = (EditText)findViewById(R.id.editEmail);
+        mail.setHintTextColor(getResources().getColor(R.color.white));
         password = (EditText)findViewById(R.id.password);
+        password.setHintTextColor(getResources().getColor(R.color.white));
         confirm = (EditText)findViewById(R.id.passwordr);
+        confirm.setHintTextColor(getResources().getColor(R.color.white));
         imageViewRound=(ImageView)findViewById(R.id.imageProfile);
         imageViewRound.setOnClickListener(this);
 

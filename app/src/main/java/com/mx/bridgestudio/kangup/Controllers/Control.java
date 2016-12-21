@@ -7,13 +7,20 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
+import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,7 +51,7 @@ public class Control {
 
 
     public static Bitmap onActivityResult(int requestCode, int resultCode, Intent data, Activity activity) {
-        Control.onActivityResult(requestCode, resultCode, data,activity);
+        Control.onActivityResult(requestCode, resultCode, data, activity);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == activity.RESULT_OK && data != null && data.getData() != null) {
 
@@ -59,7 +66,7 @@ public class Control {
         return bitmap;
     }
 
-    public String getStringImage(Bitmap bmp){
+    public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -67,8 +74,8 @@ public class Control {
         return encodedImage;
     }
 
-    private void uploadImage(final Context mContext){
-        class UploadImage extends AsyncTask<Bitmap,Void,String> {
+    private void uploadImage(final Context mContext) {
+        class UploadImage extends AsyncTask<Bitmap, Void, String> {
 
             ProgressDialog loading;
             RequestHandler rh = new RequestHandler();
@@ -76,14 +83,14 @@ public class Control {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(mContext, "Uploading...", null,true,true);
+                loading = ProgressDialog.show(mContext, "Uploading...", null, true, true);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(mContext,s,Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, s, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -91,10 +98,10 @@ public class Control {
                 Bitmap bitmap = params[0];
                 String uploadImage = getStringImage(bitmap);
 
-                HashMap<String,String> data = new HashMap<>();
+                HashMap<String, String> data = new HashMap<>();
 
                 data.put(UPLOAD_KEY, uploadImage);
-                String result = rh.sendPostRequest(UPLOAD_URL,data);
+                String result = rh.sendPostRequest(UPLOAD_URL, data);
 
                 return result;
             }
@@ -104,19 +111,19 @@ public class Control {
         ui.execute(bitmap);
     }
 
-    public int LogicaReservaciones(Date fechaInicio, String horaInicio,String horaTermino){
+    public int LogicaReservaciones(Date fechaInicio, String horaInicio, String horaTermino) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         Date horaInicioReal = null;
         Date horaInicioMargen = null;
-        Date  horaFinalReal = null;
-        Date  horaFinalMargen = null;
+        Date horaFinalReal = null;
+        Date horaFinalMargen = null;
 
         try {
             /*Obtengo tiempo de inicio de la reservacion y le reduzco dos hora = hora de margen para poder
             estar disponible para otra reservacion
             */
             horaInicioReal = simpleDateFormat.parse(horaInicio);
-            String date1 = String.valueOf(horaInicioReal.getHours()-2);
+            String date1 = String.valueOf(horaInicioReal.getHours() - 2);
             horaInicioMargen = simpleDateFormat.parse(date1);
 
 
@@ -124,9 +131,8 @@ public class Control {
             estar disponible para otra reservacion
             */
             horaFinalReal = simpleDateFormat.parse(horaTermino);
-            String date2 = String.valueOf(horaFinalReal.getHours()+2);
+            String date2 = String.valueOf(horaFinalReal.getHours() + 2);
             horaFinalMargen = simpleDateFormat.parse(date2);
-
 
 
         } catch (ParseException e) {
@@ -142,25 +148,25 @@ public class Control {
         int hours = (int) ((difference - (1000 * 60 * 60 * 24 * days)) / (1000 * 60 * 60));
         int min = (int) (difference - (1000 * 60 * 60 * 24 * days) - (1000 * 60 * 60 * hours)) / (1000 * 60);
         hours = (hours < 0 ? -hours : hours);
-        Log.i("======= Hours"," :: "+hours);
+        Log.i("======= Hours", " :: " + hours);
 
 
         //Regreso minutos para poder calcular total a pagar
         return min;
     }
 
-    public double calculatePrice(int minutes,Vehicle vehicle, Package[] paquetes){
+    public double calculatePrice(int minutes, Vehicle vehicle, Package[] paquetes) {
 
 
         //calculo precio por minuto
 
 
         //Multiplicacion de precio x minuto por minutos de rservacion
-        double totalXtiempo = getTotalPrecio(minutes,vehicle);
+        double totalXtiempo = getTotalPrecio(minutes, vehicle);
         double gastosExtras = 0.0;
 
         //Obtener todos los precio de los paquetes agregados si es el caso
-        if(paquetes.length > 0) {
+        if (paquetes.length > 0) {
             for (int j = 0; j < paquetes.length; j++) {
                 gastosExtras += paquetes[j].getTotal();
             }
@@ -178,28 +184,27 @@ public class Control {
     }
 
 
-
-    public double getPricesXAuto(Vehicle vehicle){
+    public double getPricesXAuto(Vehicle vehicle) {
         // agregar consulta de regresar precio de hora por automovil
         return 1.0;
     }
 
 
-    public void agregarTiempoReservacionCurso(int minutos, Vehicle vehicle){
+    public void agregarTiempoReservacionCurso(int minutos, Vehicle vehicle) {
 
         // chwecar como se vovlera a cargara el aumento de tiempo y como hacer el cobro de nuevo para la misma transaccion
-        double precioTiempo = getTotalPrecio(minutos,vehicle);
+        double precioTiempo = getTotalPrecio(minutos, vehicle);
 
     }
 
-    public double getTotalPrecio(int minutos,Vehicle vehicle){
+    public double getTotalPrecio(int minutos, Vehicle vehicle) {
         double precioHoraAuto = getPricesXAuto(vehicle);
-        double precioXminuto = (precioHoraAuto/60);
+        double precioXminuto = (precioHoraAuto / 60);
         double price = precioXminuto * minutos;
         return price;
     }
 
-    public double cancelarReservacion(int minutos,int id_reservacion){
+    public double cancelarReservacion(int minutos, int id_reservacion) {
         double cargosCancelacion = 0.0;
         /*agregar metodo y obtener total a pagar de reservacion
             Agregar campo de hora de reservacion
@@ -214,17 +219,18 @@ public class Control {
         int hours = (int) ((diferencia - (1000 * 60 * 60 * 24 * days)) / (1000 * 60 * 60));
         int min = (int) (diferencia - (1000 * 60 * 60 * 24 * days) - (1000 * 60 * 60 * hours)) / (1000 * 60);
         double precioTotalReservacion = 100;
-        if(min > 15){
+        if (min > 15) {
             //obtener de sw
             cargosCancelacion = 100 * .15;
             //Revisar si los cargos por cancelacion seran actualizados desde la bd o panel ponerlo en sw
-        }else{
-                cargosCancelacion = 100 * 0.05;
+        } else {
+            cargosCancelacion = 100 * 0.05;
         }
 
         return cargosCancelacion;
     }
-    public void notificarSocio(Vehicle vehicle){
+
+    public void notificarSocio(Vehicle vehicle) {
         /*
             int idsocio= webs.getSocioXvehiculo(vehicle);
             int idvehiculo = getvehicle;
@@ -232,11 +238,22 @@ public class Control {
             control.sendNotificaction(idsocio);
          */
     }
-    public void CheckReservationStatus(int id_reservacion){
+
+    public void CheckReservationStatus(int id_reservacion) {
         /*
         String status = webs.checkStatus(id_reservacion);
 
          */
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void changeColorStatusBar(Activity activity1) {
+        Activity activity = activity1;
+        Window window = activity.getWindow();
+        activity.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(activity, R.color.status));
+    }
 }
+
