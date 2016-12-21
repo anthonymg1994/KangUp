@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncVehiculosXmarca;
+import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
@@ -17,6 +18,7 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Model;
+import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
@@ -51,6 +53,11 @@ public class webServices {
     public void  favsByUser(OnDataSendFavorites OnDataSendFavorites, Context context, User user){
 
         new AsyncFavs(OnDataSendFavorites,context,user).execute();
+
+    }
+    public void  EmailConfirmationReservation(Context context, Reservacion reservacion){
+
+        new asyncEmailConfirmacion(context,reservacion).execute();
 
     }
 /*

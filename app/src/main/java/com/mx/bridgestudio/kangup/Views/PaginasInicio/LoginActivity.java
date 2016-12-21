@@ -57,7 +57,7 @@ CoordinatorLayout coordinatorLayout;
 
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user);
-
+        mEmailView.setAlpha(0.5f);
         logo = (ImageView)findViewById(R.id.logo);
         guest = (Button)findViewById(R.id.guest);
         guest.setOnClickListener(new View.OnClickListener() {
