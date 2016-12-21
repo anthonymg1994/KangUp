@@ -40,6 +40,8 @@ public class AddPaymentActivity extends AppCompatActivity {
 
     public String colors[] = {"Tarjeta de debito","Tarjeta de credito"};
 
+    private boolean flag = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,52 @@ public class AddPaymentActivity extends AppCompatActivity {
                         if(LuhnAlgoritm(card.getText().toString())){
                             if(card.getText().toString().matches(numberPattern)){
                                 pay.setNum_cuenta(card.getText().toString());
+
+                                if(Integer.valueOf(mm.getText().toString()) > 0 && Integer.valueOf(mm.getText().toString()) < 13){
+                                    if(mm.getText().toString().matches(numberPattern))
+                                    {
+                                        pay.setMes_venc(mm.getText().toString());
+
+                                        if(yy.getText().toString().matches(numberPattern))
+                                        {
+                                            pay.setAnio_venc(yy.getText().toString());
+
+                                            if(cvv.getText().toString().matches(cvvPattern)){
+                                                pay.setCvv(cvv.getText().toString());
+
+                                                pay.setId_forma_pago(value);
+
+                                                webs.insertFormaPago(AddPaymentActivity.this,pay);
+                                                Toast msg = Toast.makeText(getBaseContext(),
+                                                        "Forma de pago guardada con exito!", Toast.LENGTH_SHORT);
+                                                msg.show();
+                                            }
+                                            else
+                                            {
+                                                Toast msg = Toast.makeText(getBaseContext(),
+                                                        "CVV invalido, intentelo de nuevo", Toast.LENGTH_SHORT);
+                                                msg.show();
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Toast msg = Toast.makeText(getBaseContext(),
+                                                    "Anio invalido, intentelo de nuevo", Toast.LENGTH_SHORT);
+                                            msg.show();
+                                        }
+                                    }
+                                    else {
+                                        Toast msg = Toast.makeText(getBaseContext(),
+                                                "Mes invalido, intentelo de nuevo", Toast.LENGTH_SHORT);
+                                        msg.show();
+                                    }
+                                }
+                                else{
+                                    Toast msg = Toast.makeText(getBaseContext(),
+                                            "Mes invalido, intentelo de nuevo", Toast.LENGTH_SHORT);
+                                    msg.show();
+                                }
+
                             }
                             else
                             {
@@ -93,52 +141,6 @@ public class AddPaymentActivity extends AppCompatActivity {
                                 "Tarjeta invalida, intentelo de nuevo", Toast.LENGTH_SHORT);
                         msg.show();
                     }
-
-                    if(Integer.valueOf(mm.getText().toString()) > 0 && Integer.valueOf(mm.getText().toString()) < 13){
-                        if(mm.getText().toString().matches(numberPattern))
-                        {
-                            pay.setMes_venc(mm.getText().toString());
-                        }
-                        else {
-                            Toast msg = Toast.makeText(getBaseContext(),
-                                    "Mes invalido, intentelo de nuevo", Toast.LENGTH_SHORT);
-                            msg.show();
-                        }
-                    }
-                    else{
-                        Toast msg = Toast.makeText(getBaseContext(),
-                                "Mes invalido, intentelo de nuevo", Toast.LENGTH_SHORT);
-                        msg.show();
-                    }
-
-                    if(yy.getText().toString().matches(numberPattern))
-                    {
-                        pay.setAnio_venc(yy.getText().toString());
-                    }
-                    else
-                    {
-                        Toast msg = Toast.makeText(getBaseContext(),
-                                "Anio invalido, intentelo de nuevo", Toast.LENGTH_SHORT);
-                        msg.show();
-                    }
-
-                    if(cvv.getText().toString().matches(cvvPattern)){
-                        pay.setCvv(cvv.getText().toString());
-                    }
-                    else
-                    {
-                        Toast msg = Toast.makeText(getBaseContext(),
-                                "CVV invalido, intentelo de nuevo", Toast.LENGTH_SHORT);
-                        msg.show();
-                    }
-
-                    pay.setId_forma_pago(value);
-
-                    webs.insertFormaPago(AddPaymentActivity.this,pay);
-                    Toast msg = Toast.makeText(getBaseContext(),
-                            "Forma de pago guardada con exito!", Toast.LENGTH_SHORT);
-                    msg.show();
-
                 }
             }
         });
