@@ -57,7 +57,7 @@ CoordinatorLayout coordinatorLayout;
 
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user);
-        mEmailView.setAlpha(0.5f);
+        mEmailView.setHintTextColor(getResources().getColor(R.color.white));
         logo = (ImageView)findViewById(R.id.logo);
         guest = (Button)findViewById(R.id.guest);
         guest.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +88,7 @@ CoordinatorLayout coordinatorLayout;
 
 
         mPasswordView = (EditText) findViewById(R.id.passwordeye);
+        mPasswordView.setHintTextColor(getResources().getColor(R.color.white));
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
