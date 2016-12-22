@@ -98,27 +98,6 @@ public class ProfileActivity extends DrawerActivity implements
 
 
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag=1;
-                if(flag ==1)
-                {
-                    fab.setImageResource(R.drawable.ic_menu_send);
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    flag=0;
-                }
-                else {
-
-                }
-
-            }
-        });
-
-
-
 
         sql = new SqliteController(ProfileActivity.this, "kangup",null, 1);
         sql.Connect();
