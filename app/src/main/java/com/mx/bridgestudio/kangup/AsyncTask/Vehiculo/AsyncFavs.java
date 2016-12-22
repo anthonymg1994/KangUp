@@ -7,21 +7,17 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
+import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -73,7 +69,7 @@ public class AsyncFavs  extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(mContext);
+        progressDialog = new ProgressDialog(mContext, R.style.MyDialogTheme);
         progressDialog.setMessage("Procesando...");
         progressDialog.show();
         progressDialog.setCancelable(false);

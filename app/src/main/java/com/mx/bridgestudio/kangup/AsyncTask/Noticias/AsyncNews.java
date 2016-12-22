@@ -7,13 +7,10 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAONoticias;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAObrand;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.News;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
+import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 
 import org.json.JSONArray;
@@ -69,7 +66,7 @@ public class AsyncNews extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(mContext);
+        progressDialog = new ProgressDialog(mContext, R.style.MyDialogTheme);
         progressDialog.setMessage("Procesando...");
         progressDialog.show();
         progressDialog.setCancelable(false);

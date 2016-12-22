@@ -8,13 +8,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOFormasPago;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOuser;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
-import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.AddPaymentActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 
 import org.json.JSONObject;
@@ -50,7 +46,7 @@ public class AsyncInsertPaymentForms extends AsyncTask<String,Integer,Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(mContext);
+        progressDialog = new ProgressDialog(mContext,R.style.MyDialogTheme);
         progressDialog.show();
         progressDialog.setContentView(R.layout.dialog);
         progressDialog.setCancelable(false);

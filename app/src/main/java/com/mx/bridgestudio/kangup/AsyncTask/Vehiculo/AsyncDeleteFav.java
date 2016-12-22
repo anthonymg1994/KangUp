@@ -8,13 +8,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOuser;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.Favorite;
-import com.mx.bridgestudio.kangup.Models.User;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 
 import org.json.JSONObject;
@@ -52,7 +47,7 @@ public class AsyncDeleteFav extends AsyncTask<String,Integer,Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(mContext);
+        progressDialog = new ProgressDialog(mContext,R.style.MyDialogTheme);
         progressDialog.show();
         progressDialog.setContentView(R.layout.dialog);
         progressDialog.setCancelable(false);

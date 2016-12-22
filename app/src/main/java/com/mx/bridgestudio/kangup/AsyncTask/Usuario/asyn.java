@@ -6,8 +6,9 @@ package com.mx.bridgestudio.kangup.AsyncTask.Usuario;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
 import android.view.View;
+
+import com.mx.bridgestudio.kangup.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +50,7 @@ public class asyn extends AsyncTask<URL,String,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(context);
+        progressDialog = new ProgressDialog(context, R.style.MyDialogTheme);
         progressDialog.setMessage("Solicitando cita...");
         progressDialog.show();
         progressDialog.setCancelable(false);

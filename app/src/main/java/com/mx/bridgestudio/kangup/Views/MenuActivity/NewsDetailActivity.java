@@ -2,16 +2,17 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Models.News;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
@@ -21,16 +22,19 @@ public class NewsDetailActivity extends DrawerActivity {
     protected DrawerLayout mDrawer;
 
     private TextView title,desc;
+    Control control = new Control();
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private DrawerActivity drw =  new DrawerActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_news_detail);
+        control.changeColorStatusBar(NewsDetailActivity.this);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);

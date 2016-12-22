@@ -33,8 +33,9 @@
         android:gravity="bottom|center_vertical|center_horizontal|center"
         android:padding="10dip"
         app:centered="true"
-        app:fillColor="#000000"
-        app:pageColor="#000000"
+        app:fillColor="#ffcc00"
+        app:pageColor="#ffcc00"
+        app:strokeColor="#ffcc00"
         app:snap="false"
         android:layout_width="match_parent"
 

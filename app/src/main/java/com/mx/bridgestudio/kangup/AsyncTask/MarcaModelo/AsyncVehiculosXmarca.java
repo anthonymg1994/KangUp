@@ -10,6 +10,7 @@ import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
+import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 
 import org.json.JSONArray;
@@ -66,7 +67,7 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(mContext);
+        progressDialog = new ProgressDialog(mContext, R.style.MyDialogTheme);
         progressDialog.setMessage("Procesando...");
         progressDialog.show();
         progressDialog.setCancelable(false);

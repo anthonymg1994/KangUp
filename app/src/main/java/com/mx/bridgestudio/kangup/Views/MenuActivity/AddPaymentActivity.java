@@ -1,9 +1,12 @@
 package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +19,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.CCUtils;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
@@ -44,16 +47,20 @@ public class AddPaymentActivity extends AppCompatActivity {
     private ImageButton catalogo,noticias,favoritos,historial;
 
     public String colors[] = {"Tarjeta de debito","Tarjeta de credito"};
+    Control control = new Control();
 
     private boolean flag = true;
     private SqliteController sql;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private DrawerActivity drw = new DrawerActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_payment);
+
+        control.changeColorStatusBar(AddPaymentActivity.this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarAddPay);
         setSupportActionBar(toolbar);

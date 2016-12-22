@@ -28,5 +28,9 @@
     </style>
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="colorAccent">#ffcc00</item>
+        <item name="android:textColorPrimary">@color/white</item>
+
     </style>
 </resources>

@@ -7,14 +7,10 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOFormasPago;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
-import com.mx.bridgestudio.kangup.Models.User;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
+import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 
 import org.json.JSONArray;
@@ -23,8 +19,6 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import static com.mx.bridgestudio.kangup.R.id.user;
 
 /**
  * Created by Isaac on 20/12/2016.
@@ -74,7 +68,7 @@ public class AsyncPaymentFormsUser extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(mContext);
+        progressDialog = new ProgressDialog(mContext, R.style.MyDialogTheme);
         progressDialog.setMessage("Procesando...");
         progressDialog.show();
         progressDialog.setCancelable(false);

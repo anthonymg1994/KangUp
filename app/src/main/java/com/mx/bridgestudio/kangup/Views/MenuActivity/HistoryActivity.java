@@ -2,7 +2,10 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,13 +17,14 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterViaje;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
 import com.mx.bridgestudio.kangup.Models.Lists.ListViaje;
 import com.mx.bridgestudio.kangup.Models.RoadTrip;
-import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
@@ -42,16 +46,19 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     ArrayList<ListViaje> items= new ArrayList<>();
     private SqliteController sql;
     private User user = new User();
+    Control control = new Control();
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
     private DrawerActivity drw = new DrawerActivity();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_favorite);
+        control.changeColorStatusBar(HistoryActivity.this);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
@@ -80,9 +87,10 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
 
         webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
 
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
 
-        final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
-        recycler.addItemDecoration(itemDecoration);
+        recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
+
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {

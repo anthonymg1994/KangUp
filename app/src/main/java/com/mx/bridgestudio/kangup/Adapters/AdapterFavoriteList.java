@@ -3,7 +3,6 @@ package com.mx.bridgestudio.kangup.Adapters;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +16,10 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
-import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
-import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.util.ArrayList;
-
-import static com.mx.bridgestudio.kangup.R.id.user;
 
 /**
  * Created by Isaac on 09/11/2016.
@@ -77,6 +71,7 @@ public class AdapterFavoriteList extends ArrayAdapter<ListCar> {
                     Toast.makeText(context, "Eliminado veh "+list.get(arg0).getId(), Toast.LENGTH_LONG).show();
                     Toast.makeText(context, "Eliminado user "+user.getId(), Toast.LENGTH_LONG).show();
                     //int xy =(Integer) v.getTag();
+
                 }
             });
             TextView Nnom = (TextView) item.findViewById(R.id.titleCar);

@@ -23,10 +23,10 @@
             <ImageView
                 android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/album_cover_height"
                 android:clickable="true"
-                android:background="@drawable/marca"
-                android:scaleType="centerInside" />
+                android:background="#262626"
+                android:scaleType="centerInside"
+                android:layout_height="140dp" />
 
             <TextView
                 android:id="@+id/title"

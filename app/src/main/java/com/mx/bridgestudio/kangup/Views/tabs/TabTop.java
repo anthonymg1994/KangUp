@@ -1,13 +1,10 @@
 package com.mx.bridgestudio.kangup.Views.tabs;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,27 +14,18 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
+import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
-import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.TypesOfAutomobiles;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -82,6 +70,9 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
         CatalogCar.flagDate = 1;
 
         recycler = (RecyclerView) v.findViewById(R.id.recycler_view);
+        Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
+
+        recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         recycler.setHasFixedSize(true);
         // Usar un administrador para LinearLayout
         lManager = new LinearLayoutManager(getActivity());
@@ -113,7 +104,7 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
 
 
         // Crear un nuevo adaptador
-        adapter = new AdaptadorType(items);
+        adapter = new AdaptadorType(getActivity(),items);
         recycler.setAdapter(adapter);
 
         return v;

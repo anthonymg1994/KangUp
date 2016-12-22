@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.os.StrictMode;
 
 import com.mx.bridgestudio.kangup.Models.Brand;
-import com.mx.bridgestudio.kangup.Models.Model;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 
@@ -229,6 +228,54 @@ public class DAOVehiculo {
         HttpURLConnection httpURLConnection = null;
         try {
             URL url = new URL("http://kangup.com.mx/index.php/deleteFav");
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(5000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.connect();
+            JSONObject jsonParam = new JSONObject();
+            //jsonParam.put("id",user.getId());
+            jsonParam.put("id_vehiculo",id_vehiculo);
+            jsonParam.put("id_usuario",id_user);
+            OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
+            os.write(jsonParam.toString());
+            os.flush();
+        }catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String line;
+        StringBuffer response = new StringBuffer();
+        try {
+            if(httpURLConnection.getResponseCode() == 500)
+                return false;
+            //return "0";
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            if(reader != null) {
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+            }else
+                response = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        httpURLConnection.disconnect();
+        String json = response.toString();
+
+        return true;
+    }
+
+    public boolean addFavoriteCar(int id_vehiculo, int id_user){
+        ProgressDialog progressDialog;
+        HttpURLConnection httpURLConnection = null;
+        try {
+            URL url = new URL("http://kangup.com.mx/index.php/addFav");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");

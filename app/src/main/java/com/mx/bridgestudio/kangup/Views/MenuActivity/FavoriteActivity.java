@@ -2,7 +2,9 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
@@ -46,16 +49,20 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     public static int id_vehiculo = 0;
     public static String nombre_vehiculo = "";
     ArrayList<ListCar> items= new ArrayList<>();
+    Control control = new Control();
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private DrawerActivity drw = new DrawerActivity();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_favorite);
+        control.changeColorStatusBar(FavoriteActivity.this);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
@@ -80,6 +87,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
 
         //listFav.setOnItemClickListener(this);
         listFav.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
         listFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,

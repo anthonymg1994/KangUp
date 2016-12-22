@@ -1,17 +1,16 @@
 package com.mx.bridgestudio.kangup.Controllers.ServiciosWeb;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import com.mx.bridgestudio.kangup.AsyncTask.Formas_Pago.AsyncInsertPaymentForms;
 import com.mx.bridgestudio.kangup.AsyncTask.Formas_Pago.AsyncPaymentFormsUser;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncVehiculosXmarca;
-import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Noticias.AsyncNews;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncAddFav;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDeleteFav;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncFavs;
@@ -24,11 +23,8 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Models.Brand;
-import com.mx.bridgestudio.kangup.Models.Model;
-import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
-import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 
@@ -85,7 +81,9 @@ public class webServices {
     public void destroyFav(Context context, int id_vehiculo, int id_user){
         new AsyncDeleteFav(context,id_vehiculo,id_user).execute();
     }
-
+    public void addFav(Context context, int id_vehiculo, int id_user){
+        new AsyncAddFav(context,id_vehiculo,id_user).execute();
+    }
 /*
     public void Noticias(Context context, News news){
         new AsyncNews(context,news).execute();

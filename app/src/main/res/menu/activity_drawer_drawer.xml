@@ -3,40 +3,40 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/perfil_icon"
+            android:title="Perfil" />
+        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="Catalogo" />
         <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Perfil" />
-        <item
             android:id="@+id/nav_pay"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/forma_icon"
             android:title="Forma de pago" />
         <item
             android:id="@+id/nav_history"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/historial_icon"
             android:title="Historial" />
         <item
             android:id="@+id/nav_favorite"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/fav_icon"
             android:title="Favoritos" />
         <item
             android:id="@+id/nav_news"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/noticia_icon"
             android:title="Noticias" />
     </group>
 
-    <item android:title="Otras">
+    <item android:title="Otro">
         <menu>
             <item
                 android:id="@+id/nav_privacy"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Politicas" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/salir_icon"
                 android:title="Cerrar sesion" />
         </menu>
     </item>
