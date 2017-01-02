@@ -32,19 +32,7 @@
                     android:id="@+id/catalogoToolbar"
                     android:scaleType="centerCrop"
                     android:background="@android:color/transparent"
-                    app:srcCompat="?android:attr/actionModeFindDrawable"
-                    android:tint="@android:color/white" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Catalogo"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:id="@+id/catalogoTxt" />
-
+                    app:srcCompat="@drawable/catalogo"/>
             </LinearLayout>
 
             <LinearLayout
@@ -66,22 +54,10 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_gravity="center"
-                    app:srcCompat="?android:attr/actionModeCopyDrawable"
+                    app:srcCompat="@drawable/historial"
                     android:scaleType="centerCrop"
                     android:background="@android:color/transparent"
-                    android:id="@+id/historialToolbar"
-                    android:tint="@android:color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Historial"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:id="@+id/historialTxt"
-                    android:layout_height="wrap_content" />
+                    android:id="@+id/historialToolbar" />
 
             </LinearLayout>
 
@@ -100,22 +76,10 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_gravity="center"
-                    app:srcCompat="?android:attr/actionModeSelectAllDrawable"
+                    app:srcCompat="@drawable/favoritos"
                     android:id="@+id/favoritosToolbar"
                     android:scaleType="centerCrop"
-                    android:background="@android:color/transparent"
-                    android:tint="@android:color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Favoritos"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:id="@+id/favoritosTxt"
-                    android:layout_height="wrap_content" />
+                    android:background="@android:color/transparent"/>
 
             </LinearLayout>
 
@@ -134,22 +98,10 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_gravity="center"
-                    app:srcCompat="?android:attr/actionModePasteDrawable"
+                    app:srcCompat="@drawable/noticias"
                     android:id="@+id/noticiasToolbar"
                     android:scaleType="centerCrop"
-                    android:background="@android:color/transparent"
-                    android:tint="@android:color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Noticias"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:id="@+id/noticiasTxt"
-                    android:layout_height="wrap_content" />
+                    android:background="@android:color/transparent" />
 
             </LinearLayout>
 
