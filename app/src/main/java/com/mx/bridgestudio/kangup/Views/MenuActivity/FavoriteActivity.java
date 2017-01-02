@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
@@ -51,6 +52,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     ArrayList<ListCar> items= new ArrayList<>();
     Control control = new Control();
 
+    public TextView emptyTest;
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
@@ -69,7 +71,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_favorite, null, false);
         mDrawer.addView(contentView, 0);
-
+        emptyTest =(TextView) findViewById(android.R.id.empty);
         //drw.setNameToolbar("Favoritos");
 
         listFav = (ListView)findViewById(R.id.listFav);
@@ -162,10 +164,17 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
 
             tipos.add(i,list[i]);
         }
+        if(list.length<=0){
+            setEmptyTest("No tiene favoritos : ( ");
+        }
         adaptador.notifyDataSetChanged();
 
     }
 
+
+    public void setEmptyTest(CharSequence text){
+        emptyTest.setText(text);
+    }
     @Override
     public void onBackPressed()
     {
