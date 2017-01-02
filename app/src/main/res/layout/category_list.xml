@@ -22,7 +22,9 @@
         android:layout_marginTop="3dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginBottom="3dp" />
+        android:layout_marginBottom="3dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:text="VER TODOS LOS"

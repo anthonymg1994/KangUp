@@ -54,26 +54,26 @@ public class AdapterCategory extends ArrayAdapter<Category> {
 
 
             if(arg0==0){
-                imgImg.setImageResource(R.drawable.limusinas);
+                imgImg.setImageResource(R.drawable.limusinacat);
                 flag = 1;
                 autocompleteTxt.setText("VER TODAS LAS");
                 tipo.setText("LIMUSIONAS");
             }
             if(arg0==1) {
 
-                imgImg.setImageResource(R.drawable.lujo);
+                imgImg.setImageResource(R.drawable.lujocat);
                 flag =2;
                 autocompleteTxt.setText("VER TODOS LOS");
                 tipo.setText("AUTOS DE LUJO");
             }
             if(arg0==2) {
-                imgImg.setImageResource(R.drawable.clasicos);
+                imgImg.setImageResource(R.drawable.clasicocat);
                 autocompleteTxt.setText("VER TODAS LOS");
               flag = 3;
                 tipo.setText("AUTOS CLASICOS");
             }
             if(arg0==3){
-                imgImg.setImageResource(R.drawable.suvs);
+                imgImg.setImageResource(R.drawable.suvscat);
                 autocompleteTxt.setText("VER TODAS LAS");
                 flag = 4;
                 tipo.setText("SUBS O CAMIONETAS");
