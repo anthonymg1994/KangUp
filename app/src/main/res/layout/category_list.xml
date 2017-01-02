@@ -3,30 +3,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/backall"
+    >
 
     <ImageView
         app:srcCompat="@drawable/suvs"
         android:id="@+id/imageCateg"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:scaleType="centerCrop"
-        android:layout_width="95dp"
-        android:layout_height="58dp"
+        android:scaleType="fitXY"
+        android:layout_width="59dp"
+        android:layout_height="49dp"
         android:background="@drawable/limusinas"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
         android:layout_marginTop="3dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginBottom="3dp" />
 
     <TextView
-        android:text="TextView"
-        android:layout_width="210dp"
-        android:layout_height="40dp"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="94dp"
-        android:id="@+id/textView5" />
+        android:text="VER TODOS LOS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:layout_marginStart="5dp"
+        app:layout_constraintLeft_toRightOf="@+id/imageCateg"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:text="AUTOS DE LUJO"
+        android:layout_width="131dp"
+        android:layout_height="18dp"
+        android:id="@+id/txttipo"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toRightOf="@+id/textView5"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:textSize="14sp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        app:srcCompat="@drawable/right_arrow"
+        android:id="@+id/imageButtonsIG"
+        android:background="#262626"
+
+        android:tint="#ffcc00"
+        android:scaleType="centerCrop"
+        android:elevation="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/txttipo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp" />
 
 </android.support.constraint.ConstraintLayout>

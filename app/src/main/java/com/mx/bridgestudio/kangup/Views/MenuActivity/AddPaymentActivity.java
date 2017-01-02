@@ -1,8 +1,12 @@
 package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +19,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.CCUtils;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.Payment;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
+import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
@@ -28,7 +36,7 @@ public class AddPaymentActivity extends AppCompatActivity {
     private ImageButton camara;
 
     private int value=0;
-    private String cvvPattern = "/^[0-9]{3,4}$/";
+    private String cvvPattern = "^([0-9]{3,4})$";
     private String numberPattern = "[0-9]*";
 
     private webServices webs = new webServices();
@@ -39,17 +47,27 @@ public class AddPaymentActivity extends AppCompatActivity {
     private ImageButton catalogo,noticias,favoritos,historial;
 
     public String colors[] = {"Tarjeta de debito","Tarjeta de credito"};
+    Control control = new Control();
 
     private boolean flag = true;
+    private SqliteController sql;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private DrawerActivity drw = new DrawerActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_payment);
 
+        control.changeColorStatusBar(AddPaymentActivity.this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarAddPay);
         setSupportActionBar(toolbar);
         //getSupportActionBar().hide();
+        //drw.setNameToolbar("Agregar metodos de pago");
+
+        getSupportActionBar().setTitle("Agregar metodos de pago");
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
@@ -88,6 +106,14 @@ public class AddPaymentActivity extends AppCompatActivity {
                                                 pay.setCvv(cvv.getText().toString());
 
                                                 pay.setId_forma_pago(value);
+
+                                                sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+                                                sql.Connect();
+                                                User user = new User();
+                                                user = sql.user();
+                                                sql.Close();
+
+                                                pay.setId_usuario(user.getId());
 
                                                 webs.insertFormaPago(AddPaymentActivity.this,pay);
                                                 Toast msg = Toast.makeText(getBaseContext(),
@@ -188,6 +214,13 @@ public class AddPaymentActivity extends AppCompatActivity {
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(AddPaymentActivity.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override

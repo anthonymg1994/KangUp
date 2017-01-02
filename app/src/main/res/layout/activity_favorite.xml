@@ -5,10 +5,10 @@
     android:id="@+id/activity_favorite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity">
+    tools:context="com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity"
+    android:background="#000000">
 
     <ListView
-        android:layout_below="@+id/toolbar"
         android:layout_width="0dp"
         android:id="@+id/listFav"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -17,7 +17,11 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintBottom_toTopOf="@+id/include3"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="52dp" />
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp" />
 
     <include
         android:layout_height="wrap_content"

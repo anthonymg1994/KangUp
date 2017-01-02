@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/backall">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view_catalogo"
@@ -10,20 +11,22 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/card_margin"
         android:elevation="3dp"
-        android:background="#ffffff"
+        android:background="#262626"
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#262626"
             >
 
             <ImageView
                 android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/album_cover_height"
                 android:clickable="true"
-                android:scaleType="centerCrop" />
+                android:background="#262626"
+                android:scaleType="centerInside"
+                android:layout_height="140dp" />
 
             <TextView
                 android:id="@+id/title"

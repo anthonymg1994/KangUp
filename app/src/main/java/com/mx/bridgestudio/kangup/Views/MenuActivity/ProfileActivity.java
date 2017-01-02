@@ -4,35 +4,32 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.renderscript.ScriptGroup;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.AppBarLayout;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Controllers.Tools;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {
@@ -47,13 +44,17 @@ public class ProfileActivity extends DrawerActivity implements
     private  Toolbar toolbar;
     private User user = new User();
     Tools tol;
+    Control control = new Control();
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
+    private DrawerActivity drw = new DrawerActivity();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        control.changeColorStatusBar(ProfileActivity.this);
 
         //setContentView(R.layout.activity_profile);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -68,7 +69,9 @@ public class ProfileActivity extends DrawerActivity implements
         sql.Close();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(user.getFirstName()+ " " +user.getLastName());
+        //toolbar.setTitle(user.getFirstName()+ " " +user.getLastName());
+        //drw.setNameToolbar(user.getFirstName()+ " " +user.getLastName());
+        getSupportActionBar().setTitle(user.getFirstName()+ " " +user.getLastName());
 
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);
@@ -95,27 +98,6 @@ public class ProfileActivity extends DrawerActivity implements
 
 
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag=1;
-                if(flag ==1)
-                {
-                    fab.setImageResource(R.drawable.ic_menu_send);
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    flag=0;
-                }
-                else {
-
-                }
-
-            }
-        });
-
-
-
 
         sql = new SqliteController(ProfileActivity.this, "kangup",null, 1);
         sql.Connect();
@@ -132,6 +114,13 @@ public class ProfileActivity extends DrawerActivity implements
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(ProfileActivity.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override

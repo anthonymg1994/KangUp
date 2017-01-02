@@ -2,33 +2,31 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.AdapterNews;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
+import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
 import com.mx.bridgestudio.kangup.Models.Lists.ListNews;
 import com.mx.bridgestudio.kangup.Models.News;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
-import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
 import java.util.ArrayList;
 
@@ -48,23 +46,26 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
     private News n;
 
     protected DrawerLayout mDrawer;
+    Control control = new Control();
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
+    private DrawerActivity drw = new DrawerActivity();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_news);
+        control.changeColorStatusBar(NewsActivity.this);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_news, null, false);
         mDrawer.addView(contentView, 0);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Noticias");
-        setSupportActionBar(toolbar);
+       // drw.setNameToolbar("Noticias");
+        getSupportActionBar().setTitle("Noticias");
 
         webs.getAllNews(NewsActivity.this,this);
 
@@ -77,6 +78,15 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setColorFilter(ContextCompat.getColor(NewsActivity.this,R.color.colorAccent));
+
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(NewsActivity.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +104,11 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
             }
         });
 
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
 
         recycler = (RecyclerView) findViewById(R.id.newsRecycler);
+        recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
+
         recycler.setHasFixedSize(true);
 
         // Usar un administrador para LinearLayout

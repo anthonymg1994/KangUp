@@ -4,17 +4,16 @@ import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
@@ -36,14 +35,20 @@ public class DrawerActivity extends AppCompatActivity
     private SqliteController sql;
     private User user = new User();
 
+    public static int flag=0;
+    public static String title="";
+
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(getLayoutId());
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -66,7 +71,7 @@ public class DrawerActivity extends AppCompatActivity
         View header = navigationView.inflateHeaderView(R.layout.nav_header_drawer);
 
         name = (TextView) header.findViewById(R.id.namedrawer);
-        email = (TextView) header.findViewById(R.id.emaildrawer);
+       // email = (TextView) header.findViewById(R.id.emaildrawer);
 
         drawer.requestLayout();
 
@@ -183,7 +188,11 @@ public class DrawerActivity extends AppCompatActivity
 
 
         name.setText(user.getFirstName() +" "+ user.getLastName());
-        email.setText(user.getEmail());
+//        email.setText(user.getEmail());
 
+    }
+
+    public void setNameToolbar(String name){
+        toolbar.setTitle(name);
     }
 }

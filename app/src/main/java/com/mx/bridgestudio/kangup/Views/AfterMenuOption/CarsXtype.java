@@ -4,54 +4,39 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Adapters.ViewPagerAdapter;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
-import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
-import com.mx.bridgestudio.kangup.Models.SampleDivider;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
-
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -70,22 +55,25 @@ public class CarsXtype extends DrawerActivity implements
     ViewPager viewPager;
     ViewPagerAdapterTab androidAdapter;
     private int mYear, mMonth, mDay,mHour, mMinute,pm;
-
+    private Control control = new Control();
     private ImageButton time,date;
     private TextView hora,fecha;
     protected DrawerLayout mDrawer;
 
     private SqliteController sql;
+    private DrawerActivity drw = new DrawerActivity();
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
     // private List items = new ArrayList();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.content_types);
+        control.changeColorStatusBar(CarsXtype.this);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
@@ -93,15 +81,8 @@ public class CarsXtype extends DrawerActivity implements
         View contentView = inflater.inflate(R.layout.typeofcar, null, false);
         mDrawer.addView(contentView, 0);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcars);
-        toolbar.setTitle(""+CardAdapter.marca);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"your icon was clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
-        setSupportActionBar(toolbar);
+        //drw.setNameToolbar(""+CardAdapter.marca);
+        getSupportActionBar().setTitle(""+CardAdapter.marca);
 
         //tab host
         tabHost = (MaterialTabHost)findViewById(R.id.tabHost);
@@ -116,6 +97,8 @@ public class CarsXtype extends DrawerActivity implements
         fecha = (TextView) findViewById(R.id.date);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(CarsXtype.this,R.color.colorAccent));
+
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,6 +107,13 @@ public class CarsXtype extends DrawerActivity implements
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CarsXtype.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override

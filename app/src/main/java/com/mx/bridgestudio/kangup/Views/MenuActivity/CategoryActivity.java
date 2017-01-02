@@ -2,8 +2,11 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
 import com.mx.bridgestudio.kangup.Adapters.AndroidImageAdapter;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Category;
@@ -35,20 +39,24 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     private Brand brand = new Brand();
     public static int opcionSeleccionada;
     AsyncBrands asyncTask;
+    Control control = new Control();
     protected DrawerLayout mDrawer;
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_category);
+        control.changeColorStatusBar(CategoryActivity.this);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_category, null, false);
+
         mDrawer.addView(contentView, 0);
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPageAndroid);
@@ -62,9 +70,11 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             }
         });
 
+        getSupportActionBar().setTitle("Categorias");
 
 
         list = (ListView)findViewById(R.id.listCategory);
+        list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         adaptador = new AdapterCategory(this,tipos);
         list.setAdapter(adaptador);
         //list.setOnClickListener(this);
@@ -86,6 +96,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         fillList();
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(CategoryActivity.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +105,13 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CategoryActivity.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,29 +4,29 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.ListEspecificaciones;
@@ -36,19 +36,14 @@ import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
-import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
-import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.mx.bridgestudio.kangup.R.id.viewPager;
 
 public class DetalleActivity extends DrawerActivity implements OnDataSendDetail, View.OnClickListener {
 
@@ -75,10 +70,13 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     SlidingImage_Adapter s;
     ViewPager page;
     CirclePageIndicator indicator;
-
+    RatingBar ratingBar;
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
+    Control control = new Control();
 
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +85,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
       //  webs.DetailVehicle(this,this,vehicle);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
+        control.changeColorStatusBar(DetalleActivity.this);
 
 
         //dialog.setTitle();
@@ -98,15 +97,16 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_detalle, null, false);
         mDrawer.addView(contentView, 0);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        Drawable drawable = ratingBar.getProgressDrawable();
+        drawable.setColorFilter(Color.parseColor("#ffcc00"), PorterDuff.Mode.SRC_ATOP);
 
         Intent intent=this.getIntent();
         Bundle bundle=intent.getExtras();
 
         car=(Vehicle)bundle.getSerializable("value");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
-        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
 
         vermas = (Button)findViewById(R.id.vermas);
         vermas.setOnClickListener(this);
@@ -114,14 +114,14 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         reservar.setOnClickListener(this);
         modelo = (TextView) findViewById(R.id.modelo);
         descripcion = (TextView) findViewById(R.id.descripcion);
-        horizontal_recycler_view= (RecyclerView) findViewById(R.id.horizontal_recycler_view);
+     //   horizontal_recycler_view= (RecyclerView) findViewById(R.id.horizontal_recycler_view);
 
-        data = fill_with_data();
+      //  data = fill_with_data();
 
-        horizontalAdapter=new HorizontalAdapter(data, getApplication());
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(DetalleActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
-        horizontal_recycler_view.setAdapter(horizontalAdapter);
+      //  horizontalAdapter=new HorizontalAdapter(data, getApplication());
+       // LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(DetalleActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        //horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
+        //horizontal_recycler_view.setAdapter(horizontalAdapter);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +132,13 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(DetalleActivity.this, NewsActivity.class));
+            }
+        });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,9 +173,11 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
 
 
     public void showChangeLangDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.fragment_page, null);
+
+
         dialogBuilder.setView(dialogView);
 
 

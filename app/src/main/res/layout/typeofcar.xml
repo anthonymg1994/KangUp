@@ -5,19 +5,22 @@
     android:id="@+id/typeofcar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="#000000">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarcars"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
         android:background="#29235b"
         app:layout_collapseMode="pin"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp" />
 
     <LinearLayout android:id="@+id/footer"
         android:layout_height="wrap_content" android:orientation="horizontal"
-        android:background="#ffa500"
+        android:background="#ffcc00"
         android:layout_alignParentBottom="true" style="@android:style/ButtonBar"
         app:layout_constraintBottom_toTopOf="@+id/include"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -85,11 +88,18 @@
         android:layout_height="0dp"
         android:layout_below="@+id/tabHost"
         android:visibility="visible"
-        android:layout_width="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
+        android:background="#000000"
+        android:layout_width="0dp"
         app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintTop_toBottomOf="@+id/tabHost"
-        app:layout_constraintVertical_bias="0.62">
+        app:layout_constraintVertical_bias="0.62"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp">
 
     </android.support.v4.view.ViewPager>
 
@@ -97,7 +107,7 @@
         android:id="@+id/tabHost"
         android:layout_height="48dp"
         app:accentColor="@color/white"
-        app:primaryColor="@color/colorPrimaryDark"
+        app:primaryColor="#000000"
         android:layout_below="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"

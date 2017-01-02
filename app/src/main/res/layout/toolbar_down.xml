@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
-        android:background="@android:color/holo_orange_light"
+        android:background="#262626"
         android:orientation="vertical"
         android:layout_gravity="bottom">
 
@@ -29,10 +29,11 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_gravity="center"
-                    app:srcCompat="@drawable/kangup"
                     android:id="@+id/catalogoToolbar"
                     android:scaleType="centerCrop"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"
+                    app:srcCompat="?android:attr/actionModeFindDrawable"
+                    android:tint="@android:color/white" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,10 +66,11 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_gravity="center"
-                    app:srcCompat="@drawable/kangup"
+                    app:srcCompat="?android:attr/actionModeCopyDrawable"
                     android:scaleType="centerCrop"
                     android:background="@android:color/transparent"
-                    android:id="@+id/historialToolbar" />
+                    android:id="@+id/historialToolbar"
+                    android:tint="@android:color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,10 +100,11 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_gravity="center"
-                    app:srcCompat="@drawable/kangup"
+                    app:srcCompat="?android:attr/actionModeSelectAllDrawable"
                     android:id="@+id/favoritosToolbar"
                     android:scaleType="centerCrop"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"
+                    android:tint="@android:color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -131,10 +134,11 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:layout_gravity="center"
-                    app:srcCompat="@drawable/kangup"
+                    app:srcCompat="?android:attr/actionModePasteDrawable"
                     android:id="@+id/noticiasToolbar"
                     android:scaleType="centerCrop"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"
+                    android:tint="@android:color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"

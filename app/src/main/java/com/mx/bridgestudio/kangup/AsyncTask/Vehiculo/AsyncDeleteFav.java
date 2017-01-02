@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.AsyncTask.Usuario;
+package com.mx.bridgestudio.kangup.AsyncTask.Vehiculo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,11 +7,10 @@ import android.os.AsyncTask;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOuser;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 
 import org.json.JSONObject;
 
@@ -19,27 +18,30 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by USUARIO on 29/11/2016.
+ * Created by Isaac on 21/12/2016.
  */
 
-public class AsyncInsertUser  extends AsyncTask<String,Integer,Boolean> {
+public class AsyncDeleteFav extends AsyncTask<String,Integer,Boolean> {
+
     private JSONObject responseJson;
     private ProgressDialog progressDialog;
     private HttpURLConnection httpURLConnection;
     private String param1;
     private String param2;
     private URL url;
-    private User user;
     webServices services = new webServices();
-    DAOuser Duser = new DAOuser();
+    DAOVehiculo Dveh = new DAOVehiculo();
     private Context mContext;
     private boolean flag = false;
 
-    public AsyncInsertUser(Context context,User user) {
+    private int id_vehiculo = 0;
+    private int id_user = 0;
+
+    public AsyncDeleteFav(Context context, int id_vehiculo, int id_user) {
         super();
         mContext = context;
-        this.user = user;
-
+        this.id_vehiculo = id_vehiculo;
+        this.id_user = id_user;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class AsyncInsertUser  extends AsyncTask<String,Integer,Boolean> {
     }
     @Override
     protected Boolean doInBackground(String... params) {
-        flag = Duser.registerUser(user);
+        flag = Dveh.deleteFavoriteCar(id_vehiculo,id_user);
         return true;
     }
 
@@ -66,15 +68,13 @@ public class AsyncInsertUser  extends AsyncTask<String,Integer,Boolean> {
             progressDialog.dismiss();
         }
         if(result){
-            Toast.makeText(mContext, "Insertado nuevo usuario", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Favorito eliminado", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent().setClass(
-                    mContext,CategoryActivity.class);
+                    mContext, FavoriteActivity.class);
             mContext.startActivity(intent);
 
         }else{
             Toast.makeText(mContext, "Vuelve a intentarlo", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

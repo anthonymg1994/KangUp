@@ -71,7 +71,7 @@ public class TypesOfAutomobiles extends DrawerActivity implements View.OnClickLi
                 })
         );
             // Crear un nuevo adaptador
-        adapter = new AdaptadorType(items);
+        adapter = new AdaptadorType(TypesOfAutomobiles.this,items);
         recycler.setAdapter(adapter);
         fillList();
     }

@@ -1,26 +1,14 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
-import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -30,23 +18,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
-import com.mx.bridgestudio.kangup.Adapters.PlacesAutoCompleteAdapter;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.User;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,20 +73,28 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
     Calendar time = Calendar.getInstance();
     DAOReservaciones dao = new DAOReservaciones();
 
+    Control control = new Control();
+    private DrawerActivity drw = new DrawerActivity();
+
 
     //toolbardown
     private ImageButton catalogo, favoritos, historial;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_favorite);
+        control.changeColorStatusBar(Reservacion.this);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_reservacion, null, false);
         mDrawer.addView(contentView, 0);
+
+        //drw.setNameToolbar("Reservacion");
+        getSupportActionBar().setTitle("Reservacion");
 
 
         reservar = (Button) findViewById(R.id.confirmarButton);
@@ -134,6 +127,13 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
             }
         });
         noticias = (ImageButton) findViewById(R.id.noticiasToolbar);
+        noticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(Reservacion.this, NewsActivity.class));
+            }
+        });
         favoritos = (ImageButton) findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
