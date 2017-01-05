@@ -9,15 +9,20 @@ import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncVehiculosXmarca;
 import com.mx.bridgestudio.kangup.AsyncTask.Noticias.AsyncNews;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
+import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncTaskUpdateUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncAddFav;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDeleteFav;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncFavs;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncRecommend;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncScore;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.historyByUser;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterRecommend;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
@@ -81,9 +86,21 @@ public class webServices {
     public void destroyFav(Context context, int id_vehiculo, int id_user){
         new AsyncDeleteFav(context,id_vehiculo,id_user).execute();
     }
+
+    public void updateUser(Context context,User user){
+        new AsyncTaskUpdateUser(context,user).execute();
+    }
     public void addFav(Context context, int id_vehiculo, int id_user){
         new AsyncAddFav(context,id_vehiculo,id_user).execute();
     }
+    public void TopRankingVehiculo(Context context, Vehicle vehiculo,OnDataSendFilterScore OnDataSendToActivity){
+        new AsyncScore(context,vehiculo,OnDataSendToActivity).execute();
+    }
+    public void getRecommendCVehicles(Context context, Vehicle vehiculo,OnDataSendFilterRecommend OnDataSendToActivity){
+        new AsyncRecommend(context,vehiculo,OnDataSendToActivity).execute();
+    }
+
+
 /*
     public void Noticias(Context context, News news){
         new AsyncNews(context,news).execute();

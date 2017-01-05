@@ -1,7 +1,9 @@
 package com.mx.bridgestudio.kangup.Controllers;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,8 +17,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
@@ -26,6 +32,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -34,8 +41,8 @@ import java.util.HashMap;
  * Created by USUARIO on 20/12/2016.
  */
 
-public class Control {
-
+public class Control  {
+    private int mYear, mMonth, mDay,mHour, mMinute,pm;
     public static final String UPLOAD_URL = "http://simplifiedcoding.16mb.com/PhotoUpload/upload.php";
     public static final String UPLOAD_KEY = "image";
     private static int PICK_IMAGE_REQUEST = 1;
@@ -254,6 +261,64 @@ public class Control {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(activity, R.color.status));
+    }
+
+    public void showDialogTime(Context mContext ,final TextView hora){
+
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        pm = c.get(Calendar.AM_PM);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+
+                        hora.setText(hourOfDay + ":" + minute + " ");
+                       // sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                        //)  sql.updateReservacionHora(hourOfDay + ":" + minute);
+                    }
+                }, mHour, mMinute, false);
+
+        timePickerDialog.show();
+    }
+
+    public void showDialogCalendar(Context mContext ,final TextView fecha){
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        Date parseDate = null;
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+                        String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        try {
+                            parseDate = dateFormat.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
+                        String finalString = dateFormat1.format(parseDate);
+                        fecha.setText(""+finalString);
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+
     }
 }
 

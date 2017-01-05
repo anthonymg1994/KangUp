@@ -131,7 +131,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAI4PGKAtAXvMTvvcEfMj8sE9AI90OaKyg" />
+            android:value="AIzaSyCQF2RDLchRhcqygfARkmUJqOibjcoCvOU" />
 
         <activity
             android:name=".Views.MenuActivity.NewsActivity"

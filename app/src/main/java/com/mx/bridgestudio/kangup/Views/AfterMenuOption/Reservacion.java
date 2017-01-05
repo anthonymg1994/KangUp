@@ -3,6 +3,7 @@ package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -11,11 +12,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +39,17 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,9 +61,15 @@ import java.util.Locale;
  * Created by USUARIO on 14/12/2016.
  */
 
-public class Reservacion extends DrawerActivity implements View.OnClickListener {
+public class Reservacion extends DrawerActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
 
+    private static final String LOG_TAG = "kangup";
+
+    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+    private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
+    private static final String OUT_JSON = "/json";
+    private static final String API_KEY = "AIzaSyCjWw7BILSM1YnBwf48nU-RglJP1fmOKUE";
 
     protected DrawerLayout mDrawer;
     private webServices webs = new webServices();
@@ -168,14 +191,14 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
         if (v.getId() == R.id.confirmarButton) {
             //confirmar reservacion
             Confirmacion(v);
-
-
         }
         if (v.getId() == R.id.imageButtonCalendar) {
             // seleccionar fecha de viaje
+            control.showDialogCalendar(Reservacion.this,fecha);
         }
         if (v.getId() == R.id.imageButtonTime) {
             //seleccionar hota de viaje
+            control.showDialogTime(Reservacion.this,hora);
         }
         if (v.getId() == R.id.addruta) {
             //Agregar origenes y destinos
@@ -204,12 +227,14 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Intent setIntent = new Intent(Reservacion.this, PlacesAutoCompleteActivity.class);
+                setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(setIntent);
 
             }
         });
 
         final EditText destino = (EditText) dialogView.findViewById(R.id.destinotxt);
+
 
         dialogBuilder.setTitle("Nueva ruta");
         dialogBuilder.setMessage("Introduzca su nueva ruta:");
@@ -232,6 +257,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
     }
 
     public void Confirmacion(final View v) {
+
+
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
         dialogo.setTitle("Confirmacion");
         dialogo.setMessage("¿Esta seguro de realizar la reservacion?");
@@ -260,6 +287,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
             }
         });
         dialogo.show();
+
+
     }
 
 
@@ -351,6 +380,13 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener 
 */
 
         startActivity(intent);
+    }
+
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_news_detail"
     android:layout_width="match_parent"
+    android:background="#ffffff"
     android:layout_height="match_parent"
     tools:context="com.mx.bridgestudio.kangup.Views.MenuActivity.NewsDetailActivity">
 
@@ -42,7 +43,7 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.05" />
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <ImageView
         android:layout_width="0dp"
@@ -72,6 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/titleDetaiNews"
         app:layout_constraintBottom_toTopOf="@+id/include6"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:background="#ffffff" />
 
 </android.support.constraint.ConstraintLayout>

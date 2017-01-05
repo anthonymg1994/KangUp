@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOuser;
@@ -22,35 +23,28 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Anthony on 02/11/2016.
+ * Created by USUARIO on 04/01/2017.
  */
 
-public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
-    private URL url;
-    private HttpURLConnection httpURLConnection;
+public class AsyncTaskUpdateUser  extends AsyncTask<String,Integer,Boolean> {
     private JSONObject responseJson;
-    private JSONObject jsonParam;
     private ProgressDialog progressDialog;
-    private View rootLayout;
-    private Context context;
-    private SqliteController sql;
-    private User u = new User();
-
-
+    private HttpURLConnection httpURLConnection;
+    private String param1;
+    private String param2;
+    private URL url;
     private User user;
     webServices services = new webServices();
     DAOuser Duser = new DAOuser();
-    Context mContext;
+    private Context mContext;
+    private boolean flag = false;
 
-
-    public AsynkTaskUser(Context context,User user) {
+    public AsyncTaskUpdateUser(Context context,User user) {
         super();
-        this.mContext = context;
-        this.user  =user;
+        mContext = context;
+        this.user = user;
 
     }
-
-
 
     @Override
     protected void onPreExecute() {
@@ -59,17 +53,10 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
         progressDialog.setMessage("Procesando...");
         progressDialog.show();
         progressDialog.setCancelable(false);
-
     }
     @Override
     protected Boolean doInBackground(String... params) {
-        try {
-            user = Duser.authenticate(user);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        flag = Duser.updateUser(user);
         return true;
     }
 
@@ -79,26 +66,12 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
         if(progressDialog.isShowing()){
             progressDialog.dismiss();
         }
-       if(result && user.getFirstName()!= null){
-       //     Toast.makeText(mContext, "Bienvenido  "+user.getFirstName(), Toast.LENGTH_SHORT).show();
-         
-           sql = new SqliteController(mContext, "kangup",null, 1);
-           sql.Connect();
+        if(result){
+            Toast.makeText(mContext, "actualizado nuevo usuario", Toast.LENGTH_SHORT).show();
 
-           if(user.getAddress() == null){
-               user.setAddress("");
-           }
-
-            sql.Close();
-
-
-            Intent intent = new Intent().setClass(
-                    mContext,CategoryActivity.class);
-            mContext.startActivity(intent);
-
-       }else{
-            Toast.makeText(mContext, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
-       }
+        }else{
+            Toast.makeText(mContext, "vuelve a intentarlo", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

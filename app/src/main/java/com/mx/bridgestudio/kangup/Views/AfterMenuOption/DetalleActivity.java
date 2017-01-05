@@ -106,13 +106,12 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
 
         car=(Vehicle)bundle.getSerializable("value");
 
-        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
+        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca() + " " + car.getValoracion());
 
         vermas = (Button)findViewById(R.id.vermas);
         vermas.setOnClickListener(this);
         reservar = (Button)findViewById(R.id.reservarr);
         reservar.setOnClickListener(this);
-        modelo = (TextView) findViewById(R.id.modelo);
         descripcion = (TextView) findViewById(R.id.descripcion);
      //   horizontal_recycler_view= (RecyclerView) findViewById(R.id.horizontal_recycler_view);
 
@@ -165,9 +164,12 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         Toast.makeText(this, "string"+response, Toast.LENGTH_SHORT).show();
         vehicle = vehicle;
     }
+
     */
+
     public void fillFields(Vehicle vehicle){
-        modelo.setText(vehicle.getModel() + " " + vehicle.getYear() + " " + vehicle.getMarca());
+        ratingBar.setRating(vehicle.getValoracion());
+
         descripcion.setText(vehicle.getDescription());
     }
 

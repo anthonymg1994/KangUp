@@ -152,6 +152,7 @@ public class DAOVehiculo {
         vehicle.setMarca(obj.getString("Marca"));
         vehicle.setModel(obj.getString("Modelo"));
         vehicle.setYear(obj.getString("year"));
+        vehicle.setValoracion(obj.getInt("puntuacion"));
         // vehicle.setId_brand(obj.getString("id_brand"));
         ///vehicle.setId_categoria(obj.getString("id_categoria"));
         // vehicle.setId_parther(obj.getString("Socio"));
@@ -319,4 +320,125 @@ public class DAOVehiculo {
         return true;
     }
 
+    public String getVehiclesByScoreFilter(Vehicle vehicle) throws JSONException {
+        ProgressDialog progressDialog;
+        HttpURLConnection httpURLConnection = null;
+        InputStream in = null;
+
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL("http://kangup.com.mx/index.php/score");
+            //cambiar nombre de metodo de vehiculos
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(5000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.connect();
+            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("id_marca", String.valueOf(vehicle.getId_brand()));
+            jsonParam.put("id_categoria", String.valueOf(vehicle.getId_categoria()));
+            OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
+            os.write(jsonParam.toString());
+            os.flush();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String line;
+        StringBuffer response = new StringBuffer();
+        try {
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            if (httpURLConnection.getResponseCode() == 500)
+                return "0";
+            int statusCode = httpURLConnection.getResponseCode();
+            InputStream is = null;
+            if (statusCode >= 200 && statusCode < 400) {
+                // Create an InputStream in order to extract the response object
+                is = httpURLConnection.getInputStream();
+            } else {
+                is = httpURLConnection.getErrorStream();
+            }
+            if (reader != null) {
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+            } else
+                response = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        httpURLConnection.disconnect();
+
+
+        return response.toString();
+    }
+
+    public String getRecommendCVehicles(Vehicle vehicle) throws JSONException {
+        ProgressDialog progressDialog;
+        HttpURLConnection httpURLConnection = null;
+        InputStream in = null;
+
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL("http://kangup.com.mx/index.php/recommend");
+            //cambiar nombre de metodo de vehiculos
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(5000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.connect();
+            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("id_marca", String.valueOf(vehicle.getId_brand()));
+            jsonParam.put("id_categoria", String.valueOf(vehicle.getId_categoria()));
+            OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
+            os.write(jsonParam.toString());
+            os.flush();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String line;
+        StringBuffer response = new StringBuffer();
+        try {
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            if (httpURLConnection.getResponseCode() == 500)
+                return "0";
+            int statusCode = httpURLConnection.getResponseCode();
+            InputStream is = null;
+            if (statusCode >= 200 && statusCode < 400) {
+                // Create an InputStream in order to extract the response object
+                is = httpURLConnection.getInputStream();
+            } else {
+                is = httpURLConnection.getErrorStream();
+            }
+            if (reader != null) {
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+            } else
+                response = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        httpURLConnection.disconnect();
+
+
+        return response.toString();
+    }
 }

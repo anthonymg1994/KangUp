@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,8 +17,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Controllers.Tools;
 import com.mx.bridgestudio.kangup.Models.User;
@@ -35,7 +36,7 @@ public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {
 
     private ImageButton showCalendar;
-    private EditText email,address,city,cellphone;
+    private EditText email,address,city,cellphone,name,lastname;
     private int mYear, mMonth, mDay;
     private TextView editBirth;
     private int flag=0;
@@ -43,7 +44,9 @@ public class ProfileActivity extends DrawerActivity implements
     private SqliteController sql;
     private  Toolbar toolbar;
     private User user = new User();
+    private FloatingActionButton edit;
     Tools tol;
+    webServices webs = new webServices();
     Control control = new Control();
 
     //toolbardown
@@ -71,16 +74,48 @@ public class ProfileActivity extends DrawerActivity implements
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setTitle(user.getFirstName()+ " " +user.getLastName());
         //drw.setNameToolbar(user.getFirstName()+ " " +user.getLastName());
-        getSupportActionBar().setTitle(user.getFirstName()+ " " +user.getLastName());
+        getSupportActionBar().setTitle("Perfil");
 
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);
 //Arreglar cuando selccione edittext solo salg dialg y se esconda teclado
+        lastname = (EditText) findViewById(R.id.editText);
+        name = (EditText) findViewById(R.id.editText2);
         editBirth = (TextView)findViewById(R.id.editBirth);
-        cellphone = (EditText) findViewById(R.id.editText);
+        cellphone = (EditText) findViewById(R.id.editName);
         email = (EditText)findViewById(R.id.editEmail);
         address = (EditText)findViewById(R.id.editAddress);
+        edit = (FloatingActionButton) findViewById(R.id.editinfo);
         city = (EditText)findViewById(R.id.editCity);
+
+        edit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                user.setFirstName(name.getText().toString());
+                user.setLastName(lastname.getText().toString());
+                user.setFnacimiento(editBirth.getText().toString());
+                user.setCellphone(cellphone.getText().toString());
+                user.setEmail(email.getText().toString());
+                //agregar campo en xml de password y ver como cambiar la contraseña
+                user.setCiudad(city.getText().toString());
+                user.setAddress(address.getText().toString());
+
+                sql = new SqliteController(ProfileActivity.this, "kangup",null, 1);
+                sql.Connect();
+                sql.updateProfile(user);
+
+                    Toast.makeText(ProfileActivity.this, "Actalizacion exitosa", Toast.LENGTH_SHORT).show();
+                User user = sql.user();
+
+
+
+
+                webs.updateUser(ProfileActivity.this,user);
+
+                sql.Close();
+            }
+        });
+
      //   cellphone = (EditText)findViewById(R.id.ed);
 
 
@@ -95,10 +130,6 @@ public class ProfileActivity extends DrawerActivity implements
                 }
             }
         });
-
-
-
-
         sql = new SqliteController(ProfileActivity.this, "kangup",null, 1);
         sql.Connect();
         //user = sql.user();
@@ -163,7 +194,7 @@ public class ProfileActivity extends DrawerActivity implements
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd de MMM de yy");
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/mm/yy");
                        String finalString = dateFormat1.format(parseDate);
 
 
@@ -177,9 +208,14 @@ public class ProfileActivity extends DrawerActivity implements
 
 
         //AGREGO Nombre de usuario a toolbar
-        toolbar.setTitle(user.getFirstName() + " " + user.getLastName());
+        toolbar.setTitle("Perfil");
         setSupportActionBar(toolbar);
 
+        if(!user.getLastName().equals("null"))
+            name.setText(user.getFirstName());
+
+        if(!user.getLastName().equals("null"))
+            lastname.setText(user.getLastName());
         //Validar si el campo esta null no muestro nada en los edittext
         if(!user.getFnacimiento().equals("null"))
              editBirth.setText(user.getFnacimiento());
@@ -188,8 +224,8 @@ public class ProfileActivity extends DrawerActivity implements
              email.setText(user.getEmail());
         //Agregar a bd un campo de domicilio
         //Cambiar ciudad por domicilio get
-        if(!user.getCiudad().equals("null"))
-            address.setText(user.getCiudad());
+        if(!user.getAddress().equals("null"))
+            address.setText(user.getAddress());
 
         if(!user.getCiudad().equals("null"))
             city.setText(user.getCiudad());

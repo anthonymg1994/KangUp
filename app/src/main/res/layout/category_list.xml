@@ -9,7 +9,6 @@
     >
 
     <ImageView
-        app:srcCompat="@drawable/suvs"
         android:id="@+id/imageCateg"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -18,7 +17,7 @@
         android:scaleType="fitXY"
         android:layout_width="59dp"
         android:layout_height="49dp"
-        android:background="@drawable/limusinas"
+
         android:layout_marginTop="3dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"

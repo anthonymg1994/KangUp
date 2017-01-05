@@ -48,5 +48,5 @@ dependencies {
     // pulls in dependency for APT
 
 
-
+    compile 'junit:junit:4.12'
 }

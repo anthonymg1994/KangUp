@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -22,7 +21,6 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
@@ -33,6 +31,8 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
+import com.mx.bridgestudio.kangup.Views.tabs.TabRecommend;
+import com.mx.bridgestudio.kangup.Views.tabs.TabVotados;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
 import java.text.ParseException;
@@ -286,10 +286,11 @@ public class CarsXtype extends DrawerActivity implements
         public Fragment getItem(int num) {
             switch (num){
                 case 0: fragment = new TabTop();
+
                     break;
-                case 1: fragment = new TabTop();
+                case 1: fragment = new TabRecommend();
                     break;
-                case 2: fragment = new TabTop();
+                case 2: fragment = new TabVotados();;
                     break;
             }
             return fragment;

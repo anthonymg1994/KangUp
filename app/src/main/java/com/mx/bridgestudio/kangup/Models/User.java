@@ -14,10 +14,19 @@ public class User {
     private String status;
     private String ciudad;
     private int pay;
+    private String address;
     private  String fnacimiento;
     private String photo;
 
     public User(){
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCiudad() {
