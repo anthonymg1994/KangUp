@@ -139,7 +139,9 @@
         <activity
             android:name=".Views.MenuActivity.NewsDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Views.MenuActivity.HistoryDetailsActivity"></activity>
+
+        <activity android:name=".Views.MenuActivity.HistoryDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

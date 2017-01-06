@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.AsyncTask.Viaje;
+package com.mx.bridgestudio.kangup.AsyncTask.Reservacion;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOviajes;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAONoticias;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOPaquetes;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.RoadTrip;
-import com.mx.bridgestudio.kangup.Models.User;
+import com.mx.bridgestudio.kangup.Models.News;
+import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,46 +25,50 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by USUARIO on 07/12/2016.
+ * Created by Isaac on 05/01/2017.
  */
 
-public class historyByUser extends AsyncTask<String,Integer,String> {
+public class asyncPaquetesXReservacion extends AsyncTask<String,Integer,String> {
+
     private JSONObject responseJson;
     private ProgressDialog progressDialog;
     private HttpURLConnection httpURLConnection;
     private String param1;
     private String param2;
     URL url;
-    private RoadTrip[] arrayViajes;
-    private User user = new User();
-    private String sviajes;
+    private Package[] arrayPack;
+    private Package packs = new Package();
+    private String newsString;
     private webServices services = new webServices();
-    private DAOviajes Dviajes = new DAOviajes();
-    public OnDataSendHistory SendToActivity;//Call back interface
+    private DAOPaquetes Dpack = new DAOPaquetes();
+    private int id_reservacion;
+    private int id_usuario;
+
+    public OnDataSendPackageByReservation SendToActivity;//Call back interface
 
 
     Context mContext;
 
     private boolean flag = false;
 
-    public historyByUser(OnDataSendHistory SendToActivity, Context context, User user) {
+    public asyncPaquetesXReservacion(OnDataSendPackageByReservation SendToActivity, Context context, int idRes, int idUs) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
-        this.user = user;
-
+        this.id_reservacion = idRes;
+        this.id_usuario = idUs;
     }
 
     @Override
     protected String doInBackground(String... params) {
 
         try {
-            sviajes = Dviajes.getHistoryByUser(user);
+            newsString = Dpack.getPackagesByReservation(id_reservacion,id_usuario);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return sviajes;
+        return newsString;
     }
 
     @Override
@@ -83,29 +90,26 @@ public class historyByUser extends AsyncTask<String,Integer,String> {
         if(result.equals("0")){
             Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(mContext, "Bienvenido "+user, Toast.LENGTH_SHORT).show();
+            //     Toast.makeText(mContext, "Bienvenido "+brands, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                arrayViajes = new RoadTrip[jsonarray.length()];
+                arrayPack = new Package[jsonarray.length()];
 
                 for (int i = 0; i < jsonarray.length(); i++) {
-                    arrayViajes[i] = new RoadTrip();
+                    arrayPack[i] = new Package();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    arrayViajes[i].setId(jsonobject.getInt("ID"));
-                    arrayViajes[i].setMarca(jsonobject.getString("Marca"));
-                    arrayViajes[i].setModelo(jsonobject.getString("Modelo"));
-                    arrayViajes[i].setYear(jsonobject.getString("Anio"));
-                    arrayViajes[i].setFecha(jsonobject.getString("Fecha"));
-                    arrayViajes[i].setTotal(jsonobject.getString("Total"));
-                    arrayViajes[i].setId_reservation(jsonobject.getInt("id_reservacion"));
+                    arrayPack[i].setId(jsonobject.getInt("id"));
+                    arrayPack[i].setNombre(jsonobject.getString("nombre"));
+                    arrayPack[i].setDescripcion(jsonobject.getString("descripcion"));
+                    arrayPack[i].setPrecio(jsonobject.getString("precio"));
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(mContext, HistoryActivity.class);
-            SendToActivity.sendDataHistory(arrayViajes);
+            Intent intent = new Intent(mContext, HistoryDetailsActivity.class);
+            SendToActivity.sendDataPackageByReservation(arrayPack);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 
@@ -115,6 +119,4 @@ public class historyByUser extends AsyncTask<String,Integer,String> {
 
         }
     }
-
 }
-

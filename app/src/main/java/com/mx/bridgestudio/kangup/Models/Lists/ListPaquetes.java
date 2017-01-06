@@ -1,14 +1,23 @@
-package com.mx.bridgestudio.kangup.Models;
+package com.mx.bridgestudio.kangup.Models.Lists;
 
 /**
- * Created by USUARIO on 24/10/2016.
+ * Created by Isaac on 05/01/2017.
  */
 
-public class Package {
+public class ListPaquetes {
     private int id;
     private String nombre;
     private String descripcion;
     private String precio;
+
+    public ListPaquetes(){}
+    public ListPaquetes(int id, String nombre, String descripcion, String precio){
+        this.setId(id);
+        this.setNombre(nombre);
+        this.setDescripcion(descripcion);
+        this.setPrecio(precio);
+    }
+
 
     public int getId() {
         return id;

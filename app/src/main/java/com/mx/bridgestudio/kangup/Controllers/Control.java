@@ -168,7 +168,7 @@ public class Control {
         //Obtener todos los precio de los paquetes agregados si es el caso
         if (paquetes.length > 0) {
             for (int j = 0; j < paquetes.length; j++) {
-                gastosExtras += paquetes[j].getTotal();
+                gastosExtras += Double.valueOf(paquetes[j].getPrecio());
             }
         }
 

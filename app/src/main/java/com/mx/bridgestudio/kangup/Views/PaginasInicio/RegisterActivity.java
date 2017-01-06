@@ -50,6 +50,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
+    private Uri uri;
+    private String foto;
+    private File file;
+
 
     webServices webs = new webServices();
     @Override
@@ -238,7 +242,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Log.w("path of image from gallery......******************.........", picturePath+"");
+                //Log.w("path of image from gallery......******************.........", picturePath+"");
                 imageViewRound.setImageBitmap(thumbnail);
             }
         }
