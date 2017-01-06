@@ -198,7 +198,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         }
         if (v.getId() == R.id.imageButtonTime) {
             //seleccionar hota de viaje
-            control.showDialogTime(Reservacion.this,hora);
+            control.showDialogTime(Reservacion.this);
         }
         if (v.getId() == R.id.addruta) {
             //Agregar origenes y destinos

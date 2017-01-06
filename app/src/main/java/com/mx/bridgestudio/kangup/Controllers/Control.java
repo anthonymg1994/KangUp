@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,11 +14,17 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -26,6 +33,7 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -48,6 +56,7 @@ public class Control  {
     private static int PICK_IMAGE_REQUEST = 1;
     private static Bitmap bitmap;
     private static Uri filePath;
+    private Calendar c;
 
     private void showFileChooser(Activity activity) {
         Intent intent = new Intent();
@@ -263,14 +272,12 @@ public class Control  {
         window.setStatusBarColor(ContextCompat.getColor(activity, R.color.status));
     }
 
-    public void showDialogTime(Context mContext ,final TextView hora){
+    public int showDialogTime(Context mContext){
 
         // Get Current Time
         final Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
-        pm = c.get(Calendar.AM_PM);
-
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
                 new TimePickerDialog.OnTimeSetListener() {
@@ -278,14 +285,16 @@ public class Control  {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-
-                        hora.setText(hourOfDay + ":" + minute + " ");
+                        final Calendar lastCalendar = Calendar.getInstance();
+                        lastCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        lastCalendar.set(Calendar.MINUTE, minute);
                        // sql = new SqliteController(getApplicationContext(),"kangup",null,1);
                         //)  sql.updateReservacionHora(hourOfDay + ":" + minute);
+                        mHour = hourOfDay;
                     }
-                }, mHour, mMinute, false);
-
+                }, c.get((Calendar.HOUR_OF_DAY)), c.get(Calendar.MINUTE), false);
         timePickerDialog.show();
+        return mHour;
     }
 
     public void showDialogCalendar(Context mContext ,final TextView fecha){
@@ -319,6 +328,63 @@ public class Control  {
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
 
+    }
+
+
+    public Calendar InitDateView(final Context context) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.date_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+
+
+        final EditText fecha = (EditText) dialogView.findViewById(R.id.fecha);
+
+
+        final EditText hora = (EditText) dialogView.findViewById(R.id.hora);
+        final ImageView bHora = (ImageView) dialogView.findViewById(R.id.IBhora);
+        bHora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int c = showDialogTime(context);
+                hora.setText(""+c);
+            }
+        });
+        final ImageView bFecha = (ImageView) dialogView.findViewById(R.id.IBfecha);
+        bFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        dialogBuilder.setTitle("Disponbildad");
+        dialogBuilder.setMessage("Ingrese hora y fecha para buscar vehiculos:");
+        dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //do something with edt.getText().toString();
+                //com.mx.bridgestudio.kangup.Models.Reservacion res = new com.mx.bridgestudio.kangup.Models.Reservacion();
+                Intent setIntent = new Intent(context,CarsXtype.class);
+                //CatalogCar.id_Marca = list.get
+                context.startActivity(setIntent);
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+                dialog.dismiss();
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+
+
+
+
+
+
+        return c;
     }
 }
 

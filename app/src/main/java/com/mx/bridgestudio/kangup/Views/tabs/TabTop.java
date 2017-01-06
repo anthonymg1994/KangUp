@@ -1,19 +1,25 @@
 package com.mx.bridgestudio.kangup.Views.tabs;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
@@ -23,10 +29,13 @@ import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Isaac on 06/12/2016.
@@ -64,6 +73,8 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
 
         vehicle.setId_categoria(CategoryActivity.opcionSeleccionada);
         vehicle.setId_brand(CardAdapter.id_marca);
+        String fecha = CardAdapter.datee;
+        String hora = CardAdapter.hour;
         webs.AutosByMarca(TabTop.this,getActivity(),vehicle);
 
         // Obtener el Recycler
@@ -139,4 +150,6 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
 
         vehicle = obj;
     }
+
+
 }

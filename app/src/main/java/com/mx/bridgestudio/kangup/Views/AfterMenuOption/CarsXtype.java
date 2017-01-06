@@ -1,8 +1,10 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,11 +15,17 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,11 +34,13 @@ import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabRecommend;
 import com.mx.bridgestudio.kangup.Views.tabs.TabVotados;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
@@ -322,5 +332,6 @@ public class CarsXtype extends DrawerActivity implements
     protected int getLayoutId() {
         return R.layout.activity_drawer;
     }
+
 
 }

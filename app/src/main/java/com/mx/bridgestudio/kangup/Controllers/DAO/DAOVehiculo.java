@@ -18,6 +18,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 /**
  * Created by USUARIO on 02/12/2016.
@@ -320,7 +321,7 @@ public class DAOVehiculo {
         return true;
     }
 
-    public String getVehiclesByScoreFilter(Vehicle vehicle) throws JSONException {
+    public String getVehiclesByScoreFilter(Vehicle vehicle, Date date, Date time,Date time_final) throws JSONException {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         InputStream in = null;
@@ -329,7 +330,7 @@ public class DAOVehiculo {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/score");
+            URL url = new URL("http://kangup.com.mx/index.php/scoreByDate");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
@@ -340,6 +341,9 @@ public class DAOVehiculo {
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("id_marca", String.valueOf(vehicle.getId_brand()));
             jsonParam.put("id_categoria", String.valueOf(vehicle.getId_categoria()));
+            jsonParam.put("fecha_reservacion", date);
+            jsonParam.put("hora_inicio",time);
+            jsonParam.put("hora_termino", time_final);
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();

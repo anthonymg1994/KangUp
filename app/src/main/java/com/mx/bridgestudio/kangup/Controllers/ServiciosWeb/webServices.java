@@ -33,6 +33,8 @@ import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 
+import java.util.Date;
+
 /**
  * Created by USUARIO on 28/11/2016.
  */
@@ -93,8 +95,8 @@ public class webServices {
     public void addFav(Context context, int id_vehiculo, int id_user){
         new AsyncAddFav(context,id_vehiculo,id_user).execute();
     }
-    public void TopRankingVehiculo(Context context, Vehicle vehiculo,OnDataSendFilterScore OnDataSendToActivity){
-        new AsyncScore(context,vehiculo,OnDataSendToActivity).execute();
+    public void TopRankingVehiculo(Context context, Vehicle vehiculo,Date date, Date time,Date time_final, OnDataSendFilterScore OnDataSendToActivity){
+        new AsyncScore(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
     }
     public void getRecommendCVehicles(Context context, Vehicle vehiculo,OnDataSendFilterRecommend OnDataSendToActivity){
         new AsyncRecommend(context,vehiculo,OnDataSendToActivity).execute();

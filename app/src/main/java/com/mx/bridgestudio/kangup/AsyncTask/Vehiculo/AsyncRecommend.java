@@ -85,11 +85,9 @@ public class AsyncRecommend extends AsyncTask<String,Integer,String> {
             Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
         }else{
             //      Toast.makeText(mContext, "Bienvenido "+vehicle, Toast.LENGTH_SHORT).show();
-
             try {
                 JSONArray jsonarray = new JSONArray(result);
                 arrayVehiculos = new Vehicle[jsonarray.length()];
-
                 for (int i = 0; i < jsonarray.length(); i++) {
                     arrayVehiculos[i] = new Vehicle();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -97,7 +95,6 @@ public class AsyncRecommend extends AsyncTask<String,Integer,String> {
                     arrayVehiculos[i].setMarca(jsonobject.getString("Marca"));
                     arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
                     arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
-
                 }
 
             } catch (JSONException e) {
@@ -107,11 +104,7 @@ public class AsyncRecommend extends AsyncTask<String,Integer,String> {
             SendToActivity.sendDataRecommend(arrayVehiculos);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
-
             //  mContext.startActivity(intent);
-
-
-
         }
     }
 }

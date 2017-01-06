@@ -27,7 +27,10 @@ import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by USUARIO on 04/01/2017.
@@ -65,7 +68,44 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
 
         vehicle.setId_categoria(CategoryActivity.opcionSeleccionada);
         vehicle.setId_brand(CardAdapter.id_marca);
-        webs.TopRankingVehiculo(getActivity(),vehicle, TabVotados.this);
+        String fecha = CardAdapter.datee;
+        String hora = CardAdapter.hour;
+        String hour_final = CardAdapter.hour_final;
+
+        // parseo de string para convertir a date
+        String dateString = fecha;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //parseo de string a time
+
+        String time = hora;
+        String time_final = hour_final;
+
+        SimpleDateFormat timFormat = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm:ss");
+        Date date3 = null,date2 = null;
+
+
+        try {
+            Date date = dateFormat.parse(time);
+            String out = dateFormat2.format(date);
+             date2 = dateFormat2.parse(out);
+
+            Date date1 = dateFormat.parse(time);
+            String out2 = dateFormat2.format(date);
+             date3 = dateFormat2.parse(out2);
+
+
+        } catch (ParseException e) {
+        }
+
+        webs.TopRankingVehiculo(getActivity(),vehicle,convertedDate,date2,date3,TabVotados.this);
 
         // Obtener el Recycler
         CatalogCar.flagDate = 1;
