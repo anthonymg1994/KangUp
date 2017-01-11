@@ -90,7 +90,6 @@ public class DrawerActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_drawer_drawer, menu);
         return true;
     }
 
@@ -160,7 +159,7 @@ public class DrawerActivity extends AppCompatActivity
         new AlertDialog.Builder(DrawerActivity.this)
                 .setTitle("Cerrar sesion")
                 .setMessage("¿Desea cerrar sesión?")
-                .setIcon(R.drawable.ic_menu_manage)
+                .setIcon(R.drawable.ic_close_light)
                 .setPositiveButton("Si",
                         new DialogInterface.OnClickListener() {
                             @TargetApi(11)
@@ -187,7 +186,7 @@ public class DrawerActivity extends AppCompatActivity
 
 
 
-        name.setText(user.getFirstName() +" "+ user.getLastName());
+        name.setText(user.getFirstName() +" "+ user.getAp_paterno() + " " + user.getAp_materno());
 //        email.setText(user.getEmail());
 
     }

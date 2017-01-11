@@ -18,7 +18,7 @@ import com.mx.bridgestudio.kangup.Models.User;
 public class SqliteController extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
-    private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellidos TEXT," +
+    private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellido_paterno TEXT, apellido_materno TEXT," +
             "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
 
     private String Memento ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellidos TEXT," +
@@ -61,26 +61,29 @@ public class SqliteController extends SQLiteOpenHelper {
     public User loginUsuario(String user, String pass){
         int id=0;
         String nombre="";
-        String apellidos="";
+        String apellido_pat="";
+        String apellido_mat="";
         String email="";
         String password="";
         User u = new User();
 
         db = getReadableDatabase();
-        Cursor c=db.rawQuery("SELECT id,nombre,apellidos,email,password FROM Usuarios WHERE email= '"+ user + "' AND password= '"+ pass +"'" ,null);
+        Cursor c=db.rawQuery("SELECT id,nombre,apellido_paterno, apellido_materno,email,password FROM Usuarios WHERE email= '"+ user + "' AND password= '"+ pass +"'" ,null);
         if(c.moveToFirst())
         {
             do{
                 id = c.getInt(0);
                 nombre = c.getString(1);
-                apellidos = c.getString(2);
-                email = c.getString(3);
-                password = c.getString(4);
+                apellido_pat = c.getString(2);
+                apellido_mat = c.getString(3);
+                email = c.getString(4);
+                password = c.getString(5);
             }while(c.moveToNext());
         }
         u.setId(id);
         u.setFirstName(nombre);
-        u.setLastName(apellidos);
+        u.setAp_paterno(apellido_pat);
+        u.setAp_materno(apellido_mat);
         u.setEmail(email);
         u.setPassword(password);
 
@@ -90,18 +93,19 @@ public class SqliteController extends SQLiteOpenHelper {
     public User user(){
         User u = new User();
         db = getReadableDatabase();
-        Cursor c=db.rawQuery("SELECT id,nombre,apellidos,email,password,ciudad,fecha_nacimiento,telefono FROM Usuarios" ,null);
+        Cursor c=db.rawQuery("SELECT id,nombre,apellido_paterno,apellido_materno,email,password,ciudad,fecha_nacimiento,telefono FROM Usuarios" ,null);
         if(c.moveToFirst())
         {
             do{
                 u.setId(c.getInt(0));
                 u.setFirstName(c.getString(1));
-                u.setLastName(c.getString(2));
-                u.setEmail(c.getString(3));
-                u.setPassword(c.getString(4));
-                u.setCiudad(c.getString(5));
-                u.setFnacimiento(c.getString(6));
-                u.setCellphone(c.getString(7));
+                u.setAp_paterno(c.getString(2));
+                u.setAp_materno(c.getString(3));
+                u.setEmail(c.getString(4));
+                u.setPassword(c.getString(5));
+                u.setCiudad(c.getString(6));
+                u.setFnacimiento(c.getString(7));
+                u.setCellphone(c.getString(8));
             }while(c.moveToNext());
         }
         db.close();
@@ -112,18 +116,19 @@ public class SqliteController extends SQLiteOpenHelper {
     {
         db = getWritableDatabase();
         try{
-            SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (id,nombre,apellidos,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status) "+
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (id,nombre,apellido_paterno,apellido_materno,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status) "+
                     "VALUES (?,?,?,?,?,?,?,?,?,?)");
             stmt.bindLong(1,user.getId());
             stmt.bindString(2, user.getFirstName());
-            stmt.bindString(3, user.getLastName());
-            stmt.bindString(4, user.getCellphone());
-            stmt.bindString(5, user.getEmail());
-            stmt.bindString(6, user.getFnacimiento());
-            stmt.bindString(7, user.getCiudad());
-            stmt.bindString(8, user.getPassword());
-            stmt.bindLong(9, user.getPay());
-            stmt.bindString(10, user.getStatus());
+            stmt.bindString(3, user.getAp_paterno());
+            stmt.bindString(4, user.getAp_materno());
+            stmt.bindString(5, user.getCellphone());
+            stmt.bindString(6, user.getEmail());
+            stmt.bindString(7, user.getFnacimiento());
+            stmt.bindString(8, user.getCiudad());
+            stmt.bindString(9, user.getPassword());
+            stmt.bindLong(10, user.getPay());
+            stmt.bindString(11, user.getStatus());
             stmt.execute();
         }
         catch (SQLiteConstraintException e){

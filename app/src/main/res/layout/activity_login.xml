@@ -50,12 +50,9 @@
         android:singleLine="true"
         android:layout_marginStart="50dp"
         android:background="@drawable/buttons_alpha"
-
-
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="50dp"
         android:layout_marginEnd="50dp"
-
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="50dp"
         app:layout_constraintHorizontal_bias="0.4"
@@ -157,7 +154,7 @@
         android:layout_marginRight="50dp"
         android:layout_marginTop="4dp"
         android:hint="@string/prompt_password"
-
+        android:textColor="#ffffff"
         app:layout_constraintTop_toBottomOf="@+id/user"
         android:textAlignment="textStart"
         android:gravity="center_vertical|center_horizontal|center"

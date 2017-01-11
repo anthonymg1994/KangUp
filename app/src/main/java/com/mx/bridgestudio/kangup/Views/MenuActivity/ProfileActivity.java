@@ -71,7 +71,7 @@ public class ProfileActivity extends DrawerActivity implements
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setTitle(user.getFirstName()+ " " +user.getLastName());
         //drw.setNameToolbar(user.getFirstName()+ " " +user.getLastName());
-        getSupportActionBar().setTitle(user.getFirstName()+ " " +user.getLastName());
+        getSupportActionBar().setTitle(user.getFirstName()+ " " +user.getAp_paterno());
 
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);
@@ -177,7 +177,7 @@ public class ProfileActivity extends DrawerActivity implements
 
 
         //AGREGO Nombre de usuario a toolbar
-        toolbar.setTitle(user.getFirstName() + " " + user.getLastName());
+        toolbar.setTitle(user.getFirstName() + " " + user.getAp_paterno());
         setSupportActionBar(toolbar);
 
         //Validar si el campo esta null no muestro nada en los edittext

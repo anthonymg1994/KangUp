@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private CardView card;
     private ImageView imageViewRound;
-    private EditText name, lastname,mail,password,confirm;
+    private EditText name, lastname_pat,lastname_mat,mail,password,confirm;
     private Button next;
     private User user = new User();
     private SqliteController sql;
@@ -112,8 +112,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         name = (EditText)findViewById(R.id.namedrawer);
         name.setHintTextColor(getResources().getColor(R.color.white));
-        lastname = (EditText)findViewById(R.id.lastname);
-        lastname.setHintTextColor(getResources().getColor(R.color.white));
+        lastname_pat = (EditText)findViewById(R.id.lastnamepat);
+        lastname_pat.setHintTextColor(getResources().getColor(R.color.white));
+        lastname_mat = (EditText)findViewById(R.id.lastnamemat);
+        lastname_mat.setHintTextColor(getResources().getColor(R.color.white));
         mail = (EditText)findViewById(R.id.editEmail);
         mail.setHintTextColor(getResources().getColor(R.color.white));
         password = (EditText)findViewById(R.id.password);
@@ -145,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
                 p2 =  confirm.getText().toString();
                 String email = mail.getText().toString().trim();
 
-                if(name.getText().toString().equals("") || lastname.getText().toString().equals("")
+                if(name.getText().toString().equals("") || lastname_pat.getText().toString().equals("") || lastname_mat.getText().toString().equals("")
                         || mail.getText().toString().equals("") || password.getText().toString().equals("") || confirm.getText().toString().equals(""))
                 {
                     Toast msg = Toast.makeText(getBaseContext(),
@@ -159,7 +161,8 @@ public class RegisterActivity extends AppCompatActivity {
                         if(p1.equals(p2))     {
                             // validar espacios o remplazar con string replace por _
                             user.setFirstName(name.getText().toString());
-                            user.setLastName(lastname.getText().toString());
+                            user.setAp_paterno(lastname_pat.getText().toString());
+                            user.setAp_materno(lastname_mat.getText().toString());
                             user.setEmail(mail.getText().toString().trim());
                             user.setPassword(password.getText().toString());
                             webs.insertUser(RegisterActivity.this,user);
