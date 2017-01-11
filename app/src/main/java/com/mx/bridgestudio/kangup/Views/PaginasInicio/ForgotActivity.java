@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOuser;
 import com.mx.bridgestudio.kangup.R;
 
@@ -26,6 +27,7 @@ public class ForgotActivity extends AppCompatActivity {
     private String texto;
     private AsynkTaskUser mAuthTask = null;
     public Boolean flag = false;
+    private Control control = new Control();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,17 +52,24 @@ public class ForgotActivity extends AppCompatActivity {
                 //finish();
                 //startActivity(new Intent(ForgotActivity.this, FavoriteActivity.class));
                 if(email.getText().toString().equals("")){
-                     texto = "Ingresa tu correo electronico";
+                    Toast msg = Toast.makeText(getBaseContext(),
+                            "Ingresa tu correo electronico", Toast.LENGTH_SHORT);
+                    msg.show();
                 }else{
+                    if(control.isOnline()) {
+                        Email task = new Email(email.getText().toString().trim());
+                        task.execute();
+                    }else{
+                        Toast msg = Toast.makeText(getBaseContext(),
+                                "Verifica tu conexion", Toast.LENGTH_SHORT);
+                        msg.show();
+                    }
 
-                    Email task = new Email(email.getText().toString().trim());
-                    task.execute();
+
                    //  texto = "Se ha mandado una solicitud de cambio a tu email";
                 }
 
-                Toast msg = Toast.makeText(getBaseContext(),
-                      texto, Toast.LENGTH_SHORT);
-                msg.show();
+
             }
         });
     }

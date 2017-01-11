@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -137,35 +138,62 @@ public class ProfileActivity extends DrawerActivity implements
         sql.Close();
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(ProfileActivity.this, CategoryActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this P and return to preview activity (if there is any)
+                    startActivity(new Intent(ProfileActivity.this, CategoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(ProfileActivity.this, NewsActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(ProfileActivity.this, NewsActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(ProfileActivity.this, FavoriteActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(ProfileActivity.this, FavoriteActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(ProfileActivity.this, HistoryActivity.class));
+
+                if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(ProfileActivity.this, HistoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
 

@@ -67,90 +67,72 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
        // drw.setNameToolbar("Noticias");
         getSupportActionBar().setTitle("Noticias");
 
-        webs.getAllNews(NewsActivity.this,this);
+        if(control.isOnline()){
+            webs.getAllNews(NewsActivity.this,this);
+        }else{
+            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+        }
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(NewsActivity.this, CategoryActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(NewsActivity.this, CategoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
-        noticias.setColorFilter(ContextCompat.getColor(NewsActivity.this,R.color.colorAccent));
-
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(NewsActivity.this, NewsActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(NewsActivity.this, NewsActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(NewsActivity.this, FavoriteActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(NewsActivity.this, FavoriteActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(NewsActivity.this, HistoryActivity.class));
+
+                if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(NewsActivity.this, HistoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
-
-        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
-
-        recycler = (RecyclerView) findViewById(R.id.newsRecycler);
-        recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
-
-        recycler.setHasFixedSize(true);
-
-        // Usar un administrador para LinearLayout
-        lManager = new LinearLayoutManager(this);
-        recycler.setLayoutManager(lManager);
-        final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
-        recycler.addItemDecoration(itemDecoration);
-        recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        //Toast.makeText(getActi(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
-                        int opcionSeleccionada = items.get(position).getId();
-                        Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
-                        id_noticia = opcionSeleccionada;
-                        //nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
-                        titulo = items.get(position).getTitle();
-                        desc = items.get(position).getDescription();
-
-                        Toast.makeText(NewsActivity.this, "titulo = " + titulo
-                                + " " + "desc = "+ desc , Toast.LENGTH_SHORT).show();
-
-                        //webs.DetailVehicle(this,getActivity(),vehicle);
-                        //n = new News();
-                        //n.setId(id_noticia);
-                        //n.setTitulo(titulo);
-                        //n.setDescripccion(desc);
-                        //Bundle bundle = new Bundle();
-                        //bundle.putSerializable("value", n);
-
-                        //intent.putExtras(bundle);
-                        startActivity(intent);
-
-                        //  TabTop.this.startActivity(intent);
-                        //finish();
-                    }
-
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
-
         // Crear un nuevo adaptador
         adapter = new AdapterNews(items);
         recycler.setAdapter(adapter);

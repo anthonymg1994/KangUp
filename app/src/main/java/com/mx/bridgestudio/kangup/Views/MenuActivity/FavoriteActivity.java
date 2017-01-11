@@ -84,8 +84,12 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         sql.Connect();
         user = sql.user();
         sql.Close();
+        if(control.isOnline()){
+            webs.favsByUser(FavoriteActivity.this,FavoriteActivity.this,user);
+        }else{
+            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-        webs.favsByUser(FavoriteActivity.this,FavoriteActivity.this,user);
+        }
 
         //listFav.setOnItemClickListener(this);
         listFav.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -113,37 +117,62 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         });
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(FavoriteActivity.this, CategoryActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(FavoriteActivity.this, CategoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(FavoriteActivity.this, NewsActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(FavoriteActivity.this, NewsActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
-        favoritos.setColorFilter(ContextCompat.getColor(FavoriteActivity.this,R.color.colorAccent));
-
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(FavoriteActivity.this, FavoriteActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(FavoriteActivity.this, FavoriteActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this afctivity and return to preview activity (if there is any)
-                startActivity(new Intent(FavoriteActivity.this, HistoryActivity.class));
+
+                if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(FavoriteActivity.this, HistoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
 

@@ -3,6 +3,7 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.graphics.drawable.DrawableWrapper;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaymentList;
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOFormasPago;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
 import com.mx.bridgestudio.kangup.Controllers.Paypal.Paypal;
@@ -27,6 +29,7 @@ import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
 import java.util.ArrayList;
@@ -39,7 +42,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
     private AdapterPaymentList adaptador;
     private AlertDialog alertTypePayment;
     public static int type=0;
-
+    private Control control = new Control();
     private webServices webs = new webServices();
     private DAOFormasPago Dpay = new DAOFormasPago();
     private PaymentForm pa = new PaymentForm();
@@ -81,35 +84,62 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         });
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this P and return to preview activity (if there is any)
+                    startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(PaymentActivity.this, NewsActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(PaymentActivity.this, NewsActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(PaymentActivity.this, FavoriteActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(PaymentActivity.this, FavoriteActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(PaymentActivity.this, HistoryActivity.class));
+
+                if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(PaymentActivity.this, HistoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
 
@@ -120,7 +150,12 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         pa.setId_usuario(user.getId());
         sql.Close();
 
-        webs.getFormaPagoByUser(PaymentActivity.this,this,pa);
+        if(control.isOnline()){
+            webs.getFormaPagoByUser(PaymentActivity.this,this,pa);
+        }else{
+            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 

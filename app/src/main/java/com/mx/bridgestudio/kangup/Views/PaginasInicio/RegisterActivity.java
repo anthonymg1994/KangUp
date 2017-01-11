@@ -29,7 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-
+    private Control control = new Control();
 
     webServices webs = new webServices();
     @Override
@@ -88,52 +88,54 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String p1,p2;
-                p1 = password.getText().toString();
-                p2 =  confirm.getText().toString();
-                String email = mail.getText().toString().trim();
+                if(control.isOnline()) {
+                        String p1,p2;
+                        p1 = password.getText().toString();
+                        p2 =  confirm.getText().toString();
+                        String email = mail.getText().toString().trim();
 
-                if(name.getText().toString().equals("") || lastname.getText().toString().equals("")
-                        || mail.getText().toString().equals("") || password.getText().toString().equals("") || confirm.getText().toString().equals(""))
-                {
-                    Toast msg = Toast.makeText(getBaseContext(),
-                            "Faltan campos por llenar", Toast.LENGTH_SHORT);
-                    msg.show();
-                }
-                else{
-                    if (email.matches(emailPattern))
-                    {
-                        Toast.makeText(getApplicationContext(),"valid email address",Toast.LENGTH_SHORT).show();
-                        if(p1.equals(p2))     {
-                            // validar espacios o remplazar con string replace por _
-                            user.setFirstName(name.getText().toString());
-                            user.setLastName(lastname.getText().toString());
-                            user.setEmail(mail.getText().toString().trim());
-                            user.setPassword(password.getText().toString());
-                            webs.insertUser(RegisterActivity.this,user);
-
+                        if(name.getText().toString().equals("") || lastname.getText().toString().equals("")
+                                || mail.getText().toString().equals("") || password.getText().toString().equals("") || confirm.getText().toString().equals(""))
+                        {
                             Toast msg = Toast.makeText(getBaseContext(),
-                                    "Usuario registrado con éxito", Toast.LENGTH_SHORT);
-                            msg.show();
-                            finish(); // close this activity and return to preview activity (if there is any)
-                            startActivity(new Intent(RegisterActivity.this, AddPaymentActivity.class));
-                        }else{
-                            Toast msg = Toast.makeText(getBaseContext(),
-                                    "Error Las contraseñas no son identicas", Toast.LENGTH_SHORT);
+                                    "Faltan campos por llenar", Toast.LENGTH_SHORT);
                             msg.show();
                         }
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),"Invalid email address",Toast.LENGTH_SHORT).show();
-                        //or
+                        else{
+                            if (email.matches(emailPattern))
+                            {
+                                Toast.makeText(getApplicationContext(),"valid email address",Toast.LENGTH_SHORT).show();
+                                if(p1.equals(p2))     {
+                                    // validar espacios o remplazar con string replace por _
+                                    user.setFirstName(name.getText().toString());
+                                    user.setLastName(lastname.getText().toString());
+                                    user.setEmail(mail.getText().toString().trim());
+                                    user.setPassword(password.getText().toString());
+                                    webs.insertUser(RegisterActivity.this,user);
 
-                    }
+                                    Toast msg = Toast.makeText(getBaseContext(),
+                                            "Usuario registrado con éxito", Toast.LENGTH_SHORT);
+                                    msg.show();
+                                    finish(); // close this activity and return to preview activity (if there is any)
+                                    startActivity(new Intent(RegisterActivity.this, AddPaymentActivity.class));
+                                }else{
+                                    Toast msg = Toast.makeText(getBaseContext(),
+                                            "Error Las contraseñas no son identicas", Toast.LENGTH_SHORT);
+                                    msg.show();
+                                }
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"Invalid email address",Toast.LENGTH_SHORT).show();
 
+                            }
+                        }
 
+                    }else{
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                }
                 }
 
-            }
         });
     }
 

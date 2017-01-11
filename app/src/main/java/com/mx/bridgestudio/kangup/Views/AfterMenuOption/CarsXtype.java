@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
@@ -40,6 +41,7 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabRecommend;
 import com.mx.bridgestudio.kangup.Views.tabs.TabVotados;
@@ -105,42 +107,65 @@ public class CarsXtype extends DrawerActivity implements
 
         hora = (TextView) findViewById(R.id.hour);
         fecha = (TextView) findViewById(R.id.date);
-
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(CarsXtype.this,R.color.colorAccent));
-
+        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(CarsXtype.this, CategoryActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this P and return to preview activity (if there is any)
+                    startActivity(new Intent(CarsXtype.this, CategoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(CarsXtype.this, NewsActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(CarsXtype.this, NewsActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(CarsXtype.this, FavoriteActivity.class));
+                if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(CarsXtype.this, FavoriteActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(CarsXtype.this, HistoryActivity.class));
+
+                if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(CarsXtype.this, HistoryActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
-
 
 
         //adapter view

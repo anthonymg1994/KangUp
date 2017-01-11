@@ -39,7 +39,7 @@ import java.util.List;
  * Created by Anthony on 09/11/2016.
  */
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> {
-    private int mYear, mMonth, mDay,mHour, mMinute,pm;
+    private int mYear, mMonth, mDay, mHour, mMinute, pm;
 
     private Context mContext;
     private List<ListBrand> listMarcas;
@@ -47,13 +47,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     public ClipData.Item currentItem;
     public CardView cardView;
     public static int id_marca = 0;
-    public static String marca ="";
-    public static String hour ="";
-    public static String hour_final ="";
-    public static String datee ="";
+    public static String marca = "";
+    public static String hour = "";
+    public static String hour_final = "";
+    public static String datee = "";
     Control c = new Control();
-    EditText hora,horaTermino;
-     EditText fecha;
+    EditText hora, horaTermino;
+    EditText fecha;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -72,8 +72,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
             cardView = (CardView) view.findViewById(R.id.card_view_catalogo);
 
 
-
-
         }
     }
 
@@ -81,12 +79,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         this.mContext = mContext;
         this.listMarcas = listMarcas;
     }
+
     @Override
     public CardAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_places_cars, parent, false);
         return new CardAdapter.MyViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(final CardAdapter.MyViewHolder holder, final int position) {
         final ListBrand list = listMarcas.get(position);
@@ -95,7 +95,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Position"+list.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Position" + list.getName(), Toast.LENGTH_SHORT).show();
                 id_marca = list.getId();
                 marca = list.getName();
                 InitDateView();
@@ -106,7 +106,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         holder.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Position"+list.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Position" + list.getName(), Toast.LENGTH_SHORT).show();
                 id_marca = list.getId();
                 marca = list.getName();
                 InitDateView();
@@ -115,7 +115,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
 
 
     }
-    private void showDialogTime(final int x){
+
+    private void showDialogTime(final int x) {
 
         // Get Current Time
         final Calendar c = Calendar.getInstance();
@@ -128,10 +129,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        if(x == 1) {
+                        if (x == 1) {
                             hora.setText(hourOfDay + ":" + minute + " ");
                             hour = hora.getText().toString();
-                        }else if(x ==2){
+                        } else if (x == 2) {
                             horaTermino.setText(hourOfDay + ":" + minute + " ");
                             hour_final = horaTermino.getText().toString();
                         }
@@ -146,8 +147,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = inflater.inflate(R.layout.date_dialog, null);
         dialogBuilder.setView(dialogView);
-         fecha = (EditText) dialogView.findViewById(R.id.fecha);
-         hora = (EditText) dialogView.findViewById(R.id.hora);
+        fecha = (EditText) dialogView.findViewById(R.id.fecha);
+        hora = (EditText) dialogView.findViewById(R.id.hora);
         horaTermino = (EditText) dialogView.findViewById(R.id.horatermino);
         final ImageView bHora_termino = (ImageView) dialogView.findViewById(R.id.IBhoraTermino);
 
@@ -195,9 +196,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         AlertDialog b = dialogBuilder.create();
         b.show();
     }
+
     /**
      * Showing popup menu when tapping on 3 dots
      */
+
     private void showPopupMenu(View view) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
@@ -206,6 +209,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         popup.setOnMenuItemClickListener(new CardAdapter.MyMenuItemClickListener());
         popup.show();
     }
+
     /**
      * Click listener for popup menu items
      */
@@ -229,42 +233,48 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
             return false;
         }
     }
-    @Override
-    public int getItemCount() {
-        return listMarcas.size();
-    }
+
+        @Override
+        public int getItemCount() {
+            return listMarcas.size();
+        }
 
 
-    private void showDialogCalendar(){
-        // Get Current Date
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
-                new DatePickerDialog.OnDateSetListener() {
 
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
+        private void showDialogCalendar() {
+            // Get Current Date
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                        Date parseDate = null;
+            DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
+                    new DatePickerDialog.OnDateSetListener() {
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
-                        String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                        try {
-                            parseDate = dateFormat.parse(date);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+
+                            Date parseDate = null;
+
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+                            String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                            try {
+                                parseDate = dateFormat.parse(date);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
+                            String finalString = dateFormat1.format(parseDate);
+                            fecha.setText("" + finalString);
+                            datee = String.valueOf(parseDate);
                         }
-                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
-                        String finalString = dateFormat1.format(parseDate);
-                        fecha.setText(""+finalString);
-                        datee = String.valueOf(parseDate);
-                    }
-                }, mYear, mMonth, mDay);
-        datePickerDialog.show();
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
 
+        }
     }
-}
+
+
+
