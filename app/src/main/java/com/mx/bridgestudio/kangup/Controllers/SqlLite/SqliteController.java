@@ -137,7 +137,7 @@ public class SqliteController extends SQLiteOpenHelper {
     {
         db = getWritableDatabase();
         try{
-            String actualizar= "Update Reservacion set fecha='"+fecha+"', Where id=1";
+            String actualizar= "Update Reservacion set fecha='"+fecha+"' Where id=1";
             db.execSQL(actualizar);
         }
         catch (SQLiteConstraintException e){
@@ -151,7 +151,7 @@ public class SqliteController extends SQLiteOpenHelper {
     {
         db = getWritableDatabase();
         try{
-            String actualizar= "Update Reservacion set hora='"+hora+"', Where id=1";
+            String actualizar= "Update Reservacion set hora='"+hora+"' Where id=1";
             db.execSQL(actualizar);
         }
         catch (SQLiteConstraintException e){
