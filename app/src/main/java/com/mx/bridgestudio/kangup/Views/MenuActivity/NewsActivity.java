@@ -67,25 +67,26 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
        // drw.setNameToolbar("Noticias");
         getSupportActionBar().setTitle("Noticias");
 
-        if(control.isOnline()){
+       // if(control.isOnline()){
             webs.getAllNews(NewsActivity.this,this);
-        }else{
-            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+        //}else{
+        //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-        }
+
+        //}
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+         //       if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(NewsActivity.this, CategoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+           //     } else {
+             //       Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+               // }
 
             }
         });
@@ -93,13 +94,13 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+            //    if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(NewsActivity.this, NewsActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+              //  } else {
+                //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -107,13 +108,13 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+             //   if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(NewsActivity.this, FavoriteActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+               // } else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -122,14 +123,14 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
             @Override
             public void onClick(View view) {
 
-                if (control.isOnline()) {
+               // if (control.isOnline()) {
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(NewsActivity.this, HistoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });

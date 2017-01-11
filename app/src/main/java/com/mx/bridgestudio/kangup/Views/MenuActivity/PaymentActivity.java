@@ -88,13 +88,13 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+            //    if (control.isOnline()) {
                     finish(); // close this P and return to preview activity (if there is any)
                     startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+              //  } else {
+                //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -102,13 +102,13 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+                //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(PaymentActivity.this, NewsActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -116,13 +116,13 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+                //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(PaymentActivity.this, FavoriteActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -131,14 +131,14 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
 
-                if (control.isOnline()) {
+    //            if (control.isOnline()) {
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(PaymentActivity.this, HistoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+      //          } else {
+        //            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+          //      }
 
             }
         });
@@ -150,12 +150,12 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         pa.setId_usuario(user.getId());
         sql.Close();
 
-        if(control.isOnline()){
+       // if(control.isOnline()){
             webs.getFormaPagoByUser(PaymentActivity.this,this,pa);
-        }else{
+        //}else{
             Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-        }
+        //}
 
     }
 

@@ -44,7 +44,7 @@ public class Paypal extends Activity implements View.OnClickListener {
 
     // note that these credentials will differ between live & sandbox
     // environments.
-    private static final String CONFIG_CLIENT_ID = "AX_wiqxDAc9cXgog8VElysx6MnsG_qeV5-oYPoK7-1xYUiYg0gF_v8riiDAWeufIA526LqG3AdHmeghy";
+    private static final String CONFIG_CLIENT_ID = "AfRGZ7VfKf6cw7q53koHwgO4hRHA2vXpojMeutxRRkvD4U4dgatKJ6uEnfUmlfjZo5P7x00pD";
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;

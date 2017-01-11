@@ -128,13 +128,13 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+             //   if (control.isOnline()) {
                     finish(); // close this P and return to preview activity (if there is any)
                     startActivity(new Intent(DetalleActivity.this, CategoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+               // } else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -142,13 +142,13 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+              //  if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(DetalleActivity.this, NewsActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+               // } else {
+                //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -156,13 +156,13 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+               // if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(DetalleActivity.this, FavoriteActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -171,14 +171,14 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
             @Override
             public void onClick(View view) {
 
-                if (control.isOnline()) {
+                //if (control.isOnline()) {
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(DetalleActivity.this, HistoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -369,7 +369,6 @@ init();
             public MyViewHolder(View view) {
                 super(view);
                 imageView=(ImageView) view.findViewById(R.id.imageview);
-                txtview=(TextView) view.findViewById(R.id.txtview);
             }
         }
 

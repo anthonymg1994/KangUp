@@ -117,68 +117,68 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if(id == R.id.nav_home){
-            if(control.isOnline()){
+            //if(control.isOnline()){
                 Intent setIntent = new Intent(this, CategoryActivity.class);
                 startActivity(setIntent);
                 finish();
-            }else{
-                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+          //  }else{
+              //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-            }
+        //    }
 
         }else if (id == R.id.nav_profile) {
             //Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
-            if(control.isOnline()){
+      //      if(control.isOnline()){
                 Intent setIntent = new Intent(this,ProfileActivity.class);
                 startActivity(setIntent);
                 finish();
-            }else{
-                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+    //        }else{
+  //              Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-            }
+//            }
 
             // Handle the camera action
         } else if (id == R.id.nav_pay) {
-            if(control.isOnline()){
+            //if(control.isOnline()){
                 Intent setIntent = new Intent(this, PaymentActivity.class);
                 startActivity(setIntent);
                 finish();
-            }else{
-                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+            //}else{
+              //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-            }
+            //}
 
 
         } else if (id == R.id.nav_history) {
-            if(control.isOnline()){
+          //  if(control.isOnline()){
                 Intent setIntent = new Intent(this, HistoryActivity.class);
                 startActivity(setIntent);
                 finish();
-            }else{
-                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+        //    }else{
+      //          Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-            }
+    //        }
 
         } else if (id == R.id.nav_favorite) {
-            if(control.isOnline()){
+           // (()) if(control.isOnline()){
                 Intent setIntent = new Intent(this, FavoriteActivity.class);
                 startActivity(setIntent);
                 finish();
-            }else{
-                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+            //}else{
+  //            /  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-            }
+
 
 
         } else if(id == R.id.nav_news){
-            if(control.isOnline()){
+            //if(control.isOnline()){
                 Intent setIntent = new Intent(this, NewsActivity.class);
                 startActivity(setIntent);
                 finish();
-            }else{
-                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+           // }else{
+//                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-            }
+       //     }
 
 
         } else if (id == R.id.nav_privacy) {

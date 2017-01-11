@@ -7,8 +7,11 @@ import com.mx.bridgestudio.kangup.AsyncTask.Formas_Pago.AsyncPaymentFormsUser;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncVehiculosXmarca;
 import com.mx.bridgestudio.kangup.AsyncTask.Noticias.AsyncNews;
+import com.mx.bridgestudio.kangup.AsyncTask.Publicidad.asyncTaskPublicidad;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
+import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncPaquetesXReservacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
+import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncTaskUpdateUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncAddFav;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDeleteFav;
@@ -16,6 +19,8 @@ import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncFavs;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncRecommend;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncScore;
+import com.mx.bridgestudio.kangup.AsyncTask.Viaje.DetalleViajeByUser;
+import com.mx.bridgestudio.kangup.AsyncTask.Viaje.RoutesByTrip;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.historyByUser;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
@@ -27,6 +32,7 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistoryDetail
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendRoutesByTrip;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Models.Brand;
@@ -87,6 +93,12 @@ public class webServices {
     public void getAllNews(OnDataSendNews dataSendNews, Context context){
         new AsyncNews(dataSendNews,context).execute();
     }
+
+    public void getAllPublicidad(OnDataSendPublicidad dataSendPublicidad, Context context){
+        new asyncTaskPublicidad(dataSendPublicidad,context).execute();
+    }
+
+
 
     public void destroyFav(Context context, int id_vehiculo, int id_user){
         new AsyncDeleteFav(context,id_vehiculo,id_user).execute();

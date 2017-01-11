@@ -8,29 +8,40 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
 import com.mx.bridgestudio.kangup.Adapters.AndroidImageAdapter;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Category;
+import com.mx.bridgestudio.kangup.Models.Lists.ListPublicidad;
+import com.mx.bridgestudio.kangup.Models.Publicidad;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class CategoryActivity extends DrawerActivity implements AdapterView.OnItemClickListener{
+public class CategoryActivity extends DrawerActivity implements AdapterView.OnItemClickListener,OnDataSendPublicidad{
 
     private ListView list;
     private ArrayList<Category> tipos = new ArrayList<>();
@@ -41,10 +52,12 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     AsyncBrands asyncTask;
     Control control = new Control();
     protected DrawerLayout mDrawer;
+    RecyclerView horizontal_recycler_view;
+    HorizontalAdapter horizontalAdapter;
+    private List<ListPublicidad> data;
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +83,20 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             }
         });
 
+        webs.getAllPublicidad(this,this);
         getSupportActionBar().setTitle("Categorias");
 
 
+
+
+        horizontalAdapter=new HorizontalAdapter(data, getApplication());
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(CategoryActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
+        horizontal_recycler_view.setAdapter(horizontalAdapter);
+
         list = (ListView)findViewById(R.id.listCategory);
+        horizontal_recycler_view= (RecyclerView) findViewById(R.id.horizontal_recycler_view);
+
         list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         adaptador = new AdapterCategory(this,tipos);
         list.setAdapter(adaptador);
@@ -100,13 +123,13 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+              //  if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, CategoryActivity.class));
-                } else {
+                //} else {
                     Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -114,13 +137,13 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+             //   if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, NewsActivity.class));
-                } else {
+               // } else {
                     Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -128,13 +151,13 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+              //  if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, FavoriteActivity.class));
-                } else {
+                //} else {
                     Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -143,14 +166,14 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             @Override
             public void onClick(View view) {
 
-                if (control.isOnline()) {
+             //   if (control.isOnline()) {
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, HistoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-                }
+               // } else {
+ //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+//
+  //              }
 
             }
         });
@@ -208,4 +231,89 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     protected int getLayoutId() {
         return R.layout.activity_drawer;
     }
+
+    public void fill_with_data(Publicidad[] list) {
+
+
+        ListPublicidad listF = new ListPublicidad();
+        for (int i = 0; i < list.length ; i ++){
+
+            listF.setId(list[i].getId());
+            listF.setNombre(list[i].getNombre());
+            listF.setImage(R.drawable.auto);
+            data.add(i,listF);
+        }
+        /*
+        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 1"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 2"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 1"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 2"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
+*/
+
+    }
+
+    @Override
+    public void sendDataPublicidad(Publicidad[] obj) {
+        fill_with_data(obj);
+    }
+
+    public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.MyViewHolder> {
+
+
+        List<ListPublicidad> horizontalList = Collections.emptyList();
+        Context context;
+
+
+        public HorizontalAdapter(List<ListPublicidad> horizontalList, Context context) {
+            this.horizontalList = horizontalList;
+            this.context = context;
+        }
+
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+
+            ImageView imageView;
+            TextView txtview;
+            public MyViewHolder(View view) {
+                super(view);
+                imageView=(ImageView) view.findViewById(R.id.imageview);
+            }
+        }
+
+
+
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vertical_menu, parent, false);
+
+            return new MyViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
+            holder.imageView.setImageResource(horizontalList.get(position).getImage());
+
+            holder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+
+                public void onClick(View v) {
+                    String list = horizontalList.get(position).getNombre().toString();
+                    Toast.makeText(CategoryActivity.this, list, Toast.LENGTH_SHORT).show();
+                }
+
+            });
+
+        }
+
+
+        @Override
+        public int getItemCount()
+        {
+            return horizontalList.size();
+        }
+    }
+
 }

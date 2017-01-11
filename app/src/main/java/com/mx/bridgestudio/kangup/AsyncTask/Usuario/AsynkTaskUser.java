@@ -88,7 +88,7 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
            if(user.getAddress() == null){
                user.setAddress("");
            }
-
+            sql.insertUsuario(user);
             sql.Close();
 
 

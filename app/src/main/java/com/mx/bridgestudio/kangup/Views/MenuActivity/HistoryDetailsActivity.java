@@ -62,7 +62,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
     private Package pa = new Package();
     private webServices webs = new webServices();
     private User u = new User();
-
+    private RatingBar rating;
     RecyclerView.Adapter adapter;
     ArrayList<ListRoutes> items= new ArrayList<>();
     RecyclerView.Adapter adapterPacks;
@@ -130,12 +130,14 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
         anio = (TextView)findViewById(R.id.anioTxt);
         socio= (TextView)findViewById(R.id.socioTxt);
         total= (TextView)findViewById(R.id.totalTxt);
+        rating = (RatingBar) findViewById(R.id.ratingViaje);
 
         marca.setText(det.getMarca());
         modelo.setText(det.getModelo());
         anio.setText(det.getAnio());
         socio.setText(det.getSocio());
         total.setText("$ "+ det.getTotal());
+        rating.setRating(Float.parseFloat(det.getValoracion()));
 
         SqliteController sql = new SqliteController(getApplicationContext(), "kangup", null, 1);
         sql.Connect();

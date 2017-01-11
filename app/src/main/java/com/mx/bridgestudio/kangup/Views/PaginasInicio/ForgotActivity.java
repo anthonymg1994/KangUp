@@ -56,14 +56,14 @@ public class ForgotActivity extends AppCompatActivity {
                             "Ingresa tu correo electronico", Toast.LENGTH_SHORT);
                     msg.show();
                 }else{
-                    if(control.isOnline()) {
+                //    if(control.isOnline()) {
                         Email task = new Email(email.getText().toString().trim());
                         task.execute();
-                    }else{
-                        Toast msg = Toast.makeText(getBaseContext(),
-                                "Verifica tu conexion", Toast.LENGTH_SHORT);
-                        msg.show();
-                    }
+                  //  }else{
+                    //    Toast msg = Toast.makeText(getBaseContext(),
+                        //        "Verifica tu conexion", Toast.LENGTH_SHORT);
+                      //  msg.show();
+                    //}
 
 
                    //  texto = "Se ha mandado una solicitud de cambio a tu email";

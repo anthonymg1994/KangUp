@@ -112,13 +112,13 @@ public class CarsXtype extends DrawerActivity implements
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+              //  if (control.isOnline()) {
                     finish(); // close this P and return to preview activity (if there is any)
                     startActivity(new Intent(CarsXtype.this, CategoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+               // }
 
             }
         });
@@ -126,13 +126,13 @@ public class CarsXtype extends DrawerActivity implements
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+              //  if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CarsXtype.this, NewsActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -140,13 +140,13 @@ public class CarsXtype extends DrawerActivity implements
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+                //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CarsXtype.this, FavoriteActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -155,14 +155,14 @@ public class CarsXtype extends DrawerActivity implements
             @Override
             public void onClick(View view) {
 
-                if (control.isOnline()) {
+                //if (control.isOnline()) {
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CarsXtype.this, HistoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -323,9 +323,9 @@ public class CarsXtype extends DrawerActivity implements
                 case 0: fragment = new TabTop();
 
                     break;
-                case 1: fragment = new TabRecommend();
+                case 1: fragment = new TabTop();
                     break;
-                case 2: fragment = new TabVotados();;
+                case 2: fragment = new TabTop();;
                     break;
             }
             return fragment;

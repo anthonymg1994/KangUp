@@ -152,6 +152,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         horaTermino = (EditText) dialogView.findViewById(R.id.horatermino);
         final ImageView bHora_termino = (ImageView) dialogView.findViewById(R.id.IBhoraTermino);
 
+
+        fecha.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
+        hora.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
+        horaTermino.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
+
+
+
         final ImageView bHora = (ImageView) dialogView.findViewById(R.id.IBhora);
 
 

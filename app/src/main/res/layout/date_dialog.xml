@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:text="Hora"
@@ -16,7 +17,8 @@
         android:layout_marginLeft="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/hora"
         app:layout_constraintTop_toTopOf="@+id/hora"
-        app:layout_constraintVertical_bias="0.58000004" />
+        app:layout_constraintVertical_bias="0.58000004"
+        android:textColor="#ffffff" />
 
     <TextView
         android:text="Fecha"
@@ -27,7 +29,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
         app:layout_constraintTop_toTopOf="@+id/fecha"
-        app:layout_constraintBottom_toBottomOf="@+id/fecha" />
+        app:layout_constraintBottom_toBottomOf="@+id/fecha"
+        android:textColor="#ffffff" />
 
     <EditText
         android:layout_width="183dp"
@@ -51,11 +54,10 @@
         android:ems="10"
         android:id="@+id/hora"
         android:hint="Selecciona horario"
-        tools:layout_editor_absoluteY="33dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView8"
-        android:layout_marginLeft="8dp"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="62dp" />
 
     <ImageView
         android:layout_width="42dp"
@@ -67,9 +69,12 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintTop_toTopOf="@+id/hora"
         app:layout_constraintBottom_toBottomOf="@+id/hora"
-        app:layout_constraintVertical_bias="0.51"
+        app:layout_constraintVertical_bias="1.0"
         android:background="@color/colorPrimary"
-        android:tint="@color/white" />
+        android:tint="@color/white"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp" />
 
     <ImageView
         android:layout_width="42dp"
@@ -84,7 +89,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.48"
         android:tint="@color/white"
         android:background="?attr/colorPrimary" />
 
@@ -99,7 +104,8 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.02" />
+        app:layout_constraintHorizontal_bias="0.02"
+        android:textColor="#ffffff" />
 
     <EditText
         android:layout_width="180dp"
@@ -107,9 +113,6 @@
         android:ems="10"
         android:id="@+id/horatermino"
         android:layout_height="39dp"
-        android:layout_marginEnd="136dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="136dp"
         android:hint="Selecciona horario"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/textView14"
@@ -128,7 +131,11 @@
         app:layout_constraintLeft_toRightOf="@+id/horatermino"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.52" />
 
 
 </android.support.constraint.ConstraintLayout>

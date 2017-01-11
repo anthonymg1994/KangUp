@@ -84,12 +84,12 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         sql.Connect();
         user = sql.user();
         sql.Close();
-        if(control.isOnline()){
+      //  if(control.isOnline()){
             webs.favsByUser(FavoriteActivity.this,FavoriteActivity.this,user);
-        }else{
-            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+        //}else{
+//            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-        }
+  //      }
 
         //listFav.setOnItemClickListener(this);
         listFav.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -121,13 +121,13 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+            //    if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, CategoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+              //  } else {
+                //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -135,13 +135,13 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+                //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, NewsActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -149,13 +149,13 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+                //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, FavoriteActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //} else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -164,14 +164,14 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
             @Override
             public void onClick(View view) {
 
-                if (control.isOnline()) {
+             //   if (control.isOnline()) {
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, HistoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+               // } else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
