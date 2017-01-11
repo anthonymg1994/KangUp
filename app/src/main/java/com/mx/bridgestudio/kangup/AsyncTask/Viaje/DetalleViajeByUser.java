@@ -4,64 +4,81 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOviajes;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistoryDetail;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Models.DetalleViaje;
 import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by USUARIO on 07/12/2016.
+ * Created by Isaac on 02/01/2017.
  */
 
-public class historyByUser extends AsyncTask<String,Integer,String> {
+public class DetalleViajeByUser extends AsyncTask<String,Integer,DetalleViaje> implements Serializable {
+
     private JSONObject responseJson;
     private ProgressDialog progressDialog;
     private HttpURLConnection httpURLConnection;
     private String param1;
     private String param2;
     URL url;
-    private RoadTrip[] arrayViajes;
+    private DetalleViaje[] arrayViajes;
+    private DetalleViaje objDetalle;
     private User user = new User();
     private String sviajes;
     private webServices services = new webServices();
     private DAOviajes Dviajes = new DAOviajes();
-    public OnDataSendHistory SendToActivity;//Call back interface
+    public OnDataSendHistoryDetail SendToActivity;//Call back interface
 
+    private int idUser;
+    private int idRes;
+    private int idUs;
 
     Context mContext;
 
     private boolean flag = false;
 
-    public historyByUser(OnDataSendHistory SendToActivity, Context context, User user) {
+    public DetalleViajeByUser(OnDataSendHistoryDetail SendToActivity, Context context, int idUser, int idRes, int idUs) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
-        this.user = user;
-
+        this.idUser = idUser;
+        this.idRes = idRes;
+        this.idUs = idUs;
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected DetalleViaje doInBackground(String... params) {
 
         try {
-            sviajes = Dviajes.getHistoryByUser(user);
+            try {
+                objDetalle = Dviajes.getHistoryDetailByUser(idUser,idRes,idUs);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return sviajes;
+        return objDetalle;
     }
 
     @Override
@@ -75,37 +92,22 @@ public class historyByUser extends AsyncTask<String,Integer,String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(DetalleViaje result) {
         super.onPostExecute(result);
         if(progressDialog.isShowing()){
             progressDialog.dismiss();
         }
-        if(result.equals("0")){
+        if(result == null){
             Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(mContext, "Bienvenido "+user, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "Bienvenido "+user, Toast.LENGTH_SHORT).show();
 
-            try {
-                JSONArray jsonarray = new JSONArray(result);
-                arrayViajes = new RoadTrip[jsonarray.length()];
+            Intent intent = new Intent(mContext, HistoryDetailsActivity.class);
 
-                for (int i = 0; i < jsonarray.length(); i++) {
-                    arrayViajes[i] = new RoadTrip();
-                    JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    arrayViajes[i].setId(jsonobject.getInt("ID"));
-                    arrayViajes[i].setMarca(jsonobject.getString("Marca"));
-                    arrayViajes[i].setModelo(jsonobject.getString("Modelo"));
-                    arrayViajes[i].setYear(jsonobject.getString("Anio"));
-                    arrayViajes[i].setFecha(jsonobject.getString("Fecha"));
-                    arrayViajes[i].setTotal(jsonobject.getString("Total"));
-                    arrayViajes[i].setId_reservation(jsonobject.getInt("id_reservacion"));
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Intent intent = new Intent(mContext, HistoryActivity.class);
-            SendToActivity.sendDataHistory(arrayViajes);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("value", objDetalle);
+            intent.putExtras(bundle);
+            mContext.startActivity(intent);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 
@@ -115,6 +117,4 @@ public class historyByUser extends AsyncTask<String,Integer,String> {
 
         }
     }
-
 }
-

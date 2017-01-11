@@ -9,7 +9,6 @@ import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncVehiculosXmarca;
 import com.mx.bridgestudio.kangup.AsyncTask.Noticias.AsyncNews;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
-import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncTaskUpdateUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncAddFav;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDeleteFav;
@@ -24,12 +23,16 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterRecommend;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistoryDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendRoutesByTrip;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
+import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 
@@ -103,6 +106,18 @@ public class webServices {
     }
 
 
+
+    public void getHistoryDetailByUser(OnDataSendHistoryDetail c,Context context, int idUser, int idRes, int idu){
+        new DetalleViajeByUser(c,context,idUser,idRes,idu).execute();
+    }
+
+    public void getRoutesByTrip(OnDataSendRoutesByTrip dataSendRoutesByTrip, Context context, Rutas rutas){
+        new RoutesByTrip(dataSendRoutesByTrip,context,rutas).execute();
+    }
+
+    public void getPackagesByReservation(OnDataSendPackageByReservation dataSendPackageByReservation, Context context, int id_reservacion, int id_usuario){
+        new asyncPaquetesXReservacion(dataSendPackageByReservation,context,id_reservacion,id_usuario).execute();
+    }
 /*
     public void Noticias(Context context, News news){
         new AsyncNews(context,news).execute();

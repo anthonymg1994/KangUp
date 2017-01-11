@@ -69,4 +69,5 @@ public class ListViaje {
     public void setTotal(String total) {
         this.total = total;
     }
+
 }

@@ -273,9 +273,9 @@ public class CarsXtype extends DrawerActivity implements
                         }
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
                         String finalString = dateFormat1.format(parseDate);
-                        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                        //sql = new SqliteController(getApplicationContext(),"kangup",null,1);
 
-                        sql.updateReservacionFecha(finalString);
+                        //sql.updateReservacionFecha(finalString);
 
                         fecha.setText(""+finalString);
 
@@ -300,9 +300,9 @@ public class CarsXtype extends DrawerActivity implements
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
 
-                        hora.setText(hourOfDay + ":" + minute + " " + pm);
-                        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
-                        sql.updateReservacionHora(hourOfDay + ":" + minute);
+                        //hora.setText(hourOfDay + ":" + minute + " " + pm);
+                        //sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                        //sql.updateReservacionHora(hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, false);
 
