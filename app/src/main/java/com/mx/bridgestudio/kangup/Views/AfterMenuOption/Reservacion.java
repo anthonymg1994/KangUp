@@ -1,15 +1,21 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,13 +29,31 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Adapters.AdapterAllPackages;
+import com.mx.bridgestudio.kangup.Adapters.AdapterArticle;
+import com.mx.bridgestudio.kangup.Adapters.AdapterPaquetes;
+import com.mx.bridgestudio.kangup.Adapters.AdapterRoutes;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendAllPackages;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSentArticlesByPackage;
+import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.Article;
+import com.mx.bridgestudio.kangup.Models.DetalleViaje;
+import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
+import com.mx.bridgestudio.kangup.Models.Lists.ListArticles;
+import com.mx.bridgestudio.kangup.Models.Lists.ListPaquetes;
+import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
+import com.mx.bridgestudio.kangup.Models.Package;
+import com.mx.bridgestudio.kangup.Models.Rutas;
+import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
@@ -37,6 +61,7 @@ import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 
 import org.json.JSONArray;
@@ -61,7 +86,7 @@ import java.util.Locale;
  * Created by USUARIO on 14/12/2016.
  */
 
-public class Reservacion extends DrawerActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class Reservacion extends DrawerActivity implements View.OnClickListener, AdapterView.OnItemClickListener , OnDataSendAllPackages, OnDataSentArticlesByPackage {
 
 
     private static final String LOG_TAG = "kangup";
@@ -79,7 +104,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     private EditText fecha, hora;
     private Button reservar, bAdd;
     private ImageButton bDate, bTime,noticias;
-    private ListView listPaquetes, listRutas;
     private Date dt = new Date();
     private Date dtf = new Date();
     private com.mx.bridgestudio.kangup.Models.Reservacion reservacion = new com.mx.bridgestudio.kangup.Models.Reservacion();
@@ -98,6 +122,20 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
     Control control = new Control();
     private DrawerActivity drw = new DrawerActivity();
+
+    RecyclerView listPaquetes, listRutas;
+    RecyclerView.LayoutManager lManagerPacks, lManagerRoutes;
+    RecyclerView.Adapter adapterRoutes;
+    ArrayList<ListRoutes> itemsRoutes= new ArrayList<>();
+    RecyclerView.Adapter adapterPacks;
+    ArrayList<ListPaquetes> itemsPacks= new ArrayList<>();
+    public static String descripcionPaquete="";
+    public static String nombrePaquete="";
+    public int id_paquete=0;
+
+    //Alert articulos
+    RecyclerView.Adapter adapterArticulos;
+    ArrayList<ListArticles> itemsArt= new ArrayList<>();
 
 
     //toolbardown
@@ -119,6 +157,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         //drw.setNameToolbar("Reservacion");
         getSupportActionBar().setTitle("Reservacion");
 
+        webs.getAllPackages(Reservacion.this,this);
+
 
         reservar = (Button) findViewById(R.id.confirmarButton);
         reservar.setOnClickListener(this);
@@ -132,14 +172,60 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         bAdd = (Button) findViewById(R.id.addruta);
         bAdd.setOnClickListener(this);
 
-        listPaquetes = (ListView) findViewById(R.id.listViewPaquetes);
-        listRutas = (ListView) findViewById(R.id.listViewRuta);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                addres);
+        //RecyclerView
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
 
-        listRutas.setAdapter(arrayAdapter);
+        listPaquetes = (RecyclerView) findViewById(R.id.packsRecyclerView);
+        listPaquetes.addItemDecoration(new DividerItemDecoration(dividerDrawable));
+        listPaquetes.setHasFixedSize(true);
+        listRutas = (RecyclerView) findViewById(R.id.rutasRecyclerView);
+        listRutas.addItemDecoration(new DividerItemDecoration(dividerDrawable));
+        listRutas.setHasFixedSize(true);
+
+        // Usar un administrador para LinearLayout
+                lManagerPacks = new LinearLayoutManager(this);
+        listPaquetes.setLayoutManager(lManagerPacks);
+        final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
+        listPaquetes.addItemDecoration(itemDecoration);
+        listPaquetes.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, listPaquetes ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        id_paquete = itemsPacks.get(position).getId();
+                        nombrePaquete = itemsPacks.get(position).getNombre();
+                        descripcionPaquete = itemsPacks.get(position).getDescripcion();
+                        alertFormElementsArticulos(id_paquete);
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+
+        // Usar un administrador para LinearLayout
+        lManagerRoutes = new LinearLayoutManager(this);
+        listRutas.setLayoutManager(lManagerRoutes);
+        final RecyclerView.ItemDecoration itemDecorations = new SampleDivider(this);
+        listRutas.addItemDecoration(itemDecorations);
+        listRutas.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, listRutas,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+
+        // Crear un nuevo adaptador
+        adapterRoutes = new AdapterRoutes(itemsRoutes);
+        listRutas.setAdapter(adapterRoutes);
+        adapterPacks = new AdapterAllPackages(itemsPacks);
+        listPaquetes.setAdapter(adapterPacks);
+
 
         catalogo = (ImageButton) findViewById(R.id.catalogoToolbar);
         catalogo.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +293,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     }
 
     public void showChangeLangDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.reservacion_dialog, null);
         dialogBuilder.setView(dialogView);
@@ -389,5 +475,106 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
     }
 
+    public void fillListPacks(Package[] packs){
+        ListPaquetes[] list = new ListPaquetes[packs.length];
+        for(int i = 0 ; i < packs.length ; i++){
+            list[i] = new ListPaquetes();
+            list[i].setId(packs[i].getId());
+            list[i].setNombre(packs[i].getNombre());
+            list[i].setDescripcion(packs[i].getDescripcion());
+            //list[i].setImage(news[i].getImagen());
+            //Cmbiar por imagen del servidor
+            list[i].setPrecio(packs[i].getPrecio());
+            itemsPacks.add(i,list[i]);
+        }
+        adapterPacks.notifyDataSetChanged();
 
+    }
+
+    public void fillListArticulos(Article[] art){
+        ListArticles[] list = new ListArticles[art.length];
+        for(int i = 0 ; i < art.length ; i++){
+            list[i] = new ListArticles();
+            list[i].setId(art[i].getId());
+            list[i].setNombre(art[i].getNombre());
+            list[i].setDescripcion(art[i].getDescription());
+            list[i].setPrecio(art[i].getPrecio());
+            itemsArt.add(i,list[i]);
+        }
+        adapterArticulos.notifyDataSetChanged();
+
+    }
+
+
+    @Override
+    public void sendDataAllPackages(Package[] obj) {
+        fillListPacks(obj);
+    }
+
+    public void alertFormElementsArticulos(int id_paquete) {
+
+    /*
+     * Inflate the XML view. activity_main is in
+     * res/layout/form_elements.xml
+     */
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View formElementsView = inflater.inflate(R.layout.articulos_dialog,
+                null, false);
+
+        webs.getArticlesByPackage(Reservacion.this,this,id_paquete);
+
+        final RecyclerView recycler;
+        final RecyclerView.LayoutManager lManager;
+
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
+        recycler = (RecyclerView) formElementsView.findViewById(R.id.articleRecycle);
+        recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
+
+        final TextView desc = (TextView)formElementsView.findViewById(R.id.descripcionPacks);
+        desc.setText(Reservacion.descripcionPaquete);
+        final ImageView image = (ImageView)formElementsView.findViewById(R.id.imagePaquete);
+        image.setImageResource(R.drawable.auto);
+
+        recycler.setHasFixedSize(true);
+
+        // Usar un administrador para LinearLayout
+        lManager = new LinearLayoutManager(this);
+        recycler.setLayoutManager(lManager);
+        final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
+        recycler.addItemDecoration(itemDecoration);
+        recycler.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+
+
+        // Crear un nuevo adaptador
+        adapterArticulos = new AdapterArticle(itemsArt);
+        recycler.setAdapter(adapterArticulos);
+
+        // the alert dialog
+        new AlertDialog.Builder(Reservacion.this,R.style.MyDialogTheme).setView(formElementsView)
+                .setTitle(Reservacion.nombrePaquete)
+                .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        itemsArt.clear();
+                        dialog.dismiss();
+                    }
+
+                }).show();
+    }
+
+
+    @Override
+    public void sendDataArticleByPackage(Article[] obj) {
+        fillListArticulos(obj);
+    }
 }

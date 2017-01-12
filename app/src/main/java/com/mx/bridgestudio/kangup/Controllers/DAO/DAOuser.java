@@ -197,7 +197,7 @@ public class DAOuser {
         user.setId(obj.getInt("id"));
         user.setFirstName(obj.getString("nombre"));
         user.setAp_paterno(obj.getString("apellido_paterno"));
-        user.setAp_paterno(obj.getString("apellido_materno"));
+        user.setAp_materno(obj.getString("apellido_materno"));
         user.setCellphone(obj.getString("telefono"));
         user.setEmail(obj.getString("email"));
         user.setAddress(obj.getString("domicilio"));

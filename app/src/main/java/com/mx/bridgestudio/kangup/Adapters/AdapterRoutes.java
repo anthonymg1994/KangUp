@@ -54,7 +54,7 @@ public class AdapterRoutes extends RecyclerView.Adapter<AdapterRoutes.AnimeViewH
         public TextView destino;
         public AnimeViewHolder(View v) {
             super(v);
-            origen = (TextView) v.findViewById(R.id.originTitle);
+            origen = (TextView) v.findViewById(R.id.descripcionArticulo);
             destino = (TextView) v.findViewById(R.id.destinyTitle);
             // fav.setOnClickListener(this);
         }

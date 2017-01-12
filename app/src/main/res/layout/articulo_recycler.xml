@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newsCell"
+    android:background="@drawable/backall"
+    android:layout_width="match_parent"
+    android:layout_gravity="center|top"
+    android:layout_height="100dp">
+
+    <TextView
+        android:text="Descripcion"
+        tools:ignore="HardcodedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffcc00"
+        android:textSize="18sp"
+        android:id="@+id/descripcionArticulo"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/imageArticulo"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/nombreArt"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:text="Nombre"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffcc00"
+        android:textSize="18sp"
+        android:id="@+id/nombreArt"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/imageArticulo"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <TextView
+        android:text="$ 0.00"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffcc00"
+        android:textSize="18sp"
+        android:id="@+id/descripcionPack"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/imageArticulo"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionArticulo"
+        app:layout_constraintHorizontal_bias="0.87" />
+
+    <ImageView
+        android:layout_width="99dp"
+        android:layout_height="91dp"
+        app:srcCompat="@drawable/marca"
+        android:id="@+id/imageArticulo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

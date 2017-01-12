@@ -10,6 +10,8 @@ import com.mx.bridgestudio.kangup.AsyncTask.Noticias.AsyncNews;
 import com.mx.bridgestudio.kangup.AsyncTask.Publicidad.asyncTaskPublicidad;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncPaquetesXReservacion;
+import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncTaskArticulos;
+import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncTaskPaquetes;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncTaskUpdateUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
@@ -22,6 +24,7 @@ import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncScore;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.DetalleViajeByUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.RoutesByTrip;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.historyByUser;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendAllPackages;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
@@ -35,6 +38,7 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsU
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendRoutesByTrip;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSentArticlesByPackage;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
@@ -117,8 +121,6 @@ public class webServices {
         new AsyncRecommend(context,vehiculo,OnDataSendToActivity).execute();
     }
 
-
-
     public void getHistoryDetailByUser(OnDataSendHistoryDetail c,Context context, int idUser, int idRes, int idu){
         new DetalleViajeByUser(c,context,idUser,idRes,idu).execute();
     }
@@ -129,6 +131,14 @@ public class webServices {
 
     public void getPackagesByReservation(OnDataSendPackageByReservation dataSendPackageByReservation, Context context, int id_reservacion, int id_usuario){
         new asyncPaquetesXReservacion(dataSendPackageByReservation,context,id_reservacion,id_usuario).execute();
+    }
+
+    public void getAllPackages(OnDataSendAllPackages dataSendAllPackages, Context context){
+        new asyncTaskPaquetes(dataSendAllPackages,context).execute();
+    }
+
+    public void getArticlesByPackage(OnDataSentArticlesByPackage dataSendArticlesByPackage, Context context, int id_paquete){
+        new asyncTaskArticulos(dataSendArticlesByPackage,context,id_paquete).execute();
     }
 /*
     public void Noticias(Context context, News news){

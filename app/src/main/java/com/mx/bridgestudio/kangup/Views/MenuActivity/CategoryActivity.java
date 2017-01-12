@@ -263,11 +263,20 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             listF.setImage(R.drawable.auto);
             data.add(i,listF);
         }
+        /*
+        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 1"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 2"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 1"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 2"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
+*/
+
     }
 
     @Override
     public void sendDataPublicidad(Publicidad[] obj) {
-//        fill_with_data(obj);
+        fill_with_data(obj);
     }
 
 

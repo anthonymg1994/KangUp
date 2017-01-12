@@ -6,61 +6,52 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOPaquetes;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendAllPackages;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOArticulos;
+
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSentArticlesByPackage;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Models.Article;
 import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
- * Created by Isaac on 11/01/2017.
+ * Created by Isaac on 12/01/2017.
  */
 
-public class asyncTaskPaquetes extends AsyncTask<String,Integer,String> {
+public class asyncTaskArticulos extends AsyncTask<String,Integer,String> {
 
-    private JSONObject responseJson;
     private ProgressDialog progressDialog;
-    private HttpURLConnection httpURLConnection;
-    private String param1;
-    private String param2;
-    URL url;
-    private Package[] arrayPack;
+    private Article[] arrayArt;
     private Package packs = new Package();
     private String newsString;
     private webServices services = new webServices();
-    private DAOPaquetes Dpack = new DAOPaquetes();
-    private int id_reservacion;
-    private int id_usuario;
+    private DAOArticulos Dart = new DAOArticulos();
+    private int id_paquete;
 
-    public OnDataSendAllPackages SendToActivity;//Call back interface
-
+    public OnDataSentArticlesByPackage SendToActivity;//Call back interface
 
     Context mContext;
 
     private boolean flag = false;
 
-    public asyncTaskPaquetes(OnDataSendAllPackages SendToActivity, Context context) {
+    public asyncTaskArticulos(OnDataSentArticlesByPackage SendToActivity, Context context, int id_paquete) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
-
+        this.id_paquete = id_paquete;
     }
 
     @Override
     protected String doInBackground(String... params) {
 
         try {
-            newsString = Dpack.getAllPackages();
+            newsString = Dart.getArticlesByPackage(id_paquete);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -91,22 +82,22 @@ public class asyncTaskPaquetes extends AsyncTask<String,Integer,String> {
 
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                arrayPack = new Package[jsonarray.length()];
+                arrayArt = new Article[jsonarray.length()];
 
                 for (int i = 0; i < jsonarray.length(); i++) {
-                    arrayPack[i] = new Package();
+                    arrayArt[i] = new Article();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    arrayPack[i].setId(jsonobject.getInt("id"));
-                    arrayPack[i].setNombre(jsonobject.getString("Paquete"));
-                    arrayPack[i].setDescripcion(jsonobject.getString("descripcion"));
-                    arrayPack[i].setPrecio(jsonobject.getString("precio"));
+                    arrayArt[i].setId(jsonobject.getInt("id"));
+                    arrayArt[i].setNombre(jsonobject.getString("Articulo"));
+                    arrayArt[i].setDescription(jsonobject.getString("descripcion"));
+                    arrayArt[i].setPrecio(jsonobject.getString("precio"));
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             Intent intent = new Intent(mContext, Reservacion.class);
-            SendToActivity.sendDataAllPackages(arrayPack);
+            SendToActivity.sendDataArticleByPackage(arrayArt);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 
@@ -117,5 +108,3 @@ public class asyncTaskPaquetes extends AsyncTask<String,Integer,String> {
         }
     }
 }
-
-
