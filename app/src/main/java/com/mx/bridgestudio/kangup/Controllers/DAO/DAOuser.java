@@ -91,7 +91,8 @@ public class DAOuser {
             JSONObject jsonParam = new JSONObject();
             //jsonParam.put("id",user.getId());
             jsonParam.put("nombre",user.getFirstName());
-            jsonParam.put("apellidos",user.getLastName());
+            jsonParam.put("apellido_paterno",user.getAp_paterno());
+            jsonParam.put("apellido_materno",user.getAp_materno());
             jsonParam.put("telefono",user.getCellphone());
             jsonParam.put("email",user.getEmail());
             jsonParam.put("fecha_nacimiento",user.getFnacimiento());
@@ -195,7 +196,8 @@ public class DAOuser {
         User user = new User();
         user.setId(obj.getInt("id"));
         user.setFirstName(obj.getString("nombre"));
-        user.setLastName(obj.getString("apellidos"));
+        user.setAp_paterno(obj.getString("apellido_paterno"));
+        user.setAp_paterno(obj.getString("apellido_materno"));
         user.setCellphone(obj.getString("telefono"));
         user.setEmail(obj.getString("email"));
         user.setAddress(obj.getString("domicilio"));

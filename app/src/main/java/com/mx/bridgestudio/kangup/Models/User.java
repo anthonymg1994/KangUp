@@ -7,26 +7,18 @@ package com.mx.bridgestudio.kangup.Models;
 public class User {
     private int id;
     private String FirstName;
-    private String LastName;
+    private String ap_paterno;
+    private String ap_materno;
     private String cellphone;
     private String email;
     private String password;
     private String status;
     private String ciudad;
     private int pay;
-    private String address;
-    private  String fnacimiento;
+    private String fnacimiento;
     private int photo;
 
     public User(){
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getCiudad() {
@@ -69,14 +61,6 @@ public class User {
         FirstName = firstName;
     }
 
-    public String getLastName() {
-        return LastName;
-    }
-
-    public void setLastName(String lastName) {
-        LastName = lastName;
-    }
-
     public String getCellphone() {
         return cellphone;
     }
@@ -115,5 +99,22 @@ public class User {
 
     public void setPay(int pay) {
         this.pay = pay;
+    }
+
+
+    public String getAp_paterno() {
+        return ap_paterno;
+    }
+
+    public void setAp_paterno(String ap_paterno) {
+        this.ap_paterno = ap_paterno;
+    }
+
+    public String getAp_materno() {
+        return ap_materno;
+    }
+
+    public void setAp_materno(String ap_materno) {
+        this.ap_materno = ap_materno;
     }
 }

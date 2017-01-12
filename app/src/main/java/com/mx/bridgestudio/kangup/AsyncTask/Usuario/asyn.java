@@ -69,9 +69,6 @@ public class asyn extends AsyncTask<URL,String,String> {
             httpURLConnection.connect();
 
             jsonParam = new JSONObject();
-                /*jsonParam.put("idDoctor", idObject);
-                jsonParam.put("descripcionPaciente", idObject);
-                jsonParam.put("estado", 0);*/
             jsonParam.put("email", email);
             jsonParam.put("password", password);
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());

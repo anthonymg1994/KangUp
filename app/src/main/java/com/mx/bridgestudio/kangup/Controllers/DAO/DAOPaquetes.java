@@ -83,7 +83,7 @@ public class DAOPaquetes {
         return response.toString();
     }
 
-    /*public String getPackagesByReservation(int id_reservacion, int id_usuario) throws JSONException {
+    public String getAllPackages() throws JSONException {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         InputStream in = null;
@@ -92,19 +92,13 @@ public class DAOPaquetes {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/paquetesReservacion");
+            URL url = new URL("http://kangup.com.mx/index.php/paquetes");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(10000);
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.connect();
-            JSONObject jsonParam = new JSONObject();
-            jsonParam.put("id_reservacion",String.valueOf(id_reservacion));
-            jsonParam.put("id_usuario",String.valueOf(id_usuario));
-            OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
-            os.write(jsonParam.toString());
-            os.flush();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -140,5 +134,5 @@ public class DAOPaquetes {
 
 
         return response.toString();
-    }*/
+    }
 }
