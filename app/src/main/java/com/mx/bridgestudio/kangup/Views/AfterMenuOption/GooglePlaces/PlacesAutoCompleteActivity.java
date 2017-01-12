@@ -136,7 +136,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                             ruta.setOrigen(item.description.toString());
                             sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
                             sql.Connect();
-                            sql.insertRuta(item.description.toString(),"");
+                            //sql.in(item.description.toString(),"");
                             sql.Close();
 
 

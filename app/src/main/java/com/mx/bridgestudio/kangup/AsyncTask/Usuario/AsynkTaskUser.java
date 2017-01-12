@@ -88,6 +88,12 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
            if(user.getAddress() == null){
                user.setAddress("");
            }
+           if(user.getAp_materno() == null){
+               user.setAp_materno("");
+           }
+           if(user.getAp_paterno() == null){
+               user.setAp_paterno("");
+           }
             sql.insertUsuario(user);
             sql.Close();
 

@@ -17,8 +17,17 @@ public class User {
     private int pay;
     private String fnacimiento;
     private int photo;
+    private String address;
 
     public User(){
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCiudad() {

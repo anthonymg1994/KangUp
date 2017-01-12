@@ -53,8 +53,10 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     Control control = new Control();
     protected DrawerLayout mDrawer;
     RecyclerView horizontal_recycler_view;
-    HorizontalAdapter horizontalAdapter;
     private List<ListPublicidad> data;
+
+
+
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
@@ -89,13 +91,8 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
 
 
-        horizontalAdapter=new HorizontalAdapter(data, getApplication());
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(CategoryActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
-        horizontal_recycler_view.setAdapter(horizontalAdapter);
 
         list = (ListView)findViewById(R.id.listCategory);
-        horizontal_recycler_view= (RecyclerView) findViewById(R.id.horizontal_recycler_view);
 
         list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         adaptador = new AdapterCategory(this,tipos);
@@ -259,61 +256,10 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         fill_with_data(obj);
     }
 
-    public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.MyViewHolder> {
-
-
-        List<ListPublicidad> horizontalList = Collections.emptyList();
-        Context context;
-
-
-        public HorizontalAdapter(List<ListPublicidad> horizontalList, Context context) {
-            this.horizontalList = horizontalList;
-            this.context = context;
-        }
-
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-
-            ImageView imageView;
-            TextView txtview;
-            public MyViewHolder(View view) {
-                super(view);
-                imageView=(ImageView) view.findViewById(R.id.imageview);
-            }
-        }
 
 
 
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vertical_menu, parent, false);
-
-            return new MyViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(final MyViewHolder holder, final int position) {
-
-            holder.imageView.setImageResource(horizontalList.get(position).getImage());
-
-            holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-
-                public void onClick(View v) {
-                    String list = horizontalList.get(position).getNombre().toString();
-                    Toast.makeText(CategoryActivity.this, list, Toast.LENGTH_SHORT).show();
-                }
-
-            });
-
-        }
 
 
-        @Override
-        public int getItemCount()
-        {
-            return horizontalList.size();
-        }
-    }
 
 }

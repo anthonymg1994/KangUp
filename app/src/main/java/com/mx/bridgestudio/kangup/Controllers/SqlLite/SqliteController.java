@@ -117,7 +117,7 @@ public class SqliteController extends SQLiteOpenHelper {
         db = getWritableDatabase();
         try{
             SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (id,nombre,apellido_paterno,apellido_materno,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status) "+
-                    "VALUES (?,?,?,?,?,?,?,?,?,?)");
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             stmt.bindLong(1,user.getId());
             stmt.bindString(2, user.getFirstName());
             stmt.bindString(3, user.getAp_paterno());

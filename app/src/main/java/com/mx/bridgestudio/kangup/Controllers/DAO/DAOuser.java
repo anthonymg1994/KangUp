@@ -148,7 +148,7 @@ public class DAOuser {
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("id",user.getId());
             jsonParam.put("nombre",user.getFirstName());
-            jsonParam.put("apellidos",user.getLastName());
+          //  jsonParam.put("apellidos",user.getLastName());
             jsonParam.put("telefono",user.getCellphone());
             jsonParam.put("domicilio",user.getAddress());
 
