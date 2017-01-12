@@ -18,8 +18,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Controllers.Tools;
 import com.mx.bridgestudio.kangup.Models.User;
@@ -35,7 +37,7 @@ public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {
 
     private ImageButton showCalendar;
-    private EditText email,address,city,cellphone;
+    private EditText email,address,city,cellphone,name,lastname;
     private int mYear, mMonth, mDay;
     private TextView editBirth;
     private int flag=0;
@@ -44,8 +46,9 @@ public class ProfileActivity extends DrawerActivity implements
     private  Toolbar toolbar;
     private User user = new User();
     Tools tol;
+    private FloatingActionButton edit;
     Control control = new Control();
-
+    private webServices webs;
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
     private DrawerActivity drw = new DrawerActivity();
@@ -76,11 +79,50 @@ public class ProfileActivity extends DrawerActivity implements
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);
 //Arreglar cuando selccione edittext solo salg dialg y se esconda teclado
+
+        name = (EditText) findViewById(R.id.editText2);
+        lastname = (EditText) findViewById(R.id.editText);
         editBirth = (TextView)findViewById(R.id.editBirth);
         cellphone = (EditText) findViewById(R.id.editText);
         email = (EditText)findViewById(R.id.editEmail);
         address = (EditText)findViewById(R.id.editAddress);
         city = (EditText)findViewById(R.id.editCity);
+        edit = (FloatingActionButton) findViewById(R.id.editinfo);
+
+
+        edit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                user.setFirstName(name.getText().toString());
+
+                //separar apellidos
+                user.setAp_paterno(lastname.getText().toString());
+                user.setAp_materno(lastname.getText().toString());
+
+
+
+                user.setFnacimiento(editBirth.getText().toString());
+                user.setCellphone(cellphone.getText().toString());
+                user.setEmail(email.getText().toString());
+                //agregar campo en xml de password y ver como cambiar la contraseña
+                user.setCiudad(city.getText().toString());
+                user.setAddress(address.getText().toString());
+
+                sql = new SqliteController(ProfileActivity.this, "kangup",null, 1);
+                sql.Connect();
+                sql.updateProfile(user);
+
+                Toast.makeText(ProfileActivity.this, "Actalizacion exitosa", Toast.LENGTH_SHORT).show();
+                User user = sql.user();
+
+
+
+
+                webs.updateUser(ProfileActivity.this,user);
+
+                sql.Close();
+            }
+        });
      //   cellphone = (EditText)findViewById(R.id.ed);
 
 

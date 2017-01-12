@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Controllers.SqlLite;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
@@ -179,6 +180,67 @@ public class SqliteController extends SQLiteOpenHelper {
         }
         db.close();
         return r;
+    }
+
+    public void insertRuta(String origen, String destino)
+    {
+        db = getWritableDatabase();
+        try{
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO Destinations (id,origen,destino) "+
+                    "VALUES (?,?,?)");
+            stmt.bindLong(1,1);
+            stmt.bindString(2,origen);
+            stmt.bindString(3,destino);
+
+            stmt.execute();
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
+        db.close();
+    }
+
+    public Reservacion getCurrent(){
+        Reservacion u = new Reservacion();
+        db = getReadableDatabase();
+        Cursor c=db.rawQuery("SELECT id,origen,destino FROM Destinations" ,null);
+        if(c.moveToFirst())
+        {
+            do{
+                u.setId(c.getInt(0));
+                u.setOrigen(c.getString(1));
+                u.setDestination(c.getString(2));
+            }while(c.moveToNext());
+        }
+        db.close();
+        return u;
+    }
+
+
+    public void updateProfile(User user)
+    {
+        int numberOfRowsAffected = 0;
+        db = getWritableDatabase();
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put("nombre",user.getFirstName()); //These Fields should be your String values of actual column names
+            cv.put("apellido_paterno",user.getAp_paterno());
+            cv.put("apellido_materno",user.getAp_materno());
+            cv.put("telefono",user.getCellphone());
+            cv.put("domicilio",user.getAddress());
+            cv.put("email",user.getEmail());
+            cv.put("fecha_nacimiento",user.getFnacimiento());
+            cv.put("ciudad",user.getCiudad());
+            cv.put("password",user.getPassword());
+            db.update("Usuarios", cv, "id="+user.getId(), null);
+
+            db.close();
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
     }
 
 }

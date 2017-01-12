@@ -231,7 +231,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
         recycler.setAdapter(adapter);
 
         // the alert dialog
-        new AlertDialog.Builder(HistoryDetailsActivity.this).setView(formElementsView)
+        new AlertDialog.Builder(HistoryDetailsActivity.this,R.style.MyDialogTheme).setView(formElementsView)
                 .setTitle("Detalles de viaje")
                 .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
                     @TargetApi(11)
@@ -314,7 +314,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
         recycler.setAdapter(adapterPacks);
 
         // the alert dialog
-        new AlertDialog.Builder(HistoryDetailsActivity.this).setView(formElementsView)
+        new AlertDialog.Builder(HistoryDetailsActivity.this,R.style.MyDialogTheme).setView(formElementsView)
                 .setTitle("Paquetes escogidos")
                 .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
                     @TargetApi(11)

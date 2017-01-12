@@ -276,7 +276,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
     @Override
     public void sendDataPublicidad(Publicidad[] obj) {
-        fill_with_data(obj);
+
     }
 
 
