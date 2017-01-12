@@ -124,7 +124,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, CategoryActivity.class));
                 //} else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -138,7 +138,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, NewsActivity.class));
                // } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -152,7 +152,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, FavoriteActivity.class));
                 //} else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -253,7 +253,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
     @Override
     public void sendDataPublicidad(Publicidad[] obj) {
-        fill_with_data(obj);
+        //fill_with_data(obj);
     }
 
 

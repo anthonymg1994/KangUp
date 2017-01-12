@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,7 +15,9 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
+        android:textColor="#ffcc00"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -25,7 +28,9 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="48dp"
+        android:textColor="#ffcc00"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
@@ -43,7 +48,9 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/origentxt"
-        app:layout_constraintHorizontal_bias="0.55" />
+        app:layout_constraintHorizontal_bias="0.55"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff" />
 
 
     <EditText
@@ -52,7 +59,7 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/origentxt"
-        android:hint="Destino"
+        android:hint="Origen"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/textView9"
         android:layout_marginLeft="8dp"
@@ -61,7 +68,8 @@
         android:layout_marginRight="16dp"
         app:layout_constraintHorizontal_bias="0.58"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColorHint="#ffffff" />
 
 
 

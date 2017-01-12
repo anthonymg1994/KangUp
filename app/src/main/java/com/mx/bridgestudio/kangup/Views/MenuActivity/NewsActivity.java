@@ -68,7 +68,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         getSupportActionBar().setTitle("Noticias");
 
        // if(control.isOnline()){
-            webs.getAllNews(NewsActivity.this,this);
+          webs.getAllNews(NewsActivity.this,this);
         //}else{
         //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 

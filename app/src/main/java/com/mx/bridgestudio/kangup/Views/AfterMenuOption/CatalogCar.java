@@ -99,12 +99,12 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         Intent mIntent = getIntent();
         brand.setId_categoria(CategoryActivity.opcionSeleccionada);
 
-        if(control.isOnline()){
+        //if(control.isOnline()){
             webs.brandByCategory(CatalogCar.this,CatalogCar.this,brand);
-        }else{
-            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+        //}else{
+          //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-        }
+        //}
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setTitle("Marcas");
