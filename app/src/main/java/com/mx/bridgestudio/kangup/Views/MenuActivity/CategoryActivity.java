@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
 import com.mx.bridgestudio.kangup.Adapters.AndroidImageAdapter;
+import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
@@ -36,10 +38,13 @@ import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CategoryActivity extends DrawerActivity implements AdapterView.OnItemClickListener,OnDataSendPublicidad{
 
@@ -52,13 +57,18 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     AsyncBrands asyncTask;
     Control control = new Control();
     protected DrawerLayout mDrawer;
-    RecyclerView horizontal_recycler_view;
     private List<ListPublicidad> data;
+    private RecyclerView horizontal_recycler_view;
+    private ArrayList<String> horizontalList;
+    private static final Integer[] IMAGES= {R.drawable.auto,R.drawable.auto,R.drawable.auto,R.drawable.auto};
+    SlidingImage_Adapter s;
+    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+    ViewPager page,pagePublicidad;
+    CirclePageIndicator indicator;
+    private static int currentPage = 0;
+    private static int NUM_PAGES = 0;
 
-
-
-
-    //toolbardown
+    //ctoolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -70,11 +80,23 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+
+
+
+
+
         View contentView = inflater.inflate(R.layout.activity_category, null, false);
 
         mDrawer.addView(contentView, 0);
 
+
+
+
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPageAndroid);
+        pagePublicidad = (ViewPager) findViewById(R.id.viewPagePublicidad);
+
+
         AndroidImageAdapter adapterView = new AndroidImageAdapter(this);
         mViewPager.setAdapter(adapterView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcateg);
@@ -174,6 +196,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
             }
         });
+        init();
 
     }
 
@@ -240,26 +263,56 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             listF.setImage(R.drawable.auto);
             data.add(i,listF);
         }
-        /*
-        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 1"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 2"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 1"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 2"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
-*/
-
     }
 
     @Override
     public void sendDataPublicidad(Publicidad[] obj) {
-        fill_with_data(obj);
+//        fill_with_data(obj);
     }
 
 
 
 
+    private void init() {
+        for(int i=0;i<IMAGES.length;i++)
+            ImagesArray.add(IMAGES[i]);
 
 
+
+        pagePublicidad.setAdapter(new SlidingImage_Adapter(CategoryActivity.this,ImagesArray));
+
+
+
+
+
+        final float density = getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+
+
+        NUM_PAGES =IMAGES.length;
+
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                pagePublicidad.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+
+        // Pager listener over indicator
+
+
+    }
 
 }
