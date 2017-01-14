@@ -85,7 +85,8 @@
             android:name=".Views.AfterMenuOption.CatalogCar"
             android:permission="android.permission.INTERNET"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Views.PaginasInicio.SplashActivity">
+        <activity android:name=".Views.PaginasInicio.SplashActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

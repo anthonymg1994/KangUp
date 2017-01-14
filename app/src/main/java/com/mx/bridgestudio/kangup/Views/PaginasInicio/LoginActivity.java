@@ -21,7 +21,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
@@ -29,6 +32,9 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A login screen that offers login via email/password.
@@ -69,9 +75,10 @@ CoordinatorLayout coordinatorLayout;
         guest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                finish();
+                //finish();
                 //startActivity(new Intent(LoginActivity.this, TypesOfAutomobiles.class));
-                startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
+                //startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
+
             }
         });
         register = (Button)findViewById(R.id.register);
