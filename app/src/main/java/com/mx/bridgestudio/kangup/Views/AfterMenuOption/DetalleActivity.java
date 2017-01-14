@@ -60,7 +60,6 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     private int id_vehiculo = 0;
     private String nombre_vehiculo = "";
     RecyclerView horizontal_recycler_view;
-    HorizontalAdapter horizontalAdapter;
     private List<ListEspecificaciones> data;
     protected DrawerLayout mDrawer;
     private Button vermas, reservar;
@@ -349,63 +348,7 @@ init();
         });
 
     }
-    public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.MyViewHolder> {
 
-
-        List<ListEspecificaciones> horizontalList = Collections.emptyList();
-        Context context;
-
-
-        public HorizontalAdapter(List<ListEspecificaciones> horizontalList, Context context) {
-            this.horizontalList = horizontalList;
-            this.context = context;
-        }
-
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-
-            ImageView imageView;
-            TextView txtview;
-            public MyViewHolder(View view) {
-                super(view);
-                imageView=(ImageView) view.findViewById(R.id.imageview);
-            }
-        }
-
-
-
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vertical_menu, parent, false);
-
-            return new MyViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(final MyViewHolder holder, final int position) {
-
-            holder.imageView.setImageResource(horizontalList.get(position).getId_image());
-            holder.txtview.setText(horizontalList.get(position).getNombre());
-
-            holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-
-                public void onClick(View v) {
-                    String list = horizontalList.get(position).getNombre().toString();
-                    Toast.makeText(DetalleActivity.this, list, Toast.LENGTH_SHORT).show();
-                }
-
-            });
-
-        }
-
-
-        @Override
-        public int getItemCount()
-        {
-            return horizontalList.size();
-        }
-    }
 
 
 

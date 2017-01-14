@@ -143,7 +143,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     }
 
     public void InitDateView() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext,R.style.MyDialogTheme);
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = inflater.inflate(R.layout.date_dialog, null);
         dialogBuilder.setView(dialogView);
@@ -184,7 +184,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         });
 
         dialogBuilder.setTitle("Disponbildad");
-        dialogBuilder.setMessage("Ingrese hora y fecha para buscar vehiculos:");
+        dialogBuilder.setMessage("Completa los siguientes datos:");
         dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();

@@ -59,6 +59,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         //setContentView(R.layout.activity_news);
         control.changeColorStatusBar(NewsActivity.this);
 
+
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_news, null, false);
@@ -134,6 +135,53 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
 
             }
         });
+
+        Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
+
+        recycler = (RecyclerView) findViewById(R.id.newsRecycler);
+        recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
+
+        recycler.setHasFixedSize(true);
+
+        // Usar un administrador para LinearLayout
+        lManager = new LinearLayoutManager(this);
+        recycler.setLayoutManager(lManager);
+        final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
+        recycler.addItemDecoration(itemDecoration);
+        recycler.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        //Toast.makeText(getActi(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
+                        int opcionSeleccionada = items.get(position).getId();
+                        Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
+                        id_noticia = opcionSeleccionada;
+                        //nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
+                        titulo = items.get(position).getTitle();
+                        desc = items.get(position).getDescription();
+
+                        Toast.makeText(NewsActivity.this, "titulo = " + titulo
+                                + " " + "desc = "+ desc , Toast.LENGTH_SHORT).show();
+
+                        //webs.DetailVehicle(this,getActivity(),vehicle);
+                        //n = new News();
+                        //n.setId(id_noticia);
+                        //n.setTitulo(titulo);
+                        //n.setDescripccion(desc);
+                        //Bundle bundle = new Bundle();
+                        //bundle.putSerializable("value", n);
+
+                        //intent.putExtras(bundle);
+                        startActivity(intent);
+
+                        //  TabTop.this.startActivity(intent);
+                        //finish();
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
         // Crear un nuevo adaptador
         adapter = new AdapterNews(items);
         recycler.setAdapter(adapter);

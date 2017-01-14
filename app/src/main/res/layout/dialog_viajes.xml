@@ -44,7 +44,8 @@
                 android:text="Fecha"
                 android:ems="10"
                 android:id="@+id/fechaTxt"
-                android:enabled="true" />
+                android:enabled="true"
+                android:textColor="#ffffff" />
 
         </LinearLayout>
 
@@ -71,7 +72,8 @@
                 android:ems="10"
                 android:id="@+id/horaIniTxt"
                 android:enabled="true"
-                android:layout_weight="710.59" />
+                android:layout_weight="710.59"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
         <LinearLayout
@@ -95,7 +97,8 @@
                 android:text="HH:hh"
                 android:ems="10"
                 android:id="@+id/horaFinTxt"
-                android:enabled="true" />
+                android:enabled="true"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
         <LinearLayout
@@ -120,7 +123,8 @@
                 android:text="0"
                 android:ems="10"
                 android:id="@+id/tiempoTxt"
-                android:enabled="true" />
+                android:enabled="true"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
     </LinearLayout>
