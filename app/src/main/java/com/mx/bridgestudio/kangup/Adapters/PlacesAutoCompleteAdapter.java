@@ -19,39 +19,51 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
-public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCompleteAdapter.PredictionHolder> implements Filterable {
+public class PlacesAutoCompleteAdapter   extends RecyclerView.Adapter<PlacesAutoCompleteAdapter.PredictionHolder> implements Filterable {
 
-        private static final String TAG = "PlacesAutoCompleteAdapter";
-        private ArrayList<PlaceAutocomplete> mResultList;
-        private GoogleApiClient mGoogleApiClient;
-        private LatLngBounds mBounds;
-        private AutocompleteFilter mPlaceFilter;
+    private static final String TAG = "PlacesAutoCompleteAdapter";
+    private ArrayList<PlaceAutocomplete> mResultList;
+    private GoogleApiClient mGoogleApiClient;
+    private LatLngBounds mBounds;
+    private AutocompleteFilter mPlaceFilter;
 
-        private Context mContext;
-        private int layout;
+    private Context mContext;
+    private int layout;
 
-        public PlacesAutoCompleteAdapter(Context context, int resource, GoogleApiClient googleApiClient,
-                LatLngBounds bounds, AutocompleteFilter filter) {
-            mContext = context;
-            layout = resource;
-            mGoogleApiClient = googleApiClient;
-            mBounds = bounds;
-            mPlaceFilter = filter;
-        }
+    public PlacesAutoCompleteAdapter(Context context, int resource, GoogleApiClient googleApiClient,
+                                     LatLngBounds bounds, AutocompleteFilter filter) {
+        mContext = context;
+        layout = resource;
+        mGoogleApiClient = googleApiClient;
+        mBounds = bounds;
+        mPlaceFilter = filter;
+    }
 
-        /**
-         * Sets the bounds for all subsequent queries.
-         */
+    /**
+     * Sets the bounds for all subsequent queries.
+     */
     public void setBounds(LatLngBounds bounds) {
         mBounds = bounds;
     }
@@ -181,6 +193,7 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
             super(itemView);
             mPrediction = (TextView) itemView.findViewById(R.id.address);
             mRow=(RelativeLayout)itemView.findViewById(R.id.predictedRow);
+
         }
 
     }
@@ -203,5 +216,6 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
             return description.toString();
         }
     }
+
 
 }

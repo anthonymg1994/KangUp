@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -59,7 +60,6 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     private int id_vehiculo = 0;
     private String nombre_vehiculo = "";
     RecyclerView horizontal_recycler_view;
-    HorizontalAdapter horizontalAdapter;
     private List<ListEspecificaciones> data;
     protected DrawerLayout mDrawer;
     private Button vermas, reservar;
@@ -106,13 +106,12 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
 
         car=(Vehicle)bundle.getSerializable("value");
 
-        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
+        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca() + " " + car.getValoracion());
 
         vermas = (Button)findViewById(R.id.vermas);
         vermas.setOnClickListener(this);
         reservar = (Button)findViewById(R.id.reservarr);
         reservar.setOnClickListener(this);
-        modelo = (TextView) findViewById(R.id.modelo);
         descripcion = (TextView) findViewById(R.id.descripcion);
      //   horizontal_recycler_view= (RecyclerView) findViewById(R.id.horizontal_recycler_view);
 
@@ -124,38 +123,64 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         //horizontal_recycler_view.setAdapter(horizontalAdapter);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(DetalleActivity.this, CategoryActivity.class));
+             //   if (control.isOnline()) {
+                    finish(); // close this P and return to preview activity (if there is any)
+                    startActivity(new Intent(DetalleActivity.this, CategoryActivity.class));
+               // } else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(DetalleActivity.this, NewsActivity.class));
+              //  if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(DetalleActivity.this, NewsActivity.class));
+               // } else {
+                //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(DetalleActivity.this, FavoriteActivity.class));
+               // if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(DetalleActivity.this, FavoriteActivity.class));
+                //} else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(DetalleActivity.this, HistoryActivity.class));
+
+                //if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(DetalleActivity.this, HistoryActivity.class));
+                //} else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
-
 
         fillFields(car);
     }
@@ -165,9 +190,12 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         Toast.makeText(this, "string"+response, Toast.LENGTH_SHORT).show();
         vehicle = vehicle;
     }
+
     */
+
     public void fillFields(Vehicle vehicle){
-        modelo.setText(vehicle.getModel() + " " + vehicle.getYear() + " " + vehicle.getMarca());
+        ratingBar.setRating(vehicle.getValoracion());
+
         descripcion.setText(vehicle.getDescription());
     }
 
@@ -320,64 +348,7 @@ init();
         });
 
     }
-    public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.MyViewHolder> {
 
-
-        List<ListEspecificaciones> horizontalList = Collections.emptyList();
-        Context context;
-
-
-        public HorizontalAdapter(List<ListEspecificaciones> horizontalList, Context context) {
-            this.horizontalList = horizontalList;
-            this.context = context;
-        }
-
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-
-            ImageView imageView;
-            TextView txtview;
-            public MyViewHolder(View view) {
-                super(view);
-                imageView=(ImageView) view.findViewById(R.id.imageview);
-                txtview=(TextView) view.findViewById(R.id.txtview);
-            }
-        }
-
-
-
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.vertical_menu, parent, false);
-
-            return new MyViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(final MyViewHolder holder, final int position) {
-
-            holder.imageView.setImageResource(horizontalList.get(position).getId_image());
-            holder.txtview.setText(horizontalList.get(position).getNombre());
-
-            holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-
-                public void onClick(View v) {
-                    String list = horizontalList.get(position).getNombre().toString();
-                    Toast.makeText(DetalleActivity.this, list, Toast.LENGTH_SHORT).show();
-                }
-
-            });
-
-        }
-
-
-        @Override
-        public int getItemCount()
-        {
-            return horizontalList.size();
-        }
-    }
 
 
 

@@ -4,33 +4,49 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
 import com.mx.bridgestudio.kangup.Adapters.AndroidImageAdapter;
+import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Category;
+import com.mx.bridgestudio.kangup.Models.Lists.ListPublicidad;
+import com.mx.bridgestudio.kangup.Models.Publicidad;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class CategoryActivity extends DrawerActivity implements AdapterView.OnItemClickListener{
+public class CategoryActivity extends DrawerActivity implements AdapterView.OnItemClickListener,OnDataSendPublicidad{
 
     private ListView list;
     private ArrayList<Category> tipos = new ArrayList<>();
@@ -41,10 +57,19 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     AsyncBrands asyncTask;
     Control control = new Control();
     protected DrawerLayout mDrawer;
+    private List<ListPublicidad> data;
+    private RecyclerView horizontal_recycler_view;
+    private ArrayList<String> horizontalList;
+    private static final Integer[] IMAGES= {R.drawable.auto,R.drawable.auto,R.drawable.auto,R.drawable.auto};
+    SlidingImage_Adapter s;
+    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+    ViewPager page,pagePublicidad;
+    CirclePageIndicator indicator;
+    private static int currentPage = 0;
+    private static int NUM_PAGES = 0;
 
-    //toolbardown
+    //ctoolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +80,23 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+
+
+
+
+
         View contentView = inflater.inflate(R.layout.activity_category, null, false);
 
         mDrawer.addView(contentView, 0);
 
+
+
+
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPageAndroid);
+        pagePublicidad = (ViewPager) findViewById(R.id.viewPagePublicidad);
+
+
         AndroidImageAdapter adapterView = new AndroidImageAdapter(this);
         mViewPager.setAdapter(adapterView);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcateg);
@@ -70,10 +107,15 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             }
         });
 
+        webs.getAllPublicidad(this,this);
         getSupportActionBar().setTitle("Categorias");
 
 
+
+
+
         list = (ListView)findViewById(R.id.listCategory);
+
         list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         adaptador = new AdapterCategory(this,tipos);
         list.setAdapter(adaptador);
@@ -100,34 +142,61 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(CategoryActivity.this, CategoryActivity.class));
+              //  if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(CategoryActivity.this, CategoryActivity.class));
+                //} else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(CategoryActivity.this, NewsActivity.class));
+             //   if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(CategoryActivity.this, NewsActivity.class));
+               // } else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(CategoryActivity.this, FavoriteActivity.class));
+              //  if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(CategoryActivity.this, FavoriteActivity.class));
+                //} else {
+                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(CategoryActivity.this, HistoryActivity.class));
+
+             //   if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(CategoryActivity.this, HistoryActivity.class));
+               // } else {
+ //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+//
+  //              }
+
             }
         });
+        init();
 
     }
 
@@ -182,4 +251,77 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     protected int getLayoutId() {
         return R.layout.activity_drawer;
     }
+
+    public void fill_with_data(Publicidad[] list) {
+
+
+        ListPublicidad listF = new ListPublicidad();
+        for (int i = 0; i < list.length ; i ++){
+
+            listF.setId(list[i].getId());
+            listF.setNombre(list[i].getNombre());
+            listF.setImage(R.drawable.auto);
+            data.add(i,listF);
+        }
+        /*
+        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 1"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 2"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 1"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 2"));
+        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
+*/
+
+    }
+
+    @Override
+    public void sendDataPublicidad(Publicidad[] obj) {
+
+    }
+
+
+
+
+    private void init() {
+        for(int i=0;i<IMAGES.length;i++)
+            ImagesArray.add(IMAGES[i]);
+
+
+
+        pagePublicidad.setAdapter(new SlidingImage_Adapter(CategoryActivity.this,ImagesArray));
+
+
+
+
+
+        final float density = getResources().getDisplayMetrics().density;
+
+//Set circle indicator radius
+
+
+        NUM_PAGES =IMAGES.length;
+
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                pagePublicidad.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+
+        // Pager listener over indicator
+
+
+    }
+
 }

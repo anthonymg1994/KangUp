@@ -98,6 +98,7 @@ public class historyByUser extends AsyncTask<String,Integer,String> {
                     arrayViajes[i].setYear(jsonobject.getString("Anio"));
                     arrayViajes[i].setFecha(jsonobject.getString("Fecha"));
                     arrayViajes[i].setTotal(jsonobject.getString("Total"));
+                    arrayViajes[i].setId_reservation(jsonobject.getInt("id_reservacion"));
                 }
 
             } catch (JSONException e) {

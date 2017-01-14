@@ -7,26 +7,46 @@ import com.mx.bridgestudio.kangup.AsyncTask.Formas_Pago.AsyncPaymentFormsUser;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncVehiculosXmarca;
 import com.mx.bridgestudio.kangup.AsyncTask.Noticias.AsyncNews;
+import com.mx.bridgestudio.kangup.AsyncTask.Publicidad.asyncTaskPublicidad;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
+import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncPaquetesXReservacion;
+import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncTaskArticulos;
+import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncTaskPaquetes;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
+import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncTaskUpdateUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncAddFav;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDeleteFav;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncFavs;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncRecommend;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncScore;
+import com.mx.bridgestudio.kangup.AsyncTask.Viaje.DetalleViajeByUser;
+import com.mx.bridgestudio.kangup.AsyncTask.Viaje.RoutesByTrip;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.historyByUser;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendAllPackages;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterRecommend;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistoryDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendRoutesByTrip;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSentArticlesByPackage;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
+import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
+
+import java.util.Date;
 
 /**
  * Created by USUARIO on 28/11/2016.
@@ -78,11 +98,47 @@ public class webServices {
         new AsyncNews(dataSendNews,context).execute();
     }
 
+    public void getAllPublicidad(OnDataSendPublicidad dataSendPublicidad, Context context){
+        new asyncTaskPublicidad(dataSendPublicidad,context).execute();
+    }
+
+
+
     public void destroyFav(Context context, int id_vehiculo, int id_user){
         new AsyncDeleteFav(context,id_vehiculo,id_user).execute();
     }
+
+    public void updateUser(Context context,User user){
+        new AsyncTaskUpdateUser(context,user).execute();
+    }
     public void addFav(Context context, int id_vehiculo, int id_user){
         new AsyncAddFav(context,id_vehiculo,id_user).execute();
+    }
+    public void TopRankingVehiculo(Context context, Vehicle vehiculo,Date date, Date time,Date time_final, OnDataSendFilterScore OnDataSendToActivity){
+        new AsyncScore(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
+    }
+    public void getRecommendCVehicles(Context context, Vehicle vehiculo,OnDataSendFilterRecommend OnDataSendToActivity){
+        new AsyncRecommend(context,vehiculo,OnDataSendToActivity).execute();
+    }
+
+    public void getHistoryDetailByUser(OnDataSendHistoryDetail c,Context context, int idUser, int idRes, int idu){
+        new DetalleViajeByUser(c,context,idUser,idRes,idu).execute();
+    }
+
+    public void getRoutesByTrip(OnDataSendRoutesByTrip dataSendRoutesByTrip, Context context, Rutas rutas){
+        new RoutesByTrip(dataSendRoutesByTrip,context,rutas).execute();
+    }
+
+    public void getPackagesByReservation(OnDataSendPackageByReservation dataSendPackageByReservation, Context context, int id_reservacion, int id_usuario){
+        new asyncPaquetesXReservacion(dataSendPackageByReservation,context,id_reservacion,id_usuario).execute();
+    }
+
+    public void getAllPackages(OnDataSendAllPackages dataSendAllPackages, Context context){
+        new asyncTaskPaquetes(dataSendAllPackages,context).execute();
+    }
+
+    public void getArticlesByPackage(OnDataSentArticlesByPackage dataSendArticlesByPackage, Context context, int id_paquete){
+        new asyncTaskArticulos(dataSendArticlesByPackage,context,id_paquete).execute();
     }
 /*
     public void Noticias(Context context, News news){

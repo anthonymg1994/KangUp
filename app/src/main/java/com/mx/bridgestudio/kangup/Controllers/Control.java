@@ -1,8 +1,11 @@
 package com.mx.bridgestudio.kangup.Controllers;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -11,21 +14,33 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -34,13 +49,14 @@ import java.util.HashMap;
  * Created by USUARIO on 20/12/2016.
  */
 
-public class Control {
-
+public class Control  {
+    private int mYear, mMonth, mDay,mHour, mMinute,pm;
     public static final String UPLOAD_URL = "http://simplifiedcoding.16mb.com/PhotoUpload/upload.php";
     public static final String UPLOAD_KEY = "image";
     private static int PICK_IMAGE_REQUEST = 1;
     private static Bitmap bitmap;
     private static Uri filePath;
+    private Calendar c;
 
     private void showFileChooser(Activity activity) {
         Intent intent = new Intent();
@@ -168,7 +184,7 @@ public class Control {
         //Obtener todos los precio de los paquetes agregados si es el caso
         if (paquetes.length > 0) {
             for (int j = 0; j < paquetes.length; j++) {
-                gastosExtras += paquetes[j].getTotal();
+                gastosExtras += Double.valueOf(paquetes[j].getPrecio());
             }
         }
 
@@ -255,5 +271,136 @@ public class Control {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(activity, R.color.status));
     }
+
+    public int showDialogTime(Context mContext){
+
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        final Calendar lastCalendar = Calendar.getInstance();
+                        lastCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        lastCalendar.set(Calendar.MINUTE, minute);
+                       // sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                        //)  sql.updateReservacionHora(hourOfDay + ":" + minute);
+                        mHour = hourOfDay;
+                    }
+                }, c.get((Calendar.HOUR_OF_DAY)), c.get(Calendar.MINUTE), false);
+        timePickerDialog.show();
+        return mHour;
+    }
+
+    public void showDialogCalendar(Context mContext ,final TextView fecha){
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(mContext,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        Date parseDate = null;
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+                        String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        try {
+                            parseDate = dateFormat.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
+                        String finalString = dateFormat1.format(parseDate);
+                        fecha.setText(""+finalString);
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+
+    }
+
+
+    public Calendar InitDateView(final Context context) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        LayoutInflater inflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.date_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+
+
+        final EditText fecha = (EditText) dialogView.findViewById(R.id.fecha);
+
+
+        final EditText hora = (EditText) dialogView.findViewById(R.id.hora);
+        final ImageView bHora = (ImageView) dialogView.findViewById(R.id.IBhora);
+        bHora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int c = showDialogTime(context);
+                hora.setText(""+c);
+            }
+        });
+        final ImageView bFecha = (ImageView) dialogView.findViewById(R.id.IBfecha);
+        bFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        dialogBuilder.setTitle("Disponbildad");
+        dialogBuilder.setMessage("Ingrese hora y fecha para buscar vehiculos:");
+        dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //do something with edt.getText().toString();
+                //com.mx.bridgestudio.kangup.Models.Reservacion res = new com.mx.bridgestudio.kangup.Models.Reservacion();
+                Intent setIntent = new Intent(context,CarsXtype.class);
+                //CatalogCar.id_Marca = list.get
+                context.startActivity(setIntent);
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+                dialog.dismiss();
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+
+
+
+
+
+
+        return c;
+    }
+
+    public boolean isOnline() {
+
+        Runtime runtime = Runtime.getRuntime();
+        try {
+
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+
+        } catch (IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+
+        return false;
+    }
+
 }
 

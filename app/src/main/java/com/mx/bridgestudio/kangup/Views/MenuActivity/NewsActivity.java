@@ -59,6 +59,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         //setContentView(R.layout.activity_news);
         control.changeColorStatusBar(NewsActivity.this);
 
+
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_news, null, false);
@@ -67,40 +68,71 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
        // drw.setNameToolbar("Noticias");
         getSupportActionBar().setTitle("Noticias");
 
-        webs.getAllNews(NewsActivity.this,this);
+       // if(control.isOnline()){
+          webs.getAllNews(NewsActivity.this,this);
+        //}else{
+        //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+
+        //}
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(NewsActivity.this, CategoryActivity.class));
+         //       if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(NewsActivity.this, CategoryActivity.class));
+           //     } else {
+             //       Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+               // }
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
-        noticias.setColorFilter(ContextCompat.getColor(NewsActivity.this,R.color.colorAccent));
-
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(NewsActivity.this, NewsActivity.class));
+            //    if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(NewsActivity.this, NewsActivity.class));
+              //  } else {
+                //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(NewsActivity.this, FavoriteActivity.class));
+             //   if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(NewsActivity.this, FavoriteActivity.class));
+               // } else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(NewsActivity.this, HistoryActivity.class));
+
+               // if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(NewsActivity.this, HistoryActivity.class));
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
 
@@ -150,7 +182,6 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
                     }
                 })
         );
-
         // Crear un nuevo adaptador
         adapter = new AdapterNews(items);
         recycler.setAdapter(adapter);

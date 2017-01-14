@@ -19,9 +19,11 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.AdapterViaje;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistoryDetail;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.DetalleViaje;
 import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
 import com.mx.bridgestudio.kangup.Models.Lists.ListViaje;
 import com.mx.bridgestudio.kangup.Models.RoadTrip;
@@ -35,7 +37,7 @@ import java.util.ArrayList;
  * Created by USUARIO on 07/12/2016.
  */
 
-public class HistoryActivity extends DrawerActivity implements AdapterView.OnItemClickListener,OnDataSendHistory {
+public class HistoryActivity extends DrawerActivity implements AdapterView.OnItemClickListener,OnDataSendHistoryDetail,OnDataSendHistory{
 
     private webServices webs = new webServices();
     protected DrawerLayout mDrawer;
@@ -47,6 +49,8 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     private SqliteController sql;
     private User user = new User();
     Control control = new Control();
+
+    public static int id_viaje=0;
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
@@ -84,8 +88,12 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         user = sql.user();
         sql.Close();
 
+        if(control.isOnline()){
+            webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
+        }else{
+            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-        webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
+        }
 
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
 
@@ -95,7 +103,12 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                 new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(view.getContext(), "position = " +items.get(position).getModelo(), Toast.LENGTH_SHORT).show();
+                        int opcionSeleccionada = items.get(position).getId();
+                        id_viaje = opcionSeleccionada;
 
+                        webs.getHistoryDetailByUser(HistoryActivity.this,HistoryActivity.this,user.getId(),id_viaje,user.getId());
+                        //Intent intent = new Intent(HistoryActivity.this, HistoryDetailsActivity.class);
+                        //startActivity(intent);
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
@@ -109,40 +122,64 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         recycler.setAdapter(adapter);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
+        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(HistoryActivity.this, CategoryActivity.class));
+         //       if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(HistoryActivity.this, CategoryActivity.class));
+           //     } else {
+             //       Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+               // }
+
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(HistoryActivity.this, NewsActivity.class));
+                //if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(HistoryActivity.this, NewsActivity.class));
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(HistoryActivity.this, FavoriteActivity.class));
+                //if (control.isOnline()) {
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(HistoryActivity.this, FavoriteActivity.class));
+                //} else {
+                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
-        historial.setColorFilter(ContextCompat.getColor(HistoryActivity.this,R.color.colorAccent));
-
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(HistoryActivity.this, HistoryActivity.class));
+
+                //if (control.isOnline()) {
+
+                    finish(); // close this activity and return to preview activity (if there is any)
+                    startActivity(new Intent(HistoryActivity.this, HistoryActivity.class));
+                //} else {
+                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+                //}
+
             }
         });
-
 
     }
 
@@ -185,6 +222,11 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     public void sendDataHistory(RoadTrip[] obj) {
         Toast.makeText(this, "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
         fillList(obj);
+    }
+
+    @Override
+    public void sendDataHistoryDetail(DetalleViaje[] obj) {
+
     }
 }
 

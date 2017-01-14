@@ -15,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
@@ -34,7 +36,7 @@ public class DrawerActivity extends AppCompatActivity
     private TextView name,email;
     private SqliteController sql;
     private User user = new User();
-
+    private Control control = new Control();
     public static int flag=0;
     public static String title="";
 
@@ -90,7 +92,6 @@ public class DrawerActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_drawer_drawer, menu);
         return true;
     }
 
@@ -115,31 +116,69 @@ public class DrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if(id == R.id.nav_home){
-            Intent setIntent = new Intent(this, CategoryActivity.class);
-            startActivity(setIntent);
-            finish();
+            //if(control.isOnline()){
+                Intent setIntent = new Intent(this, CategoryActivity.class);
+                startActivity(setIntent);
+                finish();
+          //  }else{
+              //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+        //    }
+
         }else if (id == R.id.nav_profile) {
             //Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
-            Intent setIntent = new Intent(this,ProfileActivity.class);
-            startActivity(setIntent);
-            finish();
+      //      if(control.isOnline()){
+                Intent setIntent = new Intent(this,ProfileActivity.class);
+                startActivity(setIntent);
+                finish();
+    //        }else{
+  //              Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+//            }
+
             // Handle the camera action
         } else if (id == R.id.nav_pay) {
-            Intent setIntent = new Intent(this, PaymentActivity.class);
-            startActivity(setIntent);
-            finish();
+            //if(control.isOnline()){
+                Intent setIntent = new Intent(this, PaymentActivity.class);
+                startActivity(setIntent);
+                finish();
+            //}else{
+              //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+            //}
+
+
         } else if (id == R.id.nav_history) {
-            Intent setIntent = new Intent(this, HistoryActivity.class);
-            startActivity(setIntent);
-            finish();
+          //  if(control.isOnline()){
+                Intent setIntent = new Intent(this, HistoryActivity.class);
+                startActivity(setIntent);
+                finish();
+        //    }else{
+      //          Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+    //        }
+
         } else if (id == R.id.nav_favorite) {
-            Intent setIntent = new Intent(this, FavoriteActivity.class);
-            startActivity(setIntent);
-            finish();
+           // (()) if(control.isOnline()){
+                Intent setIntent = new Intent(this, FavoriteActivity.class);
+                startActivity(setIntent);
+                finish();
+            //}else{
+  //            /  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+
+
+
         } else if(id == R.id.nav_news){
-            Intent setIntent = new Intent(this, NewsActivity.class);
-            startActivity(setIntent);
-            finish();
+            //if(control.isOnline()){
+                Intent setIntent = new Intent(this, NewsActivity.class);
+                startActivity(setIntent);
+                finish();
+           // }else{
+//                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+       //     }
+
 
         } else if (id == R.id.nav_privacy) {
 
@@ -160,7 +199,7 @@ public class DrawerActivity extends AppCompatActivity
         new AlertDialog.Builder(DrawerActivity.this)
                 .setTitle("Cerrar sesion")
                 .setMessage("¿Desea cerrar sesión?")
-                .setIcon(R.drawable.ic_menu_manage)
+                .setIcon(R.drawable.ic_close_light)
                 .setPositiveButton("Si",
                         new DialogInterface.OnClickListener() {
                             @TargetApi(11)
@@ -187,7 +226,7 @@ public class DrawerActivity extends AppCompatActivity
 
 
 
-        name.setText(user.getFirstName() +" "+ user.getLastName());
+        name.setText(user.getFirstName() +" "+ user.getAp_paterno() + " " + user.getAp_materno());
 //        email.setText(user.getEmail());
 
     }

@@ -58,7 +58,8 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/include6"
         app:layout_constraintRight_toRightOf="@+id/include6"
-        tools:layout_constraintRight_creator="1" />
+        tools:layout_constraintRight_creator="1"
+        android:id="@+id/include8" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/wrap"
@@ -82,10 +83,27 @@
             android:src="@drawable/perfil1"
             android:scaleType="centerCrop"
             android:layout_height="110dp"
-            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteY="30dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/edit"
+        android:id="@+id/editinfo"
+        app:layout_constraintLeft_toLeftOf="@+id/include6"
+        app:layout_constraintTop_toTopOf="@+id/include6"
+        android:layout_marginStart="312dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginLeft="312dp"
+        app:layout_constraintRight_toRightOf="@+id/include6"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintBottom_toTopOf="@+id/include8"
+        android:layout_marginBottom="8dp" />
 
 </android.support.constraint.ConstraintLayout>

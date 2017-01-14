@@ -30,6 +30,7 @@ public class NewsDetailActivity extends DrawerActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private DrawerActivity drw =  new DrawerActivity();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

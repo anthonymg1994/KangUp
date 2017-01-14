@@ -2,8 +2,14 @@ package com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
@@ -19,6 +25,7 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 
 /**
  * Created by USUARIO on 02/12/2016.
@@ -101,6 +108,7 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             Intent intent = new Intent(mContext, CarsXtype.class);
             SendToActivity.sendData(arrayVehiculos);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
@@ -112,4 +120,7 @@ public class AsyncVehiculosXmarca extends AsyncTask<String,Integer,String> {
 
         }
     }
+
+
+
 }

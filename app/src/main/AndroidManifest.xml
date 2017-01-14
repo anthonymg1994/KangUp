@@ -85,7 +85,8 @@
             android:name=".Views.AfterMenuOption.CatalogCar"
             android:permission="android.permission.INTERNET"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Views.PaginasInicio.SplashActivity">
+        <activity android:name=".Views.PaginasInicio.SplashActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -131,7 +132,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAI4PGKAtAXvMTvvcEfMj8sE9AI90OaKyg" />
+            android:value="AIzaSyCQF2RDLchRhcqygfARkmUJqOibjcoCvOU" />
 
         <activity
             android:name=".Views.MenuActivity.NewsActivity"
@@ -139,7 +140,9 @@
         <activity
             android:name=".Views.MenuActivity.NewsDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Views.MenuActivity.HistoryDetailsActivity"></activity>
+
+        <activity android:name=".Views.MenuActivity.HistoryDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

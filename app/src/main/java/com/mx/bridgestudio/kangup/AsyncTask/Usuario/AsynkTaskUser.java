@@ -37,7 +37,7 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
     private User u = new User();
 
 
-    private User user;
+    private User user = new User();
     webServices services = new webServices();
     DAOuser Duser = new DAOuser();
     Context mContext;
@@ -84,7 +84,17 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
          
            sql = new SqliteController(mContext, "kangup",null, 1);
            sql.Connect();
-          sql.insertUsuario(user);
+
+           if(user.getAddress() == null){
+               user.setAddress("");
+           }
+           if(user.getAp_materno() == null){
+               user.setAp_materno("");
+           }
+           if(user.getAp_paterno() == null){
+               user.setAp_paterno("");
+           }
+            sql.insertUsuario(user);
             sql.Close();
 
 

@@ -3,6 +3,8 @@ package com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.maps.android.SphericalUtil;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
@@ -11,6 +13,7 @@ import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
  */
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +24,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,6 +42,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.mx.bridgestudio.kangup.Adapters.PlacesAutoCompleteAdapter;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Models.Constants;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
 
 public class PlacesAutoCompleteActivity extends DrawerActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -49,7 +55,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     sb.append("&types=(cities)");
     sb.append("&input=" + URLEncoder.encode(input, "utf8"));
 */
-
+    private SqliteController sql;
     AutocompleteFilter filter =
             new AutocompleteFilter.Builder().setCountry("MX").build();
     private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(
@@ -58,6 +64,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     private EditText mAutocompleteView;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
+    PlacesAutoCompleteAdapter.PlaceAutocomplete item = null;
     private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
     ImageView delete;
     @Override
@@ -101,10 +108,11 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
         });
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this,mRecyclerView,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
+                        @Override
                     public void onItemClick(View view, int position) {
-                        final PlacesAutoCompleteAdapter.PlaceAutocomplete item = mAutoCompleteAdapter.getItem(position);
+                        item = mAutoCompleteAdapter.getItem(position);
                         final String placeId = String.valueOf(item.placeId);
+
                         Log.i("TAG", "Autocomplete item selected: " + item.description);
                         /*
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
@@ -124,6 +132,15 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                             }
                         });
                         Log.i("TAG", "Clicked: " + item.description);
+                            Reservacion ruta= new Reservacion();
+                            ruta.setOrigen(item.description.toString());
+                            sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
+                            sql.Connect();
+                            //sql.in(item.description.toString(),"");
+                            sql.Close();
+
+
+                            onBackPressed();
                         Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
                     }
 
@@ -209,9 +226,10 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
             mGoogleApiClient.disconnect();
         }
     }
-
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void onBackPressed()
+    {
+      super.onBackPressed();
     }
+
 }
