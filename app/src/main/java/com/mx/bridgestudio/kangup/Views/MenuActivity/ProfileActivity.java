@@ -225,6 +225,14 @@ public class ProfileActivity extends DrawerActivity implements
         setSupportActionBar(toolbar);
 
         //Validar si el campo esta null no muestro nada en los edittext
+        if(!user.getFirstName().equals("null"))
+            editBirth.setText(user.getFirstName());
+
+        if(!user.getAp_paterno().equals("null"))
+            editBirth.setText(user.getAp_paterno());
+
+        if(!user.getFnacimiento().equals("null"))
+            editBirth.setText(user.getFnacimiento());
         if(!user.getFnacimiento().equals("null"))
              editBirth.setText(user.getFnacimiento());
 
