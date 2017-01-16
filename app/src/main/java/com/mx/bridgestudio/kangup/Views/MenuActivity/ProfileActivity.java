@@ -37,7 +37,7 @@ public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {
 
     private ImageButton showCalendar;
-    private EditText email,address,city,cellphone,name,lastname;
+    private EditText email,address,city,cellphone,name,ap_materno,ap_paterno;
     private int mYear, mMonth, mDay;
     private TextView editBirth;
     private int flag=0;
@@ -83,9 +83,10 @@ public class ProfileActivity extends DrawerActivity implements
 //Arreglar cuando selccione edittext solo salg dialg y se esconda teclado
 
         name = (EditText) findViewById(R.id.editText2);
-        lastname = (EditText) findViewById(R.id.editText);
+        ap_paterno = (EditText) findViewById(R.id.editText);
+        ap_materno = (EditText) findViewById(R.id.editText3);
         editBirth = (TextView)findViewById(R.id.editBirth);
-        cellphone = (EditText) findViewById(R.id.editText);
+        cellphone = (EditText) findViewById(R.id.editName);
         email = (EditText)findViewById(R.id.editEmail);
         address = (EditText)findViewById(R.id.editAddress);
         city = (EditText)findViewById(R.id.editCity);
@@ -98,8 +99,8 @@ public class ProfileActivity extends DrawerActivity implements
                 user.setFirstName(name.getText().toString());
 
                 //separar apellidos
-                user.setAp_paterno(lastname.getText().toString());
-                user.setAp_materno(lastname.getText().toString());
+                user.setAp_paterno(ap_paterno.getText().toString());
+                user.setAp_materno(ap_materno.getText().toString());
 
 
 
@@ -226,10 +227,13 @@ public class ProfileActivity extends DrawerActivity implements
 
         //Validar si el campo esta null no muestro nada en los edittext
         if(!user.getFirstName().equals("null"))
-            editBirth.setText(user.getFirstName());
+            name.setText(user.getFirstName());
 
         if(!user.getAp_paterno().equals("null"))
-            editBirth.setText(user.getAp_paterno());
+            ap_paterno.setText(user.getAp_paterno());
+
+        if(!user.getAp_materno().equals("null"))
+            ap_materno.setText(user.getAp_materno());
 
         if(!user.getFnacimiento().equals("null"))
             editBirth.setText(user.getFnacimiento());
