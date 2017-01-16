@@ -49,6 +49,8 @@ public class ProfileActivity extends DrawerActivity implements
     private FloatingActionButton edit;
     Control control = new Control();
     private webServices webs;
+
+
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
     private DrawerActivity drw = new DrawerActivity();
