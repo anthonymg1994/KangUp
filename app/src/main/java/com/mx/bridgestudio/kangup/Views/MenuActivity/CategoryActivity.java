@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
 import com.mx.bridgestudio.kangup.Adapters.AndroidImageAdapter;
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
@@ -36,9 +38,14 @@ import com.mx.bridgestudio.kangup.Models.Publicidad;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,6 +68,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     private RecyclerView horizontal_recycler_view;
     private ArrayList<String> horizontalList;
     private static final Integer[] IMAGES= {R.drawable.auto,R.drawable.auto,R.drawable.auto,R.drawable.auto};
+    private static String[] imagenes_publicidad;
     SlidingImage_Adapter s;
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
     ViewPager page,pagePublicidad;
@@ -108,6 +116,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         });
 
         webs.getAllPublicidad(this,this);
+        getPublicidad();
         getSupportActionBar().setTitle("Categorias");
 
 
@@ -263,15 +272,6 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             listF.setImage(R.drawable.auto);
             data.add(i,listF);
         }
-        /*
-        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 1"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 2"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autob, "Image 1"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autoa, "Image 2"));
-        data.add(new ListEspecificaciones( R.drawable.detalle_autos, "Image 3"));
-*/
-
     }
 
     @Override
@@ -283,7 +283,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
 
     private void init() {
-        for(int i=0;i<IMAGES.length;i++)
+        for(int i=0;i<imagenes_publicidad.length;i++)
             ImagesArray.add(IMAGES[i]);
 
 
@@ -323,5 +323,45 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
 
     }
+
+public void getPublicidad() {
+    final String URL = "http://kangup.com.mx/profile_foto/Publicidad/";
+    Ion.with(CategoryActivity.this)
+            .load("POST", "http://kangup.com.mx/index.php/getAll")
+            .setHeader("Content-Length", "0")
+            .asString()
+            .setCallback(new FutureCallback<String>() {
+                @Override
+                public void onCompleted(Exception e, String result) {
+                    //String info="";
+
+                    JSONArray jsonarray = null;
+                    try {
+                        jsonarray = new JSONArray(result);
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                    imagenes_publicidad = new String[jsonarray.length()];
+
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            imagenes_publicidad[i] = new String();
+                            JSONObject jsonobject = null;
+                            try {
+                                jsonobject = jsonarray.getJSONObject(i);
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+                            try {
+                                imagenes_publicidad[i] = (URL + jsonobject.getString("nombre"));
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+
+                        }
+
+
+                }
+            });
+}
 
 }

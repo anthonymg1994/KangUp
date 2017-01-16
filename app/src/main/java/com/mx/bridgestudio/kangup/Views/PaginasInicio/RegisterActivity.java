@@ -3,6 +3,7 @@ package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,10 +11,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import android.os.Environment;
@@ -37,9 +40,12 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.async.future.FutureCallback;
+import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.ExitUtils;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
@@ -70,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-
+   ExitUtils exitUtils;
     private final int PICK_IMAGE = 12345;
     private final int TAKE_PICTURE = 6352;
     private static final int REQUEST_CAMERA_ACCESS_PERMISSION =5674;
@@ -274,17 +280,26 @@ public class RegisterActivity extends AppCompatActivity {
             startActivityForResult(takePicture, TAKE_PICTURE);
         }
     }
-
-    @Override
+   @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    path = data.getData().getPath();
+                    Uri selectedImageUri = data.getData();
+                    Bitmap bitmap = null;
+
+                    //  path = data.getData().getPath();
                     bitmap = BitmapFactory.decodeStream(inputStream);
                     imageViewRound.setImageBitmap(bitmap);
+                  //BitmapFactory.decodeFile(path);
+                  //  Bitmap b = ExitUtils.rotateBitmap(path, b1);
+
+                  //  decodeFile(path);
+                    //  ExitUtils.rotateBitmap(path,bitmap);
+                    //   Glide.with(RegisterActivity.this).load(path).into(imageViewRound);
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -351,6 +366,5 @@ public class RegisterActivity extends AppCompatActivity {
 
         return imageFile;
     }
-
 
 }
