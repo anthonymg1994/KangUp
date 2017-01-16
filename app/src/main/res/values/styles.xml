@@ -6,6 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--your other properties -->
+        <!--<item name="android:windowDisablePreview">true</item>-->
+        <item name="android:windowDisablePreview">true</item>
+        <!--your other properties -->
     </style>
 
     <style name="AppTheme.NoActionBar">

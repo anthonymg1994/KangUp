@@ -37,7 +37,7 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
     private User u = new User();
 
 
-    private User user;
+    private User user = new User();
     webServices services = new webServices();
     DAOuser Duser = new DAOuser();
     Context mContext;
@@ -107,5 +107,6 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
        }
     }
 
+    //jjjdk
 
 }

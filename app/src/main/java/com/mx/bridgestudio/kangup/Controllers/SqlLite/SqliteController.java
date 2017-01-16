@@ -22,9 +22,6 @@ public class SqliteController extends SQLiteOpenHelper {
     private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellido_paterno TEXT, apellido_materno TEXT," +
             "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
 
-    private String Memento ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellidos TEXT," +
-            "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
-
     private String reservacion ="CREATE TABLE Reservacion(id INTEGER, fecha TEXT, hora TEXT);";
 
     private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";

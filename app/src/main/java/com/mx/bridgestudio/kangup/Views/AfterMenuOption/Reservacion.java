@@ -34,6 +34,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.Adapters.AdapterAllPackages;
 import com.mx.bridgestudio.kangup.Adapters.AdapterArticle;
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaquetes;
@@ -63,6 +65,7 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -132,6 +135,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     public static String descripcionPaquete="";
     public static String nombrePaquete="";
     public int id_paquete=0;
+    public int id_reservacion=0;
 
     //Alert articulos
     RecyclerView.Adapter adapterArticulos;
@@ -326,10 +330,43 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         dialogBuilder.setMessage("Introduzca su nueva ruta:");
         dialogBuilder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                //do something with edt.getText().toString();
-                //com.mx.bridgestudio.kangup.Models.Reservacion res = new com.mx.bridgestudio.kangup.Models.Reservacion();
-                String ruta = "Origen: " + origen.getText().toString() + "\n" + "Destino: " + destino.getText().toString();
-                addres.add(ruta);
+                //String ruta = "Origen: " + origen.getText().toString() + "\n" + "Destino: " + destino.getText().toString();
+                //addres.add(ruta);
+                Ion.with(Reservacion.this)
+                        .load("POST", "http://kangup.com.mx/index.php/idRes")
+                        .setHeader("Content-Length","0")
+                        .asString()
+                        .setCallback(new FutureCallback<String>() {
+                            @Override
+                            public void onCompleted(Exception e, String result) {
+                                //String info="";
+                                try {
+                                    JSONObject objUser = new JSONObject(result);
+                                    //info = String.valueOf(objUser.getInt("id"));
+                                    id_reservacion = objUser.getInt("id")+1;
+
+                                    } catch (JSONException e1) {
+                                    e1.printStackTrace();
+                                }
+                            }
+                        });
+                Ion.with(Reservacion.this)
+                        .load("POST", "http://kangup.com.mx/index.php/routes")
+                        .setHeader("Content-Length","0")
+                        .setBodyParameter("origen", origen.getText().toString())
+                        .setBodyParameter("destino",destino.getText().toString())
+                        .setBodyParameter("id_reservacion", String.valueOf(id_reservacion))
+                        .asString()
+                        .setCallback(new FutureCallback<String>() {
+                            @Override
+                            public void onCompleted(Exception e, String result) {
+                                //String info="";
+                                Toast msg = Toast.makeText(getBaseContext(),
+                                        result, Toast.LENGTH_SHORT);
+                                msg.show();
+                            }
+                        });
+
             }
         });
         dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
