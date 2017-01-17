@@ -206,6 +206,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
 
         return super.onOptionsItemSelected(item);
@@ -265,6 +266,7 @@ public class RegisterActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -272,6 +274,7 @@ public class RegisterActivity extends AppCompatActivity {
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePicture.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePicture, TAKE_PICTURE);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 

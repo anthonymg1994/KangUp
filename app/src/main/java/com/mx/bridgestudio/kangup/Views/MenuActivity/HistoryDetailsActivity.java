@@ -98,6 +98,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(HistoryDetailsActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
@@ -106,6 +107,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(HistoryDetailsActivity.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
@@ -114,6 +116,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(HistoryDetailsActivity.this, FavoriteActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
@@ -122,6 +125,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(HistoryDetailsActivity.this, HistoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 

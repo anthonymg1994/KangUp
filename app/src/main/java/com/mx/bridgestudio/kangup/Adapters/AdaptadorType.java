@@ -3,6 +3,7 @@ package com.mx.bridgestudio.kangup.Adapters;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,9 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 
 import java.util.List;
 
@@ -96,9 +100,14 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
         viewHolder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertConfirmacion(items.get(i).getId(),user.getId());
-                Toast.makeText(context, "Eliminado veh "+items.get(i).getId(), Toast.LENGTH_LONG).show();
-                Toast.makeText(context, "Eliminado user "+user.getId(), Toast.LENGTH_LONG).show();
+                if(LoginActivity.guestFlag==1){
+                    alertGuest();
+                }
+                else {
+                    alertConfirmacion(items.get(i).getId(),user.getId());
+                    Toast.makeText(context, "Eliminado veh "+items.get(i).getId(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Eliminado user "+user.getId(), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -121,6 +130,29 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
                     @TargetApi(11)
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
+                    }
+                }).show();
+    }
+
+    public void alertGuest() {
+        new AlertDialog.Builder(context)
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(context, RegisterActivity.class);
+                                context.startActivity(setIntent);
+                                context.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
                     }
                 }).show();
     }

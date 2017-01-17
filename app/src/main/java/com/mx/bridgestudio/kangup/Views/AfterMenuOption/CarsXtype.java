@@ -43,6 +43,7 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabRecommend;
 import com.mx.bridgestudio.kangup.Views.tabs.TabVotados;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
@@ -108,29 +109,29 @@ public class CarsXtype extends DrawerActivity implements
         hora = (TextView) findViewById(R.id.hour);
         fecha = (TextView) findViewById(R.id.date);
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
+        catalogo.setColorFilter(ContextCompat.getColor(CarsXtype.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  if (control.isOnline()) {
-                    finish(); // close this P and return to preview activity (if there is any)
-                    startActivity(new Intent(CarsXtype.this, CategoryActivity.class));
+                //  if (control.isOnline()) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CarsXtype.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
-                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-               // }
-
+                //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //}
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  if (control.isOnline()) {
-                    finish(); // close this activity and return to preview activity (if there is any)
-                    startActivity(new Intent(CarsXtype.this, NewsActivity.class));
-                //} else {
-                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //   if (control.isOnline()) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CarsXtype.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                // } else {
+                //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -140,12 +141,18 @@ public class CarsXtype extends DrawerActivity implements
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if (control.isOnline()) {
+                //  if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else
+                {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CarsXtype.this, FavoriteActivity.class));
-                //} else {
-                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    //} else {
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                }
                 //}
 
             }
@@ -155,14 +162,20 @@ public class CarsXtype extends DrawerActivity implements
             @Override
             public void onClick(View view) {
 
-                //if (control.isOnline()) {
-
+                //   if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else{
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CarsXtype.this, HistoryActivity.class));
-                //} else {
-                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
 
-                //}
+                // } else {
+                //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+//
+                //              }
 
             }
         });
@@ -203,6 +216,7 @@ public class CarsXtype extends DrawerActivity implements
     {
         Intent setIntent = new Intent(this,CatalogCar.class);
         startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
     @Override
@@ -232,10 +246,22 @@ public class CarsXtype extends DrawerActivity implements
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.changeDate){
-            showDialogCalendar();
+            if(LoginActivity.guestFlag == 1)
+            {
+                alertGuest();
+            }
+            else{
+                showDialogCalendar();
+            }
         }
         if(v.getId() == R.id.changeHour){
-            showDialogTime();
+            if(LoginActivity.guestFlag == 1)
+            {
+                alertGuest();
+            }
+            else{
+                showDialogTime();
+            }
         }
     }
     /*
@@ -358,5 +384,27 @@ public class CarsXtype extends DrawerActivity implements
         return R.layout.activity_drawer;
     }
 
-
+    public void alertGuest() {
+        new AlertDialog.Builder(CarsXtype.this)
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(CarsXtype.this, RegisterActivity.class);
+                                startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
 }

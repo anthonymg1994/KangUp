@@ -91,6 +91,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
             //    if (control.isOnline()) {
                     finish(); // close this P and return to preview activity (if there is any)
                     startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
               //  } else {
                 //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -105,6 +106,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                 //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(PaymentActivity.this, NewsActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                   //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -119,6 +121,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                 //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(PaymentActivity.this, FavoriteActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                   //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -135,6 +138,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(PaymentActivity.this, HistoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
       //          } else {
         //            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -181,10 +185,11 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                         finish();
                         //startActivity(new Intent(PaymentActivity.this, AddPaymentActivity.class));
                         startActivity(new Intent(PaymentActivity.this, Paypal.class));
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         type=1;
                         break;
                     case 1:
-                        Toast.makeText(PaymentActivity.this, "Second Item Clicked", Toast.LENGTH_LONG).show();
+                        Toast.makeText(PaymentActivity.this, "Tiendas de conveniencia", Toast.LENGTH_LONG).show();
                         type=2;
                         break;
                 }
@@ -203,6 +208,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
             startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
 
         return super.onOptionsItemSelected(item);

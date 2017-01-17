@@ -88,12 +88,12 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         user = sql.user();
         sql.Close();
 
-        if(control.isOnline()){
+        //if(control.isOnline()){
             webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
-        }else{
-            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+        //}else{
+          //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-        }
+        //}
 
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
 
@@ -129,6 +129,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
          //       if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, CategoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
            //     } else {
              //       Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -143,6 +144,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                 //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, NewsActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                   //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -157,6 +159,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                 //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, FavoriteActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                   //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -173,6 +176,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, HistoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                  //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -213,6 +217,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     {
         Intent setIntent = new Intent(this,CategoryActivity.class);
         startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 

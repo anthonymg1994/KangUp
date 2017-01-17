@@ -1,6 +1,8 @@
 package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +41,7 @@ import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -131,6 +135,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
                 //SendToActivity.sendData(arrayBrands);
                 intent.putExtra("option",brand.getId_categoria());
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 //                webs.brandByCategory(CategoryActivity.this,CategoryActivity.this,brand);
             }
         });
@@ -145,11 +150,10 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
               //  if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, CategoryActivity.class));
-                //} else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-                //}
-
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    //} else {
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                    //}
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
@@ -159,8 +163,9 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
              //   if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, NewsActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                // } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -171,11 +176,17 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             @Override
             public void onClick(View view) {
               //  if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else
+                {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, FavoriteActivity.class));
-                //} else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    //} else {
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                }
                 //}
 
             }
@@ -186,9 +197,15 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
             public void onClick(View view) {
 
              //   if (control.isOnline()) {
-
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else{
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, HistoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+
                // } else {
  //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 //
@@ -230,6 +247,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent setIntent = new Intent(this,CatalogCar.class);
         startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 
@@ -238,6 +256,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     {
         Intent setIntent = new Intent(this,LoginActivity.class);
         startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 /*
@@ -322,6 +341,30 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         // Pager listener over indicator
 
 
+    }
+
+    public void alertGuest() {
+        new AlertDialog.Builder(CategoryActivity.this)
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(CategoryActivity.this, RegisterActivity.class);
+                                startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 
 }

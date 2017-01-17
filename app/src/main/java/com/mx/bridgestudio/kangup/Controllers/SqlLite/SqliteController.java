@@ -26,6 +26,7 @@ public class SqliteController extends SQLiteOpenHelper {
 
     private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";
 
+    private String guestTable="CREATE TABLE Guest(id INTEGER, nombre TEXT);";
 
     private User us [];
 

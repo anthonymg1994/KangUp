@@ -28,6 +28,7 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.ProfileActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,11 +103,6 @@ public class DrawerActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -119,7 +115,9 @@ public class DrawerActivity extends AppCompatActivity
             //if(control.isOnline()){
                 Intent setIntent = new Intent(this, CategoryActivity.class);
                 startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+
           //  }else{
               //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -128,9 +126,16 @@ public class DrawerActivity extends AppCompatActivity
         }else if (id == R.id.nav_profile) {
             //Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
       //      if(control.isOnline()){
+            if(LoginActivity.guestFlag==1)
+            {
+                alertGuest();
+            }
+            else{
                 Intent setIntent = new Intent(this,ProfileActivity.class);
                 startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+            }
     //        }else{
   //              Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -139,9 +144,16 @@ public class DrawerActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_pay) {
             //if(control.isOnline()){
+            if(LoginActivity.guestFlag==1)
+            {
+                alertGuest();
+            }
+            else{
                 Intent setIntent = new Intent(this, PaymentActivity.class);
                 startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+            }
             //}else{
               //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -150,9 +162,16 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_history) {
           //  if(control.isOnline()){
+            if(LoginActivity.guestFlag==1)
+            {
+                alertGuest();
+            }
+            else {
                 Intent setIntent = new Intent(this, HistoryActivity.class);
                 startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+            }
         //    }else{
       //          Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -160,9 +179,17 @@ public class DrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_favorite) {
            // (()) if(control.isOnline()){
+            if(LoginActivity.guestFlag==1)
+            {
+                alertGuest();
+            }
+            else{
                 Intent setIntent = new Intent(this, FavoriteActivity.class);
                 startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+            }
+
             //}else{
   //            /  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -173,6 +200,7 @@ public class DrawerActivity extends AppCompatActivity
             //if(control.isOnline()){
                 Intent setIntent = new Intent(this, NewsActivity.class);
                 startActivity(setIntent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
            // }else{
 //                Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
@@ -183,7 +211,13 @@ public class DrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_privacy) {
 
         } else if (id == R.id.nav_logout) {
-            alertLogOut();
+            if(LoginActivity.guestFlag==1)
+            {
+                alertLogOutGuest();
+            }
+            else{
+                alertLogOut();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -206,6 +240,31 @@ public class DrawerActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent setIntent = new Intent(DrawerActivity.this,LoginActivity.class);
                                 startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
+    public void alertLogOutGuest() {
+        new AlertDialog.Builder(DrawerActivity.this)
+                .setTitle("Invitado")
+                .setMessage("¿Desea salir del modo invitado?")
+                .setIcon(R.drawable.ic_close_light)
+                .setPositiveButton("Si",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(DrawerActivity.this,LoginActivity.class);
+                                startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                                 dialog.cancel();
                             }
@@ -219,19 +278,48 @@ public class DrawerActivity extends AppCompatActivity
     }
 
     public void getInformation(){
-        sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
-        sql.Connect();
-        user = sql.user();
-        sql.Close();
+        if(LoginActivity.guestFlag==1)
+        {
+            name.setText("Invitado");
 
-
-
-        name.setText(user.getFirstName() +" "+ user.getAp_paterno() + " " + user.getAp_materno());
-//        email.setText(user.getEmail());
+        }
+        else{
+            sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+            sql.Connect();
+            user = sql.user();
+            sql.Close();
+            name.setText(user.getFirstName() +" "+ user.getAp_paterno() + " " + user.getAp_materno());
+        }
 
     }
 
     public void setNameToolbar(String name){
         toolbar.setTitle(name);
     }
+
+
+    public void alertGuest() {
+        new AlertDialog.Builder(DrawerActivity.this)
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(DrawerActivity.this, RegisterActivity.class);
+                                startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
 }
