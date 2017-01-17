@@ -101,7 +101,7 @@
         android:background="@drawable/buttons_alpha"/>
 
     <TextView
-        android:text="a"
+        android:text=" "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView14"

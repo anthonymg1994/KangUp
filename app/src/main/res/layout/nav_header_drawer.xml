@@ -26,7 +26,7 @@
         android:layout_width="90dp"
         app:layout_collapseMode="parallax"
         app:layout_collapseParallaxMultiplier="0.7"
-        android:id="@+id/imageProfile"
+        android:id="@+id/imageProfilee"
         android:src="@drawable/perfil1"
 
 
@@ -50,9 +50,9 @@
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_marginStart="14dp"
-        app:layout_constraintLeft_toRightOf="@+id/imageProfile"
+        app:layout_constraintLeft_toRightOf="@+id/imageProfilee"
         android:layout_marginLeft="14dp"
-        app:layout_constraintTop_toTopOf="@+id/imageProfile"
+        app:layout_constraintTop_toTopOf="@+id/imageProfilee"
         app:layout_constraintHorizontal_bias="1.0"
         android:textSize="16sp"
         android:textStyle="normal|bold"

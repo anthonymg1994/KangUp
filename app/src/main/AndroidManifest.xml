@@ -60,9 +60,11 @@
         <activity
             android:name=".Views.PaginasInicio.RegisterActivity"
             android:isScrollContainer="true"
+
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+    />
         <activity
             android:name=".Views.PaginasInicio.ForgotActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -86,11 +88,12 @@
             android:name=".Views.AfterMenuOption.CatalogCar"
             android:permission="android.permission.INTERNET"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity android:name=".Views.PaginasInicio.SplashActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"
-                    />
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

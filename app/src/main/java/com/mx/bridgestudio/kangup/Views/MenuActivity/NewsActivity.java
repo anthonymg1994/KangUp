@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterNews;
@@ -36,7 +37,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
     ArrayList<ListNews> items= new ArrayList<>();
-
+    private ImageView imageNew;
     private webServices webs = new webServices();
 
     public static int id_noticia=0;
@@ -183,11 +184,15 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
                 })
         );
         // Crear un nuevo adaptador
-        adapter = new AdapterNews(items);
+        adapter = new AdapterNews(NewsActivity.this,items);
         recycler.setAdapter(adapter);
     }
 
     public void fillList(News[] news){
+        final String URL = "http://kangup.com.mx/uploads/Noticias/";
+        final String URLDefault = "http://kangup.com.mx/uploads/Noticias/noticia_1.png";
+
+
         ListNews[] list = new ListNews[news.length];
         for(int i = 0 ; i < news.length ; i++){
             list[i] = new ListNews();
@@ -196,7 +201,11 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
             list[i].setDescription(news[i].getDescripccion());
             //list[i].setImage(news[i].getImagen());
             //Cmbiar por imagen del servidor
-            list[i].setImage(1);
+            if(news[i].getImagen() == null){
+                list[i].setImage(URLDefault);
+            }else{
+                list[i].setImage(URL + news[i].getImagen());
+            }
             items.add(i,list[i]);
         }
         adapter.notifyDataSetChanged();

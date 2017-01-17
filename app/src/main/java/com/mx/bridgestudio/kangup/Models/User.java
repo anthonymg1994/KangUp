@@ -16,7 +16,7 @@ public class User {
     private String ciudad;
     private int pay;
     private String fnacimiento;
-    private int photo;
+    private String photo;
     private String address;
 
     public User(){
@@ -46,11 +46,11 @@ public class User {
         this.fnacimiento = fnacimiento;
     }
 
-    public int getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(int photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 

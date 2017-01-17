@@ -245,7 +245,7 @@ init();
         ListEspecificaciones list = new ListEspecificaciones();
         for (int i = 0; i < onlySpec.size() ; i ++){
 
-            list.setId_image(R.drawable.detalle_autoa);
+            //list.setId_image(R.drawable.detalle_autoa);
             list.setNombre(onlySpec.get(i));
             data.add(i,list);
         }
@@ -296,7 +296,7 @@ init();
 
 
 
-        page.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
+       // page.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
 
 
 

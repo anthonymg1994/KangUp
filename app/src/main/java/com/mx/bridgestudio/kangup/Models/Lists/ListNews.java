@@ -8,16 +8,18 @@ import android.content.Context;
 
 public class ListNews {
 
+
     private int id;
     private String title;
     private String description;
-    private int image;
+    private String image;
 
     public ListNews(){}
-    public ListNews(int id, String title, String desc){
+    public ListNews(int id, String title, String desc,String image){
         this.setId(id);
         this.setTitle(title);
         this.setDescription(desc);
+        this.setImage(image);
     }
     public static int getImageId(Context context, int imageName) {
         return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
@@ -48,11 +50,11 @@ public class ListNews {
         this.description = description;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

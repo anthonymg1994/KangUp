@@ -8,15 +8,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.mx.bridgestudio.kangup.Controllers.Tools;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +39,7 @@ public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {
 
     private ImageButton showCalendar;
+    private ImageView profile_photo;
     private EditText email,address,city,cellphone,name,ap_materno,ap_paterno;
     private int mYear, mMonth, mDay;
     private TextView editBirth;
@@ -49,6 +52,7 @@ public class ProfileActivity extends DrawerActivity implements
     private FloatingActionButton edit;
     Control control = new Control();
     private webServices webs;
+    String URL = "http://kangup.com.mx/uploads/Foto_perfil/";
 
 
     //toolbardown
@@ -60,6 +64,7 @@ public class ProfileActivity extends DrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         control.changeColorStatusBar(ProfileActivity.this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         //setContentView(R.layout.activity_profile);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -81,7 +86,7 @@ public class ProfileActivity extends DrawerActivity implements
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);
 //Arreglar cuando selccione edittext solo salg dialg y se esconda teclado
-
+        profile_photo = (ImageView) findViewById(R.id.imageProfilee);
         name = (EditText) findViewById(R.id.editText2);
         ap_paterno = (EditText) findViewById(R.id.editText);
         ap_materno = (EditText) findViewById(R.id.editText3);
@@ -110,6 +115,7 @@ public class ProfileActivity extends DrawerActivity implements
                 //agregar campo en xml de password y ver como cambiar la contraseña
                 user.setCiudad(city.getText().toString());
                 user.setAddress(address.getText().toString());
+// actualizar foto en imageview
 
                 sql = new SqliteController(ProfileActivity.this, "kangup",null, 1);
                 sql.Connect();
@@ -224,6 +230,14 @@ public class ProfileActivity extends DrawerActivity implements
         //AGREGO Nombre de usuario a toolbar
         toolbar.setTitle(user.getFirstName() + " " + user.getAp_paterno());
         setSupportActionBar(toolbar);
+
+        if(!user.getPhoto().equals("vacio")){
+            Picasso.with(ProfileActivity.this).load(user.getPhoto()).into(profile_photo);
+
+        }else{
+            profile_photo.setImageResource(R.drawable.perfil1);
+        }
+           // name.setText(user.getFirstName());
 
         //Validar si el campo esta null no muestro nada en los edittext
         if(!user.getFirstName().equals("null"))

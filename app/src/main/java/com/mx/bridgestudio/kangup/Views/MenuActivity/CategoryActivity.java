@@ -70,7 +70,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     private static final Integer[] IMAGES= {R.drawable.auto,R.drawable.auto,R.drawable.auto,R.drawable.auto};
     private static String[] imagenes_publicidad;
     SlidingImage_Adapter s;
-    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+    private ArrayList<String> ImagesArray = new ArrayList<String>();
     ViewPager page,pagePublicidad;
     CirclePageIndicator indicator;
     private static int currentPage = 0;
@@ -116,7 +116,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         });
 
         webs.getAllPublicidad(this,this);
-        getPublicidad();
+     //   getPublicidad();
         getSupportActionBar().setTitle("Categorias");
 
 
@@ -205,7 +205,6 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
             }
         });
-        init();
 
     }
 
@@ -276,6 +275,14 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
     @Override
     public void sendDataPublicidad(Publicidad[] obj) {
+        final String URL = "http://kangup.com.mx/uploads/Publicidad/";
+        imagenes_publicidad = new String[obj.length];
+        for (int i = 0; i < obj.length; i++) {
+            imagenes_publicidad[i] = new String();
+                imagenes_publicidad[i] = (URL + obj[i].getNombre() + "." +obj[i].getFormato());
+
+        }
+        init();
 
     }
 
@@ -284,17 +291,9 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
     private void init() {
         for(int i=0;i<imagenes_publicidad.length;i++)
-            ImagesArray.add(IMAGES[i]);
-
-
-
-        pagePublicidad.setAdapter(new SlidingImage_Adapter(CategoryActivity.this,ImagesArray));
-
-
-
-
-
-        final float density = getResources().getDisplayMetrics().density;
+            ImagesArray.add(imagenes_publicidad[i]);
+            pagePublicidad.setAdapter(new SlidingImage_Adapter(CategoryActivity.this,ImagesArray));
+             final float density = getResources().getDisplayMetrics().density;
 
 //Set circle indicator radius
 
@@ -320,9 +319,9 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         }, 3000, 3000);
 
         // Pager listener over indicator
-
-
     }
+
+
 
 public void getPublicidad() {
     final String URL = "http://kangup.com.mx/profile_foto/Publicidad/";
@@ -362,6 +361,6 @@ public void getPublicidad() {
 
                 }
             });
-}
+    }
 
 }

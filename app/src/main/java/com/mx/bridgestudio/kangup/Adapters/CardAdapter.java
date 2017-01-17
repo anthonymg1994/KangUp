@@ -28,6 +28,7 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,7 +92,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     public void onBindViewHolder(final CardAdapter.MyViewHolder holder, final int position) {
         final ListBrand list = listMarcas.get(position);
         holder.title.setText(list.getName());
-        Glide.with(mContext).load(R.drawable.marca).into(holder.thumbnail);
+     //   Glide.with(mContext).load(R.drawable.marca).into(holder.thumbnail);
+
+        Picasso.with(mContext).load(list.getImage()).into(holder.thumbnail);
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

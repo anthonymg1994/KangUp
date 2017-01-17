@@ -20,7 +20,7 @@ public class SqliteController extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
     private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellido_paterno TEXT, apellido_materno TEXT," +
-            "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
+            "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT, foto TEXT);";
 
     private String reservacion ="CREATE TABLE Reservacion(id INTEGER, fecha TEXT, hora TEXT);";
 
@@ -91,7 +91,7 @@ public class SqliteController extends SQLiteOpenHelper {
     public User user(){
         User u = new User();
         db = getReadableDatabase();
-        Cursor c=db.rawQuery("SELECT id,nombre,apellido_paterno,apellido_materno,email,password,ciudad,fecha_nacimiento,telefono FROM Usuarios" ,null);
+        Cursor c=db.rawQuery("SELECT id,nombre,apellido_paterno,apellido_materno,email,password,ciudad,fecha_nacimiento,telefono,foto FROM Usuarios" ,null);
         if(c.moveToFirst())
         {
             do{
@@ -104,6 +104,7 @@ public class SqliteController extends SQLiteOpenHelper {
                 u.setCiudad(c.getString(6));
                 u.setFnacimiento(c.getString(7));
                 u.setCellphone(c.getString(8));
+                u.setPhoto(c.getString(9));
             }while(c.moveToNext());
         }
         db.close();
@@ -114,8 +115,8 @@ public class SqliteController extends SQLiteOpenHelper {
     {
         db = getWritableDatabase();
         try{
-            SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (id,nombre,apellido_paterno,apellido_materno,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status) "+
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (id,nombre,apellido_paterno,apellido_materno,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status,foto) "+
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
             stmt.bindLong(1,user.getId());
             stmt.bindString(2, user.getFirstName());
             stmt.bindString(3, user.getAp_paterno());
@@ -127,6 +128,7 @@ public class SqliteController extends SQLiteOpenHelper {
             stmt.bindString(9, user.getPassword());
             stmt.bindLong(10, user.getPay());
             stmt.bindString(11, user.getStatus());
+            stmt.bindString(12, user.getPhoto());
             stmt.execute();
         }
         catch (SQLiteConstraintException e){
@@ -230,6 +232,7 @@ public class SqliteController extends SQLiteOpenHelper {
             cv.put("fecha_nacimiento",user.getFnacimiento());
             cv.put("ciudad",user.getCiudad());
             cv.put("password",user.getPassword());
+            cv.put("foto",user.getPhoto());
             db.update("Usuarios", cv, "id="+user.getId(), null);
 
             db.close();
