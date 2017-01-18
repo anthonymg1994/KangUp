@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "384242180790",
+    "project_id": "firebase-kangup"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384242180790:android:4cde5fb90b2c152c",
+        "android_client_info": {
+          "package_name": "com.mx.bridgestudio.kangup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl2cKKqRtkQHjy99R8Rbmk3nVNdaHvIEA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-90456479-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
