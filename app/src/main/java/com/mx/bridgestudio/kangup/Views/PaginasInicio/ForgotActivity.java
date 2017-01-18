@@ -80,6 +80,7 @@ public class ForgotActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
             startActivity(new Intent(ForgotActivity.this, LoginActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
 
         return super.onOptionsItemSelected(item);

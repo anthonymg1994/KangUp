@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Models.DetalleViaje;
 import com.mx.bridgestudio.kangup.Models.ListEspecificaciones;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
@@ -38,6 +40,8 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -74,6 +78,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
     Control control = new Control();
+    DrawerActivity drawerActivity = new DrawerActivity();
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -123,29 +128,29 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         //horizontal_recycler_view.setAdapter(horizontalAdapter);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
+        catalogo.setColorFilter(ContextCompat.getColor(DetalleActivity.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   if (control.isOnline()) {
-                    finish(); // close this P and return to preview activity (if there is any)
-                    startActivity(new Intent(DetalleActivity.this, CategoryActivity.class));
-               // } else {
-                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
+                //  if (control.isOnline()) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(DetalleActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                //} else {
+                //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
                 //}
-
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  if (control.isOnline()) {
-                    finish(); // close this activity and return to preview activity (if there is any)
-                    startActivity(new Intent(DetalleActivity.this, NewsActivity.class));
-               // } else {
-                //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //   if (control.isOnline()) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(DetalleActivity.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                // } else {
+                //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -155,12 +160,18 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // if (control.isOnline()) {
+                //  if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else
+                {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(DetalleActivity.this, FavoriteActivity.class));
-                //} else {
-                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    //} else {
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                }
                 //}
 
             }
@@ -170,14 +181,20 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
             @Override
             public void onClick(View view) {
 
-                //if (control.isOnline()) {
-
+                //   if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else{
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(DetalleActivity.this, HistoryActivity.class));
-                //} else {
-                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
 
-                //}
+                // } else {
+                //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+//
+                //              }
 
             }
         });
@@ -270,6 +287,7 @@ init();
     {
         Intent setIntent = new Intent(this,CarsXtype.class);
         startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 
@@ -281,9 +299,16 @@ init();
     @Override
     public void onClick(View v) {
             if(v.getId() == R.id.reservarr){
-                Intent setIntent = new Intent(this,Reservacion.class);
-                startActivity(setIntent);
-                finish();
+                if(LoginActivity.guestFlag==1)
+                {
+                    alertGuest();
+                }
+                else{
+                    Intent setIntent = new Intent(this,Reservacion.class);
+                    startActivity(setIntent);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    finish();
+                }
             }
         if(v.getId() == R.id.vermas){
 
@@ -349,7 +374,29 @@ init();
 
     }
 
-
+    public void alertGuest() {
+        new AlertDialog.Builder(DetalleActivity.this)
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(DetalleActivity.this, RegisterActivity.class);
+                                startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
 
 
 }

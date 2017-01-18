@@ -29,6 +29,9 @@ import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.squareup.picasso.Picasso;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -103,7 +106,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                 Toast.makeText(mContext, "Position" + list.getName(), Toast.LENGTH_SHORT).show();
                 id_marca = list.getId();
                 marca = list.getName();
-                InitDateView();
+                if(LoginActivity.guestFlag==1)
+                {
+                    Intent setIntent = new Intent(mContext, CarsXtype.class);
+                    mContext.startActivity(setIntent);
+                }
+                else{
+                    InitDateView();
+                }
 
             }
         });
@@ -114,7 +124,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                 Toast.makeText(mContext, "Position" + list.getName(), Toast.LENGTH_SHORT).show();
                 id_marca = list.getId();
                 marca = list.getName();
-                InitDateView();
+                if(LoginActivity.guestFlag==1)
+                {
+                    Intent setIntent = new Intent(mContext, CarsXtype.class);
+                    mContext.startActivity(setIntent);
+                }
+                else{
+                    InitDateView();
+                }
             }
         });
 
@@ -188,7 +205,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
             }
         });
 
-        dialogBuilder.setTitle("Disponbildad");
+        dialogBuilder.setTitle("Disponibilidad");
         dialogBuilder.setMessage("Completa los siguientes datos:");
         dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -197,6 +214,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                 Intent setIntent = new Intent(mContext, CarsXtype.class);
                 //CatalogCar.id_Marca = list.get
                 mContext.startActivity(setIntent);
+                ((Activity) mContext).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -286,6 +304,30 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
             datePickerDialog.show();
 
         }
+
+    public void alertGuest() {
+        new AlertDialog.Builder(mContext)
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(mContext, RegisterActivity.class);
+                                mContext.startActivity(setIntent);
+                                ((Activity) mContext).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
     }
 
 

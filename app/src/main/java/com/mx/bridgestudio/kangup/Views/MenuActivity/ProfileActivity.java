@@ -162,6 +162,7 @@ public class ProfileActivity extends DrawerActivity implements
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(ProfileActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
@@ -170,6 +171,7 @@ public class ProfileActivity extends DrawerActivity implements
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(ProfileActivity.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
@@ -178,6 +180,7 @@ public class ProfileActivity extends DrawerActivity implements
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(ProfileActivity.this, FavoriteActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
@@ -186,6 +189,7 @@ public class ProfileActivity extends DrawerActivity implements
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(ProfileActivity.this, HistoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 

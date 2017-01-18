@@ -176,6 +176,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(AddPaymentActivity.this, PaymentActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         card = (EditText) findViewById(R.id.cardNumber);
@@ -211,6 +212,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(AddPaymentActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
@@ -219,6 +221,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(AddPaymentActivity.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
@@ -227,6 +230,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(AddPaymentActivity.this, FavoriteActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
@@ -235,6 +239,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(AddPaymentActivity.this, HistoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -246,6 +251,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
             startActivity(new Intent(AddPaymentActivity.this, PaymentActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
 
         return super.onOptionsItemSelected(item);

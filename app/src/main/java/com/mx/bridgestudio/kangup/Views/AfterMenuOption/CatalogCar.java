@@ -39,6 +39,7 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,31 +128,31 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         recyclerView.setAdapter(adapter);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
+        catalogo.setColorFilter(ContextCompat.getColor(CatalogCar.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
-                    finish(); // close this P and return to preview activity (if there is any)
-                    startActivity(new Intent(CatalogCar.this, CategoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-                }
-
+                //  if (control.isOnline()) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CatalogCar.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                //} else {
+                //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //}
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
-                    finish(); // close this activity and return to preview activity (if there is any)
-                    startActivity(new Intent(CatalogCar.this, NewsActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //   if (control.isOnline()) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(CatalogCar.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                // } else {
+                //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-                }
+                //}
 
             }
         });
@@ -159,13 +160,19 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (control.isOnline()) {
+                //  if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else
+                {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CatalogCar.this, FavoriteActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    //} else {
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
                 }
+                //}
 
             }
         });
@@ -174,14 +181,20 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
             @Override
             public void onClick(View view) {
 
-                if (control.isOnline()) {
-
+                //   if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else{
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CatalogCar.this, HistoryActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
+
+                // } else {
+                //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+//
+                //              }
 
             }
         });
@@ -320,6 +333,7 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
     {
         Intent setIntent = new Intent(this,CategoryActivity.class);
         startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 

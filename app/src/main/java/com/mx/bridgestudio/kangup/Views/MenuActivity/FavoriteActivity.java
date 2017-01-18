@@ -124,6 +124,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
             //    if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, CategoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
               //  } else {
                 //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -138,6 +139,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
                 //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, NewsActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                   //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -152,6 +154,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
                 //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, FavoriteActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                  //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -168,6 +171,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, HistoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                // } else {
                  //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -209,6 +213,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     {
         Intent setIntent = new Intent(this,LoginActivity.class);
         startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 
