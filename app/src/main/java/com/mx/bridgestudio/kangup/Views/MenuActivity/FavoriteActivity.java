@@ -183,6 +183,9 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     }
 
     public void fillList(Vehicle[] vehicles){
+        final String URL = "http://kangup.com.mx/uploads/Vehiculos/";
+
+
         ListCar[] list = new ListCar[vehicles.length];
         for(int i = 0 ; i < vehicles.length ; i++){
             list[i] = new ListCar();
@@ -193,7 +196,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
             // list[i].setFecha(listCar[i].getFecha());
             //list[i].setTotal(listCar[i].getTotal());
             //Cmbiar por imagen del servidor
-            list[i].setImage(1);
+            list[i].setImage(URL + vehicles[i].getFoto());
 
             tipos.add(i,list[i]);
         }

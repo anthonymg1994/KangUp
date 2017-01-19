@@ -117,8 +117,8 @@ public class webServices {
     public void TopRankingVehiculo(Context context, Vehicle vehiculo,Date date, Date time,Date time_final, OnDataSendFilterScore OnDataSendToActivity){
         new AsyncScore(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
     }
-    public void getRecommendCVehicles(Context context, Vehicle vehiculo,OnDataSendFilterRecommend OnDataSendToActivity){
-        new AsyncRecommend(context,vehiculo,OnDataSendToActivity).execute();
+    public void getRecommendCVehicles(Context context, Vehicle vehiculo,OnDataSendFilterRecommend OnDataSendToActivity,Date date, Date time,Date time_final){
+        new AsyncRecommend(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
     }
 
     public void getHistoryDetailByUser(OnDataSendHistoryDetail c,Context context, int idUser, int idRes, int idu){

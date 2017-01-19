@@ -99,6 +99,7 @@ public class AsyncFavs  extends AsyncTask<String,Integer,String> {
                     arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
                     arrayVehiculos[i].setSpecifications(jsonobject.getString("especificaciones"));
                     arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
+                    arrayVehiculos[i].setFoto(jsonobject.getString("foto_predeterminada"));
                 }
 
             } catch (JSONException e) {

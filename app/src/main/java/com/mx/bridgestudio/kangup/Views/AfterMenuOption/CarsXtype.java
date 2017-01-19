@@ -349,9 +349,9 @@ public class CarsXtype extends DrawerActivity implements
                 case 0: fragment = new TabTop();
 
                     break;
-                case 1: fragment = new TabTop();
+                case 1: fragment = new TabRecommend();
                     break;
-                case 2: fragment = new TabTop();;
+                case 2: fragment = new TabTop();
                     break;
             }
             return fragment;

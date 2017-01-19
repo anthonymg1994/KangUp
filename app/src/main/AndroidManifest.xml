@@ -62,7 +62,7 @@
             android:name=".Views.PaginasInicio.RegisterActivity"
             android:isScrollContainer="true"
 
-            android:windowSoftInputMode="stateVisible|adjustResize"
+
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden"

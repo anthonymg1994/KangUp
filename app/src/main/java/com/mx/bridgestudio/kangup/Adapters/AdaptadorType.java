@@ -23,6 +23,7 @@ import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -83,7 +84,9 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
     public void onBindViewHolder(AnimeViewHolder viewHolder, final int i) {
        // viewHolder.imagen.setImageResource(items.get(i).getImage());
 
-        viewHolder.imagen.setImageResource(R.drawable.auto);
+
+        Picasso.with(context).load(items.get(i).getImage()).into(viewHolder.imagen);
+
         viewHolder.nombre.setText(items.get(i).getModelo());
         viewHolder.descripcion.setText(String.valueOf(items.get(i).getModelo()+" "+items.get(i).getAnio()));
 

@@ -68,21 +68,13 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
 
         vehicle.setId_categoria(CategoryActivity.opcionSeleccionada);
         vehicle.setId_brand(CardAdapter.id_marca);
-        String fecha = CardAdapter.datee;
+        Date fecha = CardAdapter.datee;
         String hora = CardAdapter.hour;
         String hour_final = CardAdapter.hour_final;
 
         // parseo de string para convertir a date
-        String dateString = fecha;
+      //  String dateString = fecha;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(dateString);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        //parseo de string a time
 
         String time = hora;
         String time_final = hour_final;
@@ -105,7 +97,7 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
         } catch (ParseException e) {
         }
 
-        webs.TopRankingVehiculo(getActivity(),vehicle,convertedDate,date2,date3,TabVotados.this);
+        webs.TopRankingVehiculo(getActivity(),vehicle,fecha,date2,date3,TabVotados.this);
 
         // Obtener el Recycler
         CatalogCar.flagDate = 1;
@@ -152,6 +144,9 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
     }
 
     public void fillList(Vehicle[] vehicle){
+        final String URL = "http://kangup.com.mx/uploads/Vehiculos/";
+
+
         ListCar[] list = new ListCar[vehicle.length];
         for(int i = 0 ; i < vehicle.length ; i++){
             list[i] = new ListCar();
@@ -160,7 +155,7 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
             list[i].setMarca(vehicle[i].getMarca());
             list[i].setAnio(vehicle[i].getYear());
             //Cmbiar por imagen del servidor
-            list[i].setImage(1);
+            list[i].setImage(URL + vehicle[i].getFoto());
             items.add(i,list[i]);
         }
         adapter.notifyDataSetChanged();

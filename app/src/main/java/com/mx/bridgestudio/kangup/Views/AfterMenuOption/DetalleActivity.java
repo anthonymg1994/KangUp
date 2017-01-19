@@ -42,6 +42,7 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
+import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -58,8 +59,10 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     private static int NUM_PAGES = 0;
     //Aqui se cargara las imagenes del servidor
     private static final Integer[] IMAGES= {R.drawable.auto,R.drawable.auto,R.drawable.auto,R.drawable.auto};
-    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+   // private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
     private webServices webs = new webServices();
+    private ArrayList<String> ImagesArray = new ArrayList<String>();
+    private static String[] imagenes_publicidad;
     private Vehicle vehicle = new Vehicle();
     private int id_vehiculo = 0;
     private String nombre_vehiculo = "";
@@ -76,6 +79,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     CirclePageIndicator indicator;
     RatingBar ratingBar;
     //toolbardown
+    private ImageView  centro;
     private ImageButton catalogo,noticias,favoritos,historial;
     Control control = new Control();
     DrawerActivity drawerActivity = new DrawerActivity();
@@ -105,7 +109,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         Drawable drawable = ratingBar.getProgressDrawable();
         drawable.setColorFilter(Color.parseColor("#ffcc00"), PorterDuff.Mode.SRC_ATOP);
-
+centro = (ImageView) findViewById(R.id.imageView2);
         Intent intent=this.getIntent();
         Bundle bundle=intent.getExtras();
 
@@ -277,6 +281,7 @@ init();
         return data;
     }
     public void FillField(Vehicle car){
+        Picasso.with(DetalleActivity.this).load(car.getFoto()).into(centro);
         modelo.setText(car.getModel()+ " " + car.getYear() + " " + car.getMarca());
         descripcion.setText(car.getDescription());
     }
@@ -316,12 +321,13 @@ init();
         }
     }
     private void init() {
+
+
+
         for(int i=0;i<IMAGES.length;i++)
             ImagesArray.add(IMAGES[i]);
 
-
-
-       // page.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
+        page.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
 
 
 

@@ -1,5 +1,7 @@
 package com.mx.bridgestudio.kangup.Adapters;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
@@ -54,7 +56,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     public static String marca = "";
     public static String hour = "";
     public static String hour_final = "";
-    public static String datee = "";
+    public static Date datee = null;
     Control c = new Control();
     EditText hora, horaTermino;
     EditText fecha;
@@ -211,10 +213,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();
                 //com.mx.bridgestudio.kangup.Models.Reservacion res = new com.mx.bridgestudio.kangup.Models.Reservacion();
-                Intent setIntent = new Intent(mContext, CarsXtype.class);
-                //CatalogCar.id_Marca = list.get
-                mContext.startActivity(setIntent);
-                ((Activity) mContext).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                if (fecha.getText().toString().equals("") || hora.getText().toString().equals("") || horaTermino.getText().toString().equals("")) {
+
+
+
+                }else{
+                    Intent setIntent = new Intent(mContext, CarsXtype.class);
+                    //CatalogCar.id_Marca = list.get
+                    mContext.startActivity(setIntent);
+                    ((Activity) mContext).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+
             }
         });
         dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -287,8 +296,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                                               int monthOfYear, int dayOfMonth) {
 
                             Date parseDate = null;
+                            Date parseDate2 = null;
 
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
                             String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                             try {
                                 parseDate = dateFormat.parse(date);
@@ -296,9 +306,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                                 e.printStackTrace();
                             }
                             SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
+                            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
                             String finalString = dateFormat1.format(parseDate);
-                            fecha.setText("" + finalString);
-                            datee = String.valueOf(parseDate);
+                            String finalString2 = dateFormat2.format(parseDate);
+
+                            try {
+                                Date last_date_date = new SimpleDateFormat("yyyy-MM-dd").parse(finalString2);
+                                fecha.setText("" + finalString);
+                                datee = last_date_date;
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();

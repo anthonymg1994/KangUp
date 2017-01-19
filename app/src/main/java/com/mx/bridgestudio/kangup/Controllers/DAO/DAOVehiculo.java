@@ -341,9 +341,9 @@ public class DAOVehiculo {
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("id_marca", String.valueOf(vehicle.getId_brand()));
             jsonParam.put("id_categoria", String.valueOf(vehicle.getId_categoria()));
-            jsonParam.put("fecha_reservacion", date);
-            jsonParam.put("hora_inicio",time);
-            jsonParam.put("hora_termino", time_final);
+            jsonParam.put("fecha_reservacion", date.getDate());
+            jsonParam.put("hora_inicio",time.getTime());
+            jsonParam.put("hora_termino", time_final.getTime());
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();
@@ -385,7 +385,7 @@ public class DAOVehiculo {
         return response.toString();
     }
 
-    public String getRecommendCVehicles(Vehicle vehicle) throws JSONException {
+    public String getRecommendCVehicles(Vehicle vehicle, Date date, Date time,Date time_final) throws JSONException {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         InputStream in = null;
@@ -405,6 +405,9 @@ public class DAOVehiculo {
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("id_marca", String.valueOf(vehicle.getId_brand()));
             jsonParam.put("id_categoria", String.valueOf(vehicle.getId_categoria()));
+            jsonParam.put("fecha_reservacion", date.getDate());
+            jsonParam.put("hora_inicio",time.getTime());
+            jsonParam.put("hora_termino", time_final.getTime());
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();

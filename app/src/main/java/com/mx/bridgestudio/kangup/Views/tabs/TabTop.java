@@ -22,6 +22,7 @@ import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
@@ -33,6 +34,9 @@ import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +45,7 @@ import java.util.Date;
  * Created by Isaac on 06/12/2016.
  */
 
-public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDetail {
+public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDetail,OnDataSendFilterScore {
 
     private String opcionSeleccionada="";
     private RecyclerView recycler;
@@ -73,9 +77,28 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
 
         vehicle.setId_categoria(CategoryActivity.opcionSeleccionada);
         vehicle.setId_brand(CardAdapter.id_marca);
-        String fecha = CardAdapter.datee;
+        Date fecha = CardAdapter.datee;
         String hora = CardAdapter.hour;
-        webs.AutosByMarca(TabTop.this,getActivity(),vehicle);
+        String hour_final = CardAdapter.hour_final;
+
+        try {
+
+            DateFormat sdf = new SimpleDateFormat("hh:mm");
+            Date date2 = sdf.parse(hora);
+
+            DateFormat sdf1 = new SimpleDateFormat("hh:mm");
+            Date date3 = sdf1.parse(hour_final);
+
+
+
+            webs.TopRankingVehiculo(getActivity(),vehicle,fecha,date2,date3,TabTop.this);
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
 
         // Obtener el Recycler
         CatalogCar.flagDate = 1;
@@ -122,6 +145,10 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     }
 
     public void fillList(Vehicle[] vehicle){
+
+        final String URL = "http://kangup.com.mx/uploads/Vehiculos/";
+
+
         ListCar[] list = new ListCar[vehicle.length];
         for(int i = 0 ; i < vehicle.length ; i++){
             list[i] = new ListCar();
@@ -130,7 +157,7 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
             list[i].setMarca(vehicle[i].getMarca());
             list[i].setAnio(vehicle[i].getYear());
             //Cmbiar por imagen del servidor
-            list[i].setImage(1);
+            list[i].setImage(URL+vehicle[i].getFoto());
             items.add(i,list[i]);
         }
         adapter.notifyDataSetChanged();
@@ -141,7 +168,7 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     @Override
     public void sendData(Vehicle[] obj) {
         Toast.makeText(getActivity(), "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
-        fillList(obj);
+       // fillList(obj);
     }
 
 
@@ -152,4 +179,8 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     }
 
 
+    @Override
+    public void sendDataScore(Vehicle[] obj) {
+        fillList(obj);
+    }
 }
