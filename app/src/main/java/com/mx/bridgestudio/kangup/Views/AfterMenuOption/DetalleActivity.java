@@ -30,9 +30,11 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPhotos;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.DetalleViaje;
 import com.mx.bridgestudio.kangup.Models.ListEspecificaciones;
+import com.mx.bridgestudio.kangup.Models.Photo;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
@@ -51,7 +53,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DetalleActivity extends DrawerActivity implements OnDataSendDetail, View.OnClickListener {
+public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,View.OnClickListener {
 
 
     private static ViewPager mPager;
@@ -72,6 +74,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     private Button vermas, reservar;
     private TextView modelo, descripcion;
     Vehicle car = new Vehicle();
+    String[] photo;
     Dialog dialogo;
     ArrayList<String> images = new ArrayList<String>();
     SlidingImage_Adapter s;
@@ -83,7 +86,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
     private ImageButton catalogo,noticias,favoritos,historial;
     Control control = new Control();
     DrawerActivity drawerActivity = new DrawerActivity();
-
+    int flag = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -109,12 +112,12 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendDetail,
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         Drawable drawable = ratingBar.getProgressDrawable();
         drawable.setColorFilter(Color.parseColor("#ffcc00"), PorterDuff.Mode.SRC_ATOP);
-centro = (ImageView) findViewById(R.id.imageView2);
+        centro = (ImageView) findViewById(R.id.imageView2);
         Intent intent=this.getIntent();
         Bundle bundle=intent.getExtras();
 
         car=(Vehicle)bundle.getSerializable("value");
-
+        webs.getAllPhotoById(this,this,car);
         getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca() + " " + car.getValoracion());
 
         vermas = (Button)findViewById(R.id.vermas);
@@ -204,6 +207,7 @@ centro = (ImageView) findViewById(R.id.imageView2);
         });
 
         fillFields(car);
+
     }
     /*
     @Override
@@ -215,13 +219,17 @@ centro = (ImageView) findViewById(R.id.imageView2);
     */
 
     public void fillFields(Vehicle vehicle){
-        ratingBar.setRating(vehicle.getValoracion());
+        final String URL = "http://kangup.com.mx/uploads/Vehiculos/";
 
+        Picasso.with(DetalleActivity.this).load(URL+vehicle.getFoto()).fit().centerCrop().into(centro);
+
+        ratingBar.setRating(vehicle.getValoracion());
         descripcion.setText(vehicle.getDescription());
     }
 
 
     public void showChangeLangDialog() {
+    flag ++;
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this,R.style.MyDialogTheme);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.fragment_page, null);
@@ -230,12 +238,12 @@ centro = (ImageView) findViewById(R.id.imageView2);
         dialogBuilder.setView(dialogView);
 
 
- page = (ViewPager) dialogView.findViewById(R.id.pagerId);
+     page = (ViewPager) dialogView.findViewById(R.id.pagerId);
       indicator = (CirclePageIndicator)
               dialogView.findViewById(R.id.indicator);
 
 
-init();
+
         dialogBuilder.setTitle("Galeria de imagenes");
         dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -297,11 +305,6 @@ init();
     }
 
     @Override
-    public void sendData(Vehicle obj) {
-      //  init(obj);
-    }
-
-    @Override
     public void onClick(View v) {
             if(v.getId() == R.id.reservarr){
                 if(LoginActivity.guestFlag==1)
@@ -318,23 +321,19 @@ init();
         if(v.getId() == R.id.vermas){
 
             showChangeLangDialog();
+            if(flag == 1){
+                init();
+            }
         }
     }
     private void init() {
 
 
-
-        for(int i=0;i<IMAGES.length;i++)
-            ImagesArray.add(IMAGES[i]);
-
+        for(int i=0;i<photo.length;i++)
+            ImagesArray.add(photo[i]);
         page.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
-
-
-
-        indicator.setViewPager(page);
-
         final float density = getResources().getDisplayMetrics().density;
-
+        indicator.setViewPager(page);
 //Set circle indicator radius
         indicator.setRadius(5 * density);
 
@@ -405,4 +404,14 @@ init();
     }
 
 
+    @Override
+    public void OnDataSendPhotos(Photo[] obj) {
+        final String URL = "http://kangup.com.mx/uploads/Vehiculos/";
+        photo = new String[obj.length];
+        for (int i = 0; i < obj.length; i++) {
+            photo[i] = new String();
+            photo[i] = (URL + obj[i].getNombre());
+        }
+
+    }
 }

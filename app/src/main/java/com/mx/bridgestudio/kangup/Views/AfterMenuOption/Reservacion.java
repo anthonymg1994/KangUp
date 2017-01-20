@@ -322,7 +322,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Intent setIntent = new Intent(Reservacion.this, PlacesAutoCompleteActivity.class);
-                setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                setIntent.putExtra("option",1);
+              //  setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(setIntent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
@@ -330,6 +331,27 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         });
 
         final EditText destino = (EditText) dialogView.findViewById(R.id.destinotxt);
+        destino.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Intent setIntent = new Intent(Reservacion.this, PlacesAutoCompleteActivity.class);
+                setIntent.putExtra("option",2);
+                setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+            }
+        });
 
 
         dialogBuilder.setTitle("Nueva ruta");

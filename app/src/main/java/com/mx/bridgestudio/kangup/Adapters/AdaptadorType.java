@@ -25,13 +25,17 @@ import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Anthony on 02/11/2016.
  */
 public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewHolder> implements View.OnClickListener{
     private List<ListCar> items;
+    private ArrayList<ListCar> arraylist;
+
     Activity context;
     webServices web = new webServices();
     public AdaptadorType(Activity context,List<ListCar> items) {
@@ -159,5 +163,21 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
                     }
                 }).show();
     }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        items.clear();
+        if (charText.length() == 0) {
+            items.addAll(arraylist);
+        } else {
+            for (ListCar wp : arraylist) {
+                if (wp.getModelo().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    items.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 
 }

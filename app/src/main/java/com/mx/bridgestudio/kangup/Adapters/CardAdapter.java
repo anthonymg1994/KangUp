@@ -54,8 +54,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     public CardView cardView;
     public static int id_marca = 0;
     public static String marca = "";
-    public static String hour = "";
-    public static String hour_final = "";
+    public static String hour = "",hour_real="";
+    public static String hour_final = "",hour_final_real;
     public static Date datee = null;
     Control c = new Control();
     EditText hora, horaTermino;
@@ -155,10 +155,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                                           int minute) {
                         if (x == 1) {
                             hora.setText(hourOfDay + ":" + minute + " ");
-                            hour = hora.getText().toString();
+                            hour_real = hourOfDay + ":" + minute + " ";
+                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + minute + "";
+                            hour = hora_margen_inicio;
                         } else if (x == 2) {
                             horaTermino.setText(hourOfDay + ":" + minute + " ");
-                            hour_final = horaTermino.getText().toString();
+                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + minute + "";
+                            hour_final_real = hourOfDay + ":" + minute + " ";
+                            hour_final = hora_margen_termino;
                         }
                     }
                 }, mHour, mMinute, false);
@@ -171,17 +175,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = inflater.inflate(R.layout.date_dialog, null);
         dialogBuilder.setView(dialogView);
+
         fecha = (EditText) dialogView.findViewById(R.id.fecha);
         hora = (EditText) dialogView.findViewById(R.id.hora);
         horaTermino = (EditText) dialogView.findViewById(R.id.horatermino);
         final ImageView bHora_termino = (ImageView) dialogView.findViewById(R.id.IBhoraTermino);
 
-
         fecha.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
         hora.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
         horaTermino.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
-
-
 
         final ImageView bHora = (ImageView) dialogView.findViewById(R.id.IBhora);
 

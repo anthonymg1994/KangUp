@@ -342,45 +342,6 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
 
 
 
-public void getPublicidad() {
-    final String URL = "http://kangup.com.mx/profile_foto/Publicidad/";
-    Ion.with(CategoryActivity.this)
-            .load("POST", "http://kangup.com.mx/index.php/getAll")
-            .setHeader("Content-Length", "0")
-            .asString()
-            .setCallback(new FutureCallback<String>() {
-                @Override
-                public void onCompleted(Exception e, String result) {
-                    //String info="";
-
-                    JSONArray jsonarray = null;
-                    try {
-                        jsonarray = new JSONArray(result);
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
-                    }
-                    imagenes_publicidad = new String[jsonarray.length()];
-
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            imagenes_publicidad[i] = new String();
-                            JSONObject jsonobject = null;
-                            try {
-                                jsonobject = jsonarray.getJSONObject(i);
-                            } catch (JSONException e1) {
-                                e1.printStackTrace();
-                            }
-                            try {
-                                imagenes_publicidad[i] = (URL + jsonobject.getString("nombre"));
-                            } catch (JSONException e1) {
-                                e1.printStackTrace();
-                            }
-
-                        }
-
-
-                }
-            });
-    }
 
     public void alertGuest() {
         new AlertDialog.Builder(CategoryActivity.this)

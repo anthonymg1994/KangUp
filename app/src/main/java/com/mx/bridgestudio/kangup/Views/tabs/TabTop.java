@@ -66,6 +66,9 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // int c =((CarsXtype)this.getActivity()).getJob();
+       // Toast.makeText(getActivity(), "HOLA :"+ c, Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -182,5 +185,9 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     @Override
     public void sendDataScore(Vehicle[] obj) {
         fillList(obj);
+    }
+
+    public ArrayList<ListCar> getItemsFromFragment(){
+        return items;
     }
 }

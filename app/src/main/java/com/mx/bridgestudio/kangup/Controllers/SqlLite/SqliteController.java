@@ -22,9 +22,9 @@ public class SqliteController extends SQLiteOpenHelper {
     private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellido_paterno TEXT, apellido_materno TEXT," +
             "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT, foto TEXT);";
 
-    private String reservacion ="CREATE TABLE Reservacion(id INTEGER, fecha TEXT, hora TEXT);";
+    private String reservacion ="CREATE TABLE Reservacion(id INTEGER PRIMARY KEY, fecha CURRENT_TIMESTAMP , hora_inicio CURRENT_TIMESTAMP, hora_termino CURRENT_TIMESTAMP );";
 
-    private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";
+  //  private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";
 
     private String guestTable="CREATE TABLE Guest(id INTEGER, nombre TEXT);";
 
@@ -38,7 +38,7 @@ public class SqliteController extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CrearUsuarios);
         db.execSQL(reservacion);
-        db.execSQL(insertReservation);
+     //   db.execSQL(insertReservation);
     }
 
     @Override
@@ -243,5 +243,59 @@ public class SqliteController extends SQLiteOpenHelper {
 
         }
     }
+
+    public void insertInfoFilter(Reservacion reservacion)
+    {
+        db = getWritableDatabase();
+        try{
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO Reservacion (fecha,hora_inicio,hora_termino) "+
+                    "VALUES (?,?,?)");
+            stmt.bindString(1, reservacion.getDate());
+            stmt.bindString(2, reservacion.getHourI());
+            stmt.bindString(3, reservacion.getHourF());
+            stmt.execute();
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
+        db.close();
+    }
+    public void updateInfoFilter(Reservacion reservacion)
+    {
+        int numberOfRowsAffected = 0;
+        db = getWritableDatabase();
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put("fecha",reservacion.getDate()); //These Fields should be your String values of actual column names
+            cv.put("hora_inicio",reservacion.getHourI());
+            cv.put("hora_termino",reservacion.getHourF());
+
+            db.update("Reservacion", cv, "id="+reservacion.getId(), null);
+
+            db.close();
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
+    }
+    public Reservacion getInfoFilter(){
+        Reservacion u = new Reservacion();
+        db = getReadableDatabase();
+        Cursor c=db.rawQuery("SELECT id,fecha,hora_inicio,hora_termino FROM Reservacion" ,null);
+        if(c.moveToFirst())
+        {
+            do{
+                u.setId(c.getInt(0));
+                u.setDate(c.getString(1));
+                u.setHourI(c.getString(2));
+                u.setHourF(c.getString(3));
+            }while(c.moveToNext());
+        }
+        db.close();
+        return u;
+    }
+
 
 }
