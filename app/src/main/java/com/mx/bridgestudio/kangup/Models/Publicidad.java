@@ -8,6 +8,15 @@ public class Publicidad {
     private int id;
     private String nombre;
     private int image;
+    private String formato;
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
 
     public int getId() {
         return id;

@@ -3,6 +3,7 @@ package com.mx.bridgestudio.kangup.Adapters;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -19,14 +20,22 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Anthony on 02/11/2016.
  */
 public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewHolder> implements View.OnClickListener{
     private List<ListCar> items;
+    private ArrayList<ListCar> arraylist;
+
     Activity context;
     webServices web = new webServices();
     public AdaptadorType(Activity context,List<ListCar> items) {
@@ -79,7 +88,9 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
     public void onBindViewHolder(AnimeViewHolder viewHolder, final int i) {
        // viewHolder.imagen.setImageResource(items.get(i).getImage());
 
-        viewHolder.imagen.setImageResource(R.drawable.auto);
+
+        Picasso.with(context).load(items.get(i).getImage()).into(viewHolder.imagen);
+
         viewHolder.nombre.setText(items.get(i).getModelo());
         viewHolder.descripcion.setText(String.valueOf(items.get(i).getModelo()+" "+items.get(i).getAnio()));
 
@@ -96,9 +107,14 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
         viewHolder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertConfirmacion(items.get(i).getId(),user.getId());
-                Toast.makeText(context, "Eliminado veh "+items.get(i).getId(), Toast.LENGTH_LONG).show();
-                Toast.makeText(context, "Eliminado user "+user.getId(), Toast.LENGTH_LONG).show();
+                if(LoginActivity.guestFlag==1){
+                    alertGuest();
+                }
+                else {
+                    alertConfirmacion(items.get(i).getId(),user.getId());
+                    Toast.makeText(context, "Eliminado veh "+items.get(i).getId(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Eliminado user "+user.getId(), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -124,5 +140,44 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
                     }
                 }).show();
     }
+
+    public void alertGuest() {
+        new AlertDialog.Builder(context)
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(context, RegisterActivity.class);
+                                context.startActivity(setIntent);
+                                context.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        items.clear();
+        if (charText.length() == 0) {
+            items.addAll(arraylist);
+        } else {
+            for (ListCar wp : arraylist) {
+                if (wp.getModelo().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    items.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 
 }

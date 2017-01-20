@@ -20,12 +20,13 @@ public class SqliteController extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
     private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellido_paterno TEXT, apellido_materno TEXT," +
-            "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT);";
+            "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT, foto TEXT);";
 
-    private String reservacion ="CREATE TABLE Reservacion(id INTEGER, fecha TEXT, hora TEXT);";
+    private String reservacion ="CREATE TABLE Reservacion(id INTEGER PRIMARY KEY, fecha CURRENT_TIMESTAMP , hora_inicio CURRENT_TIMESTAMP, hora_termino CURRENT_TIMESTAMP );";
 
-    private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";
+  //  private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";
 
+    private String guestTable="CREATE TABLE Guest(id INTEGER, nombre TEXT);";
 
     private User us [];
 
@@ -37,7 +38,7 @@ public class SqliteController extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CrearUsuarios);
         db.execSQL(reservacion);
-        db.execSQL(insertReservation);
+     //   db.execSQL(insertReservation);
     }
 
     @Override
@@ -91,7 +92,7 @@ public class SqliteController extends SQLiteOpenHelper {
     public User user(){
         User u = new User();
         db = getReadableDatabase();
-        Cursor c=db.rawQuery("SELECT id,nombre,apellido_paterno,apellido_materno,email,password,ciudad,fecha_nacimiento,telefono FROM Usuarios" ,null);
+        Cursor c=db.rawQuery("SELECT id,nombre,apellido_paterno,apellido_materno,email,password,ciudad,fecha_nacimiento,telefono,foto FROM Usuarios" ,null);
         if(c.moveToFirst())
         {
             do{
@@ -104,6 +105,7 @@ public class SqliteController extends SQLiteOpenHelper {
                 u.setCiudad(c.getString(6));
                 u.setFnacimiento(c.getString(7));
                 u.setCellphone(c.getString(8));
+                u.setPhoto(c.getString(9));
             }while(c.moveToNext());
         }
         db.close();
@@ -114,8 +116,8 @@ public class SqliteController extends SQLiteOpenHelper {
     {
         db = getWritableDatabase();
         try{
-            SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (id,nombre,apellido_paterno,apellido_materno,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status) "+
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO Usuarios (id,nombre,apellido_paterno,apellido_materno,telefono,email,fecha_nacimiento,ciudad,password,id_forma_pago,status,foto) "+
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
             stmt.bindLong(1,user.getId());
             stmt.bindString(2, user.getFirstName());
             stmt.bindString(3, user.getAp_paterno());
@@ -127,6 +129,7 @@ public class SqliteController extends SQLiteOpenHelper {
             stmt.bindString(9, user.getPassword());
             stmt.bindLong(10, user.getPay());
             stmt.bindString(11, user.getStatus());
+            stmt.bindString(12, user.getPhoto());
             stmt.execute();
         }
         catch (SQLiteConstraintException e){
@@ -230,6 +233,7 @@ public class SqliteController extends SQLiteOpenHelper {
             cv.put("fecha_nacimiento",user.getFnacimiento());
             cv.put("ciudad",user.getCiudad());
             cv.put("password",user.getPassword());
+            cv.put("foto",user.getPhoto());
             db.update("Usuarios", cv, "id="+user.getId(), null);
 
             db.close();
@@ -239,5 +243,59 @@ public class SqliteController extends SQLiteOpenHelper {
 
         }
     }
+
+    public void insertInfoFilter(Reservacion reservacion)
+    {
+        db = getWritableDatabase();
+        try{
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO Reservacion (fecha,hora_inicio,hora_termino) "+
+                    "VALUES (?,?,?)");
+            stmt.bindString(1, reservacion.getDate());
+            stmt.bindString(2, reservacion.getHourI());
+            stmt.bindString(3, reservacion.getHourF());
+            stmt.execute();
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
+        db.close();
+    }
+    public void updateInfoFilter(Reservacion reservacion)
+    {
+        int numberOfRowsAffected = 0;
+        db = getWritableDatabase();
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put("fecha",reservacion.getDate()); //These Fields should be your String values of actual column names
+            cv.put("hora_inicio",reservacion.getHourI());
+            cv.put("hora_termino",reservacion.getHourF());
+
+            db.update("Reservacion", cv, "id="+reservacion.getId(), null);
+
+            db.close();
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
+    }
+    public Reservacion getInfoFilter(){
+        Reservacion u = new Reservacion();
+        db = getReadableDatabase();
+        Cursor c=db.rawQuery("SELECT id,fecha,hora_inicio,hora_termino FROM Reservacion" ,null);
+        if(c.moveToFirst())
+        {
+            do{
+                u.setId(c.getInt(0));
+                u.setDate(c.getString(1));
+                u.setHourI(c.getString(2));
+                u.setHourF(c.getString(3));
+            }while(c.moveToNext());
+        }
+        db.close();
+        return u;
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -8,12 +10,14 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterNews;
@@ -27,6 +31,8 @@ import com.mx.bridgestudio.kangup.Models.News;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 
 import java.util.ArrayList;
 
@@ -36,7 +42,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
     ArrayList<ListNews> items= new ArrayList<>();
-
+    private ImageView imageNew;
     private webServices webs = new webServices();
 
     public static int id_noticia=0;
@@ -77,29 +83,29 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         //}
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
+        catalogo.setColorFilter(ContextCompat.getColor(NewsActivity.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-         //       if (control.isOnline()) {
-                    finish(); // close this activity and return to preview activity (if there is any)
-                    startActivity(new Intent(NewsActivity.this, CategoryActivity.class));
-           //     } else {
-             //       Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-               // }
-
+                //  if (control.isOnline()) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(NewsActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                //} else {
+                //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //}
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //    if (control.isOnline()) {
-                    finish(); // close this activity and return to preview activity (if there is any)
-                    startActivity(new Intent(NewsActivity.this, NewsActivity.class));
-              //  } else {
-                //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //   if (control.isOnline()) {
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(NewsActivity.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                // } else {
+                //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -109,12 +115,18 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   if (control.isOnline()) {
+                //  if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else
+                {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(NewsActivity.this, FavoriteActivity.class));
-               // } else {
-                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    //} else {
+                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                }
                 //}
 
             }
@@ -124,14 +136,20 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
             @Override
             public void onClick(View view) {
 
-               // if (control.isOnline()) {
-
+                //   if (control.isOnline()) {
+                if(LoginActivity.guestFlag == 1){
+                    alertGuest();
+                }
+                else{
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(NewsActivity.this, HistoryActivity.class));
-                //} else {
-                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
 
-                //}
+                // } else {
+                //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+//
+                //              }
 
             }
         });
@@ -159,8 +177,8 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
                         titulo = items.get(position).getTitle();
                         desc = items.get(position).getDescription();
 
-                        Toast.makeText(NewsActivity.this, "titulo = " + titulo
-                                + " " + "desc = "+ desc , Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(NewsActivity.this, "titulo = " + titulo
+                           //     + " " + "desc = "+ desc , Toast.LENGTH_SHORT).show();
 
                         //webs.DetailVehicle(this,getActivity(),vehicle);
                         //n = new News();
@@ -172,9 +190,10 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
 
                         //intent.putExtras(bundle);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
                         //  TabTop.this.startActivity(intent);
-                        //finish();
+                        finish();
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
@@ -183,11 +202,15 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
                 })
         );
         // Crear un nuevo adaptador
-        adapter = new AdapterNews(items);
+        adapter = new AdapterNews(NewsActivity.this,items);
         recycler.setAdapter(adapter);
     }
 
     public void fillList(News[] news){
+        final String URL = "http://kangup.com.mx/uploads/Noticias/";
+        final String URLDefault = "http://kangup.com.mx/uploads/Noticias/noticia_1.png";
+
+
         ListNews[] list = new ListNews[news.length];
         for(int i = 0 ; i < news.length ; i++){
             list[i] = new ListNews();
@@ -196,7 +219,11 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
             list[i].setDescription(news[i].getDescripccion());
             //list[i].setImage(news[i].getImagen());
             //Cmbiar por imagen del servidor
-            list[i].setImage(1);
+            if(news[i].getImagen() == null){
+                list[i].setImage(URLDefault);
+            }else{
+                list[i].setImage(URL + news[i].getImagen());
+            }
             items.add(i,list[i]);
         }
         adapter.notifyDataSetChanged();
@@ -215,5 +242,29 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
     public void sendDataNews(News[] obj) {
         Toast.makeText(this, "News"+obj.length, Toast.LENGTH_SHORT).show();
         fillList(obj);
+    }
+
+    public void alertGuest() {
+        new AlertDialog.Builder(NewsActivity.this)
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(NewsActivity.this, RegisterActivity.class);
+                                startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 }

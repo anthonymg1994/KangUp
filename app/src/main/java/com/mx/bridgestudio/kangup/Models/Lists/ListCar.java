@@ -12,15 +12,16 @@ public class ListCar {
     private String Modelo;
     private String anio;
 
-    private int image;
+    private String image;
 
 
     public ListCar(){}
-    public ListCar(int id,String Marca,String Modelo,String anio){
+    public ListCar(int id,String Marca,String Modelo,String anio,String image){
         this.id     =   id;
         this.Marca  =   Marca;
         this.Modelo =   Modelo;
         this.anio   =   anio;
+        this.image = image;
     }
     public static int getImageId(Context context, int imageName) {
         return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
@@ -58,11 +59,11 @@ public class ListCar {
         this.anio = anio;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

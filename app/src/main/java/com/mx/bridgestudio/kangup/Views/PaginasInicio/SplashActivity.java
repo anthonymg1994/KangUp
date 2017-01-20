@@ -34,6 +34,7 @@ public class SplashActivity extends Activity {
         public void handleMessage(Message msg) {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     };
 }

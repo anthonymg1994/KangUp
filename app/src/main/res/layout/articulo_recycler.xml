@@ -67,7 +67,6 @@
     <ImageView
         android:layout_width="99dp"
         android:layout_height="91dp"
-        app:srcCompat="@drawable/marca"
         android:id="@+id/imageArticulo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

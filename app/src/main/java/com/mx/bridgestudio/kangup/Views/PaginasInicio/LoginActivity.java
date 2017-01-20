@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -23,15 +24,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.GoogleAnalytics.AnalyticsApplication;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,17 +59,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private ImageView logo;
     private TextInputLayout txt;
-    private Button guest,register,forgot,signin;
-CoordinatorLayout coordinatorLayout;
+    private Button guest, register, forgot, signin;
+    CoordinatorLayout coordinatorLayout;
     private User user = new User();
-    private SqliteController sql = new SqliteController(this,"kangup",null,1);
+    private SqliteController sql = new SqliteController(this, "kangup", null, 1);
     private Control control = new Control();
+
+    public static int guestFlag=0;
+
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        /* [START shared_tracker]
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        // [END shared_tracker]*/
+
         // Set up the login form.
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.snackbarCoordinatorLayout);
 
 
@@ -75,10 +98,10 @@ CoordinatorLayout coordinatorLayout;
         guest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                //finish();
-                //startActivity(new Intent(LoginActivity.this, TypesOfAutomobiles.class));
-                //startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
-
+                finish();
+                startActivity(new Intent(LoginActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                guestFlag = 1;
             }
         });
         register = (Button)findViewById(R.id.register);
@@ -87,6 +110,7 @@ CoordinatorLayout coordinatorLayout;
                 // Perform action on click
                 finish();
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         forgot = (Button)findViewById(R.id.forgot);
@@ -96,6 +120,7 @@ CoordinatorLayout coordinatorLayout;
                 finish();
              //   startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
                 startActivity(new Intent(LoginActivity.this, ForgotActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -117,6 +142,7 @@ CoordinatorLayout coordinatorLayout;
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                guestFlag=0;
                 attemptLogin();
             }
         });
@@ -176,6 +202,22 @@ CoordinatorLayout coordinatorLayout;
 
             //new asyn(LoginActivity.this,user.getEmail(),user.getPassword()).execute();
         }
+
+        /*
+        // [START custom_event]
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Share")
+                .build());
+        // [END custom_event]
+        */
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Send a screen view when the Activity is displayed to the user.
     }
 
     private boolean isPasswordValid(String password) {

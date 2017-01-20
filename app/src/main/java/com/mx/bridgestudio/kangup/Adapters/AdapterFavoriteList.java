@@ -18,6 +18,7 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -76,7 +77,7 @@ public class AdapterFavoriteList extends ArrayAdapter<ListCar> {
             });
             TextView Nnom = (TextView) item.findViewById(R.id.titleCar);
             Nnom.setText("" + list.get(arg0).getModelo()+ " " + list.get(arg0).getAnio());
-            imgImg.setImageResource(R.drawable.auto);
+            Picasso.with(context).load(list.get(arg0).getImage()).into(imgImg);
 
 
         }

@@ -67,13 +67,19 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     PlacesAutoCompleteAdapter.PlaceAutocomplete item = null;
     private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
     ImageView delete;
+    private static String origen;
+    private static String destino;
+    int option;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buildGoogleApiClient();
         setContentView(R.layout.activity_search);
         mAutocompleteView = (EditText)findViewById(R.id.autocomplete_places);
-
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+             option = bundle.getInt("option");
+        }
         delete=(ImageView)findViewById(R.id.cross);
 
         mAutoCompleteAdapter =  new PlacesAutoCompleteAdapter(this, R.layout.searchview_adapter,
@@ -114,7 +120,15 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                         final String placeId = String.valueOf(item.placeId);
 
                         Log.i("TAG", "Autocomplete item selected: " + item.description);
-                        /*
+                            Toast.makeText(getApplicationContext(), item.description,Toast.LENGTH_SHORT).show();
+
+                            if(option == 1){
+                                origen = ""+item.description;
+                            }else{
+                                destino = ""+item.description;
+                            }
+                        /*        Toast.makeText(this, Constants.API_NOT_CONNECTED,Toast.LENGTH_SHORT).show();
+
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
                          */
 
@@ -141,6 +155,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
 
 
                             onBackPressed();
+
                         Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
                     }
 

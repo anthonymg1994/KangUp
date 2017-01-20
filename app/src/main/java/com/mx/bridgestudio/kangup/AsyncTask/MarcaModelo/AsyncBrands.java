@@ -77,6 +77,7 @@ public class AsyncBrands extends AsyncTask<String,Integer,String> {
 
     @Override
     protected void onPostExecute(String result) {
+
         super.onPostExecute(result);
         if(progressDialog.isShowing()){
             progressDialog.dismiss();
@@ -85,7 +86,7 @@ public class AsyncBrands extends AsyncTask<String,Integer,String> {
             Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
         }else{
        //     Toast.makeText(mContext, "Bienvenido "+brands, Toast.LENGTH_SHORT).show();
-
+            final String URL = "http://kangup.com.mx/uploads/Marcas/";
             try {
                 JSONArray jsonarray = new JSONArray(result);
                 arrayBrands = new Brand[jsonarray.length()];
@@ -96,6 +97,7 @@ public class AsyncBrands extends AsyncTask<String,Integer,String> {
                         arrayBrands[i].setId(jsonobject.getInt("id"));
                         arrayBrands[i].setNombre(jsonobject.getString("Marca"));
                         arrayBrands[i].setId_categoria(jsonobject.getInt("id_categoria"));
+                        arrayBrands[i].setPhoto(URL + jsonobject.getString("imagen"));
                     }
 
                 } catch (JSONException e) {

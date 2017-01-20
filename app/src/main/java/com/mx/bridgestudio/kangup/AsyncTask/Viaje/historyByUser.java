@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.AsyncTask.Viaje;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -105,6 +106,7 @@ public class historyByUser extends AsyncTask<String,Integer,String> {
                 e.printStackTrace();
             }
             Intent intent = new Intent(mContext, HistoryActivity.class);
+            ((Activity)mContext).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             SendToActivity.sendDataHistory(arrayViajes);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);

@@ -8,15 +8,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.mx.bridgestudio.kangup.Controllers.Tools;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,7 +39,8 @@ public class ProfileActivity extends DrawerActivity implements
         View.OnClickListener {
 
     private ImageButton showCalendar;
-    private EditText email,address,city,cellphone,name,lastname;
+    private ImageView profile_photo;
+    private EditText email,address,city,cellphone,name,ap_materno,ap_paterno;
     private int mYear, mMonth, mDay;
     private TextView editBirth;
     private int flag=0;
@@ -49,6 +52,9 @@ public class ProfileActivity extends DrawerActivity implements
     private FloatingActionButton edit;
     Control control = new Control();
     private webServices webs;
+    String URL = "http://kangup.com.mx/uploads/Foto_perfil/";
+
+
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
     private DrawerActivity drw = new DrawerActivity();
@@ -58,6 +64,7 @@ public class ProfileActivity extends DrawerActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         control.changeColorStatusBar(ProfileActivity.this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         //setContentView(R.layout.activity_profile);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -79,11 +86,12 @@ public class ProfileActivity extends DrawerActivity implements
         //   showCalendar = (ImageButton) findViewById(R.id.showCalendar);
       //  showCalendar.setOnClickListener(this);
 //Arreglar cuando selccione edittext solo salg dialg y se esconda teclado
-
+        profile_photo = (ImageView) findViewById(R.id.imageProfilee);
         name = (EditText) findViewById(R.id.editText2);
-        lastname = (EditText) findViewById(R.id.editText);
+        ap_paterno = (EditText) findViewById(R.id.editText);
+        ap_materno = (EditText) findViewById(R.id.editText3);
         editBirth = (TextView)findViewById(R.id.editBirth);
-        cellphone = (EditText) findViewById(R.id.editText);
+        cellphone = (EditText) findViewById(R.id.editName);
         email = (EditText)findViewById(R.id.editEmail);
         address = (EditText)findViewById(R.id.editAddress);
         city = (EditText)findViewById(R.id.editCity);
@@ -96,8 +104,8 @@ public class ProfileActivity extends DrawerActivity implements
                 user.setFirstName(name.getText().toString());
 
                 //separar apellidos
-                user.setAp_paterno(lastname.getText().toString());
-                user.setAp_materno(lastname.getText().toString());
+                user.setAp_paterno(ap_paterno.getText().toString());
+                user.setAp_materno(ap_materno.getText().toString());
 
 
 
@@ -107,6 +115,7 @@ public class ProfileActivity extends DrawerActivity implements
                 //agregar campo en xml de password y ver como cambiar la contraseña
                 user.setCiudad(city.getText().toString());
                 user.setAddress(address.getText().toString());
+// actualizar foto en imageview
 
                 sql = new SqliteController(ProfileActivity.this, "kangup",null, 1);
                 sql.Connect();
@@ -153,6 +162,7 @@ public class ProfileActivity extends DrawerActivity implements
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(ProfileActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
@@ -161,6 +171,7 @@ public class ProfileActivity extends DrawerActivity implements
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(ProfileActivity.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
@@ -169,6 +180,7 @@ public class ProfileActivity extends DrawerActivity implements
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(ProfileActivity.this, FavoriteActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
@@ -177,6 +189,7 @@ public class ProfileActivity extends DrawerActivity implements
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(ProfileActivity.this, HistoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -222,7 +235,26 @@ public class ProfileActivity extends DrawerActivity implements
         toolbar.setTitle(user.getFirstName() + " " + user.getAp_paterno());
         setSupportActionBar(toolbar);
 
+        if(!user.getPhoto().equals("vacio")){
+            Picasso.with(ProfileActivity.this).load(user.getPhoto()).into(profile_photo);
+
+        }else{
+            profile_photo.setImageResource(R.drawable.perfil1);
+        }
+           // name.setText(user.getFirstName());
+
         //Validar si el campo esta null no muestro nada en los edittext
+        if(!user.getFirstName().equals("null"))
+            name.setText(user.getFirstName());
+
+        if(!user.getAp_paterno().equals("null"))
+            ap_paterno.setText(user.getAp_paterno());
+
+        if(!user.getAp_materno().equals("null"))
+            ap_materno.setText(user.getAp_materno());
+
+        if(!user.getFnacimiento().equals("null"))
+            editBirth.setText(user.getFnacimiento());
         if(!user.getFnacimiento().equals("null"))
              editBirth.setText(user.getFnacimiento());
 

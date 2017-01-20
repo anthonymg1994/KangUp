@@ -122,6 +122,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     Calendar evento = Calendar.getInstance();
     Calendar time = Calendar.getInstance();
     DAOReservaciones dao = new DAOReservaciones();
+    public int id_reservacion;
+    public int getId;
 
     Control control = new Control();
     private DrawerActivity drw = new DrawerActivity();
@@ -237,6 +239,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(Reservacion.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         noticias = (ImageButton) findViewById(R.id.noticiasToolbar);
@@ -245,6 +248,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(Reservacion.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         favoritos = (ImageButton) findViewById(R.id.favoritosToolbar);
@@ -253,6 +257,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(Reservacion.this, FavoriteActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
         historial = (ImageButton) findViewById(R.id.historialToolbar);
@@ -261,6 +266,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
                 startActivity(new Intent(Reservacion.this, HistoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -317,13 +323,36 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Intent setIntent = new Intent(Reservacion.this, PlacesAutoCompleteActivity.class);
-                setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                setIntent.putExtra("option",1);
+              //  setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
             }
         });
 
         final EditText destino = (EditText) dialogView.findViewById(R.id.destinotxt);
+        destino.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Intent setIntent = new Intent(Reservacion.this, PlacesAutoCompleteActivity.class);
+                setIntent.putExtra("option",2);
+                setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+            }
+        });
 
 
         dialogBuilder.setTitle("Nueva ruta");
@@ -332,30 +361,12 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             public void onClick(DialogInterface dialog, int whichButton) {
                 //String ruta = "Origen: " + origen.getText().toString() + "\n" + "Destino: " + destino.getText().toString();
                 //addres.add(ruta);
-                Ion.with(Reservacion.this)
-                        .load("POST", "http://kangup.com.mx/index.php/idRes")
-                        .setHeader("Content-Length","0")
-                        .asString()
-                        .setCallback(new FutureCallback<String>() {
-                            @Override||
-                            public void onCompleted(Exception e, String result) {
-                                //String info="";
-                                try {
-                                    JSONObject objUser = new JSONObject(result);
-                                    //info = String.valueOf(objUser.getInt("id"));
-                                    id_reservacion = objUser.getInt("id")+1;
-
-                                    } catch (JSONException e1) {
-                                    e1.printStackTrace();
-                                }
-                            }
-                        });
+               getId = getReservationId();
                 Ion.with(Reservacion.this)
                         .load("POST", "http://kangup.com.mx/index.php/routes")
-                        .setHeader("Content-Length","0")
                         .setBodyParameter("origen", origen.getText().toString())
                         .setBodyParameter("destino",destino.getText().toString())
-                        .setBodyParameter("id_reservacion", String.valueOf(id_reservacion))
+                        .setBodyParameter("id_reservacion", String.valueOf(getId))
                         .asString()
                         .setCallback(new FutureCallback<String>() {
                             @Override
@@ -503,6 +514,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 */
 
         startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
 
@@ -613,5 +625,30 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     @Override
     public void sendDataArticleByPackage(Article[] obj) {
         fillListArticulos(obj);
+    }
+
+    public int getReservationId(){
+        Ion.with(Reservacion.this)
+                .load("POST", "http://kangup.com.mx/index.php/idRes")
+                .asString()
+                .setCallback(new FutureCallback<String>() {
+                    @Override
+                    public void onCompleted(Exception e, String result) {
+                        //String info="";
+                        try {
+                            JSONObject objUser = new JSONObject(result);
+                            //info = String.valueOf(objUser.getInt("id"));
+                            id_reservacion = objUser.getInt("id")+1;
+                            Toast msg = Toast.makeText(getBaseContext(),
+                                    "IdRes: "+String.valueOf(id_reservacion), Toast.LENGTH_LONG);
+                            msg.show();
+
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                        e.printStackTrace();
+                    }
+                });
+        return id_reservacion;
     }
 }

@@ -90,7 +90,7 @@ public class TypesOfAutomobiles extends DrawerActivity implements View.OnClickLi
         ListCar list = new ListCar();
         list.setModelo( "Tipos de automoviles");
         list.setMarca("Breve descripcion del tipo de automovil");
-        list.setImage(1);
+        list.setImage("");
         for(int x=0;x<4;x++){
             items.add(x,list);
         }

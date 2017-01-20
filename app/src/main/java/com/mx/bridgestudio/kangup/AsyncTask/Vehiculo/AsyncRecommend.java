@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 /**
  * Created by USUARIO on 04/01/2017.
@@ -37,7 +38,7 @@ public class AsyncRecommend extends AsyncTask<String,Integer,String> {
     private String svehiculos;
     private webServices services = new webServices();
     private DAOVehiculo Dvehiculo = new DAOVehiculo();
-
+    private Date date,time,time_final;
     public OnDataSendFilterRecommend SendToActivity;//Call back interface
 
 
@@ -45,11 +46,15 @@ public class AsyncRecommend extends AsyncTask<String,Integer,String> {
 
     private boolean flag = false;
 
-    public AsyncRecommend(Context context, Vehicle vehicle,OnDataSendFilterRecommend SendToActivity) {
+    public AsyncRecommend(Context context, Vehicle vehicle, OnDataSendFilterRecommend SendToActivity,Date date, Date time, Date time_final) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
         this.vehicle = vehicle;
+        this.date = date;
+        this.time = time;
+        this.vehicle = vehicle;
+        this.time_final = time_final;
 
     }
 
@@ -57,7 +62,7 @@ public class AsyncRecommend extends AsyncTask<String,Integer,String> {
     protected String doInBackground(String... params) {
 
         try {
-            svehiculos = Dvehiculo.getRecommendCVehicles(vehicle);
+            svehiculos = Dvehiculo.getRecommendCVehicles(vehicle,date,time,time_final);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -95,6 +100,8 @@ public class AsyncRecommend extends AsyncTask<String,Integer,String> {
                     arrayVehiculos[i].setMarca(jsonobject.getString("Marca"));
                     arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
                     arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
+                    arrayVehiculos[i].setValoracion(jsonobject.getInt("puntuacion"));
+                    arrayVehiculos[i].setFoto(jsonobject.getString("foto_predeterminada"));
                 }
 
             } catch (JSONException e) {

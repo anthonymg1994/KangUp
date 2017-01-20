@@ -17,7 +17,16 @@ public class Vehicle implements Serializable {
     private int id_categoria;
     private String marca;
     private int valoracion;
+    private String foto;
 
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
     private String status;
 

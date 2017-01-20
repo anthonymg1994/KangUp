@@ -124,6 +124,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
             //    if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, CategoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
               //  } else {
                 //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -138,6 +139,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
                 //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, NewsActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                   //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -152,6 +154,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
                 //if (control.isOnline()) {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, FavoriteActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                  //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -168,6 +171,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
 
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, HistoryActivity.class));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                // } else {
                  //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
@@ -179,6 +183,9 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     }
 
     public void fillList(Vehicle[] vehicles){
+        final String URL = "http://kangup.com.mx/uploads/Vehiculos/";
+
+
         ListCar[] list = new ListCar[vehicles.length];
         for(int i = 0 ; i < vehicles.length ; i++){
             list[i] = new ListCar();
@@ -189,7 +196,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
             // list[i].setFecha(listCar[i].getFecha());
             //list[i].setTotal(listCar[i].getTotal());
             //Cmbiar por imagen del servidor
-            list[i].setImage(1);
+            list[i].setImage(URL + vehicles[i].getFoto());
 
             tipos.add(i,list[i]);
         }
@@ -209,6 +216,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     {
         Intent setIntent = new Intent(this,LoginActivity.class);
         startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
     }
 

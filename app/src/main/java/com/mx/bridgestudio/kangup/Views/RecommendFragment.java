@@ -88,7 +88,7 @@ public class RecommendFragment extends Fragment {
             list[i].setId(brand[i].getId());
             list[i].setName(brand[i].getNombre());
             list[i].setId_categoria(brand[i].getId_categoria());
-            list[i].setImage(images[i]);
+            list[i].setImage(brand[i].getPhoto());
             albumList.add(list[i]);
         }
         adapter.notifyDataSetChanged();
