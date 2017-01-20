@@ -159,6 +159,7 @@ public class DAOuser {
             //obtener id de pago dependiendo la consulta de pago predeterminado
             jsonParam.put("id_forma_pago",user.getPay());
             jsonParam.put("status","1");
+            jsonParam.put("foto",user.getPhoto());
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();
@@ -206,6 +207,7 @@ public class DAOuser {
         user.setPassword(obj.getString("password"));
         user.setPay(obj.getInt("id_forma_pago"));
         user.setStatus(obj.getString("status"));
+        user.setPhoto(obj.getString("foto"));
 
         return user;
     }

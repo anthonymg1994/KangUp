@@ -160,6 +160,7 @@ public class DAOVehiculo {
         //apellidos vehicle.setId_parther(obj.getString("apellidos"));
          vehicle.setDescription(obj.getString("descripcion"));
          vehicle.setSpecifications(obj.getString("especificaciones"));
+        vehicle.setFoto(obj.getString("foto"));
         //vehicle.setStatus(obj.getString("status"));
 
         return vehicle;
@@ -341,9 +342,9 @@ public class DAOVehiculo {
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("id_marca", String.valueOf(vehicle.getId_brand()));
             jsonParam.put("id_categoria", String.valueOf(vehicle.getId_categoria()));
-            jsonParam.put("fecha_reservacion", date);
-            jsonParam.put("hora_inicio",time);
-            jsonParam.put("hora_termino", time_final);
+            jsonParam.put("fecha_reservacion", date.getDate());
+            jsonParam.put("hora_inicio",time.getTime());
+            jsonParam.put("hora_termino", time_final.getTime());
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();
@@ -385,7 +386,7 @@ public class DAOVehiculo {
         return response.toString();
     }
 
-    public String getRecommendCVehicles(Vehicle vehicle) throws JSONException {
+    public String getRecommendCVehicles(Vehicle vehicle, Date date, Date time,Date time_final) throws JSONException {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         InputStream in = null;
@@ -405,6 +406,9 @@ public class DAOVehiculo {
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("id_marca", String.valueOf(vehicle.getId_brand()));
             jsonParam.put("id_categoria", String.valueOf(vehicle.getId_categoria()));
+            jsonParam.put("fecha_reservacion", date.getDate());
+            jsonParam.put("hora_inicio",time.getTime());
+            jsonParam.put("hora_termino", time_final.getTime());
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();
@@ -445,4 +449,63 @@ public class DAOVehiculo {
 
         return response.toString();
     }
+
+    public String getAllPhotoById(Vehicle vehicle) throws JSONException {
+        ProgressDialog progressDialog;
+        HttpURLConnection httpURLConnection = null;
+        InputStream in = null;
+        try {
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL url = new URL("http://kangup.com.mx/index.php/fotosXVehiculo");
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(4000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.connect();
+            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("id_vehiculo",String.valueOf(vehicle.getId()));
+            OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
+            os.write(jsonParam.toString());
+            os.flush();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String line;
+        StringBuffer response = new StringBuffer();
+        try {
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            if(httpURLConnection.getResponseCode() == 500)
+                return "0";
+            int statusCode = httpURLConnection.getResponseCode();
+            InputStream is = null;
+            if (statusCode >= 200 && statusCode < 400) {
+                // Create an InputStream in order to extract the response object
+                is = httpURLConnection.getInputStream();
+            }
+            else {
+                is = httpURLConnection.getErrorStream();
+            }
+            if(reader != null) {
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+            }else
+                response = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        httpURLConnection.disconnect();
+
+
+        return response.toString();
+    }
+
 }

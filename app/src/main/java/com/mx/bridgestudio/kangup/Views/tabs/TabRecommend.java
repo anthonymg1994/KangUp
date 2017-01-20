@@ -27,7 +27,11 @@ import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by USUARIO on 04/01/2017.
@@ -65,7 +69,23 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
 
         vehicle.setId_categoria(CategoryActivity.opcionSeleccionada);
         vehicle.setId_brand(CardAdapter.id_marca);
-        webs.getRecommendCVehicles(getActivity(), vehicle, TabRecommend.this);
+        Date fecha = CardAdapter.datee;
+        String hora = CardAdapter.hour;
+        String hour_final = CardAdapter.hour_final;
+
+        try {
+
+            DateFormat sdf = new SimpleDateFormat("hh:mm");
+            Date date2 = sdf.parse(hora);
+
+            DateFormat sdf1 = new SimpleDateFormat("hh:mm");
+            Date date3 = sdf1.parse(hour_final);
+
+
+            webs.getRecommendCVehicles(getActivity(), vehicle, TabRecommend.this,fecha,date2,date3);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // Obtener el Recycler
         CatalogCar.flagDate = 1;
@@ -112,6 +132,9 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
     }
 
     public void fillList(Vehicle[] vehicle){
+        final String URL = "http://kangup.com.mx/uploads/Vehiculos/";
+
+
         ListCar[] list = new ListCar[vehicle.length];
         for(int i = 0 ; i < vehicle.length ; i++){
             list[i] = new ListCar();
@@ -120,7 +143,7 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
             list[i].setMarca(vehicle[i].getMarca());
             list[i].setAnio(vehicle[i].getYear());
             //Cmbiar por imagen del servidor
-            list[i].setImage(1);
+            list[i].setImage(URL + vehicle[i].getFoto());
             items.add(i,list[i]);
         }
         adapter.notifyDataSetChanged();

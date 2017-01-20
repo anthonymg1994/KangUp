@@ -1,23 +1,16 @@
 package com.mx.bridgestudio.kangup.Adapters;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.Lists.ListViaje;
-import com.mx.bridgestudio.kangup.Models.Payment;
-import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,7 +50,7 @@ public class AdapterViaje extends RecyclerView.Adapter<AdapterViaje.AnimeViewHol
 
         public AnimeViewHolder(View v) {
             super(v);
-            imagen = (ImageView) v.findViewById(R.id.imageProfile);
+            imagen = (ImageView) v.findViewById(R.id.imageProfilee);
             marca = (TextView) v.findViewById(R.id.ModeloCar);
             fecha = (TextView) v.findViewById(R.id.fecha);
             total = (TextView) v.findViewById(R.id.total);

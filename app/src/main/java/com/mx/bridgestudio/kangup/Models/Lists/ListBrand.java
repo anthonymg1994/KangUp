@@ -8,11 +8,11 @@ public class ListBrand {
     private int id;
     private String Name;
     private int id_categoria;
-    private int image;
+    private String image;
 
 
     public ListBrand(){}
-    public ListBrand(int id,String name,int id_categoria,int image){
+    public ListBrand(int id,String name,int id_categoria,String image){
         this.id = id;
         this.Name = name;
         this.id_categoria = id_categoria;
@@ -43,11 +43,11 @@ public class ListBrand {
         Name = name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

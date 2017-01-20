@@ -23,14 +23,19 @@ import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Anthony on 02/11/2016.
  */
 public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewHolder> implements View.OnClickListener{
     private List<ListCar> items;
+    private ArrayList<ListCar> arraylist;
+
     Activity context;
     webServices web = new webServices();
     public AdaptadorType(Activity context,List<ListCar> items) {
@@ -83,7 +88,9 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
     public void onBindViewHolder(AnimeViewHolder viewHolder, final int i) {
        // viewHolder.imagen.setImageResource(items.get(i).getImage());
 
-        viewHolder.imagen.setImageResource(R.drawable.auto);
+
+        Picasso.with(context).load(items.get(i).getImage()).into(viewHolder.imagen);
+
         viewHolder.nombre.setText(items.get(i).getModelo());
         viewHolder.descripcion.setText(String.valueOf(items.get(i).getModelo()+" "+items.get(i).getAnio()));
 
@@ -156,5 +163,21 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
                     }
                 }).show();
     }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        items.clear();
+        if (charText.length() == 0) {
+            items.addAll(arraylist);
+        } else {
+            for (ListCar wp : arraylist) {
+                if (wp.getModelo().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    items.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 
 }

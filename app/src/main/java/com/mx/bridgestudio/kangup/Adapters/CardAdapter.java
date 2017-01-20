@@ -30,6 +30,7 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
+import com.squareup.picasso.Picasso;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
@@ -53,9 +54,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     public CardView cardView;
     public static int id_marca = 0;
     public static String marca = "";
-    public static String hour = "";
-    public static String hour_final = "";
-    public static String datee = "";
+    public static String hour = "",hour_real="";
+    public static String hour_final = "",hour_final_real;
+    public static Date datee = null;
     Control c = new Control();
     EditText hora, horaTermino;
     EditText fecha;
@@ -96,7 +97,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     public void onBindViewHolder(final CardAdapter.MyViewHolder holder, final int position) {
         final ListBrand list = listMarcas.get(position);
         holder.title.setText(list.getName());
-        Glide.with(mContext).load(R.drawable.marca).into(holder.thumbnail);
+     //   Glide.with(mContext).load(R.drawable.marca).into(holder.thumbnail);
+
+        Picasso.with(mContext).load(list.getImage()).into(holder.thumbnail);
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,10 +155,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                                           int minute) {
                         if (x == 1) {
                             hora.setText(hourOfDay + ":" + minute + " ");
-                            hour = hora.getText().toString();
+                            hour_real = hourOfDay + ":" + minute + " ";
+                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + minute + "";
+                            hour = hora_margen_inicio;
                         } else if (x == 2) {
                             horaTermino.setText(hourOfDay + ":" + minute + " ");
-                            hour_final = horaTermino.getText().toString();
+                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + minute + "";
+                            hour_final_real = hourOfDay + ":" + minute + " ";
+                            hour_final = hora_margen_termino;
                         }
                     }
                 }, mHour, mMinute, false);
@@ -166,17 +175,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View dialogView = inflater.inflate(R.layout.date_dialog, null);
         dialogBuilder.setView(dialogView);
+
         fecha = (EditText) dialogView.findViewById(R.id.fecha);
         hora = (EditText) dialogView.findViewById(R.id.hora);
         horaTermino = (EditText) dialogView.findViewById(R.id.horatermino);
         final ImageView bHora_termino = (ImageView) dialogView.findViewById(R.id.IBhoraTermino);
 
-
         fecha.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
         hora.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
         horaTermino.setHintTextColor(mContext.getResources().getColor(R.color.textoHint));
-
-
 
         final ImageView bHora = (ImageView) dialogView.findViewById(R.id.IBhora);
 
@@ -208,10 +215,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();
                 //com.mx.bridgestudio.kangup.Models.Reservacion res = new com.mx.bridgestudio.kangup.Models.Reservacion();
-                Intent setIntent = new Intent(mContext, CarsXtype.class);
-                //CatalogCar.id_Marca = list.get
-                mContext.startActivity(setIntent);
-                ((Activity) mContext).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                if (fecha.getText().toString().equals("") || hora.getText().toString().equals("") || horaTermino.getText().toString().equals("")) {
+
+
+
+                }else{
+                    Intent setIntent = new Intent(mContext, CarsXtype.class);
+                    //CatalogCar.id_Marca = list.get
+                    mContext.startActivity(setIntent);
+                    ((Activity) mContext).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+
             }
         });
         dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -284,8 +298,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                                               int monthOfYear, int dayOfMonth) {
 
                             Date parseDate = null;
+                            Date parseDate2 = null;
 
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
                             String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                             try {
                                 parseDate = dateFormat.parse(date);
@@ -293,9 +308,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                                 e.printStackTrace();
                             }
                             SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
+                            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
                             String finalString = dateFormat1.format(parseDate);
-                            fecha.setText("" + finalString);
-                            datee = String.valueOf(parseDate);
+                            String finalString2 = dateFormat2.format(parseDate);
+
+                            try {
+                                Date last_date_date = new SimpleDateFormat("yyyy-MM-dd").parse(finalString2);
+                                fecha.setText("" + finalString);
+                                datee = last_date_date;
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();

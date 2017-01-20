@@ -1,11 +1,13 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -16,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -27,6 +30,8 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -34,6 +39,7 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
@@ -48,8 +54,10 @@ import com.mx.bridgestudio.kangup.Views.tabs.TabRecommend;
 import com.mx.bridgestudio.kangup.Views.tabs.TabVotados;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -62,7 +70,7 @@ import it.neokree.materialtabs.MaterialTabListener;
  */
 
 public class CarsXtype extends DrawerActivity implements
-        AdapterView.OnItemClickListener,MaterialTabListener, View.OnClickListener {
+        AdapterView.OnItemClickListener,MaterialTabListener, View.OnClickListener,SearchView.OnQueryTextListener  {
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
@@ -72,10 +80,12 @@ public class CarsXtype extends DrawerActivity implements
     private ImageButton time,date;
     private TextView hora,fecha;
     protected DrawerLayout mDrawer;
-
+    EditText hora_, horaTermino;
+    EditText fecha_;
+    SearchView simpleSearchView;
     private SqliteController sql;
     private DrawerActivity drw = new DrawerActivity();
-
+    private int flagFragment = 0;
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
@@ -103,11 +113,22 @@ public class CarsXtype extends DrawerActivity implements
         time = (ImageButton) findViewById(R.id.changeHour);
         time.setOnClickListener(this);
 
-        date = (ImageButton) findViewById(R.id.changeDate);
-        date.setOnClickListener(this);
+
+         simpleSearchView = (SearchView) findViewById(R.id.searchView); // inititate a search view
+        simpleSearchView.setQueryHint("Busqueda de vehiculos");
+        simpleSearchView.setOnQueryTextListener(this);
+        // perform set on query text focus change listener event
+
 
         hora = (TextView) findViewById(R.id.hour);
         fecha = (TextView) findViewById(R.id.date);
+
+
+        hora.setText("Horario : "+ CardAdapter.hour_real + " - " + CardAdapter.hour_final_real);
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+        fecha.setText("| Fecha : "+ dateFormat.format(CardAdapter.datee));
+
+
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setColorFilter(ContextCompat.getColor(CarsXtype.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +209,9 @@ public class CarsXtype extends DrawerActivity implements
             @Override
             public void onPageSelected(int tabposition) {
                 tabHost.setSelectedNavigationItem(tabposition);
+
                 //androidAdapter.getItem(tabposition);
+
             }
         });
 
@@ -223,16 +246,28 @@ public class CarsXtype extends DrawerActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_drawer_drawer, menu);
+        int id = simpleSearchView.getContext()
+                .getResources()
+                .getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = (TextView) simpleSearchView.findViewById(id);
+        textView.setTextColor(Color.WHITE);
+
         return true;
     }
 
 
     @Override
     public void onTabSelected(MaterialTab tab) {
+        flagFragment = tab.getPosition();
         viewPager.setCurrentItem(tab.getPosition());
+        if(flagFragment == 0){
+
+        }
         //androidAdapter.getItem(tab.getPosition());
     }
-
+    public String getJob(String text){
+        return text;
+    }
     @Override
     public void onTabReselected(MaterialTab tab) {
 
@@ -245,22 +280,15 @@ public class CarsXtype extends DrawerActivity implements
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.changeDate){
-            if(LoginActivity.guestFlag == 1)
-            {
-                alertGuest();
-            }
-            else{
-                showDialogCalendar();
-            }
-        }
+
         if(v.getId() == R.id.changeHour){
             if(LoginActivity.guestFlag == 1)
             {
                 alertGuest();
             }
             else{
-                showDialogTime();
+             //   showDialogTime();
+                InitDateView();
             }
         }
     }
@@ -289,8 +317,9 @@ public class CarsXtype extends DrawerActivity implements
                                           int monthOfYear, int dayOfMonth) {
 
                         Date parseDate = null;
+                        Date parseDate2 = null;
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yy");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
                         String date = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                         try {
                             parseDate = dateFormat.parse(date);
@@ -298,44 +327,47 @@ public class CarsXtype extends DrawerActivity implements
                             e.printStackTrace();
                         }
                         SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy");
+                        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
                         String finalString = dateFormat1.format(parseDate);
-                        //sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                        String finalString2 = dateFormat2.format(parseDate);
 
-                        //sql.updateReservacionFecha(finalString);
+                        try {
+                            Date last_date_date = new SimpleDateFormat("yyyy-MM-dd").parse(finalString2);
+                            fecha_.setText("" + finalString);
+                            CardAdapter.datee = last_date_date;
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
-                        fecha.setText(""+finalString);
+
 
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
 
     }
-    private void showDialogTime(){
 
-        // Get Current Time
-        final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
-        pm = c.get(Calendar.AM_PM);
-
-        // Launch Time Picker Dialog
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
-
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
-
-                        //hora.setText(hourOfDay + ":" + minute + " " + pm);
-                        //sql = new SqliteController(getApplicationContext(),"kangup",null,1);
-                        //sql.updateReservacionHora(hourOfDay + ":" + minute);
-                    }
-                }, mHour, mMinute, false);
-
-        timePickerDialog.show();
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
     }
 
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String text = newText;
+       //androidAdapter.filter(flagFragment,text);
+
+            Toast.makeText(CarsXtype.this, "tab :"+ flagFragment+"texto "+newText, Toast.LENGTH_SHORT).show();
+
+
+     return false;
+    }
+
+
     // view pager adapter
+
+
     private class ViewPagerAdapterTab extends FragmentStatePagerAdapter {
         Context context;
         Fragment fragment = null;
@@ -346,12 +378,21 @@ public class CarsXtype extends DrawerActivity implements
 
         public Fragment getItem(int num) {
             switch (num){
-                case 0: fragment = new TabTop();
+                case 0:
+
+                    fragment = new TabTop();
+
 
                     break;
-                case 1: fragment = new TabTop();
+                case 1:
+
+                    fragment = new TabRecommend();
+
                     break;
-                case 2: fragment = new TabTop();;
+                case 2:
+
+                    fragment = new TabTop();
+
                     break;
             }
             return fragment;
@@ -407,4 +448,107 @@ public class CarsXtype extends DrawerActivity implements
                     }
                 }).show();
     }
+
+    public void InitDateView() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(CarsXtype.this,R.style.MyDialogTheme);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View dialogView = inflater.inflate(R.layout.date_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        fecha_ = (EditText) dialogView.findViewById(R.id.fecha);
+        hora_ = (EditText) dialogView.findViewById(R.id.hora);
+        horaTermino = (EditText) dialogView.findViewById(R.id.horatermino);
+        final ImageView bHora_termino = (ImageView) dialogView.findViewById(R.id.IBhoraTermino);
+
+        fecha_.setHintTextColor(getResources().getColor(R.color.textoHint));
+        hora_.setHintTextColor(getResources().getColor(R.color.textoHint));
+        horaTermino.setHintTextColor(getResources().getColor(R.color.textoHint));
+
+        final ImageView bHora = (ImageView) dialogView.findViewById(R.id.IBhora);
+
+
+        bHora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogTime(1);
+            }
+        });
+        bHora_termino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogTime(2);
+            }
+        });
+
+        final ImageView bFecha = (ImageView) dialogView.findViewById(R.id.IBfecha);
+        bFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogCalendar();
+            }
+        });
+
+        dialogBuilder.setTitle("Disponibilidad");
+        dialogBuilder.setMessage("Completa los siguientes datos:");
+        dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //do something with edt.getText().toString();
+                //com.mx.bridgestudio.kangup.Models.Reservacion res = new com.mx.bridgestudio.kangup.Models.Reservacion();
+                if (fecha_.getText().toString().equals("") || hora.getText().toString().equals("") || horaTermino.getText().toString().equals("")) {
+
+
+
+                }else{
+                    hora.setText("Horario : "+ CardAdapter.hour_real + " - " + CardAdapter.hour_final_real);
+                    DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                    fecha.setText("| Fecha : "+ dateFormat.format(CardAdapter.datee));
+
+                       Intent setIntent = new Intent(CarsXtype.this, CarsXtype.class);
+                    startActivity(setIntent);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+                dialog.dismiss();
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+    }
+
+    private void showDialogTime(final int x) {
+
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        // Launch Time Picker Dialog
+        final TimePickerDialog timePickerDialog = new TimePickerDialog(CarsXtype.this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        if (x == 1) {
+                            hora_.setText(hourOfDay + ":" + minute + " ");
+                            CardAdapter.hour_real = hourOfDay + ":" + minute + " ";
+                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + minute + "";
+                            CardAdapter.hour = hora_margen_inicio;
+                        } else if (x == 2) {
+                            horaTermino.setText(hourOfDay + ":" + minute + " ");
+                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + minute + "";
+                            CardAdapter.hour_final_real = hourOfDay + ":" + minute + " ";
+                            CardAdapter.hour_final = hora_margen_termino;
+                        }
+                    }
+                }, mHour, mMinute, false);
+
+        timePickerDialog.show();
+    }
+
+
 }

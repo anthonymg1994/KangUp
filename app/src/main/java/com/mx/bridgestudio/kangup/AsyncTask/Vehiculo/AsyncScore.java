@@ -104,6 +104,7 @@ public class AsyncScore  extends AsyncTask<String,Integer,String> {
                     arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
                     arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
                     arrayVehiculos[i].setValoracion(jsonobject.getInt("puntuacion"));
+                    arrayVehiculos[i].setFoto(jsonobject.getString("foto_predeterminada"));
                 }
 
             } catch (JSONException e) {

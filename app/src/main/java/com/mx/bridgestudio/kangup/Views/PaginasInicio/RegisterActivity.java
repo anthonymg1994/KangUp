@@ -2,24 +2,22 @@ package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +26,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,24 +40,19 @@ import java.io.FileOutputStream;
 
 import com.google.gson.JsonObject;
 import com.koushikdutta.ion.Ion;
-import com.koushikdutta.async.future.FutureCallback;
+import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.ExitUtils;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.AddPaymentActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.ProfileActivity;
 
 import net.gotev.uploadservice.UploadNotificationConfig;
 import net.gotev.uploadservice.ftp.FTPUploadRequest;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.jibble.simpleftp.SimpleFTP;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import javax.annotation.Nullable;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -70,7 +66,8 @@ public class RegisterActivity extends AppCompatActivity {
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-
+   ExitUtils exitUtils;
+    private final String TAG = "TextEditor";
     private final int PICK_IMAGE = 12345;
     private final int TAKE_PICTURE = 6352;
     private static final int REQUEST_CAMERA_ACCESS_PERMISSION =5674;
@@ -78,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
     public final String APP_TAG = "KangUp";
     public String path="";
     public static String nameFile="";
-
+    Control control = new Control();
 
     private AlertDialog alertTypePayment;
 
@@ -90,10 +87,15 @@ public class RegisterActivity extends AppCompatActivity {
     CharSequence[] values = {"Cámara","Galería"};
 
     webServices webs = new webServices();
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        control.changeColorStatusBar(RegisterActivity.this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarRegister);
         setSupportActionBar(toolbar);
 
@@ -122,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
         password.setHintTextColor(getResources().getColor(R.color.white));
         confirm = (EditText)findViewById(R.id.passwordr);
         confirm.setHintTextColor(getResources().getColor(R.color.white));
+
         card = (CardView)findViewById(R.id.cardImage);
         card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
                 CreateAlertDialogWithRadioButtonGroup();
             }
         });
-        imageViewRound=(ImageView)findViewById(R.id.imageProfile);
+        imageViewRound=(ImageView)findViewById(R.id.imageProfilee);
         imageViewRound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -277,17 +280,26 @@ public class RegisterActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
-
-    @Override
+   @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    path = data.getData().getPath();
+                    Uri selectedImageUri = data.getData();
+                    Bitmap bitmap = null;
+
+                    //  path = data.getData().getPath();
                     bitmap = BitmapFactory.decodeStream(inputStream);
                     imageViewRound.setImageBitmap(bitmap);
+                  //BitmapFactory.decodeFile(path);
+                  //  Bitmap b = ExitUtils.rotateBitmap(path, b1);
+
+                  //  decodeFile(path);
+                    //  ExitUtils.rotateBitmap(path,bitmap);
+                    //   Glide.with(RegisterActivity.this).load(path).into(imageViewRound);
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -353,6 +365,22 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         return imageFile;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //getting Root View that gets focus
+        View rootView =((ViewGroup)findViewById(android.R.id.content)).
+                getChildAt(0);
+        rootView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    control.hideKeyboard(RegisterActivity.this);
+                }
+            }
+        });
     }
 
 

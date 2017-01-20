@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.ProfileActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.squareup.picasso.Picasso;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 
 public class DrawerActivity extends AppCompatActivity
@@ -35,6 +37,7 @@ public class DrawerActivity extends AppCompatActivity
 
     protected DrawerLayout drawer;
     private TextView name,email;
+    private ImageView profile_photo;
     private SqliteController sql;
     private User user = new User();
     private Control control = new Control();
@@ -75,6 +78,8 @@ public class DrawerActivity extends AppCompatActivity
 
         name = (TextView) header.findViewById(R.id.namedrawer);
        // email = (TextView) header.findViewById(R.id.emaildrawer);
+        profile_photo = (ImageView) header.findViewById(R.id.imageProfilee);
+
 
         drawer.requestLayout();
 
@@ -102,6 +107,11 @@ public class DrawerActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -278,6 +288,7 @@ public class DrawerActivity extends AppCompatActivity
     }
 
     public void getInformation(){
+
         if(LoginActivity.guestFlag==1)
         {
             name.setText("Invitado");
@@ -288,6 +299,7 @@ public class DrawerActivity extends AppCompatActivity
             sql.Connect();
             user = sql.user();
             sql.Close();
+            Picasso.with(DrawerActivity.this).load(user.getPhoto()).into(profile_photo);
             name.setText(user.getFirstName() +" "+ user.getAp_paterno() + " " + user.getAp_materno());
         }
 

@@ -21,6 +21,7 @@ import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncFavs;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncRecommend;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncScore;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.asyncTaskPhotoById;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.DetalleViajeByUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.RoutesByTrip;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.historyByUser;
@@ -35,6 +36,7 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistoryDetail
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPhotos;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendRoutesByTrip;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
@@ -117,8 +119,8 @@ public class webServices {
     public void TopRankingVehiculo(Context context, Vehicle vehiculo,Date date, Date time,Date time_final, OnDataSendFilterScore OnDataSendToActivity){
         new AsyncScore(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
     }
-    public void getRecommendCVehicles(Context context, Vehicle vehiculo,OnDataSendFilterRecommend OnDataSendToActivity){
-        new AsyncRecommend(context,vehiculo,OnDataSendToActivity).execute();
+    public void getRecommendCVehicles(Context context, Vehicle vehiculo,OnDataSendFilterRecommend OnDataSendToActivity,Date date, Date time,Date time_final){
+        new AsyncRecommend(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
     }
 
     public void getHistoryDetailByUser(OnDataSendHistoryDetail c,Context context, int idUser, int idRes, int idu){
@@ -140,6 +142,11 @@ public class webServices {
     public void getArticlesByPackage(OnDataSentArticlesByPackage dataSendArticlesByPackage, Context context, int id_paquete){
         new asyncTaskArticulos(dataSendArticlesByPackage,context,id_paquete).execute();
     }
+    public void getAllPhotoById(OnDataSendPhotos onDataSendPhotos, Context context, Vehicle vehicle){
+        new asyncTaskPhotoById(onDataSendPhotos,context,vehicle).execute();
+    }
+
+
 /*
     public void Noticias(Context context, News news){
         new AsyncNews(context,news).execute();

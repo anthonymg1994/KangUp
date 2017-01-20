@@ -6,13 +6,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPhotos;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.User;
+import com.mx.bridgestudio.kangup.Models.News;
+import com.mx.bridgestudio.kangup.Models.Photo;
+import com.mx.bridgestudio.kangup.Models.Publicidad;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,48 +26,48 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by USUARIO on 09/12/2016.
+ * Created by USUARIO on 19/01/2017.
  */
 
-public class AsyncFavs  extends AsyncTask<String,Integer,String> {
+public class asyncTaskPhotoById extends AsyncTask<String,Integer,String> {
+
     private JSONObject responseJson;
     private ProgressDialog progressDialog;
     private HttpURLConnection httpURLConnection;
     private String param1;
     private String param2;
     URL url;
-    private Vehicle[] arrayVehiculos;
-    private Vehicle vehicle = new Vehicle();
-    private String objVehicle;
-    private User user = new User();
+    private Photo[] arrayPhotos;
+    private News news = new News();
+    private String photoString;
     private webServices services = new webServices();
     private DAOVehiculo Dvehicle = new DAOVehiculo();
+    private Vehicle vehicle = new Vehicle();
 
-    public OnDataSendFavorites SendToActivity;//Call back interface
+    public OnDataSendPhotos SendToActivity;//Call back interface
 
 
     Context mContext;
 
     private boolean flag = false;
 
-    public AsyncFavs(OnDataSendFavorites SendToActivity, Context context, User user) {
+    public asyncTaskPhotoById(OnDataSendPhotos SendToActivity, Context context, Vehicle vehicle) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
-        this.user = user;
-
+        this.vehicle = vehicle;
     }
 
     @Override
     protected String doInBackground(String... params) {
 
         try {
-            objVehicle = Dvehicle.getFavorites(user);
+            photoString = Dvehicle.getAllPhotoById(vehicle);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return objVehicle;
+        return photoString;
     }
 
     @Override
@@ -79,38 +83,36 @@ public class AsyncFavs  extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        if (progressDialog.isShowing()) {
+        if(progressDialog.isShowing()){
             progressDialog.dismiss();
         }
-        if (result.equals("0")) {
-            Toast.makeText(mContext, "Vuelve a intentarlo" + result, Toast.LENGTH_SHORT).show();
-        } else {
-            //      Toast.makeText(mContext, "Bienvenido "+vehicle, Toast.LENGTH_SHORT).show();
+        if(result.equals("0")){
+            Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
+        }else{
+                 Toast.makeText(mContext, "Bienvenido "+result, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                arrayVehiculos = new Vehicle[jsonarray.length()];
+                arrayPhotos = new Photo[jsonarray.length()];
 
                 for (int i = 0; i < jsonarray.length(); i++) {
-                    arrayVehiculos[i] = new Vehicle();
+                    arrayPhotos[i] = new Photo();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    arrayVehiculos[i].setId(jsonobject.getInt("id"));
-                    arrayVehiculos[i].setMarca(jsonobject.getString("Marca"));
-                    arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
-                    arrayVehiculos[i].setSpecifications(jsonobject.getString("especificaciones"));
-                    arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
-                    arrayVehiculos[i].setFoto(jsonobject.getString("foto_predeterminada"));
+                    arrayPhotos[i].setId(jsonobject.getInt("id_vehiculo"));
+                    arrayPhotos[i].setNombre(jsonobject.getString("foto"));
+                    //arrayPublicidad[i].setImage(R.drawable.auto);
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(mContext, FavoriteActivity.class);
-            SendToActivity.sendDataFavorites(arrayVehiculos);
+            //        Intent intent = new Intent(mContext, DetalleActivity.class);
+            SendToActivity.OnDataSendPhotos(arrayPhotos);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 
             //  mContext.startActivity(intent);
+
 
 
         }

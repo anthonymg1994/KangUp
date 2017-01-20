@@ -16,6 +16,7 @@ import com.mx.bridgestudio.kangup.Models.News;
 
 import com.mx.bridgestudio.kangup.Models.Publicidad;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 
 import org.json.JSONArray;
@@ -97,14 +98,15 @@ public class asyncTaskPublicidad extends AsyncTask<String,Integer,String> {
                     arrayPublicidad[i] = new Publicidad();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
                     arrayPublicidad[i].setId(jsonobject.getInt("id"));
-                    arrayPublicidad[i].setNombre(jsonobject.getString("titulo"));
-                    arrayPublicidad[i].setImage(R.drawable.auto);
+                    arrayPublicidad[i].setNombre(jsonobject.getString("nombre"));
+                    arrayPublicidad[i].setFormato(jsonobject.getString("formato"));
+                    //arrayPublicidad[i].setImage(R.drawable.auto);
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(mContext, NewsActivity.class);
+           // Intent intent = new Intent(mContext, CategoryActivity.class);
             SendToActivity.sendDataPublicidad(arrayPublicidad);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
