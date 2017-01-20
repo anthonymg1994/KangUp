@@ -322,15 +322,17 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
 
             showChangeLangDialog();
             if(flag == 1){
-                init();
+                for(int i=0;i<photo.length;i++)
+                    ImagesArray.add(photo[i]);
+
             }
+            init();
         }
     }
     private void init() {
 
 
-        for(int i=0;i<photo.length;i++)
-            ImagesArray.add(photo[i]);
+
         page.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
         final float density = getResources().getDisplayMetrics().density;
         indicator.setViewPager(page);

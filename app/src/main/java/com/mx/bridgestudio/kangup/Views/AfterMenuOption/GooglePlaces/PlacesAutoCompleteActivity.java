@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -56,19 +57,21 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     sb.append("&input=" + URLEncoder.encode(input, "utf8"));
 */
     private SqliteController sql;
-    AutocompleteFilter filter =
-            new AutocompleteFilter.Builder().setCountry("MX").build();
+    AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("MX").build();
     private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(
             new LatLng(-0, 0), new LatLng(0, 0));
 
-    private EditText mAutocompleteView;
+    private EditText mAutocompleteView, mAutocompleteView_destino;
+    private int flag = 0;
+    private int flagFill = 0,flagFillDestino = 0;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     PlacesAutoCompleteAdapter.PlaceAutocomplete item = null;
     private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
-    ImageView delete;
+    ImageView delete,deleted;
     private static String origen;
     private static String destino;
+    private Button addruta;
     int option;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +79,32 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
         buildGoogleApiClient();
         setContentView(R.layout.activity_search);
         mAutocompleteView = (EditText)findViewById(R.id.autocomplete_places);
+        mAutocompleteView_destino = (EditText)findViewById(R.id.autocomplete_places_destino);
+        addruta = (Button) findViewById(R.id.addRutaPlaces);
+
+
+        addruta.setOnClickListener(this);
+
+        /*
+        addruta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mAutocompleteView.getText().toString().equals("") || mAutocompleteView_destino.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),mAutocompleteView.getText().toString() + mAutocompleteView_destino.getText().toString() ,Toast.LENGTH_SHORT).show();
+
+                }else{
+
+                }
+
+            }
+        });
+        */
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
              option = bundle.getInt("option");
         }
         delete=(ImageView)findViewById(R.id.cross);
+        deleted=(ImageView)findViewById(R.id.crosss);
 
         mAutoCompleteAdapter =  new PlacesAutoCompleteAdapter(this, R.layout.searchview_adapter,
                 mGoogleApiClient, BOUNDS_INDIA, filter);
@@ -94,6 +118,30 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
 
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
+                flag = 1;
+                if (!s.toString().equals("") && mGoogleApiClient.isConnected()) {
+                    mAutoCompleteAdapter.getFilter().filter(s.toString());
+                }else if(!mGoogleApiClient.isConnected()){
+                    Toast.makeText(getApplicationContext(), Constants.API_NOT_CONNECTED,Toast.LENGTH_SHORT).show();
+                    Log.e(Constants.PlacesTag,Constants.API_NOT_CONNECTED);
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            public void afterTextChanged(Editable s) {
+                mAutoCompleteAdapter.getFilter().filter("");
+            }
+        });
+        mAutocompleteView_destino.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                flag = 2;
                 if (!s.toString().equals("") && mGoogleApiClient.isConnected()) {
                     mAutoCompleteAdapter.getFilter().filter(s.toString());
                 }else if(!mGoogleApiClient.isConnected()){
@@ -112,6 +160,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
 
             }
         });
+
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this,mRecyclerView,new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
@@ -122,10 +171,20 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                         Log.i("TAG", "Autocomplete item selected: " + item.description);
                             Toast.makeText(getApplicationContext(), item.description,Toast.LENGTH_SHORT).show();
 
-                            if(option == 1){
+
+                            if(flag == 1){
                                 origen = ""+item.description;
-                            }else{
+                                mAutocompleteView.setText(""+item.description);
+                                flagFill = 1;
+                                mAutoCompleteAdapter.getFilter().filter(" ");
+
+
+                            }else if(flag == 2){
                                 destino = ""+item.description;
+                                mAutocompleteView_destino.setText(""+item.description);
+                                flagFillDestino = 1;
+                                mAutoCompleteAdapter.getFilter().filter(" ");
+
                             }
                         /*        Toast.makeText(this, Constants.API_NOT_CONNECTED,Toast.LENGTH_SHORT).show();
 
@@ -154,7 +213,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                             sql.Close();
 
 
-                            onBackPressed();
+                          //  onBackPressed();
 
                         Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
                     }
@@ -221,6 +280,17 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     public void onClick(View v) {
         if(v==delete){
             mAutocompleteView.setText("");
+        }
+        if(v==deleted){
+            mAutocompleteView_destino.setText("");
+        }
+        if(v.getId() == R.id.addRutaPlaces){
+            if(mAutocompleteView.getText().toString().equals("") || mAutocompleteView_destino.getText().toString().equals("")){
+
+            }else{
+                Toast.makeText(getApplicationContext(),mAutocompleteView.getText().toString() + mAutocompleteView_destino.getText().toString() ,Toast.LENGTH_SHORT).show();
+
+            }
         }
     }
 

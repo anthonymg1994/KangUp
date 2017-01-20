@@ -28,6 +28,8 @@ public class SqliteController extends SQLiteOpenHelper {
 
     private String guestTable="CREATE TABLE Guest(id INTEGER, nombre TEXT);";
 
+
+
     private User us [];
 
     public SqliteController(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -186,7 +188,7 @@ public class SqliteController extends SQLiteOpenHelper {
     {
         db = getWritableDatabase();
         try{
-            SQLiteStatement stmt = db.compileStatement("INSERT INTO Destinations (id,origen,destino) "+
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO rUTAS (id,origen,destino) "+
                     "VALUES (?,?,?)");
             stmt.bindLong(1,1);
             stmt.bindString(2,origen);
