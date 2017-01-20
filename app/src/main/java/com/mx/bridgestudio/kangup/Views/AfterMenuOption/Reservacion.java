@@ -337,7 +337,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                         .setHeader("Content-Length","0")
                         .asString()
                         .setCallback(new FutureCallback<String>() {
-                            @Override
+                            @Override||
                             public void onCompleted(Exception e, String result) {
                                 //String info="";
                                 try {
