@@ -92,4 +92,9 @@ public class ListPaymentForm {
     public void setTipoPago(String tipoPago) {
         this.tipoPago = tipoPago;
     }
+
+    @Override
+    public String toString(){
+        return this.num_cuenta;
+    }
 }

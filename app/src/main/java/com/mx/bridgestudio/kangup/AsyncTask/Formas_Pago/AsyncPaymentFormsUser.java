@@ -94,6 +94,7 @@ public class AsyncPaymentFormsUser extends AsyncTask<String,Integer,String> {
                     arrayPay[i] = new PaymentForm();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
                     arrayPay[i].setId(jsonobject.getInt("id"));
+                    arrayPay[i].setId_forma_pago(jsonobject.getInt("IdPagoUsuario"));
                     arrayPay[i].setTipoPago(jsonobject.getString("nombre"));
                     arrayPay[i].setNum_cuenta(jsonobject.getString("numero_cuenta"));
                     arrayPay[i].setMes_venc(jsonobject.getString("mes_venc"));
