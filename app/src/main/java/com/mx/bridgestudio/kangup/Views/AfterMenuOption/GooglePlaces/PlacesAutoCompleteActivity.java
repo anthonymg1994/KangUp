@@ -289,7 +289,19 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
 
             }else{
                 Toast.makeText(getApplicationContext(),mAutocompleteView.getText().toString() + mAutocompleteView_destino.getText().toString() ,Toast.LENGTH_SHORT).show();
+                sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
+                sql.Connect();
+                int id_reservacion = sql.getReservacionIdNext();
+                sql.insertRutas(mAutocompleteView.getText().toString(),mAutocompleteView_destino.getText().toString(),id_reservacion);
+                sql.Close();
 
+
+
+                Intent setIntent = new Intent(PlacesAutoCompleteActivity.this, com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion.class);
+                //setIntent.putExtra("option",1);
+                //  setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         }
     }

@@ -137,7 +137,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     RecyclerView listPaquetes, listRutas;
     RecyclerView.LayoutManager lManagerPacks, lManagerRoutes;
     RecyclerView.Adapter adapterRoutes;
-    ArrayList<ListRoutes> itemsRoutes= new ArrayList<>();
+    ArrayList<ListRoutes> itemsRoutes = new ArrayList<>();
     RecyclerView.Adapter adapterPacks;
     ArrayList<ListPaquetes> itemsPacks= new ArrayList<>();
     public static String descripcionPaquete="";
@@ -157,7 +157,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     private PaymentForm pa = new PaymentForm();
     private SpinnerAdapterPayment adapterPayment;
     private ListPaymentForm[] listPay;
-
+    private    Rutas[] rutas;
 
     //toolbardown
     private ImageButton catalogo, favoritos, historial;
@@ -183,6 +183,9 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         getIdReservacion();
 
 
+
+
+
         reservar = (Button) findViewById(R.id.confirmarButton);
         reservar.setOnClickListener(this);
 
@@ -201,6 +204,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         listPaquetes = (RecyclerView) findViewById(R.id.packsRecyclerView);
         listPaquetes.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         listPaquetes.setHasFixedSize(true);
+
         listRutas = (RecyclerView) findViewById(R.id.rutasRecyclerView);
         listRutas.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         listRutas.setHasFixedSize(true);
@@ -244,8 +248,18 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         );
 
         // Crear un nuevo adaptador
+        sql = new SqliteController(Reservacion.this, "kangup",null, 1);
+        sql.Connect();
+        itemsRoutes = sql.getRutas();
+        sql.Close();
+
         adapterRoutes = new AdapterRoutes(itemsRoutes);
+        adapterRoutes.notifyDataSetChanged();
         listRutas.setAdapter(adapterRoutes);
+
+
+
+
         adapterPacks = new AdapterAllPackages(itemsPacks,this);
         listPaquetes.setAdapter(adapterPacks);
 
@@ -670,14 +684,14 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
     public void insertRoutesReservation(){
         sql = new SqliteController(getApplicationContext(),"kangup",null,1);
-        Rutas r [];
+        ArrayList<ListRoutes> r = new ArrayList<>();
         r = sql.getRutas();
-        for(int i=0; i<r.length;i++){
+        for(int i=0; i<r.size();i++){
             Ion.with(Reservacion.this)
                     .load("POST", "http://kangup.com.mx/index.php/routes")
-                    .setBodyParameter("origen", r[i].getOrigen())
-                    .setBodyParameter("destino",r[i].getDestino())
-                    .setBodyParameter("id_reservacion", String.valueOf(r[i].getId_reservacion()))
+                    .setBodyParameter("origen", r.get(i).getOrigen())
+                    .setBodyParameter("destino",r.get(i).getDestiny())
+                    .setBodyParameter("id_reservacion", String.valueOf(r.get(i).getId()))
                     .asString()
                     .setCallback(new FutureCallback<String>() {
                         @Override

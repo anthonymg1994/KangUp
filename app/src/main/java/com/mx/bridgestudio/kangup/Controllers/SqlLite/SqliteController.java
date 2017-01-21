@@ -9,9 +9,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.hardware.camera2.params.StreamConfigurationMap;
 
+import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
+import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.User;
+
+import java.util.ArrayList;
 
 /**
  * Created by USUARIO on 18/11/2016.
@@ -212,23 +216,27 @@ public class SqliteController extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Rutas[] getRutas(){
+    public ArrayList<ListRoutes> getRutas(){
         db = getReadableDatabase();
-        Cursor c=db.rawQuery("SELECT origen,destino,id_reservacion FROM Rutas ",null);
-        Rutas r[] = new Rutas[c.getCount()];
+        Cursor c=db.rawQuery("SELECT origen,destino,id_reservacion FROM Routes ",null);
+        ArrayList<ListRoutes> rutas = new ArrayList<>();
+        ListRoutes[] r;
         if(c.moveToFirst())
         {
+            r = new ListRoutes[c.getCount()];
             do{
                 for(int i = 0; i< c.getCount(); i++){
-                    r[i] = new Rutas();
+                  //  rutas[i] = new Rutas();
+                    r[i] = new ListRoutes();
                     r[i].setOrigen(c.getString(0));
-                    r[i].setDestino(c.getString(1));
-                    r[i].setId_reservacion(c.getInt(2));
+                    r[i].setDestiny(c.getString(1));
+                    r[i].setId(c.getInt(2));
+                    rutas.add(i,r[i]);
                 }
             }while(c.moveToNext());
         }
         db.close();
-        return r;
+        return rutas;
     }
 
     public void insertPackage(int id)
@@ -285,7 +293,7 @@ public class SqliteController extends SQLiteOpenHelper {
         if(c.moveToFirst())
         {
             do{
-                r = c.getInt(1);
+                r = c.getInt(0);
             }while(c.moveToNext());
         }
         db.close();
