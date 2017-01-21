@@ -41,6 +41,7 @@ import com.mx.bridgestudio.kangup.Adapters.AdapterAllPackages;
 import com.mx.bridgestudio.kangup.Adapters.AdapterArticle;
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaquetes;
 import com.mx.bridgestudio.kangup.Adapters.AdapterRoutes;
+import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Adapters.SpinnerAdapterPayment;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
@@ -437,9 +438,9 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                 com.mx.bridgestudio.kangup.Models.Reservacion r = new com.mx.bridgestudio.kangup.Models.Reservacion();
                 r.setId_user(pa.getId_usuario());
                 r.setId_vehicle(DetalleActivity.id_vehiculo_seleccionado);
-                //r.setDate();
-                //r.setHourI();
-                //r.setHourF();
+                r.setDate(String.valueOf(CardAdapter.datee));
+                r.setHourI(CardAdapter.hour);
+                r.setHourF(CardAdapter.hour_final);
                 r.setIdpayment(id_pago_usuario);
                 insertReservation(r);
 
@@ -811,5 +812,16 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                 android.R.layout.simple_spinner_item,
                 listPay);
         adapterPayment.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        sql.deletePackages();
+        sql.deleteRoutes();
+        Intent setIntent = new Intent(this,CatalogCar.class);
+        startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
     }
 }
