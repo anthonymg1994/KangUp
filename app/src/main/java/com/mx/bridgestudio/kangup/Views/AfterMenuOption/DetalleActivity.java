@@ -86,6 +86,8 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
     private ImageButton catalogo,noticias,favoritos,historial;
     Control control = new Control();
     DrawerActivity drawerActivity = new DrawerActivity();
+    public static int id_vehiculo_seleccionado=0;
+
     int flag = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -117,6 +119,9 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
         Bundle bundle=intent.getExtras();
 
         car=(Vehicle)bundle.getSerializable("value");
+
+        id_vehiculo_seleccionado = car.getId();
+
         webs.getAllPhotoById(this,this,car);
         getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca() + " " + car.getValoracion());
 
