@@ -79,10 +79,11 @@ public class SqliteController extends SQLiteOpenHelper {
         String apellido_mat="";
         String email="";
         String password="";
+        String foto ="";
         User u = new User();
 
         db = getReadableDatabase();
-        Cursor c=db.rawQuery("SELECT id,nombre,apellido_paterno, apellido_materno,email,password FROM Usuarios WHERE email= '"+ user + "' AND password= '"+ pass +"'" ,null);
+        Cursor c=db.rawQuery("SELECT id,nombre,apellido_paterno, apellido_materno,email,password,foto FROM Usuarios WHERE email= '"+ user + "' AND password= '"+ pass +"'" ,null);
         if(c.moveToFirst())
         {
             do{
@@ -92,6 +93,7 @@ public class SqliteController extends SQLiteOpenHelper {
                 apellido_mat = c.getString(3);
                 email = c.getString(4);
                 password = c.getString(5);
+                foto = c.getString(6);
             }while(c.moveToNext());
         }
         u.setId(id);
@@ -100,6 +102,7 @@ public class SqliteController extends SQLiteOpenHelper {
         u.setAp_materno(apellido_mat);
         u.setEmail(email);
         u.setPassword(password);
+        u.setPhoto(foto);
 
         db.close();
         return u;

@@ -97,7 +97,7 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
                user.setAp_paterno("");
            }
            if(user.getPhoto() == null){
-               user.setPhoto("default");
+               user.setPhoto("http://kangup.com.mx/uploads/Foto_perfil/30df1fbc533a.png");
            }else{
                final String URL = "http://kangup.com.mx/uploads/Foto_perfil/";
 

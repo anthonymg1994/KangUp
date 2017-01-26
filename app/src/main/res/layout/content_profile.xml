@@ -10,11 +10,10 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="wrap_content"
         android:background="#ffffff">
 
         <TextView
-            android:text="Generales"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/titleProfile"
@@ -216,13 +215,10 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="16dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintLeft_toRightOf="@+id/textView13"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintTop_toBottomOf="@+id/editText2"
             android:layout_marginTop="8dp"
-            android:hint="Ingresa tu apellido paterno" />
+            android:hint="Ingresa tu apellido paterno"
+            app:layout_constraintLeft_toLeftOf="@+id/editText2" />
 
         <TextView
             android:text="Ap. materno"
@@ -262,7 +258,9 @@
             app:layout_constraintLeft_toRightOf="@+id/textPhone"
             android:layout_marginLeft="56dp"
             app:layout_constraintVertical_bias="0.39"
-            android:hint="Lada" />
+            android:hint="Lada"
+            android:textSize="14sp"
+            android:editable="true" />
 
 
     </android.support.constraint.ConstraintLayout>

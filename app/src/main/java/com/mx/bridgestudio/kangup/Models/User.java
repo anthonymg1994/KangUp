@@ -1,5 +1,7 @@
 package com.mx.bridgestudio.kangup.Models;
 
+import java.io.File;
+
 /**
  * Created by BridgeStudio on 24/10/2016.
  */
@@ -18,8 +20,18 @@ public class User {
     private String fnacimiento;
     private String photo;
     private String address;
+    private String file;
+
 
     public User(){
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public String getAddress() {
