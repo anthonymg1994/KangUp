@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -42,6 +43,7 @@ import com.mx.bridgestudio.kangup.Adapters.AdapterArticle;
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaquetes;
 import com.mx.bridgestudio.kangup.Adapters.AdapterRoutes;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
+import com.mx.bridgestudio.kangup.Adapters.RouteTouchHelper;
 import com.mx.bridgestudio.kangup.Adapters.SpinnerAdapterPayment;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
@@ -138,7 +140,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     RecyclerView listPaquetes, listRutas;
     RecyclerView.LayoutManager lManagerPacks, lManagerRoutes;
     RecyclerView.Adapter adapterRoutes;
-    ArrayList<ListRoutes> itemsRoutes = new ArrayList<>();
+    public static ArrayList<ListRoutes> itemsRoutes = new ArrayList<>();
     RecyclerView.Adapter adapterPacks;
     ArrayList<ListPaquetes> itemsPacks= new ArrayList<>();
     public static String descripcionPaquete="";
@@ -158,7 +160,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     private PaymentForm pa = new PaymentForm();
     private SpinnerAdapterPayment adapterPayment;
     private ListPaymentForm[] listPay;
-    private    Rutas[] rutas;
+    private Rutas[] rutas;
+    public int idSQLRoute=0;
 
     //toolbardown
     private ImageButton catalogo, favoritos, historial;
@@ -210,6 +213,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         listRutas.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         listRutas.setHasFixedSize(true);
 
+
         // Usar un administrador para LinearLayout
                 lManagerPacks = new LinearLayoutManager(this);
         listPaquetes.setLayoutManager(lManagerPacks);
@@ -258,7 +262,9 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         adapterRoutes.notifyDataSetChanged();
         listRutas.setAdapter(adapterRoutes);
 
-
+        ItemTouchHelper.Callback callback = new RouteTouchHelper((AdapterRoutes) adapterRoutes);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(listRutas);
 
 
         adapterPacks = new AdapterAllPackages(itemsPacks,this);
@@ -320,7 +326,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         webs.getFormaPagoByUser(this,this,pa);
 
     }
-
 
     // webs.favsByUser(Reservacion.this,Reservacion.this,user);
 
@@ -408,7 +413,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                //insertRoutesReservation(origen.getText().toString(),destino.getText().toString());
                 sql = new SqliteController(getApplicationContext(),"kangup",null,1);
                 int ix = sql.getReservacionIdNext();
-                sql.insertRutas(origen.getText().toString(),destino.getText().toString(),ix);
+                //sql.insertRutas(origen.getText().toString(),destino.getText().toString(),ix);
 
             }
         });

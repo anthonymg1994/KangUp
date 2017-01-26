@@ -36,7 +36,7 @@ public class SqliteController extends SQLiteOpenHelper {
     private String resNextTable="CREATE TABLE NextRes(id INTEGER, id_reservacion INTEGER);";
     private String insertResNext = "INSERT INTO NextRes(id,id_reservacion) VALUES (1,1)";
 
-    private String routesTable="CREATE TABLE Routes(origen TEXT,destino TEXT,id_reservacion INTEGER);";
+    private String routesTable="CREATE TABLE Routes(id INTEGER PRIMARY KEY AUTOINCREMENT,origen TEXT,destino TEXT,id_reservacion INTEGER,posicion INTEGER);";
 
     private User us [];
 
@@ -197,15 +197,16 @@ public class SqliteController extends SQLiteOpenHelper {
         return r;
     }
 
-    public void insertRutas(String origen, String destino, int id_reservacion)
+    public void insertRutas(String origen, String destino, int id_reservacion, int posicion)
     {
         db = getWritableDatabase();
         try{
-            SQLiteStatement stmt = db.compileStatement("INSERT INTO Routes (origen,destino,id_reservacion) "+
-                    "VALUES (?,?,?)");
+            SQLiteStatement stmt = db.compileStatement("INSERT INTO Routes (origen,destino,id_reservacion,posicion) "+
+                    "VALUES (?,?,?,?)");
             stmt.bindString(1,origen);
             stmt.bindString(2,destino);
             stmt.bindLong(3,id_reservacion);
+            stmt.bindLong(4,posicion);
 
             stmt.execute();
         }
@@ -218,7 +219,7 @@ public class SqliteController extends SQLiteOpenHelper {
 
     public ArrayList<ListRoutes> getRutas(){
         db = getReadableDatabase();
-        Cursor c=db.rawQuery("SELECT origen,destino,id_reservacion FROM Routes ",null);
+        Cursor c=db.rawQuery("SELECT id,origen,destino,id_reservacion,posicion FROM Routes ",null);
         ArrayList<ListRoutes> rutas = new ArrayList<>();
         ListRoutes[] r;
         if(c.moveToFirst())
@@ -227,16 +228,32 @@ public class SqliteController extends SQLiteOpenHelper {
             do{
                 for(int i = 0; i< c.getCount(); i++){
                   //  rutas[i] = new Rutas();
-                    r[i] = new ListRoutes();
-                    r[i].setOrigen(c.getString(0));
-                    r[i].setDestiny(c.getString(1));
-                    r[i].setId(c.getInt(2));
-                    rutas.add(i,r[i]);
+                        r[i] = new ListRoutes();
+                        r[i].setIdSQL(c.getInt(0));
+                        r[i].setOrigen(c.getString(1));
+                        r[i].setDestiny(c.getString(2));
+                        r[i].setId(c.getInt(3));
+                        r[i].setPosicion(c.getInt(4));
+                        rutas.add(i, r[i]);
                 }
             }while(c.moveToNext());
         }
         db.close();
         return rutas;
+    }
+
+    public void updateRoutePosition(int position,int idSQLite)
+    {
+        db = getWritableDatabase();
+        try{
+            String actualizar= "Update Routes set hora="+position+" Where id="+idSQLite;
+            db.execSQL(actualizar);
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Exception SQLite: " + e.getMessage());
+
+        }
+        db.close();
     }
 
     public void insertPackage(int id)

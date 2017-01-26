@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.R;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -58,6 +59,16 @@ public class AdapterRoutes extends RecyclerView.Adapter<AdapterRoutes.AnimeViewH
             destino = (TextView) v.findViewById(R.id.destinyTitle);
             // fav.setOnClickListener(this);
         }
+    }
+
+    public void swap(int firstPosition, int secondPosition){
+        Collections.swap(items, firstPosition, secondPosition);
+        notifyItemMoved(firstPosition, secondPosition);
+    }
+
+    public void remove(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
     }
 
 }

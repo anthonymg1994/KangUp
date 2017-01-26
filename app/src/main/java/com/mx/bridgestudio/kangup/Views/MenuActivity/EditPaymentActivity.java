@@ -1,10 +1,14 @@
 package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
+import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +20,9 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+import com.mx.bridgestudio.kangup.Adapters.AdapterPaymentList;
 import com.mx.bridgestudio.kangup.Controllers.CCUtils;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
@@ -25,9 +32,8 @@ import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
-public class AddPaymentActivity extends AppCompatActivity {
-
-    private Button add,avoid;
+public class EditPaymentActivity extends AppCompatActivity {
+    private Button edit;
     private EditText card,mm,yy,cvv;
     private Spinner countries;
     private ImageButton camara;
@@ -56,16 +62,20 @@ public class AddPaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_payment);
+        setContentView(R.layout.activity_edit_payment);
 
-        control.changeColorStatusBar(AddPaymentActivity.this);
+        control.changeColorStatusBar(EditPaymentActivity.this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarAddPay);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarEditPay);
         setSupportActionBar(toolbar);
         //getSupportActionBar().hide();
         //drw.setNameToolbar("Agregar metodos de pago");
 
-        getSupportActionBar().setTitle("Agregar metodos de pago");
+        //getSupportActionBar().setTitle("Editar metodos de pago");
+
+        Toast msg = Toast.makeText(getBaseContext(),
+                "Id: "+PaymentActivity.pay.getId_forma_pago(), Toast.LENGTH_SHORT);
+        msg.show();
 
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
@@ -73,8 +83,8 @@ public class AddPaymentActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        add  = (Button)findViewById(R.id.addBtn);
-        add.setOnClickListener(new View.OnClickListener() {
+        edit  = (Button)findViewById(R.id.editBtn);
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(card.getText().toString().equals("") || mm.getText().toString().equals("") ||
@@ -105,17 +115,12 @@ public class AddPaymentActivity extends AppCompatActivity {
 
                                                 pay.setId_forma_pago(value);
 
-                                                sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
-                                                sql.Connect();
-                                                User user = new User();
-                                                user = sql.user();
-                                                sql.Close();
+                                                pay.setId(PaymentActivity.pay.getId());
 
-                                                pay.setId_usuario(user.getId());
-
-                                                webs.insertFormaPago(AddPaymentActivity.this,pay);
+                                                //webs.insertFormaPago(AddPaymentActivity.this,pay);
+                                                alertConfirmacionEdit(pay);
                                                 Toast msg = Toast.makeText(getBaseContext(),
-                                                        "Forma de pago guardada con exito!", Toast.LENGTH_SHORT);
+                                                        "Forma de pago editada con exito!", Toast.LENGTH_SHORT);
                                                 msg.show();
                                             }
                                             else
@@ -168,19 +173,15 @@ public class AddPaymentActivity extends AppCompatActivity {
                 }
             }
         });
-        avoid  = (Button)findViewById(R.id.avoid);
-        avoid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(AddPaymentActivity.this, PaymentActivity.class));
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            }
-        });
+
         card = (EditText) findViewById(R.id.cardNumber);
+        card.setText(PaymentActivity.pay.getNum_cuenta());
         mm = (EditText) findViewById(R.id.month);
+        mm.setText(PaymentActivity.pay.getMes_venc());
         yy = (EditText) findViewById(R.id.year);
+        yy.setText(PaymentActivity.pay.getAnio_venc());
         cvv = (EditText) findViewById(R.id.cvv);
+        cvv.setText(PaymentActivity.pay.getCvv());
 
         countries = (Spinner)findViewById(R.id.formas);
         countries.setOnItemSelectedListener(
@@ -188,11 +189,11 @@ public class AddPaymentActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent,
                                                android.view.View v, int position, long id) {
                         String text = countries.getSelectedItem().toString();
-                                if(text.equals("Tarjeta de debito")){
-                                    value = 2;
-                                } else{
-                                    value = 4;
-                                }
+                        if(text.equals("Tarjeta de debito")){
+                            value = 2;
+                        } else{
+                            value = 4;
+                        }
                     }
 
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -200,16 +201,23 @@ public class AddPaymentActivity extends AppCompatActivity {
                     }
                 });
 
+
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, colors);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         countries.setAdapter(spinnerArrayAdapter);
+        if(PaymentActivity.pay.getId() == 2){
+            countries.setSelection(0);
+        }
+        else{
+            countries.setSelection(1);
+        }
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(AddPaymentActivity.this, CategoryActivity.class));
+                startActivity(new Intent(EditPaymentActivity.this, CategoryActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
@@ -218,7 +226,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(AddPaymentActivity.this, NewsActivity.class));
+                startActivity(new Intent(EditPaymentActivity.this, NewsActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
@@ -227,7 +235,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(AddPaymentActivity.this, FavoriteActivity.class));
+                startActivity(new Intent(EditPaymentActivity.this, FavoriteActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
@@ -236,7 +244,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // close this activity and return to preview activity (if there is any)
-                startActivity(new Intent(AddPaymentActivity.this, HistoryActivity.class));
+                startActivity(new Intent(EditPaymentActivity.this, HistoryActivity.class));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
@@ -248,7 +256,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
-            startActivity(new Intent(AddPaymentActivity.this, PaymentActivity.class));
+            startActivity(new Intent(EditPaymentActivity.this, PaymentActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
 
@@ -274,4 +282,50 @@ public class AddPaymentActivity extends AppCompatActivity {
         return (s1 + s2) % 10 == 0;
 
     }
+
+    public void editCard(PaymentForm pay){
+        Ion.with(EditPaymentActivity.this)
+                .load("POST", "http://kangup.com.mx/index.php/updateFormaPago")
+                .setBodyParameter("id_forma_pago", String.valueOf(pay.getId_forma_pago()))
+                .setBodyParameter("numero_cuenta", pay.getNum_cuenta())
+                .setBodyParameter("mes_venc", pay.getMes_venc())
+                .setBodyParameter("anio_venc", pay.getAnio_venc())
+                .setBodyParameter("cvv", pay.getCvv())
+                .setBodyParameter("id", String.valueOf(pay.getId()))
+                .asString()
+                .setCallback(new FutureCallback<String>() {
+                    @Override
+                    public void onCompleted(Exception e, String result) {
+                        //String info="";
+                        Toast msg = Toast.makeText(getBaseContext(),
+                                result, Toast.LENGTH_LONG);
+                        msg.show();
+                        finish();
+                        startActivity(new Intent(EditPaymentActivity.this, PaymentActivity.class));
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    }
+                });
+    }
+
+    public void alertConfirmacionEdit(final PaymentForm p) {
+        new AlertDialog.Builder(EditPaymentActivity.this)
+                .setTitle("Confirmación")
+                .setMessage("¿Desea editar la forma de pago seleccionada?")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Editar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                editCard(p);
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
 }

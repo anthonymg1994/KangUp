@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +45,7 @@ public class Paypal extends Activity implements View.OnClickListener {
 
     // note that these credentials will differ between live & sandbox
     // environments.
-    private static final String CONFIG_CLIENT_ID = "AfRGZ7VfKf6cw7q53koHwgO4hRHA2vXpojMeutxRRkvD4U4dgatKJ6uEnfUmlfjZo5P7x00pD_tJ4Ch";
+    private static final String CONFIG_CLIENT_ID = "AVSH2WqJlZFk0t7k4i9k1QF4A1GWJt985bJybpv3kL8vtet3MVYTuetkryt4-CywHJUatKZa2kGHVrTm";
 
     private static final int REQUEST_CODE_PAYMENT = 1;
     private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
@@ -67,7 +68,7 @@ public class Paypal extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.paypal);
 
-        Intent intent = new Intent(this, PayPalService.class);
+        /*Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
 
@@ -85,7 +86,13 @@ public class Paypal extends Activity implements View.OnClickListener {
 
                 startActivityForResult(intent, REQUEST_CODE_PAYMENT);
             }
-        });
+        });*/
+
+        Intent intent = new Intent(this, PayPalService.class);
+
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        startService(intent);
 
     }
 
@@ -93,12 +100,20 @@ public class Paypal extends Activity implements View.OnClickListener {
         Intent intent = new Intent(Paypal.this,
                 PayPalFuturePaymentActivity.class);
 
+        // send the same configuration for restart resiliency
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
         startActivityForResult(intent, REQUEST_CODE_FUTURE_PAYMENT);
+
+        Toast.makeText(getApplicationContext(), String.valueOf(REQUEST_CODE_FUTURE_PAYMENT),
+                Toast.LENGTH_LONG).show();
+
+        //startActivityForResult(intent, REQUEST_CODE_FUTURE_PAYMENT);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_PAYMENT) {
+        /*if (requestCode == REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
                 PaymentConfirmation confirm = data
                         .getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
@@ -149,6 +164,21 @@ public class Paypal extends Activity implements View.OnClickListener {
                 Log.i("FuturePaymentExample",
                         "Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs.");
             }
+        }*/
+        if (resultCode == Activity.RESULT_OK) {
+            PayPalAuthorization auth = data
+                    .getParcelableExtra(PayPalFuturePaymentActivity.EXTRA_RESULT_AUTHORIZATION);
+            if (auth != null) {
+                String authorization_code = auth.getAuthorizationCode();
+
+                sendAuthorizationToServer(auth);
+
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            Log.i("FuturePaymentExample", "The user canceled.");
+        } else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
+            Log.i("FuturePaymentExample",
+                    "Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs.");
         }
     }
 
@@ -161,14 +191,22 @@ public class Paypal extends Activity implements View.OnClickListener {
         String correlationId = PayPalConfiguration
                 .getApplicationCorrelationId(this);
 
+        String metadataId = PayPalConfiguration.getClientMetadataId(this);
+
+
         Log.i("FuturePaymentExample", "Application Correlation ID: "
                 + correlationId);
+        Log.i("FuturePaymentExample", "Application Metadata ID: "
+                + metadataId);
 
         // TODO: Send correlationId and transaction details to your server for
         // processing with
         // PayPal...
         Toast.makeText(getApplicationContext(),
-                "App Correlation ID received from SDK", Toast.LENGTH_LONG)
+                "App Correlation ID received from SDK", Toast.LENGTH_SHORT)
+                .show();
+        Toast.makeText(getApplicationContext(),
+                "App Metadata ID received from SDK", Toast.LENGTH_LONG)
                 .show();
     }
 

@@ -123,7 +123,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                     mAutoCompleteAdapter.getFilter().filter(s.toString());
                 }else if(!mGoogleApiClient.isConnected()){
                     Toast.makeText(getApplicationContext(), Constants.API_NOT_CONNECTED,Toast.LENGTH_SHORT).show();
-                    Log.e(Constants.PlacesTag,Constants.API_NOT_CONNECTED);
+                    //Log.e(Constants.PlacesTag,Constants.API_NOT_CONNECTED);
                 }
 
             }
@@ -146,7 +146,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                     mAutoCompleteAdapter.getFilter().filter(s.toString());
                 }else if(!mGoogleApiClient.isConnected()){
                     Toast.makeText(getApplicationContext(), Constants.API_NOT_CONNECTED,Toast.LENGTH_SHORT).show();
-                    Log.e(Constants.PlacesTag,Constants.API_NOT_CONNECTED);
+                    //Log.e(Constants.PlacesTag,Constants.API_NOT_CONNECTED);
                 }
 
             }
@@ -292,9 +292,10 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                 sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
                 sql.Connect();
                 int id_reservacion = sql.getReservacionIdNext();
-                sql.insertRutas(mAutocompleteView.getText().toString(),mAutocompleteView_destino.getText().toString(),id_reservacion);
+                sql.insertRutas(mAutocompleteView.getText().toString(),mAutocompleteView_destino.getText().toString(),id_reservacion,1);
                 sql.Close();
 
+                com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion.itemsRoutes.clear();
 
 
                 Intent setIntent = new Intent(PlacesAutoCompleteActivity.this, com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion.class);
