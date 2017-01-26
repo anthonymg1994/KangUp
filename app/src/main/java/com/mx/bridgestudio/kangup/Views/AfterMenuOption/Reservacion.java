@@ -64,6 +64,7 @@ import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.Fin_De_Viaje.terminaViaje;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
@@ -216,7 +217,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         listPaquetes.addItemDecoration(itemDecoration);
         listPaquetes.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, listPaquetes ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         id_paquete = itemsPacks.get(position).getId();
                         nombrePaquete = itemsPacks.get(position).getNombre();
@@ -224,9 +225,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                         alertFormElementsArticulos(id_paquete);
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
@@ -236,15 +235,13 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecorations = new SampleDivider(this);
         listRutas.addItemDecoration(itemDecorations);
         listRutas.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, listRutas,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
@@ -448,6 +445,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                 webs.EmailConfirmationReservation(Reservacion.this,reservacion);
                 idPack=0;
                 countPack=0;
+                Intent intent = new Intent(Reservacion.this,terminaViaje.class);
+                startActivity(intent);
 
             }
         });
@@ -648,14 +647,12 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 

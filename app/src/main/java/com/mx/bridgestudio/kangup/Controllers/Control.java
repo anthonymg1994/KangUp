@@ -64,6 +64,7 @@ public class Control  {
     private static Uri filePath;
     private Calendar c;
 
+
     private void showFileChooser(Activity activity) {
         Intent intent = new Intent();
         intent.setType("image/*");

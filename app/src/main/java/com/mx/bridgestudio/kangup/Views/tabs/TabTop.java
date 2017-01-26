@@ -55,6 +55,7 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     private Vehicle vehicle = new Vehicle();
     public static int id_vehiculo = 0;
     public static String nombre_vehiculo = "";
+    public static int flag = 0;
     ArrayList<ListCar> items= new ArrayList<>();
 
     //Context context,act;
@@ -117,23 +118,29 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(getActivity());
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(getActivity() ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
+
+
+
+
                         Toast.makeText(getActivity(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
                         //Intent intent = new Intent(getActivity(), DetalleActivity.class);
                         id_vehiculo = opcionSeleccionada;
                         nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
                         vehicle.setId(id_vehiculo);
-                        webs.DetailVehicle(TabTop.this,getActivity(),vehicle);
+                        //if(view.getId() == R.id.starButton){
+                         //   Toast.makeText(getActivity(), "ghola", Toast.LENGTH_SHORT).show();
 
+                       // }else {
+                           // webs.DetailVehicle(TabTop.this, getActivity(), vehicle);
+                        //}
                       //  TabTop.this.startActivity(intent);
                         //finish();
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 

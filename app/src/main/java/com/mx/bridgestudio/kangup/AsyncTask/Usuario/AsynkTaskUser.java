@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOuser;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
@@ -107,7 +109,13 @@ public class AsynkTaskUser extends AsyncTask<String,Integer,Boolean> {
             sql.Close();
 
 
-            Intent intent = new Intent().setClass(
+           SessionManager session;
+           session = new SessionManager(mContext);
+           Toast.makeText(mContext, "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+           session.createLoginSession(user.getFirstName() +" "+ user.getAp_paterno() +" "+user.getAp_materno(),user.getEmail());
+
+
+           Intent intent = new Intent().setClass(
                     mContext,CategoryActivity.class);
             mContext.startActivity(intent);
 

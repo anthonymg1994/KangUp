@@ -32,6 +32,7 @@ import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.GoogleAnalytics.AnalyticsApplication;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.Models.User;
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private User user = new User();
     private SqliteController sql = new SqliteController(this, "kangup", null, 1);
     private Control control = new Control();
-
+    SessionManager session;
     public static int guestFlag=0;
 
     /**
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.snackbarCoordinatorLayout);
-
+        session = new SessionManager(this);
 
     control.changeColorStatusBar(LoginActivity.this);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user);
@@ -197,8 +198,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //showProgress(true);
             user.setEmail(mEmailView.getText().toString());
             user.setPassword(mPasswordView.getText().toString());
-            Snackbar.make(coordinatorLayout, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
-            web.Login(this,user);
+                web.Login(this,user);
+
 
             //new asyn(LoginActivity.this,user.getEmail(),user.getPassword()).execute();
         }

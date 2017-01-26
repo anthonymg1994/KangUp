@@ -113,11 +113,12 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(getActivity());
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(getActivity() ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(getActivity(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
                         //Intent intent = new Intent(getActivity(), DetalleActivity.class);
+
                         id_vehiculo = opcionSeleccionada;
                         nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
                         vehicle.setId(id_vehiculo);
@@ -127,9 +128,7 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
                         //finish();
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 

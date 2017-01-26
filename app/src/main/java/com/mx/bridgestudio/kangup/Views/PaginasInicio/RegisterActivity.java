@@ -18,6 +18,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -174,22 +175,26 @@ public class RegisterActivity extends AppCompatActivity {
                                 uploadFTP(RegisterActivity.this);
                                 //uploadImageToServer();
 
-                            Toast msg = Toast.makeText(getBaseContext(),
-                                    "Usuario registrado con éxito", Toast.LENGTH_SHORT);
-                            msg.show();
+
+
+                            Snackbar snackbar = Snackbar.make(view, "Agregado a favorito", Snackbar.LENGTH_SHORT);
+                            snackbar.show();
+
                             //finish(); // close this activity and return to preview activity (if there is any)
                             //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         }else{
-                            Toast msg = Toast.makeText(getBaseContext(),
-                                    "Error Las contraseñas no son identicas", Toast.LENGTH_SHORT);
-                            msg.show();
+
+                            Snackbar snackbar = Snackbar.make(view, "Error Las contraseñas no son identicas", Snackbar.LENGTH_SHORT);
+                            snackbar.show();
+
                         }
                     }
                     else
                     {
                         Toast.makeText(getApplicationContext(),"Invalid email address",Toast.LENGTH_SHORT).show();
                         //or
-
+                        Snackbar snackbar = Snackbar.make(view, "Correo invalido", Snackbar.LENGTH_SHORT);
+                        snackbar.show();
                     }
 
                 }

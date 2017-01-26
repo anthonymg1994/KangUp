@@ -76,6 +76,12 @@
             android:label="@string/title_activity_types"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".Views.AfterMenuOption.Fin_De_Viaje.terminaViaje"
+            android:label="@string/title_activity_types"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Views.AfterMenuOption.Reservacion"
             android:label="Reservacion"
@@ -169,6 +175,17 @@
         <activity android:name=".Views.MenuActivity.HistoryDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".Controllers.conekta"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="io.card.payment.CardIOActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity android:name="io.card.payment.DataEntryActivity" />
+
+
     </application>
 
 </manifest>

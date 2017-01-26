@@ -10,18 +10,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.R;
 
 public class SplashActivity extends Activity {
     private Control control = new Control();
-
+    private SessionManager session;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         control.changeColorStatusBar(SplashActivity.this);
-
+        session = new SessionManager(this);
       //  getSupportActionBar().hide();
 
         handler.sendEmptyMessageDelayed(3000,3000);
@@ -32,9 +33,8 @@ public class SplashActivity extends Activity {
 
         @Override
         public void handleMessage(Message msg) {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            finish();
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            session.checkLogin();
+
         }
     };
 }

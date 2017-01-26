@@ -123,7 +123,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
         id_vehiculo_seleccionado = car.getId();
 
         webs.getAllPhotoById(this,this,car);
-        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca() + " " + car.getValoracion());
+        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
 
         vermas = (Button)findViewById(R.id.vermas);
         vermas.setOnClickListener(this);

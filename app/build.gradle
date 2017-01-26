@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
-
+repositories {
+    mavenCentral()
+}
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
@@ -15,7 +17,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
+    }
+    buildTypes.each {
+        it.buildConfigField('String', 'publicKeyConekta', conekta)
     }
 }
 
@@ -46,14 +52,13 @@ dependencies {
         transitive = true
     }
     // pulls in dependency for APT
-
-
     compile 'junit:junit:4.12'
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile 'com.koushikdutta.ion:ion:2.1.9'
     compile files('libs/simpleftp.jar')
     compile files('libs/commons-net-3.3-ftp.jar')
     compile 'net.gotev:uploadservice-ftp:3.0.4'
-
+    compile 'io.card:android-sdk:5.4.0'
+    compile 'io.conekta:conektasdk:2.1'
     compile 'com.google.android.gms:play-services-analytics:9.2.0'
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
+import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
@@ -43,7 +44,7 @@ public class DrawerActivity extends AppCompatActivity
     private Control control = new Control();
     public static int flag=0;
     public static String title="";
-
+    SessionManager session;
     Toolbar toolbar;
 
 
@@ -51,6 +52,9 @@ public class DrawerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(getLayoutId());
         super.onCreate(savedInstanceState);
+
+
+        session = new SessionManager(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,7 +65,7 @@ public class DrawerActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        session = new SessionManager(this);
 
 
         //ivCloseDrawer = (ImageView) lV.findViewById(R.id.imageView);
@@ -248,6 +252,7 @@ public class DrawerActivity extends AppCompatActivity
                         new DialogInterface.OnClickListener() {
                             @TargetApi(11)
                             public void onClick(DialogInterface dialog, int id) {
+                                session.logoutUser();
                                 Intent setIntent = new Intent(DrawerActivity.this,LoginActivity.class);
                                 startActivity(setIntent);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -272,8 +277,10 @@ public class DrawerActivity extends AppCompatActivity
                         new DialogInterface.OnClickListener() {
                             @TargetApi(11)
                             public void onClick(DialogInterface dialog, int id) {
+                                session.logoutUser();
                                 Intent setIntent = new Intent(DrawerActivity.this,LoginActivity.class);
                                 startActivity(setIntent);
+
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                                 dialog.cancel();

@@ -56,7 +56,7 @@ public class TypesOfAutomobiles extends DrawerActivity implements View.OnClickLi
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(view.getContext(), "position = " +items.get(position).getModelo(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent().setClass(
@@ -65,9 +65,6 @@ public class TypesOfAutomobiles extends DrawerActivity implements View.OnClickLi
                         finish();
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
                 })
         );
             // Crear un nuevo adaptador

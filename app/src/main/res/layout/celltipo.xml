@@ -87,11 +87,11 @@
 
 
         <ImageButton
-            android:layout_width="34dp"
-            android:layout_height="wrap_content"
+            android:layout_width="102dp"
+            android:layout_height="27dp"
             app:srcCompat="@android:drawable/btn_star_big_off"
             android:id="@+id/starButton"
-            android:background="@android:color/transparent"
+            android:background="@android:color/background_light"
             android:onClick="onToggleStar"
 
             app:layout_constraintRight_toRightOf="parent"

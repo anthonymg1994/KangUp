@@ -23,6 +23,7 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsU
 import com.mx.bridgestudio.kangup.Controllers.Paypal.Paypal;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Controllers.conekta;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.Lists.ListPaymentForm;
 import com.mx.bridgestudio.kangup.Models.Payment;
@@ -190,6 +191,8 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                         break;
                     case 1:
                         Toast.makeText(PaymentActivity.this, "Tiendas de conveniencia", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(PaymentActivity.this, conekta.class));
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         type=2;
                         break;
                 }
