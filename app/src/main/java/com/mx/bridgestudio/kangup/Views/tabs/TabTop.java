@@ -23,6 +23,7 @@ import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterTop;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
@@ -45,7 +46,7 @@ import java.util.Date;
  * Created by Isaac on 06/12/2016.
  */
 
-public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDetail,OnDataSendFilterScore {
+public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDetail,OnDataSendFilterTop {
 
     private String opcionSeleccionada="";
     private RecyclerView recycler;
@@ -95,7 +96,7 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
 
 
 
-            webs.TopRankingVehiculo(getActivity(),vehicle,fecha,date2,date3,TabTop.this);
+            webs.getVehiclesByTop(getActivity(),vehicle,fecha,date2,date3,TabTop.this);
 
 
         } catch (ParseException e) {
@@ -189,12 +190,12 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     }
 
 
-    @Override
-    public void sendDataScore(Vehicle[] obj) {
-        fillList(obj);
-    }
-
     public ArrayList<ListCar> getItemsFromFragment(){
         return items;
+    }
+
+    @Override
+    public void sendDataTops(Vehicle[] obj) {
+        fillList(obj);
     }
 }

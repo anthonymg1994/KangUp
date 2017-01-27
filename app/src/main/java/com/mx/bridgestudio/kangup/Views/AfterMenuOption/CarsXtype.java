@@ -391,7 +391,7 @@ public class CarsXtype extends DrawerActivity implements
                     break;
                 case 2:
 
-                    fragment = new TabTop();
+                    fragment = new TabVotados();
 
                     break;
             }

@@ -97,7 +97,7 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
         } catch (ParseException e) {
         }
 
-        webs.TopRankingVehiculo(getActivity(),vehicle,fecha,date2,date3,TabVotados.this);
+        webs.ScoreVehiculo(getActivity(),vehicle,fecha,date2,date3,TabVotados.this);
 
         // Obtener el Recycler
         CatalogCar.flagDate = 1;

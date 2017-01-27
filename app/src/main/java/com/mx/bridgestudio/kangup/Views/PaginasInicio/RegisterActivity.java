@@ -193,13 +193,8 @@ public class RegisterActivity extends AppCompatActivity {
                             //}
                             webs.insertUser(RegisterActivity.this,user);
                             //uploadImageToServer();
-
-
-                            Snackbar snackbar = Snackbar.make(view, "Agregado a favorito", Snackbar.LENGTH_SHORT);
+                            Snackbar snackbar = Snackbar.make(view, "Registro con exito", Snackbar.LENGTH_SHORT);
                             snackbar.show();
-
-                            //finish(); // close this activity and return to preview activity (if there is any)
-                            //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         } else {
 
                             Snackbar snackbar = Snackbar.make(view, "Error Las contraseñas no son identicas", Snackbar.LENGTH_SHORT);
@@ -270,7 +265,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private File convertBitmapToFile(Bitmap bitmap, String name) {
         File filesDir = getApplicationContext().getFilesDir();
-        File imageFile = new File(filesDir, name + ".jpg");
+        File imageFile = new File(filesDir, name + ".jpeg");
 
         OutputStream os;
         try {
@@ -283,6 +278,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return imageFile;
     }
+
+
     private String bitmapToBase64(Bitmap bitmap) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

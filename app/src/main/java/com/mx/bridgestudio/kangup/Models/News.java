@@ -14,7 +14,16 @@ public class News implements Serializable {
     private String emisor;
     private String receptor;
     private String imagen;
+    private String fecha;
 
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
     public int getId() {
         return id;

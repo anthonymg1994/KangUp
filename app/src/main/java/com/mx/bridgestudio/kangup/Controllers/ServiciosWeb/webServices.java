@@ -21,6 +21,7 @@ import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncDetailAuto;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncFavs;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncRecommend;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncScore;
+import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.AsyncTop;
 import com.mx.bridgestudio.kangup.AsyncTask.Vehiculo.asyncTaskPhotoById;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.DetalleViajeByUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Viaje.RoutesByTrip;
@@ -31,6 +32,7 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterRecommend;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterTop;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistory;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendHistoryDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
@@ -116,12 +118,17 @@ public class webServices {
     public void addFav(Context context, int id_vehiculo, int id_user){
         new AsyncAddFav(context,id_vehiculo,id_user).execute();
     }
-    public void TopRankingVehiculo(Context context, Vehicle vehiculo,Date date, Date time,Date time_final, OnDataSendFilterScore OnDataSendToActivity){
+    public void ScoreVehiculo(Context context, Vehicle vehiculo,Date date, Date time,Date time_final, OnDataSendFilterScore OnDataSendToActivity){
         new AsyncScore(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
     }
     public void getRecommendCVehicles(Context context, Vehicle vehiculo,OnDataSendFilterRecommend OnDataSendToActivity,Date date, Date time,Date time_final){
         new AsyncRecommend(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
     }
+
+    public void getVehiclesByTop(Context context, Vehicle vehiculo,Date date, Date time,Date time_final, OnDataSendFilterTop OnDataSendToActivity){
+        new AsyncTop(context,vehiculo,OnDataSendToActivity,date,time,time_final).execute();
+    }
+
 
     public void getHistoryDetailByUser(OnDataSendHistoryDetail c,Context context, int idUser, int idRes, int idu){
         new DetalleViajeByUser(c,context,idUser,idRes,idu).execute();
