@@ -34,6 +34,7 @@ import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.Models.Lists.ListPublicidad;
@@ -79,6 +80,8 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     CirclePageIndicator indicator;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
+private SessionManager session;
+
 
     //ctoolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
@@ -92,7 +95,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-
+        session = new SessionManager(this);
 
 
 
@@ -262,6 +265,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     @Override
     public void onBackPressed()
     {
+        session.logoutUser();
         Intent setIntent = new Intent(this,LoginActivity.class);
         startActivity(setIntent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

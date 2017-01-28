@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +42,7 @@ public class ProfileActivity extends DrawerActivity implements
 
     private ImageButton showCalendar;
     private ImageView profile_photo;
-    private EditText email,address,city,cellphone,name,ap_materno,ap_paterno;
+    private EditText email,address,city,cellphone,name,ap_materno,ap_paterno,lada;
     private int mYear, mMonth, mDay;
     private TextView editBirth;
     private int flag=0;
@@ -49,11 +51,11 @@ public class ProfileActivity extends DrawerActivity implements
     private  Toolbar toolbar;
     private User user = new User();
     Tools tol;
+
     private FloatingActionButton edit;
     Control control = new Control();
     private webServices webs;
     String URL = "http://kangup.com.mx/uploads/Foto_perfil/";
-
 
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
@@ -95,6 +97,7 @@ public class ProfileActivity extends DrawerActivity implements
         email = (EditText)findViewById(R.id.editEmail);
         address = (EditText)findViewById(R.id.editAddress);
         city = (EditText)findViewById(R.id.editCity);
+        lada = (EditText)findViewById(R.id.lada);
         edit = (FloatingActionButton) findViewById(R.id.editinfo);
 
 
@@ -121,7 +124,8 @@ public class ProfileActivity extends DrawerActivity implements
                 sql.Connect();
                 sql.updateProfile(user);
 
-                Toast.makeText(ProfileActivity.this, "Actalizacion exitosa", Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(v, "Usuario actualizado", Snackbar.LENGTH_SHORT);
+                snackbar.show();
                 User user = sql.user();
 
 
@@ -271,7 +275,7 @@ public class ProfileActivity extends DrawerActivity implements
         if(!user.getCellphone().equals("null"))
             cellphone.setText(user.getCellphone());
         //Agregar getPhotoByUser
-
+        lada.setText("+52 ");
     }
     @Override
     public void onClick(View v) {

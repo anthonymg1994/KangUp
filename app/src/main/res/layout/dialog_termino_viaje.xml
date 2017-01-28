@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="88dp"
+            android:id="@+id/imageProfilee"
+            android:src="@drawable/perfil1"
+            android:scaleType="centerCrop"
+            android:layout_height="89dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="32dp"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:background="#787878"
+        android:layout_width="352dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.75"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/stars_chofer"
+        android:id="@+id/view" />
+
+    <TextView
+        android:text="Con fecha  "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView20"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/fecha_"
+        android:layout_marginStart="64dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView20"
+        android:layout_marginLeft="64dp"
+        app:layout_constraintTop_toTopOf="@+id/textView20" />
+
+    <TextView
+        android:text="Tu conductor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView22"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageProfilee" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="191dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/conductor_nombre"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView22"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="@+id/textView22"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.6" />
+
+    <TextView
+        android:text="Con horario de"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView24"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hora_inicio"
+        android:layout_marginStart="40dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView24"
+        android:layout_marginLeft="40dp"
+        app:layout_constraintTop_toTopOf="@+id/textView24"
+        app:layout_constraintBottom_toBottomOf="@+id/textView24"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:text="a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView27"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/hora_inicio"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintTop_toTopOf="@+id/hora_inicio"
+        app:layout_constraintBottom_toBottomOf="@+id/hora_inicio"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hora_termino"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView27"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="@+id/hora_inicio"
+        app:layout_constraintBottom_toBottomOf="@+id/hora_inicio"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <RatingBar
+        android:layout_width="191dp"
+        android:layout_height="39dp"
+        android:id="@+id/stars_chofer"
+        style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+        tools:layout_editor_absoluteY="184dp"
+        tools:layout_editor_absoluteX="149dp"
+        android:numStars="5" />
+
+    <TextView
+        android:text="Total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView29"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/hora_inicio" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView29"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="@+id/textView29"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.36" />
+
+    <TextView
+        android:text="Calificacion del viaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView31"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toBottomOf="@+id/total" />
+
+    <TextView
+        android:text="Califica a tu chofer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView32"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <RatingBar
+        android:layout_width="177dp"
+        android:layout_height="37dp"
+        android:id="@+id/stars_viaje"
+        style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView31"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toTopOf="@+id/textView31"
+        app:layout_constraintHorizontal_bias="0.03" />
+
+    <Button
+        android:text="Enviar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

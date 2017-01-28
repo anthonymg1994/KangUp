@@ -19,20 +19,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPhotos;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.DetalleViaje;
 import com.mx.bridgestudio.kangup.Models.ListEspecificaciones;
 import com.mx.bridgestudio.kangup.Models.Photo;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
@@ -48,7 +44,6 @@ import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -71,8 +66,9 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
     RecyclerView horizontal_recycler_view;
     private List<ListEspecificaciones> data;
     protected DrawerLayout mDrawer;
-    private Button vermas, reservar;
-    private TextView modelo, descripcion;
+    private Button  reservar;
+    ImageView vermas;
+    private TextView modelo, descripcion,precio;
     Vehicle car = new Vehicle();
     String[] photo;
     Dialog dialogo;
@@ -86,6 +82,8 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
     private ImageButton catalogo,noticias,favoritos,historial;
     Control control = new Control();
     DrawerActivity drawerActivity = new DrawerActivity();
+    public static int id_vehiculo_seleccionado=0;
+
     int flag = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -112,19 +110,23 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         Drawable drawable = ratingBar.getProgressDrawable();
         drawable.setColorFilter(Color.parseColor("#ffcc00"), PorterDuff.Mode.SRC_ATOP);
-        centro = (ImageView) findViewById(R.id.imageView2);
+        centro = (ImageView) findViewById(R.id.vermas);
         Intent intent=this.getIntent();
         Bundle bundle=intent.getExtras();
 
         car=(Vehicle)bundle.getSerializable("value");
-        webs.getAllPhotoById(this,this,car);
-        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca() + " " + car.getValoracion());
 
-        vermas = (Button)findViewById(R.id.vermas);
+        id_vehiculo_seleccionado = car.getId();
+
+        webs.getAllPhotoById(this,this,car);
+        getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
+
+        vermas = (ImageView)findViewById(R.id.vermas);
         vermas.setOnClickListener(this);
         reservar = (Button)findViewById(R.id.reservarr);
         reservar.setOnClickListener(this);
         descripcion = (TextView) findViewById(R.id.descripcion);
+        precio = (TextView) findViewById(R.id.txtprecio);
      //   horizontal_recycler_view= (RecyclerView) findViewById(R.id.horizontal_recycler_view);
 
       //  data = fill_with_data();
@@ -223,6 +225,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
 
         Picasso.with(DetalleActivity.this).load(URL+vehicle.getFoto()).fit().centerCrop().into(centro);
 
+        precio.setText("$ "+vehicle.getTarifa());
         ratingBar.setRating(vehicle.getValoracion());
         descripcion.setText(vehicle.getDescription());
     }
@@ -322,15 +325,17 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
 
             showChangeLangDialog();
             if(flag == 1){
-                init();
+                for(int i=0;i<photo.length;i++)
+                    ImagesArray.add(photo[i]);
+
             }
+            init();
         }
     }
     private void init() {
 
 
-        for(int i=0;i<photo.length;i++)
-            ImagesArray.add(photo[i]);
+
         page.setAdapter(new SlidingImage_Adapter(DetalleActivity.this,ImagesArray));
         final float density = getResources().getDisplayMetrics().density;
         indicator.setViewPager(page);

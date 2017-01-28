@@ -104,8 +104,9 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
                 nombre_vehiculo = tipos.get(position).getMarca() + " " + tipos.get(position).getModelo() + " " + tipos.get(position).getAnio();
                 ve.setId(id_vehiculo);
 
-                Toast.makeText(FavoriteActivity.this, "id_vehiculo = " + id_vehiculo
-                        + " " + "nombre = "+ nombre_vehiculo , Toast.LENGTH_SHORT).show();
+
+              //  Toast.makeText(FavoriteActivity.this, "id_vehiculo = " + id_vehiculo
+               //         + " " + "nombre = "+ nombre_vehiculo , Toast.LENGTH_SHORT).show();
                 webs.DetailVehicle(FavoriteActivity.this,FavoriteActivity.this,ve);
                 //Intent intent = new Intent(CategoryActivity.this, CatalogCar.class);
                 //SendToActivity.sendData(arrayBrands);

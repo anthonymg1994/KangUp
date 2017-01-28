@@ -4,11 +4,13 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -16,13 +18,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,45 +39,65 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.Adapters.AdapterAllPackages;
 import com.mx.bridgestudio.kangup.Adapters.AdapterArticle;
+import com.mx.bridgestudio.kangup.Adapters.AdapterPaquetes;
 import com.mx.bridgestudio.kangup.Adapters.AdapterRoutes;
+import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
+import com.mx.bridgestudio.kangup.Adapters.SpinnerAdapterPayment;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendAllPackages;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSentArticlesByPackage;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Article;
+import com.mx.bridgestudio.kangup.Models.DetalleViaje;
 import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
 import com.mx.bridgestudio.kangup.Models.Lists.ListArticles;
 import com.mx.bridgestudio.kangup.Models.Lists.ListPaquetes;
+import com.mx.bridgestudio.kangup.Models.Lists.ListPaymentForm;
 import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.Models.Package;
+import com.mx.bridgestudio.kangup.Models.PaymentForm;
+import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.Fin_De_Viaje.terminaViaje;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by USUARIO on 14/12/2016.
  */
 
-public class Reservacion extends DrawerActivity implements View.OnClickListener, AdapterView.OnItemClickListener , OnDataSendAllPackages, OnDataSentArticlesByPackage {
+public class Reservacion extends DrawerActivity implements View.OnClickListener, AdapterView.OnItemClickListener , OnDataSendAllPackages, OnDataSentArticlesByPackage, OnDataSendPaymentFormsUser {
 
 
     private static final String LOG_TAG = "kangup";
@@ -101,7 +130,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     Calendar evento = Calendar.getInstance();
     Calendar time = Calendar.getInstance();
     DAOReservaciones dao = new DAOReservaciones();
-
+    public int id_reservacion;
     public int getId;
 
     Control control = new Control();
@@ -110,18 +139,27 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     RecyclerView listPaquetes, listRutas;
     RecyclerView.LayoutManager lManagerPacks, lManagerRoutes;
     RecyclerView.Adapter adapterRoutes;
-    ArrayList<ListRoutes> itemsRoutes= new ArrayList<>();
+    ArrayList<ListRoutes> itemsRoutes = new ArrayList<>();
     RecyclerView.Adapter adapterPacks;
     ArrayList<ListPaquetes> itemsPacks= new ArrayList<>();
     public static String descripcionPaquete="";
     public static String nombrePaquete="";
     public int id_paquete=0;
-    public int id_reservacion=0;
+    public static int idPack=0;
+    public static int countPack=0;
+    int id_pago_usuario=0;
 
     //Alert articulos
     RecyclerView.Adapter adapterArticulos;
     ArrayList<ListArticles> itemsArt= new ArrayList<>();
 
+    //Alert spinner
+    private ArrayList<ListPaymentForm> tipos = new ArrayList<>();
+    //private ArrayList<String> tiposPagos = new ArrayList<>();
+    private PaymentForm pa = new PaymentForm();
+    private SpinnerAdapterPayment adapterPayment;
+    private ListPaymentForm[] listPay;
+    private    Rutas[] rutas;
 
     //toolbardown
     private ImageButton catalogo, favoritos, historial;
@@ -144,6 +182,11 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
         webs.getAllPackages(Reservacion.this,this);
 
+        getIdReservacion();
+
+
+
+
 
         reservar = (Button) findViewById(R.id.confirmarButton);
         reservar.setOnClickListener(this);
@@ -163,6 +206,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         listPaquetes = (RecyclerView) findViewById(R.id.packsRecyclerView);
         listPaquetes.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         listPaquetes.setHasFixedSize(true);
+
         listRutas = (RecyclerView) findViewById(R.id.rutasRecyclerView);
         listRutas.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         listRutas.setHasFixedSize(true);
@@ -173,7 +217,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         listPaquetes.addItemDecoration(itemDecoration);
         listPaquetes.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, listPaquetes ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         id_paquete = itemsPacks.get(position).getId();
                         nombrePaquete = itemsPacks.get(position).getNombre();
@@ -181,9 +225,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                         alertFormElementsArticulos(id_paquete);
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
@@ -193,22 +235,30 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecorations = new SampleDivider(this);
         listRutas.addItemDecoration(itemDecorations);
         listRutas.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, listRutas,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
         // Crear un nuevo adaptador
+        sql = new SqliteController(Reservacion.this, "kangup",null, 1);
+        sql.Connect();
+        itemsRoutes = sql.getRutas();
+        sql.Close();
+
         adapterRoutes = new AdapterRoutes(itemsRoutes);
+        adapterRoutes.notifyDataSetChanged();
         listRutas.setAdapter(adapterRoutes);
-        adapterPacks = new AdapterAllPackages(itemsPacks);
+
+
+
+
+        adapterPacks = new AdapterAllPackages(itemsPacks,this);
         listPaquetes.setAdapter(adapterPacks);
 
 
@@ -256,6 +306,16 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         //   fecha.setText(re.getDate());
         //  hora.setText(re.getHourI());
 
+        //fillPackagesByReservation();
+
+        sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+        sql.Connect();
+        User user = new User();
+        user = sql.user();
+        pa.setId_usuario(user.getId());
+        sql.Close();
+        webs.getFormaPagoByUser(this,this,pa);
+
     }
 
 
@@ -265,7 +325,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     public void onClick(View v) {
         if (v.getId() == R.id.confirmarButton) {
             //confirmar reservacion
-            Confirmacion(v);
+            FormaPagoAlert();
+            //Confirmacion(v);
         }
         if (v.getId() == R.id.imageButtonCalendar) {
             // seleccionar fecha de viaje
@@ -278,6 +339,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         if (v.getId() == R.id.addruta) {
             //Agregar origenes y destinos
             showChangeLangDialog();
+
         }
     }
 
@@ -340,22 +402,10 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             public void onClick(DialogInterface dialog, int whichButton) {
                 //String ruta = "Origen: " + origen.getText().toString() + "\n" + "Destino: " + destino.getText().toString();
                 //addres.add(ruta);
-               getId = getReservationId();
-                Ion.with(Reservacion.this)
-                        .load("POST", "http://kangup.com.mx/index.php/routes")
-                        .setBodyParameter("origen", origen.getText().toString())
-                        .setBodyParameter("destino",destino.getText().toString())
-                        .setBodyParameter("id_reservacion", String.valueOf(getId))
-                        .asString()
-                        .setCallback(new FutureCallback<String>() {
-                            @Override
-                            public void onCompleted(Exception e, String result) {
-                                //String info="";
-                                Toast msg = Toast.makeText(getBaseContext(),
-                                        result, Toast.LENGTH_SHORT);
-                                msg.show();
-                            }
-                        });
+               //insertRoutesReservation(origen.getText().toString(),destino.getText().toString());
+                sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                int ix = sql.getReservacionIdNext();
+                sql.insertRutas(origen.getText().toString(),destino.getText().toString(),ix);
 
             }
         });
@@ -369,7 +419,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         b.show();
     }
 
-    public void Confirmacion(final View v) {
+    public void Confirmacion() {
 
 
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
@@ -380,23 +430,82 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
-                reservacion.setId(4);
-                reservacion.setOrigen("s");
-                reservacion.setDate("s");
-                reservacion.setDestination("s");
-                reservacion.setHourF("d");
-                reservacion.setHourI("sad");
-                reservacion.setId_user(4);
-                reservacion.setId_vehicle(1);
-                reservacion.setIdpayment(1);
-                reservacion.setStatus(1);
-                onAddEventClicked(v);
+                insertRoutesReservation();
+                insertPackagesReservation();
+                com.mx.bridgestudio.kangup.Models.Reservacion r = new com.mx.bridgestudio.kangup.Models.Reservacion();
+                r.setId_user(pa.getId_usuario());
+                r.setId_vehicle(DetalleActivity.id_vehiculo_seleccionado);
+                r.setDate(String.valueOf(CardAdapter.datee));
+                r.setHourI(CardAdapter.hour);
+                r.setHourF(CardAdapter.hour_final);
+                r.setIdpayment(id_pago_usuario);
+                insertReservation(r);
+
+                onAddEventClicked();
                 webs.EmailConfirmationReservation(Reservacion.this,reservacion);
+                idPack=0;
+                countPack=0;
+                Intent intent = new Intent(Reservacion.this,terminaViaje.class);
+                startActivity(intent);
 
             }
         });
         dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
+                Toast.makeText(getApplicationContext(),String.valueOf(countPack),Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialogo.show();
+
+
+    }
+
+    public void FormaPagoAlert() {
+
+        /*
+     * Inflate the XML view. activity_main is in
+     * res/layout/form_elements.xml
+     */
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.forma_pago_dialog,
+                null, false);
+
+
+        final Spinner spinnerPagos = (Spinner)view.findViewById(R.id.spinnerPagos);
+
+
+        spinnerPagos.setAdapter(adapterPayment);
+        spinnerPagos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View selectedItemView, int position, long id) {
+                // your code here
+                    id_pago_usuario = listPay[position].getId_forma_pago();
+                Toast.makeText(getApplicationContext(),String.valueOf(id_pago_usuario),Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this,R.style.MyDialogTheme).setView(view);
+        dialogo.setTitle("Elige tu forma de pago");
+        dialogo.setMessage("¿Que forma de pago desea utilizar?");
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+
+            Confirmacion();
+            }
+        });
+        dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                Toast.makeText(getApplicationContext(),String.valueOf(countPack),Toast.LENGTH_SHORT).show();
             }
         });
         dialogo.show();
@@ -405,9 +514,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     }
 
 
-
-
-    public void onAddEventClicked(View view) {
+    public void onAddEventClicked() {
         SimpleDateFormat formatoDeFecha = new SimpleDateFormat("dd/MM/yyyy", new Locale("es_ES"));
         SimpleDateFormat formatoo = new SimpleDateFormat("EEEE dd 'de' MMM 'del 'yyyy", new Locale("es_ES"));
         try {
@@ -460,37 +567,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         intent.putExtra(CalendarContract.Events.DESCRIPTION, "This is a sample description");
         intent.putExtra(CalendarContract.Events.EVENT_LOCATION, "My Guest House");
         intent.putExtra(CalendarContract.Events.RRULE, "FREQ=YEARLY");
-
-        /*
-        ContentResolver cr = getContentResolver();
-
-
-        ContentValues v = new ContentValues();
-        v.clear();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, v);
-
-        v.clear();
-        //Agrega Recordatorio Method:Notificacion 15 min antes
-        String eventID = uri.getLastPathSegment();
-        System.out.println("intent"+eventID);
-        Uri REMINDERS_URI=Uri.parse(getCalendarUriBase(this) + "reminders");
-        v=new ContentValues();
-        v.put("event_id",eventID);
-        v.put("method",1);
-        v.put("minutes",15); //15=Minutos antes del evento
-        cr.insert(REMINDERS_URI, v);
-*/
 
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -571,14 +647,12 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
@@ -606,7 +680,57 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         fillListArticulos(obj);
     }
 
-    public int getReservationId(){
+    public void insertRoutesReservation(){
+        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+        ArrayList<ListRoutes> r = new ArrayList<>();
+        r = sql.getRutas();
+        for(int i=0; i<r.size();i++){
+            Ion.with(Reservacion.this)
+                    .load("POST", "http://kangup.com.mx/index.php/routes")
+                    .setBodyParameter("origen", r.get(i).getOrigen())
+                    .setBodyParameter("destino",r.get(i).getDestiny())
+                    .setBodyParameter("id_reservacion", String.valueOf(r.get(i).getId()))
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result) {
+                            //String info="";
+                            Toast msg = Toast.makeText(getBaseContext(),
+                                    result, Toast.LENGTH_SHORT);
+                            msg.show();
+                        }
+                    });
+        }
+
+        sql.deleteRoutes();
+    }
+
+    public void insertPackagesReservation(){
+        sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+        int getPack[];
+        int idRes=0;
+        idRes = sql.getReservacionIdNext();
+        getPack = sql.getIdPackages(countPack);
+        for(int i=0; i<getPack.length; i++){
+            Ion.with(Reservacion.this)
+                    .load("POST", "http://kangup.com.mx/index.php/packages")
+                    .setBodyParameter("id_paquete", String.valueOf(getPack[i]))
+                    .setBodyParameter("id_reservacion", String.valueOf(idRes))
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result) {
+                            //String info="";
+                            Toast msg = Toast.makeText(getBaseContext(),
+                                    result, Toast.LENGTH_SHORT);
+                            msg.show();
+                        }
+                    });
+        }
+        sql.deletePackages();
+    }
+
+    public void getIdReservacion(){
         Ion.with(Reservacion.this)
                 .load("POST", "http://kangup.com.mx/index.php/idRes")
                 .asString()
@@ -618,6 +742,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                             JSONObject objUser = new JSONObject(result);
                             //info = String.valueOf(objUser.getInt("id"));
                             id_reservacion = objUser.getInt("id")+1;
+                            sql = new SqliteController(getApplicationContext(),"kangup",null,1);
+                            sql.updateReservacionNext(id_reservacion);
                             Toast msg = Toast.makeText(getBaseContext(),
                                     "IdRes: "+String.valueOf(id_reservacion), Toast.LENGTH_LONG);
                             msg.show();
@@ -625,9 +751,74 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
-                        e.printStackTrace();
+
                     }
                 });
-        return id_reservacion;
+    }
+
+    public void insertReservation(com.mx.bridgestudio.kangup.Models.Reservacion reservacion){
+        Ion.with(Reservacion.this)
+                .load("POST", "http://kangup.com.mx/index.php/insertReservation")
+                .setBodyParameter("id_usuario",  String.valueOf(reservacion.getId_user()))
+                .setBodyParameter("id_vehiculo",String.valueOf(reservacion.getId_vehicle()))
+                .setBodyParameter("fecha", reservacion.getDate() )
+                .setBodyParameter("hora_inicio", reservacion.getHourI())
+                .setBodyParameter("hora_termino", reservacion.getHourF())
+                .setBodyParameter("status", String.valueOf(0))
+                .setBodyParameter("cancelado", String.valueOf(0))
+                .setBodyParameter("id_pago_usuario", String.valueOf(reservacion.getIdpayment()))
+                .asString()
+                .setCallback(new FutureCallback<String>() {
+                    @Override
+                    public void onCompleted(Exception e, String result) {
+                        //String info="";
+                        Toast msg = Toast.makeText(getBaseContext(),
+                                result, Toast.LENGTH_SHORT);
+                        msg.show();
+                    }
+                });
+    }
+
+    public ListPaymentForm[] fillspinner(PaymentForm[] pay){
+        ListPaymentForm[] list = new ListPaymentForm[pay.length];
+        for(int i = 0 ; i < pay.length ; i++){
+            list[i] = new ListPaymentForm();
+            list[i].setId_forma_pago(pay[i].getId_forma_pago());
+            list[i].setNum_cuenta(pay[i].getNum_cuenta());
+            list[i].setTipoPago(pay[i].getTipoPago());
+            //tipos.add(i,list[i]);
+        }
+
+        return list;
+
+    }
+
+    /*public void fillStringPay(ListPaymentForm[] pay){
+        String account[] = new String[pay.length];
+        for(int i=0; i<pay.length;i++){
+            account[i] = pay[i].getTipoPago();
+            tiposPagos.add(i,account[i]);
+        }
+    }*/
+
+    @Override
+    public void sendDataPaymentFormsUser(PaymentForm[] obj) {
+
+        listPay=fillspinner(obj);
+        adapterPayment = new SpinnerAdapterPayment(this,
+                android.R.layout.simple_spinner_item,
+                listPay);
+        adapterPayment.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        sql.deletePackages();
+        sql.deleteRoutes();
+        Intent setIntent = new Intent(this,CatalogCar.class);
+        startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
     }
 }

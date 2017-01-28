@@ -3,6 +3,7 @@ package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -52,9 +53,8 @@ public class ForgotActivity extends AppCompatActivity {
                 //finish();
                 //startActivity(new Intent(ForgotActivity.this, FavoriteActivity.class));
                 if(email.getText().toString().equals("")){
-                    Toast msg = Toast.makeText(getBaseContext(),
-                            "Ingresa tu correo electronico", Toast.LENGTH_SHORT);
-                    msg.show();
+                    Snackbar snackbar = Snackbar.make(v, "Ingresa tu correo electronico", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                 }else{
                 //    if(control.isOnline()) {
                         Email task = new Email(email.getText().toString().trim());

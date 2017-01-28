@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/hora"
         app:layout_constraintTop_toTopOf="@+id/hora"
         app:layout_constraintVertical_bias="0.58000004"
-        android:textColor="#ffffff" />
+        android:textColor="@color/yellow" />
 
     <TextView
         android:text="Fecha"
@@ -30,7 +30,7 @@
         android:layout_marginLeft="16dp"
         app:layout_constraintTop_toTopOf="@+id/fecha"
         app:layout_constraintBottom_toBottomOf="@+id/fecha"
-        android:textColor="#ffffff" />
+        android:textColor="@color/yellow" />
 
     <EditText
         android:layout_width="183dp"
@@ -39,9 +39,9 @@
         android:id="@+id/fecha"
         android:background="@drawable/buttons_alpha"
         android:hint="Selecciona una fecha"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintLeft_toRightOf="@+id/textView9"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_height="39dp"
         android:layout_marginTop="16dp"
         android:enabled="false"
@@ -61,9 +61,9 @@
         android:textSize="14sp"
         android:textColor="#ffffff"
         android:background="@drawable/buttons_alpha"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintLeft_toRightOf="@+id/textView8"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:paddingStart="4dp"
         android:enabled="false"
         android:layout_marginTop="16dp"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="@+id/hora"
         app:layout_constraintBottom_toBottomOf="@+id/hora"
         app:layout_constraintVertical_bias="1.0"
-        android:background="@drawable/buttons_alpha"
+        android:background="@drawable/button_borderyellow"
         android:tint="@color/white"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
@@ -99,9 +99,9 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.48"
         android:tint="@color/white"
-        android:background="@drawable/buttons_alpha"/>
+        android:background="@drawable/button_borderyellow"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:layout_width="180dp"
@@ -124,7 +124,7 @@
         android:layout_height="39dp"
         app:srcCompat="@android:drawable/ic_lock_idle_alarm"
         android:id="@+id/IBhoraTermino"
-        android:background="@drawable/buttons_alpha"
+        android:background="@drawable/button_borderyellow"
         android:tint="@color/white"
         app:layout_constraintTop_toTopOf="@+id/horatermino"
         app:layout_constraintBottom_toBottomOf="@+id/horatermino"

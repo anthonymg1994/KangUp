@@ -100,7 +100,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
 
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(view.getContext(), "position = " +items.get(position).getModelo(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
@@ -111,9 +111,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                         //startActivity(intent);
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
 
         );
@@ -225,7 +223,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
 
     @Override
     public void sendDataHistory(RoadTrip[] obj) {
-        Toast.makeText(this, "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
         fillList(obj);
     }
 

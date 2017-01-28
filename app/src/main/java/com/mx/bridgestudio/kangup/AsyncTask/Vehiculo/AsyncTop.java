@@ -1,4 +1,4 @@
-package com.mx.bridgestudio.kangup.AsyncTask.Noticias;
+package com.mx.bridgestudio.kangup.AsyncTask.Vehiculo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAONoticias;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterTop;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Models.News;
+import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,48 +20,55 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 /**
- * Created by Isaac on 20/12/2016.
+ * Created by USUARIO on 27/01/2017.
  */
 
-public class AsyncNews extends AsyncTask<String,Integer,String> {
-
+public class AsyncTop extends AsyncTask<String,Integer,String> {
     private JSONObject responseJson;
     private ProgressDialog progressDialog;
     private HttpURLConnection httpURLConnection;
     private String param1;
     private String param2;
     URL url;
-    private News[] arrayNews;
-    private News news = new News();
-    private String newsString;
+    private Vehicle[] arrayVehiculos;
+    private Vehicle vehicle = new Vehicle();
+    private String svehiculos;
     private webServices services = new webServices();
-    private DAONoticias Dnews = new DAONoticias();
-
-    public OnDataSendNews SendToActivity;//Call back interface
+    private DAOVehiculo Dvehiculo = new DAOVehiculo();
+    private Date date,time,time_final;
+    public OnDataSendFilterTop SendToActivity;//Call back interface
 
 
     Context mContext;
 
     private boolean flag = false;
 
-    public AsyncNews(OnDataSendNews SendToActivity, Context context) {
+    public AsyncTop(Context context, Vehicle vehicle, OnDataSendFilterTop SendToActivity,Date date, Date time,Date time_final) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
+        this.date = date;
+        this.time = time;
+        this.vehicle = vehicle;
+        this.time_final = time_final;
+
     }
+
+
 
     @Override
     protected String doInBackground(String... params) {
 
         try {
-            newsString = Dnews.getAllNews();
+            svehiculos = Dvehiculo.getVehiclesTop(vehicle,date,time,time_final);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return newsString;
+        return svehiculos;
     }
 
     @Override
@@ -82,27 +90,28 @@ public class AsyncNews extends AsyncTask<String,Integer,String> {
         if(result.equals("0")){
             Toast.makeText(mContext, "Vuelve a intentarlo"+result, Toast.LENGTH_SHORT).show();
         }else{
-            //     Toast.makeText(mContext, "Bienvenido "+brands, Toast.LENGTH_SHORT).show();
+            //      Toast.makeText(mContext, "Bienvenido "+vehicle, Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                arrayNews = new News[jsonarray.length()];
+                arrayVehiculos = new Vehicle[jsonarray.length()];
 
                 for (int i = 0; i < jsonarray.length(); i++) {
-                    arrayNews[i] = new News();
+                    arrayVehiculos[i] = new Vehicle();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    arrayNews[i].setId(jsonobject.getInt("id"));
-                    arrayNews[i].setTitulo(jsonobject.getString("titulo"));
-                    arrayNews[i].setDescripccion(jsonobject.getString("descripcion"));
-                    arrayNews[i].setFecha(jsonobject.getString("fecha"));
-                    arrayNews[i].setImagen(jsonobject.getString("image"));
+                    arrayVehiculos[i].setId(jsonobject.getInt("id"));
+                    arrayVehiculos[i].setMarca(jsonobject.getString("Marca"));
+                    arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
+                    arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
+                    arrayVehiculos[i].setValoracion(jsonobject.getInt("puntuacion"));
+                    arrayVehiculos[i].setFoto(jsonobject.getString("foto_predeterminada"));
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(mContext, NewsActivity.class);
-            SendToActivity.sendDataNews(arrayNews);
+            Intent intent = new Intent(mContext, CarsXtype.class);
+            SendToActivity.sendDataTops(arrayVehiculos);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 

@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -80,12 +83,14 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
         }
 
         @Override
-        public void onClick(View view) {
-
+        public void onClick(View v) {
+            if (v.getId() == fav.getId()){
+                Toast.makeText(v.getContext(), "ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            }
         }
     }
     @Override
-    public void onBindViewHolder(AnimeViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(final AnimeViewHolder viewHolder, final int i) {
        // viewHolder.imagen.setImageResource(items.get(i).getImage());
 
 
@@ -93,6 +98,9 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
 
         viewHolder.nombre.setText(items.get(i).getModelo());
         viewHolder.descripcion.setText(String.valueOf(items.get(i).getModelo()+" "+items.get(i).getAnio()));
+
+
+        viewHolder.fav.setOnClickListener(this);
 
         viewHolder.fav.setFocusable(false);
         viewHolder.fav.setFocusableInTouchMode(false);
@@ -111,16 +119,16 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
                     alertGuest();
                 }
                 else {
-                    alertConfirmacion(items.get(i).getId(),user.getId());
-                    Toast.makeText(context, "Eliminado veh "+items.get(i).getId(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(context, "Eliminado user "+user.getId(), Toast.LENGTH_LONG).show();
+
+                    alertConfirmacion(items.get(i).getId(),user.getId(),view);
+
                 }
             }
         });
 
     }
 
-    public void alertConfirmacion(final int veh, final int user) {
+    public void alertConfirmacion(final int veh, final int user, final View view) {
         new AlertDialog.Builder(context)
                 .setTitle("Confirmacion")
                 .setMessage("¿ Deseas agregarlo a favoritos ?")
@@ -130,7 +138,8 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
                             @TargetApi(11)
                             public void onClick(DialogInterface dialog, int id) {
                                 web.addFav(context,veh,user);
-                                Toast.makeText(context, "Favorito "+ veh + " " + user, Toast.LENGTH_LONG).show();
+                                Snackbar snackbar = Snackbar.make(view, "Agregado a favorito", Snackbar.LENGTH_SHORT);
+                                snackbar.show();
                             }
                         })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

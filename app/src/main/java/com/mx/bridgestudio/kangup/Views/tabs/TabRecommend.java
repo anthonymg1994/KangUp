@@ -101,7 +101,7 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(getActivity());
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(getActivity() ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(getActivity(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
@@ -115,9 +115,7 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
                         //finish();
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
