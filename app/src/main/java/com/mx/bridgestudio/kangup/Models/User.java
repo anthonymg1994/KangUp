@@ -1,6 +1,6 @@
 package com.mx.bridgestudio.kangup.Models;
 
-import java.io.File;
+import android.graphics.Bitmap;
 
 /**
  * Created by BridgeStudio on 24/10/2016.
@@ -20,17 +20,17 @@ public class User {
     private String fnacimiento;
     private String photo;
     private String address;
-    private String file;
+    private Bitmap file;
 
 
     public User(){
     }
 
-    public String getFile() {
+    public Bitmap getFile() {
         return file;
     }
 
-    public void setFile(String file) {
+    public void setFile(Bitmap file) {
         this.file = file;
     }
 

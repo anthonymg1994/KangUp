@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
@@ -27,6 +26,7 @@ import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,32 +72,25 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
         String hora = CardAdapter.hour;
         String hour_final = CardAdapter.hour_final;
 
-        // parseo de string para convertir a date
-      //  String dateString = fecha;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
-        String time = hora;
-        String time_final = hour_final;
-
-        SimpleDateFormat timFormat = new SimpleDateFormat("hh:mm");
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh:mm:ss");
-        Date date3 = null,date2 = null;
-
-
         try {
-            Date date = dateFormat.parse(time);
-            String out = dateFormat2.format(date);
-             date2 = dateFormat2.parse(out);
 
-            Date date1 = dateFormat.parse(time);
-            String out2 = dateFormat2.format(date);
-             date3 = dateFormat2.parse(out2);
+            DateFormat sdf = new SimpleDateFormat("hh:mm");
+            Date date2 = sdf.parse(hora);
+
+            DateFormat sdf1 = new SimpleDateFormat("hh:mm");
+            Date date3 = sdf1.parse(hour_final);
+
+
+
+
+            webs.ScoreVehiculo(getActivity(),vehicle,fecha,date2,date3,TabVotados.this);
 
 
         } catch (ParseException e) {
+            e.printStackTrace();
         }
 
-        webs.ScoreVehiculo(getActivity(),vehicle,fecha,date2,date3,TabVotados.this);
+
 
         // Obtener el Recycler
         CatalogCar.flagDate = 1;

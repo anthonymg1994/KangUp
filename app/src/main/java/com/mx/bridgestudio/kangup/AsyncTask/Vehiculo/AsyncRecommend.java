@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterRecommend;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
@@ -100,7 +99,6 @@ public class AsyncRecommend extends AsyncTask<String,Integer,String> {
                     arrayVehiculos[i].setMarca(jsonobject.getString("Marca"));
                     arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
                     arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
-                    arrayVehiculos[i].setValoracion(jsonobject.getInt("puntuacion"));
                     arrayVehiculos[i].setFoto(jsonobject.getString("foto_predeterminada"));
                 }
 

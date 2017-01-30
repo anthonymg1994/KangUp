@@ -176,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
                             imageFile = convertBitmapToFile(bitmap,"x");
                             String y =bitmapToBase64(bitmap);
                           //  if(imageFile != null) {
-                                user.setFile(y);
+                                user.setFile(bitmap);
                             //}
                             webs.insertUser(RegisterActivity.this,user);
                             //uploadImageToServer();
