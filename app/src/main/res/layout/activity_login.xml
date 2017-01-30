@@ -158,6 +158,7 @@
         app:layout_constraintTop_toBottomOf="@+id/user"
         android:textAlignment="textStart"
         android:gravity="center_vertical|center_horizontal|center"
+        app:hintTextAppearance="@style/FloatingLabel"
         android:layout_height="56dp">
 
         <EditText
@@ -168,6 +169,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="#ffffff"
+            app:hintTextAppearance="@style/FloatingLabel"
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textSize="17sp"

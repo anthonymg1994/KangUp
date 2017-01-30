@@ -167,7 +167,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         //Toast.makeText(getActi(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
@@ -196,9 +196,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
                         finish();
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
         // Crear un nuevo adaptador

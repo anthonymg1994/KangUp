@@ -2,9 +2,12 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,9 +83,8 @@ public class AddPaymentActivity extends AppCompatActivity {
                 if(card.getText().toString().equals("") || mm.getText().toString().equals("") ||
                         yy.getText().toString().equals("") || cvv.getText().toString().equals(""))
                 {
-                    Toast msg = Toast.makeText(getBaseContext(),
-                            "Faltan campos por llenar", Toast.LENGTH_SHORT);
-                    msg.show();
+                    Snackbar snackbar = Snackbar.make(view, "Completa todos los campos", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
                 }
                 else{
                     if(utils.getCardID(card.getText().toString()) > -1)

@@ -162,7 +162,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
         });
 
         mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this,mRecyclerView,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this,new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
                     public void onItemClick(View view, int position) {
                         item = mAutoCompleteAdapter.getItem(position);
@@ -218,10 +218,7 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                         Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
                     }
 
-                    @Override
-                    public void onLongItemClick(View view, int position) {
 
-                    }
                 })
         );
     }

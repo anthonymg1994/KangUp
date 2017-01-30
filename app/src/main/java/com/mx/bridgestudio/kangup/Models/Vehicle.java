@@ -18,7 +18,15 @@ public class Vehicle implements Serializable {
     private String marca;
     private int valoracion;
     private String foto;
+    private String tarifa;
 
+    public String getTarifa() {
+        return tarifa;
+    }
+
+    public void setTarifa(String tarifa) {
+        this.tarifa = tarifa;
+    }
 
     public String getFoto() {
         return foto;

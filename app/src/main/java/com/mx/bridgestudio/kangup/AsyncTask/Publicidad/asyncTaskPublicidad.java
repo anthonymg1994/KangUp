@@ -2,22 +2,15 @@ package com.mx.bridgestudio.kangup.AsyncTask.Publicidad;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAONoticias;
-
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOPublicidad;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendNews;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.News;
-
 import com.mx.bridgestudio.kangup.Models.Publicidad;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -98,8 +91,8 @@ public class asyncTaskPublicidad extends AsyncTask<String,Integer,String> {
                     arrayPublicidad[i] = new Publicidad();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
                     arrayPublicidad[i].setId(jsonobject.getInt("id"));
-                    arrayPublicidad[i].setNombre(jsonobject.getString("nombre"));
-                    arrayPublicidad[i].setFormato(jsonobject.getString("formato"));
+                    arrayPublicidad[i].setNombre(jsonobject.getString("image"));
+
                     //arrayPublicidad[i].setImage(R.drawable.auto);
                 }
 

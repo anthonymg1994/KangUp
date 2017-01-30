@@ -32,6 +32,7 @@ import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.GoogleAnalytics.AnalyticsApplication;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.Models.User;
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private User user = new User();
     private SqliteController sql = new SqliteController(this, "kangup", null, 1);
     private Control control = new Control();
-
+    SessionManager session;
     public static int guestFlag=0;
 
     /**
@@ -88,13 +89,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.snackbarCoordinatorLayout);
-
+        session = new SessionManager(this);
 
     control.changeColorStatusBar(LoginActivity.this);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user);
         mEmailView.setHintTextColor(getResources().getColor(R.color.textoHint));
         logo = (ImageView)findViewById(R.id.logo);
         guest = (Button)findViewById(R.id.guest);
+
         guest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
@@ -131,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.loginform_layout || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptLogin(textView);
                     return true;
                 }
                 return false;
@@ -143,7 +145,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 guestFlag=0;
-                attemptLogin();
+                attemptLogin(view);
             }
         });
 
@@ -157,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptLogin(View view) {
         if (mAuthTask != null) {
             return;
         }
@@ -195,10 +197,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //showProgress(true);
-            user.setEmail(mEmailView.getText().toString());
-            user.setPassword(mPasswordView.getText().toString());
-            Snackbar.make(coordinatorLayout, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
-            web.Login(this,user);
+
+            if(control.isNetworkAvailable(this)) {
+                user.setEmail(mEmailView.getText().toString());
+                user.setPassword(mPasswordView.getText().toString());
+                web.Login(this, user);
+
+            }else{
+                Snackbar snackbar = Snackbar.make(view, "Usuario actualizado", Snackbar.LENGTH_SHORT);
+                snackbar.show();
+            }
 
             //new asyn(LoginActivity.this,user.getEmail(),user.getPassword()).execute();
         }

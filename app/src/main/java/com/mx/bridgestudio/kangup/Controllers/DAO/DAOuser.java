@@ -90,6 +90,7 @@ public class DAOuser {
             httpURLConnection.connect();
             JSONObject jsonParam = new JSONObject();
             //jsonParam.put("id",user.getId());
+
             jsonParam.put("nombre",user.getFirstName());
             jsonParam.put("apellido_paterno",user.getAp_paterno());
             jsonParam.put("apellido_materno",user.getAp_materno());
@@ -100,7 +101,10 @@ public class DAOuser {
             jsonParam.put("password",user.getPassword());
             //obtener id de pago dependiendo la consulta de pago predeterminado
             jsonParam.put("id_forma_pago",user.getPay());
-            jsonParam.put("status","1");
+            jsonParam.put("status","0");
+            if(user.getFile() != null){
+                jsonParam.put("file",user.getFile());
+            }
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();

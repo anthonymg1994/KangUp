@@ -118,7 +118,7 @@ public class NewsDetailActivity extends DrawerActivity {
         });
 
 
-        title = (TextView)findViewById(R.id.titleDetaiNews);
+
         desc = (TextView)findViewById(R.id.bodyNews);
 
         //Intent intent=this.getIntent();
@@ -128,7 +128,6 @@ public class NewsDetailActivity extends DrawerActivity {
 
         //news=(News)bundle.getSerializable("value");
 
-        title.setText(NewsActivity.titulo);
         desc.setText(NewsActivity.desc);
         //drw.setNameToolbar(NewsActivity.titulo);
 

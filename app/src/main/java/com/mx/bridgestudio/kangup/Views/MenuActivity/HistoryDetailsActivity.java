@@ -211,7 +211,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
                         Snackbar snackbar = Snackbar.make(view, getString(R.string.app_name), Snackbar.LENGTH_LONG)
@@ -223,9 +223,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
                                 });
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
@@ -294,7 +292,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
                         Snackbar snackbar = Snackbar.make(view, getString(R.string.app_name), Snackbar.LENGTH_LONG)
@@ -306,9 +304,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
                                 });
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 

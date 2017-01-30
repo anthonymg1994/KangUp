@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v7.graphics.drawable.DrawableWrapper;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +26,6 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsU
 import com.mx.bridgestudio.kangup.Controllers.Paypal.Paypal;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.Lists.ListPaymentForm;
 import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
@@ -228,6 +226,8 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                         break;
                     case 1:
                         Toast.makeText(PaymentActivity.this, "Tiendas de conveniencia", Toast.LENGTH_LONG).show();
+                      //  startActivity(new Intent(PaymentActivity.this, conekta.class));
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                         type=2;
                         break;
                 }

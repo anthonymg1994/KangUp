@@ -25,32 +25,15 @@
 
 
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="156dp"
+        android:layout_width="268dp"
+        android:layout_height="157dp"
         app:srcCompat="@drawable/auto"
-        android:id="@+id/imageView2"
+        android:id="@+id/vermas"
         android:scaleType="centerInside"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="8dp" />
-
-    <Button
-        android:text="Fotos"
-        android:layout_width="wrap_content"
-        android:id="@+id/vermas"
-        android:textSize="9sp"
-        android:background="@drawable/button_borderyellow"
-        android:textColor="#ffffff"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_height="25dp" />
 
     <LinearLayout
         android:background="@drawable/background_gradient"
@@ -61,10 +44,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/reservarr"
-        android:layout_height="200dp"
-        app:layout_constraintTop_toBottomOf="@+id/vermas"
         app:layout_constraintVertical_bias="0.0"
-        android:layout_marginTop="8dp">
+        android:weightSum="1"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7">
 
         <TextView
             android:layout_height="wrap_content"
@@ -101,7 +87,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginLeft="10dp"
-            android:gravity="start">
+            android:gravity="start"
+            android:layout_weight="0.54">
 
             <TextView
                 android:text="Valoracion"
@@ -128,6 +115,30 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/textView6"
                 android:layout_toEndOf="@+id/textView6" />
+
+
+            <TextView
+                android:text="Tarifa por hora :"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar"
+                android:layout_alignLeft="@+id/textView6"
+                android:layout_alignStart="@+id/textView6"
+                android:id="@+id/textView19"
+                android:textColor="#ffffff" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar"
+                android:layout_toRightOf="@+id/textView19"
+                android:layout_toEndOf="@+id/textView19"
+                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
+                android:id="@+id/txtprecio"
+                android:textStyle="normal|bold"
+                android:textColor="#ffffff" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -160,6 +171,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageView
+        android:layout_width="44dp"
+        android:layout_height="24dp"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:id="@+id/imageView7"
+        android:background="@drawable/button_borderyellow"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/vermas"
+        app:layout_constraintRight_toRightOf="@+id/vermas"
+        app:layout_constraintLeft_toLeftOf="@+id/vermas"
+        app:layout_constraintHorizontal_bias="1.0" />
 
 
 </android.support.constraint.ConstraintLayout>

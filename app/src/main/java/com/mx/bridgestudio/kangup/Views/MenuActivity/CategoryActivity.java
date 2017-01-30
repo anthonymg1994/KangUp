@@ -12,21 +12,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.Adapters.AdapterCategory;
 import com.mx.bridgestudio.kangup.Adapters.AndroidImageAdapter;
 import com.mx.bridgestudio.kangup.Adapters.SlidingImage_Adapter;
@@ -34,25 +28,19 @@ import com.mx.bridgestudio.kangup.AsyncTask.MarcaModelo.AsyncBrands;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.Models.Lists.ListPublicidad;
 import com.mx.bridgestudio.kangup.Models.Publicidad;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -79,6 +67,8 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     CirclePageIndicator indicator;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
+private SessionManager session;
+
 
     //ctoolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
@@ -92,7 +82,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-
+        session = new SessionManager(this);
 
 
 
@@ -262,6 +252,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
     @Override
     public void onBackPressed()
     {
+        session.logoutUser();
         Intent setIntent = new Intent(this,LoginActivity.class);
         startActivity(setIntent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -298,7 +289,7 @@ public class CategoryActivity extends DrawerActivity implements AdapterView.OnIt
         imagenes_publicidad = new String[obj.length];
         for (int i = 0; i < obj.length; i++) {
             imagenes_publicidad[i] = new String();
-                imagenes_publicidad[i] = (URL + obj[i].getNombre() + "." +obj[i].getFormato());
+                imagenes_publicidad[i] = (URL + obj[i].getNombre());
 
         }
         init();

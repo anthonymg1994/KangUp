@@ -4,13 +4,11 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -19,19 +17,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +32,6 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.Adapters.AdapterAllPackages;
 import com.mx.bridgestudio.kangup.Adapters.AdapterArticle;
-import com.mx.bridgestudio.kangup.Adapters.AdapterPaquetes;
 import com.mx.bridgestudio.kangup.Adapters.AdapterRoutes;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Adapters.RouteTouchHelper;
@@ -54,7 +45,6 @@ import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Article;
-import com.mx.bridgestudio.kangup.Models.DetalleViaje;
 import com.mx.bridgestudio.kangup.Models.DividerItemDecoration;
 import com.mx.bridgestudio.kangup.Models.Lists.ListArticles;
 import com.mx.bridgestudio.kangup.Models.Lists.ListPaquetes;
@@ -66,32 +56,22 @@ import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.Fin_De_Viaje.terminaViaje;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
-import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -220,7 +200,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         listPaquetes.addItemDecoration(itemDecoration);
         listPaquetes.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, listPaquetes ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         id_paquete = itemsPacks.get(position).getId();
                         nombrePaquete = itemsPacks.get(position).getNombre();
@@ -228,9 +208,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                         alertFormElementsArticulos(id_paquete);
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
@@ -240,15 +218,13 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecorations = new SampleDivider(this);
         listRutas.addItemDecoration(itemDecorations);
         listRutas.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, listRutas,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
@@ -316,6 +292,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         //  hora.setText(re.getHourI());
 
         //fillPackagesByReservation();
+
+
 
         sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
         sql.Connect();
@@ -453,6 +431,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
                 webs.EmailConfirmationReservation(Reservacion.this,reservacion);
                 idPack=0;
                 countPack=0;
+                Intent intent = new Intent(Reservacion.this,terminaViaje.class);
+                startActivity(intent);
 
             }
         });
@@ -653,14 +633,12 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         recycler.addItemDecoration(itemDecoration);
         recycler.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, recycler ,new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
-                    }
+
                 })
         );
 
