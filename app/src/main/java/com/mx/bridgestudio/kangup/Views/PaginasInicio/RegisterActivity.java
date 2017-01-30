@@ -3,8 +3,6 @@ package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,10 +12,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -33,34 +27,27 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-//import com.koushikdutta.ion.Ion;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
-import com.google.gson.JsonObject;
-import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.ExitUtils;
-import com.mx.bridgestudio.kangup.Controllers.ImageCompress;
-import com.mx.bridgestudio.kangup.Controllers.PhotoUtil;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.ProfileActivity;
 
-import net.gotev.uploadservice.UploadNotificationConfig;
-import net.gotev.uploadservice.ftp.FTPUploadRequest;
-
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+//import com.koushikdutta.ion.Ion;
 
 public class RegisterActivity extends AppCompatActivity {
 

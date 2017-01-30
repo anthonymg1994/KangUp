@@ -1,1 +1,1 @@
-include ':app', ':conektasdk'
+include ':app'

@@ -169,6 +169,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="#ffffff"
+            app:hintTextAppearance="@style/FloatingLabel"
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textSize="17sp"

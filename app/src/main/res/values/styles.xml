@@ -49,5 +49,6 @@
     <style name="FloatingLabel" parent="@android:style/TextAppearance">
         <item name="android:textColor">#ffffff</item>
 
+
     </style>
 </resources>
