@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterTop;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
@@ -103,7 +102,6 @@ public class AsyncTop extends AsyncTask<String,Integer,String> {
                     arrayVehiculos[i].setMarca(jsonobject.getString("Marca"));
                     arrayVehiculos[i].setModel(jsonobject.getString("Modelo"));
                     arrayVehiculos[i].setYear(jsonobject.getString("Anio"));
-                    arrayVehiculos[i].setValoracion(jsonobject.getInt("puntuacion"));
                     arrayVehiculos[i].setFoto(jsonobject.getString("foto_predeterminada"));
                 }
 
