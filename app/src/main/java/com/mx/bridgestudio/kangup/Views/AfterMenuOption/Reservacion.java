@@ -79,15 +79,6 @@ import java.util.Locale;
  */
 
 public class Reservacion extends DrawerActivity implements View.OnClickListener, AdapterView.OnItemClickListener , OnDataSendAllPackages, OnDataSentArticlesByPackage, OnDataSendPaymentFormsUser {
-
-
-    private static final String LOG_TAG = "kangup";
-
-    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
-    private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
-    private static final String OUT_JSON = "/json";
-    private static final String API_KEY = "AIzaSyCjWw7BILSM1YnBwf48nU-RglJP1fmOKUE";
-
     protected DrawerLayout mDrawer;
     private webServices webs = new webServices();
     private SqliteController sql;
@@ -117,10 +108,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     Control control = new Control();
     private DrawerActivity drw = new DrawerActivity();
 
-    RecyclerView listPaquetes, listRutas;
-    RecyclerView.LayoutManager lManagerPacks, lManagerRoutes;
-    RecyclerView.Adapter adapterRoutes;
-    public static ArrayList<ListRoutes> itemsRoutes = new ArrayList<>();
+    RecyclerView listPaquetes;
+    RecyclerView.LayoutManager lManagerPacks;
     RecyclerView.Adapter adapterPacks;
     ArrayList<ListPaquetes> itemsPacks= new ArrayList<>();
     public static String descripcionPaquete="";
@@ -142,6 +131,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     private ListPaymentForm[] listPay;
     private Rutas[] rutas;
     public int idSQLRoute=0;
+
+    private TextView counter;
 
     //toolbardown
     private ImageButton catalogo, favoritos, historial;
@@ -166,10 +157,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
         getIdReservacion();
 
-
-
-
-
         reservar = (Button) findViewById(R.id.confirmarButton);
         reservar.setOnClickListener(this);
 
@@ -189,10 +176,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         listPaquetes.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         listPaquetes.setHasFixedSize(true);
 
-        listRutas = (RecyclerView) findViewById(R.id.rutasRecyclerView);
-        listRutas.addItemDecoration(new DividerItemDecoration(dividerDrawable));
-        listRutas.setHasFixedSize(true);
-
 
         // Usar un administrador para LinearLayout
                 lManagerPacks = new LinearLayoutManager(this);
@@ -211,37 +194,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
                 })
         );
-
-        // Usar un administrador para LinearLayout
-        lManagerRoutes = new LinearLayoutManager(this);
-        listRutas.setLayoutManager(lManagerRoutes);
-        final RecyclerView.ItemDecoration itemDecorations = new SampleDivider(this);
-        listRutas.addItemDecoration(itemDecorations);
-        listRutas.addOnItemTouchListener(
-                new RecyclerItemClickListener(this,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-
-
-                    }
-
-
-                })
-        );
-
-        // Crear un nuevo adaptador
-        sql = new SqliteController(Reservacion.this, "kangup",null, 1);
-        sql.Connect();
-        itemsRoutes = sql.getRutas();
-        sql.Close();
-
-        adapterRoutes = new AdapterRoutes(itemsRoutes);
-        adapterRoutes.notifyDataSetChanged();
-        listRutas.setAdapter(adapterRoutes);
-
-        ItemTouchHelper.Callback callback = new RouteTouchHelper((AdapterRoutes) adapterRoutes);
-        ItemTouchHelper helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(listRutas);
-
 
         adapterPacks = new AdapterAllPackages(itemsPacks,this);
         listPaquetes.setAdapter(adapterPacks);
@@ -286,6 +238,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
         fecha = (EditText) findViewById(R.id.fecha);
         hora = (EditText) findViewById(R.id.hora);
+        counter = (TextView)findViewById(R.id.counterRoutes);
         //     sql = new SqliteController(getApplicationContext(),"kangup",null,1);
         //    re = sql.getReservacion();
         //   fecha.setText(re.getDate());
@@ -324,86 +277,14 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         }
         if (v.getId() == R.id.addruta) {
             //Agregar origenes y destinos
-            showChangeLangDialog();
+            finish(); // close this activity and return to preview activity (if there is any)
+            startActivity(new Intent(Reservacion.this, ReservacionRutasActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
         }
     }
 
-    public void showChangeLangDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.reservacion_dialog, null);
-        dialogBuilder.setView(dialogView);
 
-        final EditText origen = (EditText) dialogView.findViewById(R.id.origentxt);
-        origen.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Intent setIntent = new Intent(Reservacion.this, PlacesAutoCompleteActivity.class);
-                setIntent.putExtra("option",1);
-              //  setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(setIntent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-            }
-        });
-
-        final EditText destino = (EditText) dialogView.findViewById(R.id.destinotxt);
-        destino.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Intent setIntent = new Intent(Reservacion.this, PlacesAutoCompleteActivity.class);
-                setIntent.putExtra("option",2);
-                setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(setIntent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-            }
-        });
-
-
-        dialogBuilder.setTitle("Nueva ruta");
-        dialogBuilder.setMessage("Introduzca su nueva ruta:");
-        dialogBuilder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //String ruta = "Origen: " + origen.getText().toString() + "\n" + "Destino: " + destino.getText().toString();
-                //addres.add(ruta);
-               //insertRoutesReservation(origen.getText().toString(),destino.getText().toString());
-                sql = new SqliteController(getApplicationContext(),"kangup",null,1);
-                int ix = sql.getReservacionIdNext();
-                //sql.insertRutas(origen.getText().toString(),destino.getText().toString(),ix);
-
-            }
-        });
-        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //pass
-                dialog.dismiss();
-            }
-        });
-        AlertDialog b = dialogBuilder.create();
-        b.show();
-    }
 
     public void Confirmacion() {
 
@@ -669,7 +550,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     public void insertRoutesReservation(){
         sql = new SqliteController(getApplicationContext(),"kangup",null,1);
         ArrayList<ListRoutes> r = new ArrayList<>();
-        r = sql.getRutas();
+        //r = sql.getRutas(r); descomentar
         for(int i=0; i<r.size();i++){
             Ion.with(Reservacion.this)
                     .load("POST", "http://kangup.com.mx/index.php/routes")
@@ -779,14 +660,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
     }
 
-    /*public void fillStringPay(ListPaymentForm[] pay){
-        String account[] = new String[pay.length];
-        for(int i=0; i<pay.length;i++){
-            account[i] = pay[i].getTipoPago();
-            tiposPagos.add(i,account[i]);
-        }
-    }*/
-
     @Override
     public void sendDataPaymentFormsUser(PaymentForm[] obj) {
 
@@ -800,11 +673,42 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     @Override
     public void onBackPressed()
     {
+        alertCancelReservation();
+    }
+
+    public void alertCancelReservation() {
+        new AlertDialog.Builder(Reservacion.this)
+                .setTitle("Reservación")
+                .setMessage("¿Deseeas cancelar tu reservación?")
+                .setIcon(R.drawable.salir_icon)
+                .setPositiveButton("Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                sql.deletePackages();
+                                sql.deleteRoutes();
+                                Intent setIntent = new Intent(Reservacion.this,CatalogCar.class);
+                                startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
         sql.deletePackages();
         sql.deleteRoutes();
-        Intent setIntent = new Intent(this,CatalogCar.class);
-        startActivity(setIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        finish();
+
     }
+
 }

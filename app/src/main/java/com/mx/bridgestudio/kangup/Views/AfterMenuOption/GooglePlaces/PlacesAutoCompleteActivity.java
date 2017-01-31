@@ -3,9 +3,12 @@ package com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.maps.android.SphericalUtil;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendRutas;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
+import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.ReservacionRutasActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
 /**
@@ -45,6 +48,8 @@ import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Models.Constants;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
+import java.util.ArrayList;
+
 
 public class PlacesAutoCompleteActivity extends DrawerActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
     protected GoogleApiClient mGoogleApiClient;
@@ -73,6 +78,11 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     private static String destino;
     private Button addruta;
     int option;
+    //OnDataSendRutas rutas;
+    /*public PlacesAutoCompleteActivity(OnDataSendRutas rutas){
+        this.rutas = rutas;
+
+    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -292,14 +302,25 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                 sql.insertRutas(mAutocompleteView.getText().toString(),mAutocompleteView_destino.getText().toString(),id_reservacion,1);
                 sql.Close();
 
-                com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion.itemsRoutes.clear();
+
+              /*  sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
+                sql.Connect();
+                  ArrayList<ListRoutes> itemsRoutes;
+                itemsRoutes = new ArrayList<>();
+                itemsRoutes = sql.getRutas();
+                sql.Close();*/
 
 
-                Intent setIntent = new Intent(PlacesAutoCompleteActivity.this, com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion.class);
+                Intent setIntent = new Intent(PlacesAutoCompleteActivity.this, com.mx.bridgestudio.kangup.Views.AfterMenuOption.ReservacionRutasActivity.class);
                 //setIntent.putExtra("option",1);
                 //  setIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //rutas.sendData(itemsRoutes);
+
+                finish();
                 this.startActivity(setIntent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                //
+
             }
         }
     }
@@ -326,5 +347,8 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     {
       super.onBackPressed();
     }
+
+
+
 
 }

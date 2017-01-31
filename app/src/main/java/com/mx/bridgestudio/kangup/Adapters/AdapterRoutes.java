@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.R;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -69,6 +70,16 @@ public class AdapterRoutes extends RecyclerView.Adapter<AdapterRoutes.AnimeViewH
     public void remove(int position) {
         items.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void add(ListRoutes route){
+        this.items.add(route);
+    }
+
+    public void refreshEvents(List<ListRoutes> items) {
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
     }
 
 }

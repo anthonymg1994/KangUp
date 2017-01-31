@@ -8,14 +8,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.User;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.ReservacionRutasActivity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by USUARIO on 18/11/2016.
@@ -23,6 +28,7 @@ import java.util.ArrayList;
 
 public class SqliteController extends SQLiteOpenHelper {
 
+    Context context;
     SQLiteDatabase db;
     private String CrearUsuarios ="CREATE TABLE Usuarios(id INTEGER, nombre TEXT, apellido_paterno TEXT, apellido_materno TEXT," +
             "telefono TEXT, email TEXT, fecha_nacimiento TEXT, ciudad TEXT, password TEXT, id_forma_pago INTEGER, status TEXT, foto TEXT);";
@@ -42,6 +48,7 @@ public class SqliteController extends SQLiteOpenHelper {
 
     public SqliteController(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+        this.context = context;
     }
 
     @Override
@@ -220,29 +227,29 @@ public class SqliteController extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<ListRoutes> getRutas(){
+    public ListRoutes[] getRutas(){
         db = getReadableDatabase();
         Cursor c=db.rawQuery("SELECT id,origen,destino,id_reservacion,posicion FROM Routes ",null);
-        ArrayList<ListRoutes> rutas = new ArrayList<>();
-        ListRoutes[] r;
+        ListRoutes[] r = new ListRoutes[0];
         if(c.moveToFirst())
         {
-            r = new ListRoutes[c.getCount()];
-            do{
-                for(int i = 0; i< c.getCount(); i++){
-                  //  rutas[i] = new Rutas();
+                r = new ListRoutes[c.getCount()];
+                do{
+                    for(int i = 0; i< c.getCount(); i++){
+                        //  rutas[i] = new Rutas();
                         r[i] = new ListRoutes();
                         r[i].setIdSQL(c.getInt(0));
                         r[i].setOrigen(c.getString(1));
                         r[i].setDestiny(c.getString(2));
                         r[i].setId(c.getInt(3));
                         r[i].setPosicion(c.getInt(4));
-                        rutas.add(i, r[i]);
-                }
-            }while(c.moveToNext());
+                    }
+                }while(c.moveToNext());
         }
+
+        //ReservacionRutasActivity.adapterRoutes.notifyDataSetChanged();
         db.close();
-        return rutas;
+        return r;
     }
 
     public void updateRoutePosition(int position,int idSQLite)
