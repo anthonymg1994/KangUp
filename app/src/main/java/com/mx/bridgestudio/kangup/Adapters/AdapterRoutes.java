@@ -12,7 +12,9 @@ import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Isaac on 04/01/2017.
@@ -72,13 +74,15 @@ public class AdapterRoutes extends RecyclerView.Adapter<AdapterRoutes.AnimeViewH
         notifyItemRemoved(position);
     }
 
-    public void add(ListRoutes route){
+    public void add(int i,ListRoutes route){
+
         this.items.add(route);
     }
 
     public void refreshEvents(List<ListRoutes> items) {
+        Set<ListRoutes> routesWithoutDuplicates = new LinkedHashSet<ListRoutes>(items);
         this.items.clear();
-        this.items.addAll(items);
+        this.items.addAll(routesWithoutDuplicates);
         notifyDataSetChanged();
     }
 

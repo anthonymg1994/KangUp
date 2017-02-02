@@ -55,7 +55,7 @@ public class ReservacionRutasActivity extends AppCompatActivity {
     private FloatingActionButton addRoute;
     private RecyclerView listRutas;
     private RecyclerView.LayoutManager lManagerRoutes;
-    public  RecyclerView.Adapter adapterRoutes;
+    public AdapterRoutes adapterRoutes;
     public  ArrayList<ListRoutes> itemsRoute = new ArrayList<>();
     public static int itemsSize=0;
     private TextView emptyView;
@@ -129,6 +129,7 @@ public class ReservacionRutasActivity extends AppCompatActivity {
         adapterRoutes = new AdapterRoutes(itemsRoute);
         listRutas.setAdapter(adapterRoutes);
         itemsRoute = fillRoutes(rut,itemsRoute);
+        adapterRoutes.refreshEvents(itemsRoute);
 
 
         if(itemsRoute.isEmpty()){
