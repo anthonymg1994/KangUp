@@ -13,18 +13,29 @@ public class ListNews {
     private String title;
     private String description;
     private String image;
+    private String fecha;
+
+
 
     public ListNews(){}
-    public ListNews(int id, String title, String desc,String image){
+    public ListNews(int id, String title, String desc,String image,String fecha){
         this.setId(id);
         this.setTitle(title);
         this.setDescription(desc);
         this.setImage(image);
+        this.setFecha(fecha);
     }
     public static int getImageId(Context context, int imageName) {
         return context.getResources().getIdentifier("drawable/" + imageName, null, context.getPackageName());
     }
 
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
     public int getId() {
         return id;

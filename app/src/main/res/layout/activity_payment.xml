@@ -52,6 +52,18 @@
         app:layout_constraintBottom_toTopOf="@+id/include5"
         app:layout_constraintTop_toBottomOf="@+id/toolbarPay" />
 
+    <TextView
+        android:id="@+id/empty_view_payment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="No tienes metodos de pago"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarPay"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <include
         android:layout_height="wrap_content"
         android:layout_width="0dp"

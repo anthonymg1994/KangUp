@@ -1,7 +1,6 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -18,14 +17,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -39,25 +33,21 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.PaymentActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 import com.mx.bridgestudio.kangup.Views.tabs.TabRecommend;
-import com.mx.bridgestudio.kangup.Views.tabs.TabVotados;
 import com.mx.bridgestudio.kangup.Views.tabs.TabTop;
+import com.mx.bridgestudio.kangup.Views.tabs.TabVotados;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -344,6 +334,7 @@ public class CarsXtype extends DrawerActivity implements
 
                     }
                 }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
 
     }
@@ -533,15 +524,23 @@ public class CarsXtype extends DrawerActivity implements
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+
+                        String min="";
+                        if(minute<10){
+                            min = "0"+minute;
+                        }else{
+                            min=""+minute;
+                        }
+
                         if (x == 1) {
-                            hora_.setText(hourOfDay + ":" + minute + " ");
-                            CardAdapter.hour_real = hourOfDay + ":" + minute + " ";
-                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + minute + "";
+                            hora_.setText(hourOfDay + ":" + min + " ");
+                            CardAdapter.hour_real = hourOfDay + ":" + min + " ";
+                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + min + "";
                             CardAdapter.hour = hora_margen_inicio;
                         } else if (x == 2) {
-                            horaTermino.setText(hourOfDay + ":" + minute + " ");
-                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + minute + "";
-                            CardAdapter.hour_final_real = hourOfDay + ":" + minute + " ";
+                            horaTermino.setText(hourOfDay + ":" + min + " ");
+                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + min + "";
+                            CardAdapter.hour_final_real = hourOfDay + ":" + min + " ";
                             CardAdapter.hour_final = hora_margen_termino;
                         }
                     }

@@ -19,9 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
@@ -29,6 +27,7 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Controllers.Tools;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.squareup.picasso.Picasso;
 
@@ -282,29 +281,14 @@ public class ProfileActivity extends DrawerActivity implements
         if(R.id.editBirth == v.getId()){
             showDialog();
         }
-        /*
-        if(v.getId() == R.id.showCalendar)
-        {
-            // Get Current Date
-            final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
+    }
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                    new DatePickerDialog.OnDateSetListener() {
-
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-
-                            editBirth.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-
-                        }
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.show();
-        }
-        */
+    @Override
+    public void onBackPressed() {
+        Intent setIntent = new Intent(this,CatalogCar.class);
+        startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
     }
 
 }

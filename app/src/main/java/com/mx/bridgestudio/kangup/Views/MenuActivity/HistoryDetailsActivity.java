@@ -120,6 +120,8 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setColorFilter(ContextCompat.getColor(HistoryDetailsActivity.this,R.color.colorAccent));
+
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

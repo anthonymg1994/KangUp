@@ -3,9 +3,11 @@ package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,10 +31,14 @@ public class ForgotActivity extends AppCompatActivity {
     private AsynkTaskUser mAuthTask = null;
     public Boolean flag = false;
     private Control control = new Control();
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
+
+
+        control.changeColorStatusBar(ForgotActivity.this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarForgot);
         setSupportActionBar(toolbar);
@@ -74,6 +80,13 @@ public class ForgotActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent setIntent = new Intent(this,LoginActivity.class);
+        startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
@@ -154,6 +167,7 @@ public class ForgotActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         }
+
     }
 
 }

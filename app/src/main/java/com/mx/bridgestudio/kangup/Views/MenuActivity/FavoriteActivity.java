@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
 import com.mx.bridgestudio.kangup.Controllers.Control;
@@ -45,80 +44,73 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     private Vehicle vehicle = new Vehicle();
     private String opcionSeleccionada ="";
     private DAOVehiculo Dvehicle = new DAOVehiculo();
-
     private Vehicle ve = new Vehicle();
     public static int id_vehiculo = 0;
     public static String nombre_vehiculo = "";
     ArrayList<ListCar> items= new ArrayList<>();
     Control control = new Control();
-
+    private TextView emptyView;
     public TextView emptyTest;
-    //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private DrawerActivity drw = new DrawerActivity();
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_favorite);
         control.changeColorStatusBar(FavoriteActivity.this);
-
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_favorite, null, false);
         mDrawer.addView(contentView, 0);
-        emptyTest =(TextView) findViewById(android.R.id.empty);
+        emptyView =(TextView) findViewById(R.id.empty_vieww);
         //drw.setNameToolbar("Favoritos");
 
+
         listFav = (ListView)findViewById(R.id.listFav);
+       // if(control.isNetworkAvailable(this)) {
+       // }
         adaptador = new AdapterFavoriteList(this,tipos);
         listFav.setAdapter(adaptador);
-
         getSupportActionBar().setTitle("Favoritos");
+
 
         sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
         sql.Connect();
         user = sql.user();
         sql.Close();
       //  if(control.isOnline()){
-            webs.favsByUser(FavoriteActivity.this,FavoriteActivity.this,user);
+        webs.favsByUser(FavoriteActivity.this, FavoriteActivity.this, user);
         //}else{
 //            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-  //      }
-
+        //      }
+        if(tipos.isEmpty()){
+            listFav.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else{
+            listFav.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
         //listFav.setOnItemClickListener(this);
         listFav.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
         listFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
-
                 int opcionSeleccionada = tipos.get(position).getId();
                 id_vehiculo = opcionSeleccionada;
                 nombre_vehiculo = tipos.get(position).getMarca() + " " + tipos.get(position).getModelo() + " " + tipos.get(position).getAnio();
                 ve.setId(id_vehiculo);
-
-
-              //  Toast.makeText(FavoriteActivity.this, "id_vehiculo = " + id_vehiculo
-               //         + " " + "nombre = "+ nombre_vehiculo , Toast.LENGTH_SHORT).show();
-                webs.DetailVehicle(FavoriteActivity.this,FavoriteActivity.this,ve);
-                //Intent intent = new Intent(CategoryActivity.this, CatalogCar.class);
-                //SendToActivity.sendData(arrayBrands);
-                //intent.putExtra("option",brand.getId_categoria());
-                //startActivity(intent);
-
-//                webs.brandByCategory(CategoryActivity.this,CategoryActivity.this,brand);
+                    webs.DetailVehicle(FavoriteActivity.this, FavoriteActivity.this, ve);
             }
         });
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,9 +120,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
               //  } else {
                 //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
                 //}
-
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
@@ -143,12 +133,11 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                   //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
                 //}
-
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
+        favoritos.setColorFilter(ContextCompat.getColor(FavoriteActivity.this,R.color.colorAccent));
         favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,35 +147,27 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
                  //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
                 //}
-
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-             //   if (control.isOnline()) {
-
+             //   if (control.isOnline())
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(FavoriteActivity.this, HistoryActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                // } else {
                  //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
                 //}
-
             }
         });
-
     }
+
 
     public void fillList(Vehicle[] vehicles){
         final String URL = "http://kangup.com.mx/uploads/Vehiculos/";
-
-
         ListCar[] list = new ListCar[vehicles.length];
         for(int i = 0 ; i < vehicles.length ; i++){
             list[i] = new ListCar();
@@ -198,14 +179,12 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
             //list[i].setTotal(listCar[i].getTotal());
             //Cmbiar por imagen del servidor
             list[i].setImage(URL + vehicles[i].getFoto());
-
             tipos.add(i,list[i]);
         }
         if(list.length<=0){
             setEmptyTest("No tiene favoritos : ( ");
         }
         adaptador.notifyDataSetChanged();
-
     }
 
 
@@ -223,7 +202,9 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
 
     @Override
     public void sendDataFavorites(Vehicle[] obj) {
-        fillList(obj);
+      //  if(obj != null) {
+            fillList(obj);
+       // }
     }
 
     @Override

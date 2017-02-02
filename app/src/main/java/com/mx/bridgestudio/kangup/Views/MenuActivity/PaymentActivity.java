@@ -2,10 +2,9 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaymentList;
@@ -44,7 +44,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
     private DAOFormasPago Dpay = new DAOFormasPago();
     private PaymentForm pa = new PaymentForm();
     private SqliteController sql;
-
+    private TextView emptyView;
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
     private DrawerActivity drw = new DrawerActivity();
@@ -70,6 +70,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         listPay = (ListView)findViewById(R.id.listPayment);
         adaptador = new AdapterPaymentList(this,tipos);
         listPay.setAdapter(adaptador);
+        emptyView =(TextView) findViewById(R.id.empty_view_payment);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.FabAdd);
@@ -81,7 +82,6 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         });
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,9 +152,21 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         sql.Close();
 
        // if(control.isOnline()){
-            webs.getFormaPagoByUser(PaymentActivity.this,this,pa);
+        if(control.isNetworkAvailable(this)) {
+
+            webs.getFormaPagoByUser(PaymentActivity.this, this, pa);
+        }
         //}else{
-            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+        if(tipos.isEmpty()){
+            listPay.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else{
+            listPay.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
         //}
 

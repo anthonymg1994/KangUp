@@ -67,7 +67,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
     private List<ListEspecificaciones> data;
     protected DrawerLayout mDrawer;
     private Button  reservar;
-    ImageView vermas;
+    ImageButton vermas;
     private TextView modelo, descripcion,precio;
     Vehicle car = new Vehicle();
     String[] photo;
@@ -121,7 +121,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
         webs.getAllPhotoById(this,this,car);
         getSupportActionBar().setTitle(""+car.getModel()+ " " + car.getYear() +" " +car.getMarca());
 
-        vermas = (ImageView)findViewById(R.id.vermas);
+        vermas = (ImageButton) findViewById(R.id.fotos);
         vermas.setOnClickListener(this);
         reservar = (Button)findViewById(R.id.reservarr);
         reservar.setOnClickListener(this);
@@ -321,7 +321,7 @@ public class DetalleActivity extends DrawerActivity implements OnDataSendPhotos,
                     finish();
                 }
             }
-        if(v.getId() == R.id.vermas){
+        if(v.getId() == R.id.fotos){
 
             showChangeLangDialog();
             if(flag == 1){

@@ -6,7 +6,7 @@ package com.mx.bridgestudio.kangup.Controllers.Paypal;
 
 public class PayPalConfig {
 
-    public static final String PAYPAL_CLIENT_ID = "AfRGZ7VfKf6cw7q53koHwgO4hRHA2vXpojMeutxRRkvD4U4dgatKJ6uEnfUmlfjZo5P7x00pD_tJ4Ch";
-    public static final String PAYPAL_SECRET = "xBBs4BywGqswfh5SnXBNvk9PDCxdFDcBWltmmOzJZPM0U_7RgK53kwXMRsPIf1";
+    public static final String PAYPAL_CLIENT_ID = "AVSH2WqJlZFk0t7k4i9k1QF4A1GWJt985bJybpv3kL8vtet3MVYTuetkryt4-CywHJUatKZa2kGHVrTm";
+    public static final String PAYPAL_SECRET = "EN8hBftv4dET_AH9O_U3Tj-HamoByG4ta_kWqJi2i3_lM6q3xy1qfb6UvtGi4wr8RidOe-dE9DUmtq86";
 
 }

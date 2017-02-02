@@ -24,16 +24,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
-import com.squareup.picasso.Picasso;
-import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -147,21 +144,29 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
         // Launch Time Picker Dialog
+
         final TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+                        String min="";
+                        if(minute<10){
+                            min = "0"+minute;
+                        }else{
+                            min=""+minute;
+                        }
                         if (x == 1) {
-                            hora.setText(hourOfDay + ":" + minute + " ");
-                            hour_real = hourOfDay + ":" + minute + " ";
-                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + minute + "";
+
+                            hora.setText(hourOfDay + ":" + min + " ");
+                            hour_real = hourOfDay + ":" + min + " ";
+                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + min + "";
                             hour = hora_margen_inicio;
                         } else if (x == 2) {
-                            horaTermino.setText(hourOfDay + ":" + minute + " ");
-                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + minute + "";
-                            hour_final_real = hourOfDay + ":" + minute + " ";
+                            horaTermino.setText(hourOfDay + ":" + min + " ");
+                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + min + "";
+                            hour_final_real = hourOfDay + ":" + min + " ";
                             hour_final = hora_margen_termino;
                         }
                     }
@@ -324,6 +329,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
 
                         }
                     }, mYear, mMonth, mDay);
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             datePickerDialog.show();
 
         }

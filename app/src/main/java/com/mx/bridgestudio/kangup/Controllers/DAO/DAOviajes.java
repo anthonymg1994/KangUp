@@ -3,12 +3,9 @@ package com.mx.bridgestudio.kangup.Controllers.DAO;
 import android.app.ProgressDialog;
 import android.os.StrictMode;
 
-import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.DetalleViaje;
-import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.User;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +38,7 @@ public class DAOviajes {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/historial");
+            URL url = new URL("https://kangup.com.mx/index.php/historial");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
@@ -101,7 +98,7 @@ public class DAOviajes {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/historialDetalle");
+            URL url = new URL("https://kangup.com.mx/index.php/historialDetalle");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
@@ -182,7 +179,7 @@ public class DAOviajes {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/historialRutas");
+            URL url = new URL("https://kangup.com.mx/index.php/historialRutas");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");

@@ -3,9 +3,7 @@ package com.mx.bridgestudio.kangup.Controllers.DAO;
 import android.app.ProgressDialog;
 import android.os.StrictMode;
 
-import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
-import com.mx.bridgestudio.kangup.Models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +32,7 @@ public class DAOFormasPago {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         try {
-            URL url = new URL("http://kangup.com.mx/index.php/insertFormaPago");
+            URL url = new URL("https://kangup.com.mx/index.php/insertFormaPago");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
@@ -90,7 +88,7 @@ public class DAOFormasPago {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/formasPagoUsuario");
+            URL url = new URL("https://kangup.com.mx/index.php/formasPagoUsuario");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(10000);
             httpURLConnection.setRequestMethod("POST");

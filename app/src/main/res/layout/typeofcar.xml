@@ -20,7 +20,7 @@
 
     <LinearLayout android:id="@+id/footer"
         android:layout_height="wrap_content" android:orientation="horizontal"
-        android:background="@color/yellow"
+        android:background="@drawable/button_borderyellow"
         android:layout_alignParentBottom="true" style="@android:style/ButtonBar"
         app:layout_constraintBottom_toTopOf="@+id/include"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,13 +31,13 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/bordercalendarr"
+            android:background="@color/status"
             app:srcCompat="@android:drawable/ic_menu_agenda"
             android:id="@+id/changeHour"
 
             android:layout_weight="0.23"
             android:elevation="0dp"
-            android:tint="@android:color/black" />
+            android:tint="@android:color/background_light" />
 
 
 
@@ -49,9 +49,8 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:gravity="center"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textAlignment="center"
-            android:background="@color/yellow"
             android:layout_gravity="center" />
 
 
@@ -65,9 +64,8 @@
             android:layout_weight="0.80"
             android:textStyle="bold"
             android:gravity="center"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textAlignment="center"
-            android:background="@color/yellow"
             android:layout_gravity="center" />
 
 

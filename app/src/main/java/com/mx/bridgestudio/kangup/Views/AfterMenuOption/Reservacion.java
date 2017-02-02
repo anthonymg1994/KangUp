@@ -242,6 +242,9 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
 
         catalogo = (ImageButton) findViewById(R.id.catalogoToolbar);
+
+        catalogo.setColorFilter(ContextCompat.getColor(Reservacion.this,R.color.colorAccent));
+
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -433,6 +436,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         });
         dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
+                Intent intent = new Intent(Reservacion.this,terminaViaje.class);
+                startActivity(intent);
                 Toast.makeText(getApplicationContext(),String.valueOf(countPack),Toast.LENGTH_SHORT).show();
             }
         });
@@ -544,8 +549,8 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
         //CalendarContract.Events.
 
-        intent.putExtra(CalendarContract.Events.TITLE, "Neel Birthday");
-        intent.putExtra(CalendarContract.Events.DESCRIPTION, "This is a sample description");
+        intent.putExtra(CalendarContract.Events.TITLE, "Reservacion KangUp");
+        intent.putExtra(CalendarContract.Events.DESCRIPTION, "Reservacion de vehiculo el dia"+CardAdapter.datee);
         intent.putExtra(CalendarContract.Events.EVENT_LOCATION, "My Guest House");
         intent.putExtra(CalendarContract.Events.RRULE, "FREQ=YEARLY");
 

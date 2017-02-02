@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterNews;
@@ -48,12 +49,13 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
     public static int id_noticia=0;
     public static String titulo = "";
     public static String desc = "";
+    public static String fecha = "";
 
     private News n;
 
     protected DrawerLayout mDrawer;
     Control control = new Control();
-
+    private TextView emptyView;
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
     private DrawerActivity drw = new DrawerActivity();
@@ -70,20 +72,22 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_news, null, false);
         mDrawer.addView(contentView, 0);
+        emptyView =(TextView) findViewById(R.id.empty_view_news);
 
        // drw.setNameToolbar("Noticias");
         getSupportActionBar().setTitle("Noticias");
 
        // if(control.isOnline()){
-          webs.getAllNews(NewsActivity.this,this);
-        //}else{
-        //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
+        if(control.isNetworkAvailable(this)) {
+            webs.getAllNews(NewsActivity.this, this);
+        }
 
 
-        //}
+
+
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(NewsActivity.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,6 +101,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setColorFilter(ContextCompat.getColor(NewsActivity.this,R.color.colorAccent));
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,6 +162,16 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
 
         recycler = (RecyclerView) findViewById(R.id.newsRecycler);
+
+        if(items.isEmpty()){
+            recycler.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else{
+            recycler.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
+
         recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
 
         recycler.setHasFixedSize(true);
@@ -176,7 +191,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
                         //nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
                         titulo = items.get(position).getTitle();
                         desc = items.get(position).getDescription();
-
+                        fecha = items.get(position).getFecha();
                         //Toast.makeText(NewsActivity.this, "titulo = " + titulo
                            //     + " " + "desc = "+ desc , Toast.LENGTH_SHORT).show();
 

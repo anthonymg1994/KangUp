@@ -1,49 +1,40 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption.Fin_De_Viaje;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.DetalleActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
-import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.squareup.picasso.Picasso;
 
 /**
  * Created by USUARIO on 25/01/2017.
  */
 
-public class terminaViaje extends Activity {
+public class terminaViaje extends DrawerActivity {
     protected DrawerLayout mDrawer;
     Control control = new Control();
     RatingBar ratingBar_socio, ratingBar_viaje;
     TextView nombre_socio, fecha,hora_inicio,hora_termino,total;
+    Button enviar;
+    float rating_socio=0;
+    float rating_viaje=0;
     private ImageView profile_photo;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -53,9 +44,14 @@ public class terminaViaje extends Activity {
         // setContentView(R.layout.activity_detalle);
         //   vehicle.setId(id_vehiculo);
         //  webs.DetailVehicle(this,this,vehicle);
+
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //inflate your activity layout here!
+
         control.changeColorStatusBar(terminaViaje.this);
+
+
+
+
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.black_back, null, false);
         mDrawer.addView(contentView, 0);
@@ -66,16 +62,37 @@ public class terminaViaje extends Activity {
     }
 
     public void init(View v){
+
+
         ratingBar_socio = (RatingBar) v.findViewById(R.id.stars_chofer);
         ratingBar_viaje = (RatingBar) v.findViewById(R.id.stars_viaje);
         nombre_socio = (TextView)v.findViewById(R.id.conductor_nombre);
-        fecha = (TextView)v.findViewById(R.id.fecha);
+        fecha = (TextView)v.findViewById(R.id.fecha_);
         hora_inicio = (TextView)v.findViewById(R.id.hora_inicio);
         hora_termino = (TextView)v.findViewById(R.id.hora_termino);
         total = (TextView)v.findViewById(R.id.total);
         profile_photo = (ImageView)v.findViewById(R.id.imageProfilee);
 
 
+
+        ratingBar_socio.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+                float rating_socio = ratingBar_socio.getRating();
+            }
+        });
+
+        ratingBar_viaje.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+                float rating_viaje = ratingBar_viaje.getRating();
+
+            }
+        });
 
 
         fecha.setHintTextColor(this.getResources().getColor(R.color.textoHint));
@@ -103,21 +120,21 @@ public class terminaViaje extends Activity {
 
     }
     public void Dialog_Puntuacion() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(terminaViaje.this,R.style.MyDialogTheme);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View dialogView = inflater.inflate(R.layout.dialog_termino_viaje, null);
-        dialogBuilder.setView(dialogView);
 
-        init(dialogView);
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(terminaViaje.this,R.style.MyDialogTheme);
+        View root = ((LayoutInflater) terminaViaje.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.dialog_termino_viaje, null);
+        dialogBuilder.setView(root);
+
+        init(root);
         fill_fields();
         dialogBuilder.setTitle("");
         dialogBuilder.setMessage("Termina tu viaje");
-        dialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();
                 //com.mx.bridgestudio.kangup.Models.Reservacion res = new com.mx.bridgestudio.kangup.Models.Reservacion();
-                float rating_socio = ratingBar_socio.getRating();
-                float rating_viaje = ratingBar_viaje.getRating();
+
 
                 if(rating_socio == 0 || rating_viaje == 0){
                     Toast.makeText(getApplicationContext(),"Nuestra aplicacion necesita de tu opinion, califica tu viaje",Toast.LENGTH_SHORT).show();
@@ -130,13 +147,10 @@ public class terminaViaje extends Activity {
 
             }
         });
-        dialogBuilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //pass
-                dialog.dismiss();
-            }
-        });
+
         AlertDialog b = dialogBuilder.create();
         b.show();
     }
+
+
 }

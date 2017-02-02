@@ -23,7 +23,7 @@ public class NewsDetailActivity extends DrawerActivity {
     private News news;
     protected DrawerLayout mDrawer;
 
-    private TextView title,desc;
+    private TextView title,desc,fecha;
     Control control = new Control();
 
     //toolbardown
@@ -60,6 +60,8 @@ public class NewsDetailActivity extends DrawerActivity {
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setColorFilter(ContextCompat.getColor(NewsDetailActivity.this,R.color.colorAccent));
+
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +122,7 @@ public class NewsDetailActivity extends DrawerActivity {
 
 
         desc = (TextView)findViewById(R.id.bodyNews);
-
+        fecha = (TextView)findViewById(R.id.date);
         //Intent intent=this.getIntent();
         //Bundle bundle=intent.getExtras();
 
@@ -129,6 +131,7 @@ public class NewsDetailActivity extends DrawerActivity {
         //news=(News)bundle.getSerializable("value");
 
         desc.setText(NewsActivity.desc);
+        fecha.setText(NewsActivity.fecha);
         //drw.setNameToolbar(NewsActivity.titulo);
 
         getSupportActionBar().setTitle(NewsActivity.titulo);

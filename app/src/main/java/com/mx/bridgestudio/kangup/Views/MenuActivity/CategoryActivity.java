@@ -78,23 +78,12 @@ private SessionManager session;
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_category);
         control.changeColorStatusBar(CategoryActivity.this);
-
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         session = new SessionManager(this);
-
-
-
-
-
         View contentView = inflater.inflate(R.layout.activity_category, null, false);
-
         mDrawer.addView(contentView, 0);
-
-
-
-
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPageAndroid);
         pagePublicidad = (ViewPager) findViewById(R.id.viewPagePublicidad);
 
@@ -108,17 +97,13 @@ private SessionManager session;
                 Toast.makeText(getApplicationContext(),"your icon was clicked",Toast.LENGTH_SHORT).show();
             }
         });
-
-        webs.getAllPublicidad(this,this);
+        if(control.isNetworkAvailable(this)) {
+            webs.getAllPublicidad(this, this);
+        }
      //   getPublicidad();
         getSupportActionBar().setTitle("Categorias");
 
-
-
-
-
         list = (ListView)findViewById(R.id.listCategory);
-
         list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         adaptador = new AdapterCategory(this,tipos);
         list.setAdapter(adaptador);
@@ -138,9 +123,7 @@ private SessionManager session;
 //                webs.brandByCategory(CategoryActivity.this,CategoryActivity.this,brand);
             }
         });
-
         fillList();
-
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setColorFilter(ContextCompat.getColor(CategoryActivity.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
@@ -163,11 +146,6 @@ private SessionManager session;
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, NewsActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-               // } else {
-                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-                //}
-
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
@@ -186,30 +164,21 @@ private SessionManager session;
                     //} else {
                     //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
                 }
-                //}
-
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
              //   if (control.isOnline()) {
                 if(LoginActivity.guestFlag == 1){
                     alertGuest();
                 }
-                else{
+                else {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(CategoryActivity.this, HistoryActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
-
-               // } else {
- //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-//
-  //              }
-
             }
         });
 
@@ -238,7 +207,6 @@ private SessionManager session;
         {
             tipos.add(x,list[x]);
         }
-
     }
 
     @Override
@@ -252,30 +220,22 @@ private SessionManager session;
     @Override
     public void onBackPressed()
     {
-        session.logoutUser();
-        Intent setIntent = new Intent(this,LoginActivity.class);
-        startActivity(setIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        finish();
-    }
-/*
-    @Override
-    public void sendData(Brand[] obj) {
+        if(LoginActivity.guestFlag==1)
         {
-            Toast.makeText(this, "paso"+obj.length, Toast.LENGTH_SHORT).show();
+            alertLogOut();
+        }
+        else{
+            alertLogOut();
         }
     }
-    */
+
     protected int getLayoutId() {
         return R.layout.activity_drawer;
     }
 
     public void fill_with_data(Publicidad[] list) {
-
-
         ListPublicidad listF = new ListPublicidad();
         for (int i = 0; i < list.length ; i ++){
-
             listF.setId(list[i].getId());
             listF.setNombre(list[i].getNombre());
             listF.setImage(R.drawable.auto);
@@ -286,30 +246,24 @@ private SessionManager session;
     @Override
     public void sendDataPublicidad(Publicidad[] obj) {
         final String URL = "http://kangup.com.mx/uploads/Publicidad/";
-        imagenes_publicidad = new String[obj.length];
-        for (int i = 0; i < obj.length; i++) {
-            imagenes_publicidad[i] = new String();
+        if(obj.length>0) {
+            imagenes_publicidad = new String[obj.length];
+            for (int i = 0; i < obj.length; i++) {
+                imagenes_publicidad[i] = new String();
                 imagenes_publicidad[i] = (URL + obj[i].getNombre());
 
+            }
+            init();
         }
-        init();
-
     }
-
-
-
-
     private void init() {
         for(int i=0;i<imagenes_publicidad.length;i++)
             ImagesArray.add(imagenes_publicidad[i]);
             pagePublicidad.setAdapter(new SlidingImage_Adapter(CategoryActivity.this,ImagesArray));
              final float density = getResources().getDisplayMetrics().density;
 
-//Set circle indicator radius
-
-
+//Set circle indicator radi
         NUM_PAGES =IMAGES.length;
-
         // Auto start of viewpager
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
@@ -327,12 +281,32 @@ private SessionManager session;
                 handler.post(Update);
             }
         }, 3000, 3000);
-
         // Pager listener over indicator
     }
-
-
-
+    public void alertLogOut() {
+        new AlertDialog.Builder(CategoryActivity.this)
+                .setTitle("Cerrar sesion")
+                .setMessage("¿Desea cerrar sesión?")
+                .setIcon(R.drawable.ic_close_light)
+                .setPositiveButton("Si",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                session.logoutUser();
+                                Intent setIntent = new Intent(CategoryActivity.this,LoginActivity.class);
+                                startActivity(setIntent);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                finish();
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
 
     public void alertGuest() {
         new AlertDialog.Builder(CategoryActivity.this)
@@ -357,5 +331,6 @@ private SessionManager session;
                     }
                 }).show();
     }
+
 
 }

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterViaje;
@@ -49,12 +50,9 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     private SqliteController sql;
     private User user = new User();
     Control control = new Control();
-
+    private TextView emptyView;
     public static int id_viaje=0;
-
-    //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
-
     private DrawerActivity drw = new DrawerActivity();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -63,23 +61,18 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_favorite);
         control.changeColorStatusBar(HistoryActivity.this);
-
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_history, null, false);
         mDrawer.addView(contentView, 0);
-
-        //drw.setNameToolbar("Historial");
-
-
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         recycler.setHasFixedSize(true);
+        emptyView = (TextView)findViewById(R.id.empty_view);
+
         // Usar un administrador para LinearLayout
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
-
-
         getSupportActionBar().setTitle("Historial de viajes");
 
 
@@ -87,25 +80,30 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         sql.Connect();
         user = sql.user();
         sql.Close();
-
         //if(control.isOnline()){
-            webs.historyByUser(HistoryActivity.this,HistoryActivity.this,user);
-        //}else{
-          //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+        if(control.isNetworkAvailable(this)) {
+            webs.historyByUser(HistoryActivity.this, HistoryActivity.this, user);
+            //}else{
+            //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+        }
 
-        //}
+        if(items.isEmpty()){
+            recycler.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else{
+            recycler.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
 
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
-
         recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
-
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(this ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Toast.makeText(view.getContext(), "position = " +items.get(position).getModelo(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
                         id_viaje = opcionSeleccionada;
-
                         webs.getHistoryDetailByUser(HistoryActivity.this,HistoryActivity.this,user.getId(),id_viaje,user.getId());
                         //Intent intent = new Intent(HistoryActivity.this, HistoryDetailsActivity.class);
                         //startActivity(intent);
@@ -113,14 +111,12 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
 
 
                 })
-
         );
         // Crear un nuevo adaptador
         adapter = new AdapterViaje(items);
         recycler.setAdapter(adapter);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,11 +124,6 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, CategoryActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-           //     } else {
-             //       Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-               // }
-
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
@@ -143,11 +134,6 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, NewsActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                //} else {
-                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-                //}
-
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
@@ -158,31 +144,20 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, FavoriteActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                //} else {
-                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-                //}
-
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
+        historial.setColorFilter(ContextCompat.getColor(HistoryActivity.this,R.color.colorAccent));
         historial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //if (control.isOnline()) {
-
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, HistoryActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                //} else {
-                 //   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
-                //}
 
             }
         });
-
     }
 
     @Override
@@ -191,23 +166,22 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     }
 
     public void fillList(RoadTrip[] RoadTrip){
-        ListViaje[] list = new ListViaje[RoadTrip.length];
-        for(int i = 0 ; i < RoadTrip.length ; i++){
-            list[i] = new ListViaje();
-            list[i].setId(RoadTrip[i].getId());
-            list[i].setMarca(RoadTrip[i].getMarca());
-            list[i].setModelo(RoadTrip[i].getModelo());
-            list[i].setYear(RoadTrip[i].getYear());
-            list[i].setFecha(RoadTrip[i].getFecha());
-            list[i].setTotal(RoadTrip[i].getTotal());
-            //Cmbiar por imagen del servidor
-            list[i].setImage(1);
-            items.add(i,list[i]);
+        if(RoadTrip.length >1) {
+            ListViaje[] list = new ListViaje[RoadTrip.length];
+            for (int i = 0; i < RoadTrip.length; i++) {
+                list[i] = new ListViaje();
+                list[i].setId(RoadTrip[i].getId());
+                list[i].setMarca(RoadTrip[i].getMarca());
+                list[i].setModelo(RoadTrip[i].getModelo());
+                list[i].setYear(RoadTrip[i].getYear());
+                list[i].setFecha(RoadTrip[i].getFecha());
+                list[i].setTotal(RoadTrip[i].getTotal());
+                //Cmbiar por imagen del servidor
+                list[i].setImage(1);
+                items.add(i, list[i]);
+            }
         }
-
         adapter.notifyDataSetChanged();
-
-
     }
 
     @Override
@@ -224,7 +198,9 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     @Override
     public void sendDataHistory(RoadTrip[] obj) {
       //  Toast.makeText(this, "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
-        fillList(obj);
+        if(obj != null) {
+            fillList(obj);
+        }
     }
 
     @Override

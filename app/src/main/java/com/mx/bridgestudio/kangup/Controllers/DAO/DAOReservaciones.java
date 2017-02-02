@@ -32,7 +32,7 @@ public class DAOReservaciones {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/confirmationReservationEmail");
+            URL url = new URL("https://kangup.com.mx/index.php/confirmationReservationEmail");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
