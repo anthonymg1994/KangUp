@@ -7,9 +7,12 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOPaquetes;
+import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendViajesProximos;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Package;
+import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 
@@ -32,34 +35,32 @@ public class asyncViajesProximos extends AsyncTask<String,Integer,String> {
     private String param1;
     private String param2;
     URL url;
-    private Package[] arrayPack;
-    private Package packs = new Package();
+    private Reservacion[] arrayRes;
+    private Reservacion packs = new Reservacion();
     private String newsString;
     private webServices services = new webServices();
-    private DAOPaquetes Dpack = new DAOPaquetes();
-    private int id_reservacion;
+    private DAOReservaciones Dres = new DAOReservaciones();
     private int id_usuario;
 
-    public OnDataSendPackageByReservation SendToActivity;//Call back interface
+    public OnDataSendViajesProximos SendToActivity;//Call back interface
 
 
     Context mContext;
 
     private boolean flag = false;
 
-    public asyncViajesProximos(OnDataSendPackageByReservation SendToActivity, Context context, int idRes, int idUs) {
+    public asyncViajesProximos(OnDataSendViajesProximos SendToActivity, Context context, int id_usuario) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
-        this.id_reservacion = idRes;
-        this.id_usuario = idUs;
+        this.id_usuario = id_usuario;
     }
 
     @Override
     protected String doInBackground(String... params) {
 
         try {
-            newsString = Dpack.getPackagesByReservation(id_reservacion,id_usuario);
+            newsString = Dres.getAllReservationsByUser(id_usuario);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -90,22 +91,22 @@ public class asyncViajesProximos extends AsyncTask<String,Integer,String> {
 
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                arrayPack = new Package[jsonarray.length()];
+                //arrayPack = new Package[jsonarray.length()];
 
                 for (int i = 0; i < jsonarray.length(); i++) {
-                    arrayPack[i] = new Package();
+                    //arrayPack[i] = new Package();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    arrayPack[i].setId(jsonobject.getInt("id"));
-                    arrayPack[i].setNombre(jsonobject.getString("nombre"));
-                    arrayPack[i].setDescripcion(jsonobject.getString("descripcion"));
-                    arrayPack[i].setPrecio(jsonobject.getString("precio"));
+                   // arrayPack[i].setId(jsonobject.getInt("id"));
+                   // arrayPack[i].setNombre(jsonobject.getString("nombre"));
+                    //arrayPack[i].setDescripcion(jsonobject.getString("descripcion"));
+                    //arrayPack[i].setPrecio(jsonobject.getString("precio"));
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             Intent intent = new Intent(mContext, HistoryDetailsActivity.class);
-            SendToActivity.sendDataPackageByReservation(arrayPack);
+            //SendToActivity.sendDataPackageByReservation(arrayPack);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 
