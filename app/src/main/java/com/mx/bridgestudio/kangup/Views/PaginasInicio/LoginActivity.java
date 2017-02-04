@@ -76,16 +76,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // [END shared_tracker]*/
 
         // Set up the login form.
+        //Init ui
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.snackbarCoordinatorLayout);
-        session = new SessionManager(this);
-
-        control.changeColorStatusBar(LoginActivity.this);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user);
-        mEmailView.setHintTextColor(getResources().getColor(R.color.textoHint));
         logo = (ImageView)findViewById(R.id.logo);
         guest = (Button)findViewById(R.id.guest);
+        register = (Button)findViewById(R.id.register);
+        forgot = (Button)findViewById(R.id.forgot);
+        mPasswordView = (EditText) findViewById(R.id.passwordeye);
+        Button mEmailSignInButton = (Button) findViewById(R.id.signin);
+        //Sesion de usuario
+        session = new SessionManager(this);
+        //Cambiar barra de notificaciones
+        control.changeColorStatusBar(LoginActivity.this);
+        mEmailView.setHintTextColor(getResources().getColor(R.color.textoHint));
+
 
         guest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -96,7 +102,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 guestFlag = 1;
             }
         });
-        register = (Button)findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
@@ -105,7 +110,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
-        forgot = (Button)findViewById(R.id.forgot);
         forgot.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
@@ -117,7 +121,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
 
-        mPasswordView = (EditText) findViewById(R.id.passwordeye);
         mPasswordView.setHintTextColor(getResources().getColor(R.color.textoHint));
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -130,7 +133,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.signin);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

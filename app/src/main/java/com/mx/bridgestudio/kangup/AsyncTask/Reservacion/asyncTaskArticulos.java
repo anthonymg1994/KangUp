@@ -81,6 +81,8 @@ public class asyncTaskArticulos extends AsyncTask<String,Integer,String> {
             //     Toast.makeText(mContext, "Bienvenido "+brands, Toast.LENGTH_SHORT).show();
 
             try {
+                final String URL = "https://kangup.com.mx/uploads/Articulos/";
+
                 JSONArray jsonarray = new JSONArray(result);
                 arrayArt = new Article[jsonarray.length()];
 
@@ -90,7 +92,8 @@ public class asyncTaskArticulos extends AsyncTask<String,Integer,String> {
                     arrayArt[i].setId(jsonobject.getInt("id"));
                     arrayArt[i].setNombre(jsonobject.getString("Articulo"));
                     arrayArt[i].setDescription(jsonobject.getString("descripcion"));
-                    arrayArt[i].setPrecio(jsonobject.getString("precio"));
+                    arrayArt[i].setFoto(URL+jsonobject.getString("foto"));
+
                 }
 
             } catch (JSONException e) {

@@ -2,7 +2,6 @@ package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,9 +34,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.ExitUtils;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 
@@ -55,58 +52,38 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText name, lastname_pat,lastname_mat,mail,password,confirm;
     private Button next;
     private User user = new User();
-    private SqliteController sql;
-    private String userChoosenTask;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-   ExitUtils exitUtils;
-    private final String TAG = "TextEditor";
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private final int PICK_IMAGE = 12345;
     private final int TAKE_PICTURE = 6352;
     private static final int REQUEST_CAMERA_ACCESS_PERMISSION =5674;
     private Bitmap bitmap;
-    public final String APP_TAG = "KangUp";
     public String path="";
-    public static String nameFile="";
     Control control = new Control();
     public static String i;
     private AlertDialog alertTypePayment;
-    String s;
-    private int serverResponseCode = 0;
-    private ProgressDialog dialog = null;
-
-    private String upLoadServerUri = null;
-    private String imagepath=null;
-    private String foto_path;
-    static final int REQUEST_IMAGE_CAMERA = 1;
-    static final int REQUEST_IMAGE_ALBUM = 2;
     private Uri uri;  //图片保存uri
     private File file;
     String imagePath;
     private static final int REQUEST_IMAGE = 100;
-
-    File imageFile;
     CharSequence[] values = {"Cámara","Galería"};
-
     webServices webs = new webServices();
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        control.changeColorStatusBar(RegisterActivity.this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarRegister);
         setSupportActionBar(toolbar);
+        control.changeColorStatusBar(RegisterActivity.this);
+
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -157,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                 p1 = password.getText().toString();
                 p2 = confirm.getText().toString();
                 String email = mail.getText().toString().trim();
-
+                //Verifica campos vacios
                 if (name.getText().toString().equals("") || lastname_pat.getText().toString().equals("") || lastname_mat.getText().toString().equals("")
                         || mail.getText().toString().equals("") || password.getText().toString().equals("") || confirm.getText().toString().equals("")) {
                     Toast msg = Toast.makeText(getBaseContext(),
@@ -165,8 +142,10 @@ public class RegisterActivity extends AppCompatActivity {
                     msg.show();
                 } else {
                     if (email.matches(emailPattern)) {
-                      //  Toast.makeText(getApplicationContext(), "valid email address", Toast.LENGTH_SHORT).show();
+                        //Se valida que tenga formato de email
                         if (p1.equals(p2)) {
+                            // se validan que ambas contraselas sean identicas email = emailPattern
+                            //Y verifica que tenga mas de 8 caracteres
                             if (!isPasswordValid(p1)) {
                                 Snackbar snackbar = Snackbar.make(view, "La contraseña debe tener al menos 8 caracteres", Snackbar.LENGTH_SHORT);
                                 snackbar.show();

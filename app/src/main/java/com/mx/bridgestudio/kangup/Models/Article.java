@@ -9,6 +9,15 @@ public class Article {
     private String nombre;
     private String precio;
     private String Description;
+    private String foto;
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
     public int getId() {
         return id;

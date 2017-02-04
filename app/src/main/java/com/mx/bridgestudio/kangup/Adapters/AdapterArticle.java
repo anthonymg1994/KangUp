@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Adapters;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.Models.Lists.ListArticles;
 import com.mx.bridgestudio.kangup.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,9 +22,11 @@ import java.util.List;
 public class AdapterArticle extends RecyclerView.Adapter<AdapterArticle.AnimeViewHolder> {
 
     private List<ListArticles> items;
+    Context context;
 
-    public AdapterArticle(List<ListArticles> items) {
+    public AdapterArticle(List<ListArticles> items,Context context) {
         this.items = items;
+        this.context = context;
     }
 
     @Override
@@ -42,7 +46,8 @@ public class AdapterArticle extends RecyclerView.Adapter<AdapterArticle.AnimeVie
     public void onBindViewHolder(AdapterArticle.AnimeViewHolder holder, int i) {
         holder.nombre.setText(items.get(i).getNombre());
         holder.descripcion.setText(items.get(i).getDescripcion());
-        holder.precio.setText("$ "+items.get(i).getPrecio());
+        Picasso.with(context).load(items.get(i).getFoto()).into(holder.image);
+
     }
 
     public Resources getResources() {
@@ -54,14 +59,13 @@ public class AdapterArticle extends RecyclerView.Adapter<AdapterArticle.AnimeVie
         // Campos respectivos de un item
         public TextView nombre;
         public TextView descripcion;
-        public TextView precio;
+
         public ImageView image;
         public AnimeViewHolder(View v) {
             super(v);
             nombre = (TextView) v.findViewById(R.id.nombreArt);
             descripcion = (TextView) v.findViewById(R.id.descripcionArticulo);
-            precio = (TextView) v.findViewById(R.id.descripcionPack);
-            image = (ImageView)v.findViewById(R.id.imageArticulo);
+            image = (ImageView)v.findViewById(R.id.imageView4);
         }
     }
 

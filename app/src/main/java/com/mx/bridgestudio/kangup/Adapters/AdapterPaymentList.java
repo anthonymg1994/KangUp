@@ -1,6 +1,7 @@
 package com.mx.bridgestudio.kangup.Adapters;
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.Models.Lists.ListPaymentForm;
-import com.mx.bridgestudio.kangup.Models.Payment;
-import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;
@@ -23,6 +22,12 @@ public class AdapterPaymentList extends ArrayAdapter<ListPaymentForm> {
 
     Activity context;
     private ArrayList<ListPaymentForm> lista;
+    public static int idpago=0;
+    public static String numcuenta="";
+    public static String mes="";
+    public static String anio="";
+    public static String cvv="";
+    public static int id=0;
 
     public AdapterPaymentList(Activity context, ArrayList<ListPaymentForm> list) {
         super(context, R.layout.payment_list, list);
@@ -41,11 +46,17 @@ public class AdapterPaymentList extends ArrayAdapter<ListPaymentForm> {
             imgImg = (ImageView)item.findViewById(R.id.imagePay);
             TextView Nnom = (TextView) item.findViewById(R.id.textDataPay);
 
-            Nnom.setText("Cuenta: "+ lista.get(arg0).getNum_cuenta());
-            imgImg.setImageResource(R.drawable.ic_menu_manage);
+            Nnom.setText(lista.get(arg0).getNum_cuenta());
+            imgImg.setImageResource(R.drawable.forma_icon);
+            imgImg.setColorFilter(ContextCompat.getColor(item.getContext(),R.color.colorPrimary));
+
 
         }
         return item;
 
+    }
+
+    public ListPaymentForm getItem(int position){
+        return lista.get(position);
     }
 }

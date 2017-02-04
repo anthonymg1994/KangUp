@@ -128,6 +128,7 @@ public class Paypal extends Activity implements View.OnClickListener {
                         new PayPalItem("sample item #3 with a longer name", 6, new BigDecimal("37.99"),
                                 "USD", "sku-33333")
                 };
+
         BigDecimal subtotal = PayPalItem.getItemTotal(items);
         BigDecimal shipping = new BigDecimal("7.21");
         BigDecimal tax = new BigDecimal("4.67");
@@ -188,31 +189,15 @@ public class Paypal extends Activity implements View.OnClickListener {
             if (resultCode == Activity.RESULT_OK) {
                 PaymentConfirmation confirm =
                         data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-                if (confirm != null) {
-                    try {
-                        Log.i(TAG, confirm.toJSONObject().toString(4));
-                        Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
 
+                PayPalAuthorization auth = data
+                        .getParcelableExtra(PayPalProfileSharingActivity.EXTRA_RESULT_AUTHORIZATION);
+                if (auth != null) {
+                    String authorization_code = auth.getAuthorizationCode();
 
-                        /**
-                         *  TODO: send 'confirm' (and possibly confirm.getPayment() to your server for verification
-                         * or consent completion.
-                         * See https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
-                         * for more details.
-                         *
-                         * For sample mobile backend interactions, see
-                         * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
-                         */
+                    sendAuthorizationToServer(auth);
 
-
-                        displayResultText("PaymentConfirmation info received from PayPal");
-
-
-                    } catch (JSONException e) {
-                        Log.e(TAG, "an extremely unlikely failure occurred: ", e);
-                    }
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
+                } else if (resultCode == Activity.RESULT_CANCELED) {
                 Log.i(TAG, "The user canceled.");
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 Log.i(
@@ -261,6 +246,7 @@ public class Paypal extends Activity implements View.OnClickListener {
                     } catch (JSONException e) {
                         Log.e("ProfileSharingExample", "an extremely unlikely failure occurred: ", e);
                     }
+                }
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Log.i("ProfileSharingExample", "The user canceled.");

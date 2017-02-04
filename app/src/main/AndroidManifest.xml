@@ -178,8 +178,17 @@
             android:name="io.card.payment.CardIOActivity"
             android:configChanges="keyboardHidden|orientation" />
         <activity android:name="io.card.payment.DataEntryActivity" />
+        <activity
+            android:name=".Views.MenuActivity.EditPaymentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".Views.AfterMenuOption.ReservacionRutasActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name=".Views.AfterMenuOption.ViajesProximosActivity"></activity>
     </application>
 
 </manifest>

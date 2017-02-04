@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -25,14 +24,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
@@ -60,26 +56,22 @@ import it.neokree.materialtabs.MaterialTabListener;
  */
 
 public class CarsXtype extends DrawerActivity implements
-        AdapterView.OnItemClickListener,MaterialTabListener, View.OnClickListener,SearchView.OnQueryTextListener  {
+        AdapterView.OnItemClickListener,MaterialTabListener, View.OnClickListener{
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
     ViewPagerAdapterTab androidAdapter;
     private int mYear, mMonth, mDay,mHour, mMinute,pm;
     private Control control = new Control();
-    private ImageButton time,date;
+    private ImageButton time;
     private TextView hora,fecha;
     protected DrawerLayout mDrawer;
     EditText hora_, horaTermino;
     EditText fecha_;
-    SearchView simpleSearchView;
-    private SqliteController sql;
-    private DrawerActivity drw = new DrawerActivity();
+
     private int flagFragment = 0;
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
-
-    // private List items = new ArrayList();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -93,7 +85,6 @@ public class CarsXtype extends DrawerActivity implements
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.typeofcar, null, false);
         mDrawer.addView(contentView, 0);
-
         //drw.setNameToolbar(""+CardAdapter.marca);
         getSupportActionBar().setTitle(""+CardAdapter.marca);
 
@@ -103,21 +94,14 @@ public class CarsXtype extends DrawerActivity implements
         time = (ImageButton) findViewById(R.id.changeHour);
         time.setOnClickListener(this);
 
-
-         simpleSearchView = (SearchView) findViewById(R.id.searchView); // inititate a search view
-        simpleSearchView.setQueryHint("Busqueda de vehiculos");
-        simpleSearchView.setOnQueryTextListener(this);
         // perform set on query text focus change listener event
 
 
         hora = (TextView) findViewById(R.id.hour);
         fecha = (TextView) findViewById(R.id.date);
-
-
         hora.setText("Horario : "+ CardAdapter.hour_real + " - " + CardAdapter.hour_final_real);
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
-        fecha.setText("| Fecha : "+ dateFormat.format(CardAdapter.datee));
-
+        fecha.setText(" Fecha : "+ CardAdapter.date_format);
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setColorFilter(ContextCompat.getColor(CarsXtype.this,R.color.colorAccent));
@@ -143,9 +127,7 @@ public class CarsXtype extends DrawerActivity implements
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 // } else {
                 //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
                 //}
-
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
@@ -182,12 +164,6 @@ public class CarsXtype extends DrawerActivity implements
                     startActivity(new Intent(CarsXtype.this, HistoryActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
-
-                // } else {
-                //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-//
-                //              }
-
             }
         });
 
@@ -199,12 +175,8 @@ public class CarsXtype extends DrawerActivity implements
             @Override
             public void onPageSelected(int tabposition) {
                 tabHost.setSelectedNavigationItem(tabposition);
-
-                //androidAdapter.getItem(tabposition);
-
             }
         });
-
         //for tab position
         for (int i = 0; i < androidAdapter.getCount(); i++) {
             tabHost.addTab(
@@ -212,10 +184,7 @@ public class CarsXtype extends DrawerActivity implements
                             .setText(androidAdapter.getPageTitle(i))
                             .setTabListener(this)
             );
-
         }
-
-
     }
 
     @Override
@@ -236,11 +205,6 @@ public class CarsXtype extends DrawerActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_drawer_drawer, menu);
-        int id = simpleSearchView.getContext()
-                .getResources()
-                .getIdentifier("android:id/search_src_text", null, null);
-        TextView textView = (TextView) simpleSearchView.findViewById(id);
-        textView.setTextColor(Color.WHITE);
 
         return true;
     }
@@ -282,16 +246,6 @@ public class CarsXtype extends DrawerActivity implements
             }
         }
     }
-    /*
-    @Override
-    public void sendData(Vehicle[] vehicle) {
-        Toast.makeText(this, "string"+response, Toast.LENGTH_SHORT).show();
-        for(int i = 0; i < vehicle.lenght(); i ++){
-            items.add(i,vehicle[i]);
-        }
-         adapter.notifyDataSetChanged();
-    }
-    */
     private void showDialogCalendar(){
         // Get Current Date
         final Calendar c = Calendar.getInstance();
@@ -339,26 +293,8 @@ public class CarsXtype extends DrawerActivity implements
 
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        String text = newText;
-       //androidAdapter.filter(flagFragment,text);
-
-            Toast.makeText(CarsXtype.this, "tab :"+ flagFragment+"texto "+newText, Toast.LENGTH_SHORT).show();
-
-
-     return false;
-    }
-
 
     // view pager adapter
-
-
     private class ViewPagerAdapterTab extends FragmentStatePagerAdapter {
         Context context;
         Fragment fragment = null;
@@ -492,7 +428,7 @@ public class CarsXtype extends DrawerActivity implements
                 }else{
                     hora.setText("Horario : "+ CardAdapter.hour_real + " - " + CardAdapter.hour_final_real);
                     DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
-                    fecha.setText("| Fecha : "+ dateFormat.format(CardAdapter.datee));
+                    fecha.setText(" Fecha : "+ dateFormat.format(CardAdapter.datee));
 
                        Intent setIntent = new Intent(CarsXtype.this, CarsXtype.class);
                     startActivity(setIntent);
@@ -548,6 +484,7 @@ public class CarsXtype extends DrawerActivity implements
 
         timePickerDialog.show();
     }
+
 
 
 }

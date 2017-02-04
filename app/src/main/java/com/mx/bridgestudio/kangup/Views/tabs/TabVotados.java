@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
@@ -41,11 +42,12 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
     private String opcionSeleccionada="";
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager lManager;
+    private RecyclerView.LayoutManager  lManager;
     private webServices webs = new webServices();
     private Vehicle vehicle = new Vehicle();
     public static int id_vehiculo = 0;
     public static String nombre_vehiculo = "";
+    public SearchView search;
     ArrayList<ListCar> items= new ArrayList<>();
 
     //Context context,act;
@@ -62,7 +64,7 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.tab_votados,container,false);
+        View v =inflater.inflate(R.layout.tab_top,container,false);
 
         //context = v.getContext();
 
@@ -91,6 +93,9 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
         }
 
 
+        search = (SearchView) v.findViewById( R.id.searchView2);
+        // call the QuerytextListner.
+        search.setQuery("", false);
 
         // Obtener el Recycler
         CatalogCar.flagDate = 1;
@@ -118,7 +123,7 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
                         webs.DetailVehicle(TabVotados.this,getActivity(),vehicle);
 
                         //  TabTop.this.startActivity(intent);
-                        //finish();
+                        //finish();//
                     }
 
 
@@ -131,7 +136,35 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
         // Crear un nuevo adaptador
         adapter = new AdaptadorType(getActivity(),items);
         recycler.setAdapter(adapter);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String s) {
+                s = s.toLowerCase();
+
+                ArrayList<ListCar> filteredList= new ArrayList<>();
+
+                for (int i = 0; i < items.size(); i++) {
+
+                    final String text = items.get(i).getModelo().toLowerCase();
+                    if (text.contains(s)) {
+
+                        filteredList.add(items.get(i));
+                    }
+                }
+
+
+                recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+                adapter = new AdaptadorType(getActivity(),filteredList);
+                recycler.setAdapter(adapter);
+                adapter.notifyDataSetChanged();  // data set changed
+                return true;
+            }
+        });
         return v;
     }
 
@@ -167,4 +200,6 @@ public class TabVotados extends Fragment implements OnDataSendFilterScore,OnData
         vehicle = obj;
 
     }
+
+
 }

@@ -42,7 +42,6 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
 
     private webServices webs = new webServices();
     protected DrawerLayout mDrawer;
-    private String opcionSeleccionada="";
     private RecyclerView recycler;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
@@ -53,13 +52,12 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     private TextView emptyView;
     public static int id_viaje=0;
     private ImageButton catalogo,noticias,favoritos,historial;
-    private DrawerActivity drw = new DrawerActivity();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_favorite);
+
         control.changeColorStatusBar(HistoryActivity.this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
@@ -69,32 +67,23 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
         recycler = (RecyclerView) findViewById(R.id.recycler_view);
         recycler.setHasFixedSize(true);
         emptyView = (TextView)findViewById(R.id.empty_view);
-
         // Usar un administrador para LinearLayout
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
         getSupportActionBar().setTitle("Historial de viajes");
-
-
+        //Obtengo id de usuario
         sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
         sql.Connect();
         user = sql.user();
         sql.Close();
         //if(control.isOnline()){
         if(control.isNetworkAvailable(this)) {
+            //Web services ->Asynctask
             webs.historyByUser(HistoryActivity.this, HistoryActivity.this, user);
             //}else{
             //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
         }
 
-        if(items.isEmpty()){
-            recycler.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }
-        else{
-            recycler.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
 
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
         recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
@@ -155,7 +144,6 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(HistoryActivity.this, HistoryActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
             }
         });
     }
@@ -166,7 +154,7 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     }
 
     public void fillList(RoadTrip[] RoadTrip){
-        if(RoadTrip.length >1) {
+        if(RoadTrip.length > 0) {
             ListViaje[] list = new ListViaje[RoadTrip.length];
             for (int i = 0; i < RoadTrip.length; i++) {
                 list[i] = new ListViaje();
@@ -198,9 +186,16 @@ public class HistoryActivity extends DrawerActivity implements AdapterView.OnIte
     @Override
     public void sendDataHistory(RoadTrip[] obj) {
       //  Toast.makeText(this, "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
-        if(obj != null) {
+        if(obj.length == 0){
+            recycler.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else{
+            recycler.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
             fillList(obj);
         }
+
     }
 
     @Override

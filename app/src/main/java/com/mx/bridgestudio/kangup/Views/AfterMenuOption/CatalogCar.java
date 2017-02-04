@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,10 +19,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
@@ -44,8 +40,6 @@ import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.neokree.materialtabs.MaterialTabHost;
-
 /**
  * Created by Anthony on 07/11/2016.
  */
@@ -54,33 +48,15 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
 
 
     //implements OnDataSendToActivity
-
-
-    MaterialTabHost tabHost;
-    ViewPager viewPager;
-   // ViewPagerAdapter androidAdapter;
-    //UI References
-    private DatePicker dpResult;
-    boolean isOkayClicked;
-    private int mYear, mMonth, mDay;
     private RecyclerView recyclerView;
-    protected RecyclerView.LayoutManager mLayoutManager;
     private CardAdapter adapter;
     private List<ListBrand> albumList;
     private webServices webs = new webServices();
-    private FloatingActionButton editCalendar;
     private Brand brand = new Brand();
-    private Brand[] brands;
-    private ListBrand[]  list;
-    private int flag = 0;
-    private Brand[] obj1;
     public static int flagDate = 0;
     protected DrawerLayout mDrawer;
     Control control = new Control();
 
-    private DrawerActivity drw = new DrawerActivity();
-
-    //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
 
 
@@ -90,7 +66,6 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.catalogcar);
         control.changeColorStatusBar(CatalogCar.this);
-
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -100,18 +75,12 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         Intent mIntent = getIntent();
         brand.setId_categoria(CategoryActivity.opcionSeleccionada);
 
-        //if(control.isOnline()){
-            webs.brandByCategory(CatalogCar.this,CatalogCar.this,brand);
-        //}else{
-          //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-        //}
+            webs.brandByCategory(CatalogCar.this,CatalogCar.this,brand);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //toolbar.setTitle("Marcas");
         getSupportActionBar().setTitle("Marcas");
-
-        //drw.setNameToolbar("Marcas");
         // 1. get a reference to recyclerView
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         // 2. set layoutManger
@@ -190,12 +159,6 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
                     startActivity(new Intent(CatalogCar.this, HistoryActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
-
-                // } else {
-                //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-//
-                //              }
-
             }
         });
 
@@ -206,12 +169,7 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         initCollapsingToolbar();
-
-
-
     }
 
     /**
@@ -234,15 +192,11 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         }
 
         adapter.notifyDataSetChanged();
-
-
     }
 
     @Override
     public void sendData(Brand[] obj) {
-    //    Toast.makeText(this, "marcas"+obj.length, Toast.LENGTH_SHORT).show();
         prepareListBrands(obj);
-        //obj1 = obj;
     }
     /**
      * RecyclerView item decoration - give equal margin around grid item
@@ -337,38 +291,5 @@ public class CatalogCar extends DrawerActivity implements View.OnClickListener,O
         finish();
     }
 
-    /*
-    // view pager adapter
-    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        public ViewPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        public Fragment getItem(int num) {
-
-               return new AndroidFragment();
-            }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int tabposition) {
-            CharSequence tab = null;
-            switch(tabposition){
-                case 0: tab= "Top";
-                        break;
-                case 1: tab= "Recomendados";
-                        break;
-                case 2: tab= "Favoritos";
-                        break;
-                default: return null;
-            }
-            return tab;
-        }
-    }
-*/
 
 }

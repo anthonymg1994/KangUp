@@ -10,11 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterRecommend;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
@@ -48,7 +48,7 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
     public static int id_vehiculo = 0;
     public static String nombre_vehiculo = "";
     ArrayList<ListCar> items= new ArrayList<>();
-
+    public SearchView search;
     //Context context,act;
 
     public TabRecommend() {
@@ -88,6 +88,9 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
         }
 
         // Obtener el Recycler
+        search = (SearchView) v.findViewById( R.id.searchView2);
+        search.setOnQueryTextListener(listener); // call the QuerytextListner.
+
         CatalogCar.flagDate = 1;
 
         recycler = (RecyclerView) v.findViewById(R.id.recycler_view);
@@ -103,6 +106,8 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity() ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
+
+
                         Toast.makeText(getActivity(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
                         //Intent intent = new Intent(getActivity(), DetalleActivity.class);
@@ -160,4 +165,36 @@ public class TabRecommend  extends Fragment implements OnDataSendFilterRecommend
         Toast.makeText(getActivity(), "Marcas"+obj.length, Toast.LENGTH_SHORT).show();
         fillList(obj);
     }
+
+
+
+    SearchView.OnQueryTextListener listener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextChange(String query) {
+            query = query.toLowerCase();
+
+            ArrayList<ListCar> filteredList= new ArrayList<>();
+
+            for (int i = 0; i < items.size(); i++) {
+
+                final String text = items.get(i).getModelo().toLowerCase();
+                if (text.contains(query)) {
+
+                    filteredList.add(items.get(i));
+                }
+            }
+
+
+            recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+            adapter = new AdaptadorType(getActivity(),filteredList);
+            recycler.setAdapter(adapter);
+            adapter.notifyDataSetChanged();  // data set changed
+            return true;
+
+        }
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
+    };
+
 }

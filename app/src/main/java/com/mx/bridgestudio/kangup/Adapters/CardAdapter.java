@@ -51,7 +51,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     public CardView cardView;
     public static int id_marca = 0;
     public static String marca = "";
-    public static String hour = "",hour_real="";
+    public static String hour = "",hour_real="",date_format= "";;
     public static String hour_final = "",hour_final_real;
     public static Date datee = null;
     Control c = new Control();
@@ -321,6 +321,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                             try {
                                 Date last_date_date = new SimpleDateFormat("yyyy-MM-dd").parse(finalString2);
                                 fecha.setText("" + finalString);
+                                date_format = finalString;
                                 datee = last_date_date;
                             } catch (ParseException e) {
                                 e.printStackTrace();

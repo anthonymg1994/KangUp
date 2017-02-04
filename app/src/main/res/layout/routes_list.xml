@@ -4,79 +4,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/newsCell"
-    android:background="@drawable/backall"
     android:layout_height="85dp"
+    android:background="#262626"
     android:layout_width="match_parent"
     android:layout_gravity="center|top">
 
-    <TextView
+    <com.mx.bridgestudio.kangup.Models.AutoResizeTextView
         android:text="Origen"
         tools:ignore="HardcodedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffcc00"
+        android:textColor="#ffffff"
         android:textSize="14sp"
         android:id="@+id/descripcionArticulo"
-        android:layout_marginTop="14dp"
+        app:layout_constraintLeft_toRightOf="@+id/imageView4"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/nombreArt"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.05" />
+        android:maxLines="2"
+        android:lines="2"
+        app:layout_constraintHorizontal_bias="0.09" />
 
-    <TextView
-        android:text="Origen:"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#ffcc00"
-        android:textSize="14sp"
-        android:id="@+id/nombreArt"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView4"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="14dp"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:text="Destino:"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#ffcc00"
-        android:textSize="14sp"
-        android:id="@+id/descripcionPack"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView5"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/nombreArt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintVertical_bias="0.81" />
-
-    <TextView
+    <com.mx.bridgestudio.kangup.Models.AutoResizeTextView
         android:text="Destino"
         tools:ignore="HardcodedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffcc00"
+        android:textColor="#ffffff"
         android:textSize="14sp"
         android:id="@+id/destinyTitle"
-        app:layout_constraintLeft_toRightOf="@+id/descripcionPack"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.05"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/descripcionArticulo"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/descripcionArticulo"
+        android:maxLines="2"
+        android:lines="2"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -99,6 +68,7 @@
         android:layout_marginLeft="16dp"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintVertical_bias="0.44"
+        android:scaleType="fitCenter" />
 
 </android.support.constraint.ConstraintLayout>

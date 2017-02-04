@@ -17,9 +17,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterNews;
 import com.mx.bridgestudio.kangup.Controllers.Control;
@@ -43,31 +41,22 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager lManager;
     ArrayList<ListNews> items= new ArrayList<>();
-    private ImageView imageNew;
     private webServices webs = new webServices();
-
     public static int id_noticia=0;
     public static String titulo = "";
     public static String desc = "";
     public static String fecha = "";
-
-    private News n;
-
     protected DrawerLayout mDrawer;
     Control control = new Control();
     private TextView emptyView;
     //toolbardown
     private ImageButton catalogo,noticias,favoritos,historial;
-    private DrawerActivity drw = new DrawerActivity();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_news);
         control.changeColorStatusBar(NewsActivity.this);
-
-
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_news, null, false);
@@ -78,14 +67,7 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
         getSupportActionBar().setTitle("Noticias");
 
        // if(control.isOnline()){
-
-        if(control.isNetworkAvailable(this)) {
             webs.getAllNews(NewsActivity.this, this);
-        }
-
-
-
-
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setOnClickListener(new View.OnClickListener() {
@@ -151,31 +133,13 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
 
-                // } else {
-                //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-//
-                //              }
-
             }
         });
 
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
-
         recycler = (RecyclerView) findViewById(R.id.newsRecycler);
-
-        if(items.isEmpty()){
-            recycler.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }
-        else{
-            recycler.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
-
         recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
-
         recycler.setHasFixedSize(true);
-
         // Usar un administrador para LinearLayout
         lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
@@ -192,22 +156,8 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
                         titulo = items.get(position).getTitle();
                         desc = items.get(position).getDescription();
                         fecha = items.get(position).getFecha();
-                        //Toast.makeText(NewsActivity.this, "titulo = " + titulo
-                           //     + " " + "desc = "+ desc , Toast.LENGTH_SHORT).show();
-
-                        //webs.DetailVehicle(this,getActivity(),vehicle);
-                        //n = new News();
-                        //n.setId(id_noticia);
-                        //n.setTitulo(titulo);
-                        //n.setDescripccion(desc);
-                        //Bundle bundle = new Bundle();
-                        //bundle.putSerializable("value", n);
-
-                        //intent.putExtras(bundle);
                         startActivity(intent);
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
-                        //  TabTop.this.startActivity(intent);
                         finish();
                     }
 
@@ -222,7 +172,6 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
     public void fillList(News[] news){
         final String URL = "http://kangup.com.mx/uploads/Noticias/";
         final String URLDefault = "http://kangup.com.mx/uploads/Noticias/noticia_1.png";
-
 
         ListNews[] list = new ListNews[news.length];
         for(int i = 0 ; i < news.length ; i++){
@@ -253,8 +202,16 @@ public class NewsActivity extends DrawerActivity implements OnDataSendNews {
 
     @Override
     public void sendDataNews(News[] obj) {
-        Toast.makeText(this, "News"+obj.length, Toast.LENGTH_SHORT).show();
-        fillList(obj);
+        if(obj.length == 0){
+            recycler.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else{
+            recycler.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+            fillList(obj);
+        }
+
     }
 
     public void alertGuest() {

@@ -10,7 +10,10 @@ import android.widget.TextView;
 import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.R;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Isaac on 04/01/2017.
@@ -58,6 +61,28 @@ public class AdapterRoutes extends RecyclerView.Adapter<AdapterRoutes.AnimeViewH
             destino = (TextView) v.findViewById(R.id.destinyTitle);
             // fav.setOnClickListener(this);
         }
+    }
+
+    public void swap(int firstPosition, int secondPosition){
+        Collections.swap(items, firstPosition, secondPosition);
+        notifyItemMoved(firstPosition, secondPosition);
+    }
+
+    public void remove(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void add(int i,ListRoutes route){
+
+        this.items.add(route);
+    }
+
+    public void refreshEvents(List<ListRoutes> items) {
+        Set<ListRoutes> routesWithoutDuplicates = new LinkedHashSet<ListRoutes>(items);
+        this.items.clear();
+        this.items.addAll(routesWithoutDuplicates);
+        notifyDataSetChanged();
     }
 
 }

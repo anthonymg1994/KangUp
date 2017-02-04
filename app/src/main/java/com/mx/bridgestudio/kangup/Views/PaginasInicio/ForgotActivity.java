@@ -62,17 +62,8 @@ public class ForgotActivity extends AppCompatActivity {
                     Snackbar snackbar = Snackbar.make(v, "Ingresa tu correo electronico", Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }else{
-                //    if(control.isOnline()) {
                         Email task = new Email(email.getText().toString().trim());
                         task.execute();
-                  //  }else{
-                    //    Toast msg = Toast.makeText(getBaseContext(),
-                        //        "Verifica tu conexion", Toast.LENGTH_SHORT);
-                      //  msg.show();
-                    //}
-
-
-                   //  texto = "Se ha mandado una solicitud de cambio a tu email";
                 }
 
 

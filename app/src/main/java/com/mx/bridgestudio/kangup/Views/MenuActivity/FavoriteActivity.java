@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.Adapters.AdapterFavoriteList;
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOVehiculo;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFavorites;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
@@ -41,13 +40,9 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     private webServices webs = new webServices();
     private SqliteController sql;
     private User user = new User();
-    private Vehicle vehicle = new Vehicle();
-    private String opcionSeleccionada ="";
-    private DAOVehiculo Dvehicle = new DAOVehiculo();
     private Vehicle ve = new Vehicle();
     public static int id_vehiculo = 0;
     public static String nombre_vehiculo = "";
-    ArrayList<ListCar> items= new ArrayList<>();
     Control control = new Control();
     private TextView emptyView;
     public TextView emptyTest;
@@ -69,11 +64,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         mDrawer.addView(contentView, 0);
         emptyView =(TextView) findViewById(R.id.empty_vieww);
         //drw.setNameToolbar("Favoritos");
-
-
         listFav = (ListView)findViewById(R.id.listFav);
-       // if(control.isNetworkAvailable(this)) {
-       // }
         adaptador = new AdapterFavoriteList(this,tipos);
         listFav.setAdapter(adaptador);
         getSupportActionBar().setTitle("Favoritos");
@@ -88,14 +79,7 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
         //}else{
 //            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
         //      }
-        if(tipos.isEmpty()){
-            listFav.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }
-        else{
-            listFav.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
+
         //listFav.setOnItemClickListener(this);
         listFav.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -203,7 +187,15 @@ public class FavoriteActivity extends DrawerActivity implements OnDataSendFavori
     @Override
     public void sendDataFavorites(Vehicle[] obj) {
       //  if(obj != null) {
+        if(obj.length == 0){
+            listFav.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }
+        else{
+            listFav.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
             fillList(obj);
+        }
        // }
     }
 
