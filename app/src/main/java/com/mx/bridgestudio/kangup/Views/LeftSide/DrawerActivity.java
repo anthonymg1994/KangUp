@@ -23,6 +23,7 @@ import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.ViajesProximosActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
@@ -231,6 +232,18 @@ public class DrawerActivity extends AppCompatActivity
             }
             else{
                 alertLogOut();
+            }
+        }
+        else if(id == R.id.nav_viajes){
+            if(LoginActivity.guestFlag==1)
+            {
+                alertGuest();
+            }
+            else{
+                Intent setIntent = new Intent(this, ViajesProximosActivity.class);
+                startActivity(setIntent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
         }
 

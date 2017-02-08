@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.mx.bridgestudio.kangup.Adapters.AdapterNews;
 import com.mx.bridgestudio.kangup.Adapters.AdapterPaquetes;
 import com.mx.bridgestudio.kangup.Adapters.AdapterRoutes;
+import com.mx.bridgestudio.kangup.AsyncTask.Viaje.RoutesByTrip;
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
@@ -91,6 +92,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
 
         getSupportActionBar().setTitle("Detalle de viaje");
 
+        RoutesByTrip.flagg =1;
 
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
         catalogo.setOnClickListener(new View.OnClickListener() {
@@ -194,6 +196,7 @@ public class HistoryDetailsActivity extends DrawerActivity implements OnDataSend
         Rutas ru = new Rutas();
         ru.setIdUsuario(u.getId());
         ru.setId_reservacion(det.getIdReservacion());
+
         webs.getRoutesByTrip(HistoryDetailsActivity.this,this,ru);
 
         final RecyclerView recycler;

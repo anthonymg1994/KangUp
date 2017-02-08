@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Adapters;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class AdapterReservacion extends RecyclerView.Adapter<AdapterReservacion.
 
         public AnimeViewHolder(View v) {
             super(v);
-            imagen = (ImageView) v.findViewById(R.id.imageProfilee);
+            imagen = (ImageView) v.findViewById(R.id.imageView4);
             auto = (TextView) v.findViewById(R.id.autoName);
             fecha = (TextView) v.findViewById(R.id.horarios);
             total = (TextView) v.findViewById(R.id.total);
@@ -64,10 +65,12 @@ public class AdapterReservacion extends RecyclerView.Adapter<AdapterReservacion.
     @Override
     public void onBindViewHolder(AdapterReservacion.AnimeViewHolder viewHolder, int i) {
         // viewHolder.imagen.setImageResource(items.get(i).getImage());
-
-        viewHolder.imagen.setImageResource(R.drawable.auto);
         viewHolder.auto.setText(items.get(i).getAuto()+" "+items.get(i).getModelo()+" "+items.get(i).getYear()+" ");
-        viewHolder.fecha.setText(items.get(i).getDate()+ " "+ items.get(i).getHourI()+ " "+ items.get(i).getHourF());
-        viewHolder.total.setText("$ " +items.get(i).getTotal());
+        viewHolder.fecha.setText(items.get(i).getDate()+ "  "+ items.get(i).getHourI()+ " - "+ items.get(i).getHourF());
+        viewHolder.total.setText("");
+    }
+
+    public ListReservacion getItem(int position){
+        return items.get(position);
     }
 }

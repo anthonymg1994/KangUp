@@ -182,14 +182,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Views.MenuActivity.HistoryDetailsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name="io.card.payment.CardIOActivity"
             android:configChanges="keyboardHidden|orientation" />
         <activity android:name="io.card.payment.DataEntryActivity" />
-        <activity android:name=".Views.AfterMenuOption.ViajesProximosActivity"></activity>
+        <activity
+            android:name=".Views.AfterMenuOption.ViajesProximosActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Views.AfterMenuOption.RutasViajesProximos"></activity>
     </application>
 
 </manifest>

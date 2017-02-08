@@ -14,6 +14,7 @@ import com.mx.bridgestudio.kangup.Models.RoadTrip;
 import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.ViajesProximosActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 
@@ -42,6 +43,7 @@ public class RoutesByTrip extends AsyncTask<String,Integer,String> {
     private webServices services = new webServices();
     private DAOviajes Dviajes = new DAOviajes();
     public OnDataSendRoutesByTrip SendToActivity;//Call back interface
+    public static int flagg=0;
 
 
     Context mContext;
@@ -103,8 +105,19 @@ public class RoutesByTrip extends AsyncTask<String,Integer,String> {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(mContext, HistoryDetailsActivity.class);
-            SendToActivity.sendDataRoutesByTrip(arrayRutas);
+
+            if(flagg==1){
+                Intent intent = new Intent(mContext, HistoryDetailsActivity.class);
+                SendToActivity.sendDataRoutesByTrip(arrayRutas);
+                mContext.startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(mContext, ViajesProximosActivity.class);
+                SendToActivity.sendDataRoutesByTrip(arrayRutas);
+                mContext.startActivity(intent);
+
+            }
+
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);
 

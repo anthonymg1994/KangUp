@@ -11,9 +11,11 @@ import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendViajesProximos;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
+import com.mx.bridgestudio.kangup.Models.Lists.ListReservacion;
 import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.AfterMenuOption.ViajesProximosActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
 
 import org.json.JSONArray;
@@ -91,21 +93,27 @@ public class asyncViajesProximos extends AsyncTask<String,Integer,String> {
 
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                //arrayPack = new Package[jsonarray.length()];
+                arrayRes = new Reservacion[jsonarray.length()];
 
                 for (int i = 0; i < jsonarray.length(); i++) {
-                    //arrayPack[i] = new Package();
+                    arrayRes[i] = new Reservacion();
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                   // arrayPack[i].setId(jsonobject.getInt("id"));
-                   // arrayPack[i].setNombre(jsonobject.getString("nombre"));
-                    //arrayPack[i].setDescripcion(jsonobject.getString("descripcion"));
-                    //arrayPack[i].setPrecio(jsonobject.getString("precio"));
+                   arrayRes[i].setId(jsonobject.getInt("id"));
+                   arrayRes[i].setAuto(jsonobject.getString("Marca"));
+                    arrayRes[i].setModelo(jsonobject.getString("Modelo"));
+                    arrayRes[i].setYear(jsonobject.getString("year"));
+                    arrayRes[i].setDate(jsonobject.getString("fecha"));
+                    arrayRes[i].setHourI(jsonobject.getString("hora_Inicio"));
+                    arrayRes[i].setHourF(jsonobject.getString("hora_termino"));
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(mContext, HistoryDetailsActivity.class);
+
+            Intent intent = new Intent(mContext, ViajesProximosActivity.class);
+            SendToActivity.sendDataViajesProximos(arrayRes);
+            //Intent intent = new Intent(mContext, HistoryDetailsActivity.class);
             //SendToActivity.sendDataPackageByReservation(arrayPack);
             //Toast.makeText(mContext, ", Toast.LENGTH_SHORT).show();
 //  intent.putExtra("objBrands",arrayBrands);

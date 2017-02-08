@@ -33,8 +33,8 @@
         app:layout_constraintHorizontal_bias="1.0" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_height="0dp"
-        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:id="@+id/ViajesProxRecyclerView"
         app:layout_constraintBottom_toTopOf="@+id/include2"
         app:layout_constraintLeft_toLeftOf="parent"

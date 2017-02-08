@@ -101,7 +101,9 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long id) {
 
-                pay = adaptador.getItem(position);
+                pay.setId(adaptador.getItem(position).getId_forma_pago());
+                Toast.makeText(getApplicationContext(),String.valueOf(pay.getId()),Toast.LENGTH_SHORT).show();
+
                 CardOption();
 
 
@@ -317,7 +319,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                             public void onClick(DialogInterface dialog, int id) {
                                 Ion.with(PaymentActivity.this)
                                         .load("POST", "http://kangup.com.mx/index.php/deleteFormaPago")
-                                        .setBodyParameter("id", String.valueOf(AdapterPaymentList.idpago))
+                                        .setBodyParameter("id", String.valueOf(pay.getId()))
                                         .asString()
                                         .setCallback(new FutureCallback<String>() {
                                             @Override

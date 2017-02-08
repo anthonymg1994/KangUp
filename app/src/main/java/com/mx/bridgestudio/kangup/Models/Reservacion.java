@@ -13,7 +13,11 @@ public class Reservacion {
     private String HourI;
     private String HourF;
     private String origen;
+    private String auto;
+    private String modelo;
+    private String year;
     private String destination;
+    private String total;
     private int idpayment;
     private int status;
 
@@ -103,5 +107,37 @@ public class Reservacion {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getAuto() {
+        return auto;
+    }
+
+    public void setAuto(String auto) {
+        this.auto = auto;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 }

@@ -12,6 +12,7 @@ import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncEmailConfirmacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncPaquetesXReservacion;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncTaskArticulos;
 import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncTaskPaquetes;
+import com.mx.bridgestudio.kangup.AsyncTask.Reservacion.asyncViajesProximos;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncInsertUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsyncTaskUpdateUser;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
@@ -42,6 +43,7 @@ import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPhotos;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPublicidad;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendRoutesByTrip;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendToActivity;
+import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendViajesProximos;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSentArticlesByPackage;
 import com.mx.bridgestudio.kangup.Models.Brand;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
@@ -153,6 +155,9 @@ public class webServices {
         new asyncTaskPhotoById(onDataSendPhotos,context,vehicle).execute();
     }
 
+    public void getAllReservationsByUser(OnDataSendViajesProximos dataSendViajesProximos, Context context, int id_usuario){
+        new asyncViajesProximos(dataSendViajesProximos,context,id_usuario).execute();
+    }
 
 /*
     public void Noticias(Context context, News news){
