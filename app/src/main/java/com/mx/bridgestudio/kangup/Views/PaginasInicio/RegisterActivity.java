@@ -2,7 +2,6 @@ package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -34,18 +34,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.ExitUtils;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
-import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 //import com.koushikdutta.ion.Ion;
 
@@ -56,58 +52,38 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText name, lastname_pat,lastname_mat,mail,password,confirm;
     private Button next;
     private User user = new User();
-    private SqliteController sql;
-    private String userChoosenTask;
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-   ExitUtils exitUtils;
-    private final String TAG = "TextEditor";
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private final int PICK_IMAGE = 12345;
     private final int TAKE_PICTURE = 6352;
     private static final int REQUEST_CAMERA_ACCESS_PERMISSION =5674;
     private Bitmap bitmap;
-    public final String APP_TAG = "KangUp";
     public String path="";
-    public static String nameFile="";
     Control control = new Control();
     public static String i;
     private AlertDialog alertTypePayment;
-    String s;
-    private int serverResponseCode = 0;
-    private ProgressDialog dialog = null;
-
-    private String upLoadServerUri = null;
-    private String imagepath=null;
-    private String foto_path;
-    private File file;
-    static final int REQUEST_IMAGE_CAMERA = 1;
-    static final int REQUEST_IMAGE_ALBUM = 2;
     private Uri uri;  //图片保存uri
-    private File scaledFile;
-
-
-    File imageFile;
+    private File file;
+    String imagePath;
+    private static final int REQUEST_IMAGE = 100;
     CharSequence[] values = {"Cámara","Galería"};
-
     webServices webs = new webServices();
+
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        control.changeColorStatusBar(RegisterActivity.this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarRegister);
         setSupportActionBar(toolbar);
+        control.changeColorStatusBar(RegisterActivity.this);
+
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
         // add back arrow to toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -148,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
         mail.setText("asdas@g.com");
         password.setText("12345");
         confirm.setText("12345");
+        file = new File(Environment.getExternalStorageDirectory(), name + ".jpg");
 
         next = (Button) findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                 p1 = password.getText().toString();
                 p2 = confirm.getText().toString();
                 String email = mail.getText().toString().trim();
-
+                //Verifica campos vacios
                 if (name.getText().toString().equals("") || lastname_pat.getText().toString().equals("") || lastname_mat.getText().toString().equals("")
                         || mail.getText().toString().equals("") || password.getText().toString().equals("") || confirm.getText().toString().equals("")) {
                     Toast msg = Toast.makeText(getBaseContext(),
@@ -165,23 +142,27 @@ public class RegisterActivity extends AppCompatActivity {
                     msg.show();
                 } else {
                     if (email.matches(emailPattern)) {
-                        Toast.makeText(getApplicationContext(), "valid email address", Toast.LENGTH_SHORT).show();
+                        //Se valida que tenga formato de email
                         if (p1.equals(p2)) {
-                            // validar espacios o remplazar con string replace por _
-                            user.setFirstName(name.getText().toString());
-                            user.setAp_paterno(lastname_pat.getText().toString());
-                            user.setAp_materno(lastname_mat.getText().toString());
-                            user.setEmail(mail.getText().toString().trim());
-                            user.setPassword(password.getText().toString());
-                            imageFile = convertBitmapToFile(bitmap,"x");
-                            String y =bitmapToBase64(bitmap);
-                          //  if(imageFile != null) {
-                                user.setFile(bitmap);
-                            //}
-                            webs.insertUser(RegisterActivity.this,user);
-                            //uploadImageToServer();
-                            Snackbar snackbar = Snackbar.make(view, "Registro con exito", Snackbar.LENGTH_SHORT);
-                            snackbar.show();
+                            // se validan que ambas contraselas sean identicas email = emailPattern
+                            //Y verifica que tenga mas de 8 caracteres
+                            if (!isPasswordValid(p1)) {
+                                Snackbar snackbar = Snackbar.make(view, "La contraseña debe tener al menos 8 caracteres", Snackbar.LENGTH_SHORT);
+                                snackbar.show();
+                            }else {
+                                // validar espacios o remplazar con string replace por _
+                                user.setFirstName(name.getText().toString());
+                                user.setAp_paterno(lastname_pat.getText().toString());
+                                user.setAp_materno(lastname_mat.getText().toString());
+                                user.setEmail(mail.getText().toString().trim());
+                                user.setPassword(password.getText().toString());
+                                user.setFile(file);
+
+                                webs.insertUser(RegisterActivity.this, user);
+
+                                Snackbar snackbar = Snackbar.make(view, "Registro con exito", Snackbar.LENGTH_SHORT);
+                                snackbar.show();
+                            }
                         } else {
 
                             Snackbar snackbar = Snackbar.make(view, "Error Las contraseñas no son identicas", Snackbar.LENGTH_SHORT);
@@ -250,30 +231,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private File convertBitmapToFile(Bitmap bitmap, String name) {
-        File filesDir = getApplicationContext().getFilesDir();
-        File imageFile = new File(filesDir, name + ".jpeg");
-
-        OutputStream os;
-        try {
-            os = new FileOutputStream(imageFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
-        }
-        return imageFile;
-    }
 
 
-    private String bitmapToBase64(Bitmap bitmap) {
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
 
     private void getImageFromGallery() {
@@ -287,6 +253,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void getImageFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        startActivityForResult(intent, REQUEST_IMAGE);
+
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePicture.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePicture, TAKE_PICTURE);
@@ -299,35 +269,29 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
+                FileInputStream in = null;
                 try {
-                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    Uri selectedImageUri = data.getData();
-                    Bitmap bitmap = null;
-                     i = getPath(selectedImageUri);
-                    //  path = data.getData().getPath();
-                    bitmap = BitmapFactory.decodeStream(inputStream);
-                    imageViewRound.setImageBitmap(bitmap);
-
-                    //BitmapFactory.decodeFile(path);
-                    //  Bitmap b = ExitUtils.rotateBitmap(path, b1);
-
-                    //  decodeFile(path);
-                    //  ExitUtils.rotateBitmap(path,bitmap);
-                    //   Glide.with(RegisterActivity.this).load(path).into(imageViewRound);
-
-
-
+                    in = new FileInputStream(file);
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
 
-            }
-        } else if (requestCode == TAKE_PICTURE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Bundle extras = data.getExtras();
-                bitmap = (Bitmap) extras.get("data");
-                imageViewRound.setImageBitmap(bitmap);
-                imageViewRound.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                }
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 10;
+                imagePath = file.getAbsolutePath();
+                Log.d("INFO", "PATH === " +imagePath);
+                //tvPath.setText(imagePath);
+                Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
+
+
+
+            } else if (requestCode == TAKE_PICTURE) {
+                if (resultCode == Activity.RESULT_OK) {
+                    Bundle extras = data.getExtras();
+                    bitmap = (Bitmap) extras.get("data");
+                    imageViewRound.setImageBitmap(bitmap);
+                    imageViewRound.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }
             }
         }
     }
@@ -338,6 +302,8 @@ public class RegisterActivity extends AppCompatActivity {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -373,6 +339,18 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() >= 8;
+    }
+    @Override
+    public void onBackPressed() {
+        Intent setIntent = new Intent(this,LoginActivity.class);
+        startActivity(setIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
     }
 
 

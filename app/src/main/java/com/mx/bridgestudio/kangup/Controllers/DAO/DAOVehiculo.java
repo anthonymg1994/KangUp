@@ -94,7 +94,7 @@ public class DAOVehiculo {
         InputStream in = null;
 
         try {
-            URL url = new URL("http://kangup.com.mx/index.php/detalles");
+            URL url = new URL("https://kangup.com.mx/index.php/detalles");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
@@ -161,6 +161,7 @@ public class DAOVehiculo {
          vehicle.setDescription(obj.getString("descripcion"));
          vehicle.setSpecifications(obj.getString("especificaciones"));
         vehicle.setFoto(obj.getString("foto"));
+        vehicle.setTarifa(obj.getString("tarifa"));
         //vehicle.setStatus(obj.getString("status"));
 
         return vehicle;
@@ -175,7 +176,7 @@ public class DAOVehiculo {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/favoritos");
+            URL url = new URL("https://kangup.com.mx/index.php/favoritos");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
@@ -230,7 +231,7 @@ public class DAOVehiculo {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         try {
-            URL url = new URL("http://kangup.com.mx/index.php/deleteFav");
+            URL url = new URL("https://kangup.com.mx/index.php/deleteFav");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
@@ -278,7 +279,7 @@ public class DAOVehiculo {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         try {
-            URL url = new URL("http://kangup.com.mx/index.php/addFav");
+            URL url = new URL("https://kangup.com.mx/index.php/addFav");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
@@ -332,7 +333,7 @@ public class DAOVehiculo {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/topCar");
+            URL url = new URL("https://kangup.com.mx/index.php/topCar");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
@@ -397,7 +398,7 @@ public class DAOVehiculo {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/scoreByDate");
+            URL url = new URL("https://kangup.com.mx/index.php/scoreByDate");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
@@ -461,7 +462,7 @@ public class DAOVehiculo {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/recommend");
+            URL url = new URL("https://kangup.com.mx/index.php/recommend");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);

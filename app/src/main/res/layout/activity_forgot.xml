@@ -65,12 +65,12 @@
         android:hint="Ingresa tu email"
         android:background="@drawable/buttons_alpha"
 
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="96dp"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintHorizontal_bias="0.56"
@@ -95,8 +95,12 @@
         android:textAllCaps="false"
         android:textSize="18sp" />
 
+
     <android.support.v7.widget.Toolbar
         android:layout_height="wrap_content"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:theme="@style/ToolbarColoredBackArrow"
+        android:theme="?attr/colorPrimary"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         tools:layout_editor_absoluteY="0dp"
@@ -107,6 +111,5 @@
         app:title="Recuperar contraseña"
         app:navigationIcon="?android:attr/homeAsUpIndicator"
         app:titleTextColor="#ffffff"
-        android:backgroundTint="#000000"
-        android:theme="?attr/actionBarTheme" />
+ />
 </android.support.constraint.ConstraintLayout>

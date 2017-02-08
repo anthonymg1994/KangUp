@@ -14,9 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,12 +29,9 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.Adapters.AdapterAllPackages;
 import com.mx.bridgestudio.kangup.Adapters.AdapterArticle;
-import com.mx.bridgestudio.kangup.Adapters.AdapterRoutes;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Adapters.RouteTouchHelper;
 import com.mx.bridgestudio.kangup.Adapters.SpinnerAdapterPayment;
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendAllPackages;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPaymentFormsUser;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSentArticlesByPackage;
@@ -52,12 +46,10 @@ import com.mx.bridgestudio.kangup.Models.Lists.ListPaymentForm;
 import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
-import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.Fin_De_Viaje.terminaViaje;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces.PlacesAutoCompleteActivity;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
@@ -83,31 +75,20 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     private webServices webs = new webServices();
     private SqliteController sql;
     private User user = new User();
-    private ArrayList<String> addres = new ArrayList<>();
     private EditText fecha, hora;
     private Button reservar, bAdd;
     private ImageButton bDate, bTime,noticias;
     private Date dt = new Date();
     private Date dtf = new Date();
     private com.mx.bridgestudio.kangup.Models.Reservacion reservacion = new com.mx.bridgestudio.kangup.Models.Reservacion();
-    private Bundle bundle;
     private Date d = null;
-    private String date;
-    private int mes;
-    private int anio;
-    private int dia;
-    private int id;
+    private int mes,anio,dia,id;
     Calendar ca = Calendar.getInstance();
-    private Toast mToast;
     Calendar evento = Calendar.getInstance();
     Calendar time = Calendar.getInstance();
-    DAOReservaciones dao = new DAOReservaciones();
     public int id_reservacion;
     public int getId;
-
     Control control = new Control();
-    private DrawerActivity drw = new DrawerActivity();
-
     RecyclerView listPaquetes;
     RecyclerView.LayoutManager lManagerPacks;
     RecyclerView.Adapter adapterPacks;
@@ -118,22 +99,17 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
     public static int idPack=0;
     public static int countPack=0;
     int id_pago_usuario=0;
-
     //Alert articulos
     RecyclerView.Adapter adapterArticulos;
     ArrayList<ListArticles> itemsArt= new ArrayList<>();
-
     //Alert spinner
     private ArrayList<ListPaymentForm> tipos = new ArrayList<>();
     //private ArrayList<String> tiposPagos = new ArrayList<>();
     private PaymentForm pa = new PaymentForm();
     private SpinnerAdapterPayment adapterPayment;
     private ListPaymentForm[] listPay;
-    private Rutas[] rutas;
-    public int idSQLRoute=0;
-
+    private ListRoutes[] rut;
     private TextView counter;
-
     //toolbardown
     private ImageButton catalogo, favoritos, historial;
 
@@ -143,13 +119,11 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_favorite);
         control.changeColorStatusBar(Reservacion.this);
-
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //inflate your activity layout here!
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_reservacion, null, false);
         mDrawer.addView(contentView, 0);
-
         //drw.setNameToolbar("Reservacion");
         getSupportActionBar().setTitle("Reservacion");
 
@@ -159,26 +133,16 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
         reservar = (Button) findViewById(R.id.confirmarButton);
         reservar.setOnClickListener(this);
-
-        bDate = (ImageButton) findViewById(R.id.imageButtonCalendar);
-        bDate.setOnClickListener(this);
-
-        bTime = (ImageButton) findViewById(R.id.imageButtonTime);
-        bTime.setOnClickListener(this);
-
         bAdd = (Button) findViewById(R.id.addruta);
         bAdd.setOnClickListener(this);
-
         //RecyclerView
         Drawable dividerDrawable = ContextCompat.getDrawable(this, R.drawable.divider);
-
         listPaquetes = (RecyclerView) findViewById(R.id.packsRecyclerView);
         listPaquetes.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         listPaquetes.setHasFixedSize(true);
 
-
         // Usar un administrador para LinearLayout
-                lManagerPacks = new LinearLayoutManager(this);
+        lManagerPacks = new LinearLayoutManager(this);
         listPaquetes.setLayoutManager(lManagerPacks);
         final RecyclerView.ItemDecoration itemDecoration = new SampleDivider(this);
         listPaquetes.addItemDecoration(itemDecoration);
@@ -239,14 +203,17 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         fecha = (EditText) findViewById(R.id.fecha);
         hora = (EditText) findViewById(R.id.hora);
         counter = (TextView)findViewById(R.id.counterRoutes);
-        //     sql = new SqliteController(getApplicationContext(),"kangup",null,1);
-        //    re = sql.getReservacion();
-        //   fecha.setText(re.getDate());
-        //  hora.setText(re.getHourI());
-
-        //fillPackagesByReservation();
-
-
+        fecha.setText(CardAdapter.date_format);
+        hora.setText(CardAdapter.hour_real+" a  "+ CardAdapter.hour_final_real);
+        sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
+        sql.Connect();
+        rut = sql.getRutas();
+        sql.Close();
+        int count = 0;
+        if(rut != null || rut.length >0){
+            count = rut.length;
+        }
+        counter.setText(""+count);
 
         sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
         sql.Connect();
@@ -258,8 +225,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
     }
 
-    // webs.favsByUser(Reservacion.this,Reservacion.this,user);
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.confirmarButton) {
@@ -267,14 +232,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             FormaPagoAlert();
             //Confirmacion(v);
         }
-        if (v.getId() == R.id.imageButtonCalendar) {
-            // seleccionar fecha de viaje
-            control.showDialogCalendar(Reservacion.this,fecha);
-        }
-        if (v.getId() == R.id.imageButtonTime) {
-            //seleccionar hota de viaje
-            control.showDialogTime(Reservacion.this);
-        }
+
         if (v.getId() == R.id.addruta) {
             //Agregar origenes y destinos
             finish(); // close this activity and return to preview activity (if there is any)
@@ -346,7 +304,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             @Override
             public void onItemSelected(AdapterView<?> parent, View selectedItemView, int position, long id) {
                 // your code here
-                    id_pago_usuario = listPay[position].getId_forma_pago();
+                id_pago_usuario = listPay[position].getId_forma_pago();
                 Toast.makeText(getApplicationContext(),String.valueOf(id_pago_usuario),Toast.LENGTH_SHORT).show();
 
             }
@@ -367,7 +325,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
 
-            Confirmacion();
+                Confirmacion();
             }
         });
         dialogo.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -419,11 +377,6 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
         //Asignar Tiempos de Inicio y Final
         evento.set(anio, mes, dia, dt.getHours(), dt.getMinutes());
         time.set(anio, mes, dia, dtf.getHours(), dtf.getMinutes());
-
-
-        //  Calendar cal = Calendar.getInstance();
-        // long startTime = cal.getTimeInMillis();
-        // long endTime = cal.getTimeInMillis()  + 60 * 60 * 1000;
 
         intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, evento.getTimeInMillis());
         intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, time.getTimeInMillis());
@@ -525,7 +478,7 @@ public class Reservacion extends DrawerActivity implements View.OnClickListener,
 
 
         // Crear un nuevo adaptador
-        adapterArticulos = new AdapterArticle(itemsArt);
+        adapterArticulos = new AdapterArticle(itemsArt,this);
         recycler.setAdapter(adapterArticulos);
 
         // the alert dialog

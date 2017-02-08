@@ -3,11 +3,10 @@ package com.mx.bridgestudio.kangup.Views.MenuActivity;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,12 +30,7 @@ import com.mx.bridgestudio.kangup.Models.Payment;
 import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.Reservacion;
 import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -126,11 +120,11 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //    if (control.isOnline()) {
-                    finish(); // close this P and return to preview activity (if there is any)
-                    startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-              //  } else {
+                //    if (control.isOnline()) {
+                finish(); // close this P and return to preview activity (if there is any)
+                startActivity(new Intent(PaymentActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                //  } else {
                 //    Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
@@ -142,11 +136,11 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
                 //if (control.isOnline()) {
-                    finish(); // close this activity and return to preview activity (if there is any)
-                    startActivity(new Intent(PaymentActivity.this, NewsActivity.class));
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(PaymentActivity.this, NewsActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
-                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -157,11 +151,11 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
                 //if (control.isOnline()) {
-                    finish(); // close this activity and return to preview activity (if there is any)
-                    startActivity(new Intent(PaymentActivity.this, FavoriteActivity.class));
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(PaymentActivity.this, FavoriteActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 //} else {
-                  //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
                 //}
 
@@ -172,15 +166,15 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
 
-    //            if (control.isOnline()) {
+                //            if (control.isOnline()) {
 
-                    finish(); // close this activity and return to preview activity (if there is any)
-                    startActivity(new Intent(PaymentActivity.this, HistoryActivity.class));
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-      //          } else {
-        //            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+                finish(); // close this activity and return to preview activity (if there is any)
+                startActivity(new Intent(PaymentActivity.this, HistoryActivity.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                //          } else {
+                //            Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
-          //      }
+                //      }
 
             }
         });
@@ -192,10 +186,10 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
         pa.setId_usuario(user.getId());
         sql.Close();
 
-       // if(control.isOnline()){
-            webs.getFormaPagoByUser(PaymentActivity.this,this,pa);
+        // if(control.isOnline()){
+        webs.getFormaPagoByUser(PaymentActivity.this,this,pa);
         //}else{
-            //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
 
         //}
 
@@ -319,6 +313,7 @@ public class PaymentActivity extends DrawerActivity implements AdapterView.OnIte
                             public void onClick(DialogInterface dialog, int id) {
                                 Ion.with(PaymentActivity.this)
                                         .load("POST", "http://kangup.com.mx/index.php/deleteFormaPago")
+                                        .setBodyParameter("id", String.valueOf(pay.getId_forma_pago()))
                                         .setBodyParameter("id", String.valueOf(pay.getId()))
                                         .asString()
                                         .setCallback(new FutureCallback<String>() {

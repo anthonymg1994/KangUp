@@ -23,7 +23,7 @@ public class NewsDetailActivity extends DrawerActivity {
     private News news;
     protected DrawerLayout mDrawer;
 
-    private TextView title,desc;
+    private TextView title,desc,fecha;
     Control control = new Control();
 
     //toolbardown
@@ -36,17 +36,13 @@ public class NewsDetailActivity extends DrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_news_detail);
-        control.changeColorStatusBar(NewsDetailActivity.this);
 
+        control.changeColorStatusBar(NewsDetailActivity.this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mDrawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         View contentView = inflater.inflate(R.layout.activity_news_detail, null, false);
         mDrawer.addView(contentView, 0);
-
-
         catalogo = (ImageButton)findViewById(R.id.catalogoToolbar);
-        catalogo.setColorFilter(ContextCompat.getColor(NewsDetailActivity.this,R.color.colorAccent));
         catalogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +56,8 @@ public class NewsDetailActivity extends DrawerActivity {
             }
         });
         noticias = (ImageButton)findViewById(R.id.noticiasToolbar);
+        noticias.setColorFilter(ContextCompat.getColor(NewsDetailActivity.this,R.color.colorAccent));
+
         noticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,9 +67,7 @@ public class NewsDetailActivity extends DrawerActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 // } else {
                 //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-
                 //}
-
             }
         });
         favoritos  = (ImageButton)findViewById(R.id.favoritosToolbar);
@@ -87,11 +83,9 @@ public class NewsDetailActivity extends DrawerActivity {
                     finish(); // close this activity and return to preview activity (if there is any)
                     startActivity(new Intent(NewsDetailActivity.this, FavoriteActivity.class));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    //} else {
-                    //Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
+
                 }
                 //}
-
             }
         });
         historial = (ImageButton)findViewById(R.id.historialToolbar);
@@ -109,28 +103,15 @@ public class NewsDetailActivity extends DrawerActivity {
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
 
-                // } else {
-                //                   Toast.makeText(getApplicationContext(),"Verifica tu conexion",Toast.LENGTH_SHORT).show();
-//
-                //              }
-
             }
         });
 
 
 
         desc = (TextView)findViewById(R.id.bodyNews);
-
-        //Intent intent=this.getIntent();
-        //Bundle bundle=intent.getExtras();
-
-        //news = new News();
-
-        //news=(News)bundle.getSerializable("value");
-
+        fecha = (TextView)findViewById(R.id.date);
         desc.setText(NewsActivity.desc);
-        //drw.setNameToolbar(NewsActivity.titulo);
-
+        fecha.setText(NewsActivity.fecha);
         getSupportActionBar().setTitle(NewsActivity.titulo);
 
 

@@ -1,13 +1,11 @@
 package com.mx.bridgestudio.kangup.Views.PaginasInicio;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.SessionManager;
@@ -24,9 +22,7 @@ public class SplashActivity extends Activity {
         control.changeColorStatusBar(SplashActivity.this);
         session = new SessionManager(this);
       //  getSupportActionBar().hide();
-
-        handler.sendEmptyMessageDelayed(3000,3000);
-
+        handler.sendEmptyMessageDelayed(1000,1000);
     }
 
     private Handler handler = new Handler() {
@@ -34,7 +30,6 @@ public class SplashActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             session.checkLogin();
-
         }
     };
 }

@@ -32,7 +32,7 @@ public class DAOPublicidad {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/getAll");
+            URL url = new URL("https://kangup.com.mx/index.php/getAll");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(4000);
             httpURLConnection.setRequestMethod("POST");

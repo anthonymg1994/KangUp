@@ -7,20 +7,10 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.hardware.camera2.params.StreamConfigurationMap;
-import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
 import com.mx.bridgestudio.kangup.Models.Reservacion;
-import com.mx.bridgestudio.kangup.Models.Rutas;
 import com.mx.bridgestudio.kangup.Models.User;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.ReservacionRutasActivity;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by USUARIO on 18/11/2016.
@@ -35,7 +25,7 @@ public class SqliteController extends SQLiteOpenHelper {
 
     private String reservacion ="CREATE TABLE Reservacion(id INTEGER PRIMARY KEY, fecha CURRENT_TIMESTAMP , hora_inicio CURRENT_TIMESTAMP, hora_termino CURRENT_TIMESTAMP );";
 
-  //  private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";
+    //  private String insertReservation = "INSERT INTO Reservacion(id, fecha, hora) VALUES (1,'dd/mm/yyyy','00:00:00')";
 
     private String packageTable="CREATE TABLE Package(id INTEGER);";
 
@@ -60,7 +50,7 @@ public class SqliteController extends SQLiteOpenHelper {
         db.execSQL(resNextTable);
         db.execSQL(insertResNext);
         db.execSQL(routesTable);
-     //   db.execSQL(insertReservation);
+        //   db.execSQL(insertReservation);
     }
 
     @Override
@@ -230,21 +220,23 @@ public class SqliteController extends SQLiteOpenHelper {
     public ListRoutes[] getRutas(){
         db = getReadableDatabase();
         Cursor c=db.rawQuery("SELECT id,origen,destino,id_reservacion,posicion FROM Routes ",null);
-        ListRoutes[] r = new ListRoutes[0];
+        ListRoutes[] r = new ListRoutes[c.getCount()];
+        int flag = 0;
         if(c.moveToFirst())
         {
-                r = new ListRoutes[c.getCount()];
-                do{
-                    for(int i = 0; i< c.getCount(); i++){
-                        //  rutas[i] = new Rutas();
-                        r[i] = new ListRoutes();
-                        r[i].setIdSQL(c.getInt(0));
-                        r[i].setOrigen(c.getString(1));
-                        r[i].setDestiny(c.getString(2));
-                        r[i].setId(c.getInt(3));
-                        r[i].setPosicion(c.getInt(4));
-                    }
-                }while(c.moveToNext());
+
+            do{
+             //   for(int i = 0; i< c.getCount(); i++){
+                    //  rutas[i] = new Rutas();
+                    r[flag] = new ListRoutes();
+                    r[flag].setIdSQL(c.getInt(0));
+                    r[flag].setOrigen(c.getString(1));
+                    r[flag].setDestiny(c.getString(2));
+                    r[flag].setId(c.getInt(3));
+                    r[flag].setPosicion(c.getInt(4));
+                flag++;
+             //   }
+            }while(c.moveToNext());
         }
 
         //ReservacionRutasActivity.adapterRoutes.notifyDataSetChanged();

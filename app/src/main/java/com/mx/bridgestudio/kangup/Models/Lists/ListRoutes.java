@@ -9,8 +9,8 @@ public class ListRoutes {
     private int id;
     private String origen;
     private String destiny;
-    private int posicion;
-    private int idSQL;
+   private int IdSQL;
+    private int Posicion;
 
     public ListRoutes(){}
     public ListRoutes(int id, String origin, String destiny){
@@ -19,6 +19,21 @@ public class ListRoutes {
         this.setDestiny(destiny);
     }
 
+    public int getIdSQL() {
+        return IdSQL;
+    }
+
+    public void setIdSQL(int idSQL) {
+        IdSQL = idSQL;
+    }
+
+    public int getPosicion() {
+        return Posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        Posicion = posicion;
+    }
 
     public int getId() {
         return id;
@@ -44,19 +59,6 @@ public class ListRoutes {
         this.destiny = destiny;
     }
 
-    public int getPosicion() {
-        return posicion;
-    }
 
-    public void setPosicion(int posicion) {
-        this.posicion = posicion;
-    }
 
-    public int getIdSQL() {
-        return idSQL;
-    }
-
-    public void setIdSQL(int idSQL) {
-        this.idSQL = idSQL;
-    }
 }

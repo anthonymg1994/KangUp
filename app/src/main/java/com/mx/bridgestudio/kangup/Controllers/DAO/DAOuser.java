@@ -1,18 +1,16 @@
 package com.mx.bridgestudio.kangup.Controllers.DAO;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.StrictMode;
-import android.text.BoringLayout;
 
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.Models.UserPhoto;
-import com.mx.bridgestudio.kangup.Models.Vehicle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,7 +33,7 @@ public class DAOuser {
 
     public User authenticate(User user) throws IOException, JSONException {
             try {
-               URL url = new URL("http://kangup.com.mx/index.php/login");
+               URL url = new URL("https://kangup.com.mx/index.php/login");
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("POST");
@@ -80,8 +78,11 @@ public class DAOuser {
     public boolean registerUser(User user){
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
         try {
-            URL url = new URL("http://kangup.com.mx/index.php/nuevoUsuario");
+            URL url = new URL("https://kangup.com.mx/index.php/nuevoUsuario");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
@@ -102,9 +103,9 @@ public class DAOuser {
             //obtener id de pago dependiendo la consulta de pago predeterminado
             jsonParam.put("id_forma_pago",user.getPay());
             jsonParam.put("status","0");
-            if(user.getFile() != null){
+           // if(user.getFile() != null){
                 jsonParam.put("file",user.getFile());
-            }
+            //}
             OutputStreamWriter os = new OutputStreamWriter(httpURLConnection.getOutputStream());
             os.write(jsonParam.toString());
             os.flush();
@@ -142,7 +143,7 @@ public class DAOuser {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         try {
-            URL url = new URL("http://kangup.com.mx/index.php/updateUsuario");
+            URL url = new URL("https://kangup.com.mx/index.php/updateUsuario");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");
@@ -227,7 +228,7 @@ public class DAOuser {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/password");
+            URL url = new URL("https://kangup.com.mx/index.php/password");
             //cambiar nombre de metodo de vehiculos
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
@@ -282,7 +283,7 @@ public class DAOuser {
         ProgressDialog progressDialog;
         HttpURLConnection httpURLConnection = null;
         try {
-            URL url = new URL("http://kangup.com.mx/index.php/namePhoto");
+            URL url = new URL("https://kangup.com.mx/index.php/namePhoto");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setRequestMethod("POST");

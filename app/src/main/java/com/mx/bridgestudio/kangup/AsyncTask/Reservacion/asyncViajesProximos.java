@@ -7,13 +7,10 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Controllers.DAO.DAOPaquetes;
-import com.mx.bridgestudio.kangup.Controllers.DAO.DAOReservaciones;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendPackageByReservation;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendViajesProximos;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Models.Lists.ListReservacion;
 import com.mx.bridgestudio.kangup.Models.Package;
-import com.mx.bridgestudio.kangup.Models.Reservacion;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.ViajesProximosActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryDetailsActivity;
@@ -37,32 +34,34 @@ public class asyncViajesProximos extends AsyncTask<String,Integer,String> {
     private String param1;
     private String param2;
     URL url;
-    private Reservacion[] arrayRes;
-    private Reservacion packs = new Reservacion();
+    private Package[] arrayPack;
+    private Package packs = new Package();
     private String newsString;
     private webServices services = new webServices();
-    private DAOReservaciones Dres = new DAOReservaciones();
+    private DAOPaquetes Dpack = new DAOPaquetes();
+    private int id_reservacion;
     private int id_usuario;
 
-    public OnDataSendViajesProximos SendToActivity;//Call back interface
+    public OnDataSendPackageByReservation SendToActivity;//Call back interface
 
 
     Context mContext;
 
     private boolean flag = false;
 
-    public asyncViajesProximos(OnDataSendViajesProximos SendToActivity, Context context, int id_usuario) {
+    public asyncViajesProximos(OnDataSendPackageByReservation SendToActivity, Context context, int idRes, int idUs) {
         super();
         this.SendToActivity = SendToActivity;
         mContext = context;
-        this.id_usuario = id_usuario;
+        this.id_reservacion = idRes;
+        this.id_usuario = idUs;
     }
 
     @Override
     protected String doInBackground(String... params) {
 
         try {
-            newsString = Dres.getAllReservationsByUser(id_usuario);
+            newsString = Dpack.getPackagesByReservation(id_reservacion,id_usuario);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -93,7 +92,7 @@ public class asyncViajesProximos extends AsyncTask<String,Integer,String> {
 
             try {
                 JSONArray jsonarray = new JSONArray(result);
-                arrayRes = new Reservacion[jsonarray.length()];
+                //arrayPack = new Package[jsonarray.length()];
 
                 for (int i = 0; i < jsonarray.length(); i++) {
                     arrayRes[i] = new Reservacion();

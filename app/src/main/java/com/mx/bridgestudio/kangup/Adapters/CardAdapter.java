@@ -24,16 +24,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListBrand;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
-import com.squareup.picasso.Picasso;
-import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,7 +51,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
     public CardView cardView;
     public static int id_marca = 0;
     public static String marca = "";
-    public static String hour = "",hour_real="";
+    public static String hour = "",hour_real="",date_format= "";;
     public static String hour_final = "",hour_final_real;
     public static Date datee = null;
     Control c = new Control();
@@ -147,21 +144,29 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
         // Launch Time Picker Dialog
+
         final TimePickerDialog timePickerDialog = new TimePickerDialog(mContext,
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+                        String min="";
+                        if(minute<10){
+                            min = "0"+minute;
+                        }else{
+                            min=""+minute;
+                        }
                         if (x == 1) {
-                            hora.setText(hourOfDay + ":" + minute + " ");
-                            hour_real = hourOfDay + ":" + minute + " ";
-                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + minute + "";
+
+                            hora.setText(hourOfDay + ":" + min + " ");
+                            hour_real = hourOfDay + ":" + min + " ";
+                            String hora_margen_inicio ="" + (hourOfDay + 2) + ":" + min + "";
                             hour = hora_margen_inicio;
                         } else if (x == 2) {
-                            horaTermino.setText(hourOfDay + ":" + minute + " ");
-                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + minute + "";
-                            hour_final_real = hourOfDay + ":" + minute + " ";
+                            horaTermino.setText(hourOfDay + ":" + min + " ");
+                            String hora_margen_termino ="" + (hourOfDay - 2) + ":" + min + "";
+                            hour_final_real = hourOfDay + ":" + min + " ";
                             hour_final = hora_margen_termino;
                         }
                     }
@@ -316,6 +321,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                             try {
                                 Date last_date_date = new SimpleDateFormat("yyyy-MM-dd").parse(finalString2);
                                 fecha.setText("" + finalString);
+                                date_format = finalString;
                                 datee = last_date_date;
                             } catch (ParseException e) {
                                 e.printStackTrace();
@@ -324,6 +330,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
 
                         }
                     }, mYear, mMonth, mDay);
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             datePickerDialog.show();
 
         }

@@ -1,28 +1,22 @@
 package com.mx.bridgestudio.kangup.Views.tabs;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.mx.bridgestudio.kangup.Adapters.AdaptadorType;
 import com.mx.bridgestudio.kangup.Adapters.CardAdapter;
-import com.mx.bridgestudio.kangup.Controllers.Control;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendCarXtype;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendDetail;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterScore;
 import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendFilterTop;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
@@ -31,7 +25,6 @@ import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.SampleDivider;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CatalogCar;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
 
@@ -39,7 +32,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -57,6 +49,7 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     public static int id_vehiculo = 0;
     public static String nombre_vehiculo = "";
     public static int flag = 0;
+    public SearchView search;
     ArrayList<ListCar> items= new ArrayList<>();
 
     //Context context,act;
@@ -68,7 +61,8 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // int c =((CarsXtype)this.getActivity()).getJob();
+
+        // int c =((CarsXtype)this.getActivity()).getJob();
        // Toast.makeText(getActivity(), "HOLA :"+ c, Toast.LENGTH_SHORT).show();
 
 
@@ -104,13 +98,12 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
         }
 
 
-
+        search = (SearchView) v.findViewById( R.id.searchView2);
+        search.setQuery("", false);
         // Obtener el Recycler
         CatalogCar.flagDate = 1;
-
         recycler = (RecyclerView) v.findViewById(R.id.recycler_view);
         Drawable dividerDrawable = ContextCompat.getDrawable(getActivity(), R.drawable.divider);
-
         recycler.addItemDecoration(new DividerItemDecoration(dividerDrawable));
         recycler.setHasFixedSize(true);
         // Usar un administrador para LinearLayout
@@ -122,36 +115,43 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
                 new RecyclerItemClickListener(getActivity() ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
 
-
-
-
                         Toast.makeText(getActivity(), "position = " +items.get(position).getId(), Toast.LENGTH_SHORT).show();
                         int opcionSeleccionada = items.get(position).getId();
                         //Intent intent = new Intent(getActivity(), DetalleActivity.class);
                         id_vehiculo = opcionSeleccionada;
                         nombre_vehiculo = items.get(position).getMarca() + " " + items.get(position).getModelo() + " " + items.get(position).getAnio();
                         vehicle.setId(id_vehiculo);
-                        //if(view.getId() == R.id.starButton){
-                         //   Toast.makeText(getActivity(), "ghola", Toast.LENGTH_SHORT).show();
-
-                       // }else {
-                           // webs.DetailVehicle(TabTop.this, getActivity(), vehicle);
-                        //}
-                      //  TabTop.this.startActivity(intent);
-                        //finish();
+                        webs.DetailVehicle(TabTop.this,getActivity(),vehicle);
                     }
-
-
                 })
         );
 
-        // webs.AutosByMarca(this,vehicle);
-
-
-        // Crear un nuevo adaptador
         adapter = new AdaptadorType(getActivity(),items);
         recycler.setAdapter(adapter);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                s = s.toLowerCase();
+                ArrayList<ListCar> filteredList= new ArrayList<>();
+                for (int i = 0; i < items.size(); i++) {
+                    final String text = items.get(i).getModelo().toLowerCase();
+                    if (text.contains(s)) {
+                        filteredList.add(items.get(i));
+                    }
+                }
+                recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+                adapter = new AdaptadorType(getActivity(),filteredList);
+                recycler.setAdapter(adapter);
+                adapter.notifyDataSetChanged();  // data set changed
+                return true;
+            }
+        }); // call the QuerytextListner.
         return v;
     }
 
@@ -182,13 +182,11 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
        // fillList(obj);
     }
 
-
     @Override
     public void sendData(Vehicle obj) {
 
         vehicle = obj;
     }
-
 
     public ArrayList<ListCar> getItemsFromFragment(){
         return items;
@@ -198,4 +196,8 @@ public class TabTop extends Fragment implements OnDataSendCarXtype,OnDataSendDet
     public void sendDataTops(Vehicle[] obj) {
         fillList(obj);
     }
+
+
+
+
 }

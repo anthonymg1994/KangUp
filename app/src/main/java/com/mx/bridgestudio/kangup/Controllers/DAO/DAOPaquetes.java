@@ -33,7 +33,7 @@ public class DAOPaquetes {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/paquetesReservacion");
+            URL url = new URL("https://kangup.com.mx/index.php/paquetesReservacion");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(10000);
             httpURLConnection.setRequestMethod("POST");
@@ -92,7 +92,7 @@ public class DAOPaquetes {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            URL url = new URL("http://kangup.com.mx/index.php/paquetes");
+            URL url = new URL("https://kangup.com.mx/index.php/paquetes");
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(10000);
             httpURLConnection.setRequestMethod("POST");

@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mx.bridgestudio.kangup.Models.Lists.ListPaymentForm;
-import com.mx.bridgestudio.kangup.Models.Payment;
-import com.mx.bridgestudio.kangup.Models.PaymentForm;
 import com.mx.bridgestudio.kangup.R;
 
 import java.util.ArrayList;

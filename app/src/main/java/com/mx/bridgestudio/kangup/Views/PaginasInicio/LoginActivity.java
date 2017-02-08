@@ -22,26 +22,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 import com.mx.bridgestudio.kangup.AsyncTask.Usuario.AsynkTaskUser;
 import com.mx.bridgestudio.kangup.Controllers.Control;
-import com.mx.bridgestudio.kangup.Controllers.GoogleAnalytics.AnalyticsApplication;
 import com.mx.bridgestudio.kangup.Controllers.ServiciosWeb.webServices;
 import com.mx.bridgestudio.kangup.Controllers.SessionManager;
 import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Category;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * A login screen that offers login via email/password.
@@ -86,16 +76,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // [END shared_tracker]*/
 
         // Set up the login form.
+        //Init ui
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.snackbarCoordinatorLayout);
-        session = new SessionManager(this);
-
-    control.changeColorStatusBar(LoginActivity.this);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user);
-        mEmailView.setHintTextColor(getResources().getColor(R.color.textoHint));
         logo = (ImageView)findViewById(R.id.logo);
         guest = (Button)findViewById(R.id.guest);
+        register = (Button)findViewById(R.id.register);
+        forgot = (Button)findViewById(R.id.forgot);
+        mPasswordView = (EditText) findViewById(R.id.passwordeye);
+        Button mEmailSignInButton = (Button) findViewById(R.id.signin);
+        //Sesion de usuario
+        session = new SessionManager(this);
+        //Cambiar barra de notificaciones
+        control.changeColorStatusBar(LoginActivity.this);
+        mEmailView.setHintTextColor(getResources().getColor(R.color.textoHint));
+
 
         guest.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -106,7 +102,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 guestFlag = 1;
             }
         });
-        register = (Button)findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
@@ -115,7 +110,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
-        forgot = (Button)findViewById(R.id.forgot);
         forgot.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
@@ -127,7 +121,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
 
-        mPasswordView = (EditText) findViewById(R.id.passwordeye);
         mPasswordView.setHintTextColor(getResources().getColor(R.color.textoHint));
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -140,7 +133,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.signin);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,6 +141,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+
+        mEmailView.setText("isaac.figalf@gmail.com");
+        mPasswordView.setText("12345678");
         mLoginFormView = findViewById(R.id.loginform_layout);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -194,9 +189,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            //showProgress(true);
 
             if(control.isNetworkAvailable(this)) {
                 user.setEmail(mEmailView.getText().toString());
@@ -204,35 +196,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 web.Login(this, user);
 
             }else{
-                Snackbar snackbar = Snackbar.make(view, "Usuario actualizado", Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(view, "Usuario incorrectos", Snackbar.LENGTH_SHORT);
                 snackbar.show();
             }
-
-            //new asyn(LoginActivity.this,user.getEmail(),user.getPassword()).execute();
         }
-
-        /*
-        // [START custom_event]
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Share")
-                .build());
-        // [END custom_event]
-        */
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         // Send a screen view when the Activity is displayed to the user.
     }
-
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 8;
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -241,95 +219,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
-
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     *//*
-    private class UserLoginTask extends AsyncTask<String, Integer, Boolean> {
-
-        ProgressDialog progressDialog = null;
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(LoginActivity.this);
-            progressDialog.show();
-            progressDialog.setContentView(R.layout.dialog);
-            progressDialog.setCancelable(false);
-            progressDialog.getWindow().clearFlags(
-                    WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        }
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            // TODO: register the new account here.
-            sql = new SqliteController(getApplicationContext(), "kangup",null, 1);
-            u = sql.loginUsuario(mEmail,mPassword);
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-
-            if (success) {
-                if(mEmail.equals(u.getEmail()) && mPassword.equals(u.getPassword()))
-                {
-                    finish();
-                    Intent intent = new Intent().setClass(
-                            LoginActivity.this, CategoryActivity.class);
-                    startActivity(intent);
-                }
-                else{
-                    Toast msg = Toast.makeText(getBaseContext(),
-                            "Datos incorrectos", Toast.LENGTH_SHORT);
-                    msg.show();
-                }
-
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-        }
-    }
-    */
 }
 

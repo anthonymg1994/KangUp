@@ -7,10 +7,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -23,7 +21,6 @@ import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Lists.ListCar;
 import com.mx.bridgestudio.kangup.Models.User;
 import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 import com.squareup.picasso.Picasso;
@@ -38,12 +35,13 @@ import java.util.Locale;
 public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewHolder> implements View.OnClickListener{
     private List<ListCar> items;
     private ArrayList<ListCar> arraylist;
-
+    View.OnClickListener clickListener;
     Activity context;
     webServices web = new webServices();
     public AdaptadorType(Activity context,List<ListCar> items) {
         this.items = items;
         this.context = context;
+
     }
     @Override
     public int getItemCount() {
@@ -53,7 +51,9 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
     public AnimeViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.celltipo, viewGroup, false);
-        return new AnimeViewHolder(v);
+
+        AnimeViewHolder anim = new AnimeViewHolder(v);
+        return anim;
     }
 
     public Resources getResources() {
@@ -78,7 +78,6 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
             nombre = (TextView) v.findViewById(R.id.namedrawer);
             descripcion = (TextView) v.findViewById(R.id.description);
             fav = (ImageButton) v.findViewById(R.id.starButton);
-            fav.setOnClickListener(this);
 
         }
 
@@ -94,24 +93,19 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
        // viewHolder.imagen.setImageResource(items.get(i).getImage());
 
 
-        Picasso.with(context).load(items.get(i).getImage()).into(viewHolder.imagen);
-
-        viewHolder.nombre.setText(items.get(i).getModelo());
-        viewHolder.descripcion.setText(String.valueOf(items.get(i).getModelo()+" "+items.get(i).getAnio()));
-
-
-        viewHolder.fav.setOnClickListener(this);
-
-        viewHolder.fav.setFocusable(false);
-        viewHolder.fav.setFocusableInTouchMode(false);
-        //img.setOnClickListener(this);
-        viewHolder.fav.setTag(i);
-
         SqliteController sql = new SqliteController(context, "kangup", null, 1);
         sql.Connect();
         final User user = sql.user();
         sql.Close();
 
+        Picasso.with(context).load(items.get(i).getImage()).into(viewHolder.imagen);
+
+        viewHolder.nombre.setText(items.get(i).getModelo());
+        viewHolder.descripcion.setText(String.valueOf(items.get(i).getModelo()+" "+items.get(i).getAnio()));
+     //   viewHolder.fav.setFocusable(false);
+     //   viewHolder.fav.setFocusableInTouchMode(false);
+        //img.setOnClickListener(this);
+        viewHolder.fav.setTag(i);
         viewHolder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +120,23 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
             }
         });
 
+
+/*
+        viewHolder.fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(LoginActivity.guestFlag==1){
+                    alertGuest();
+                }
+                else {
+
+                    alertConfirmacion(items.get(i).getId(),user.getId(),view);
+
+                }
+            }
+        });
+
+*/
     }
 
     public void alertConfirmacion(final int veh, final int user, final View view) {
@@ -186,6 +197,10 @@ public class AdaptadorType extends RecyclerView.Adapter<AdaptadorType.AnimeViewH
             }
         }
         notifyDataSetChanged();
+    }
+
+    public void setOnItemClickListener(View.OnClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
 

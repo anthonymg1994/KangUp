@@ -1,5 +1,6 @@
 package com.mx.bridgestudio.kangup.Controllers;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -22,25 +23,28 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Package;
 import com.mx.bridgestudio.kangup.Models.Vehicle;
 import com.mx.bridgestudio.kangup.R;
 import com.mx.bridgestudio.kangup.Views.AfterMenuOption.CarsXtype;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.FavoriteActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.HistoryActivity;
+import com.mx.bridgestudio.kangup.Views.MenuActivity.NewsActivity;
 import com.mx.bridgestudio.kangup.Views.PaginasInicio.LoginActivity;
+import com.mx.bridgestudio.kangup.Views.PaginasInicio.RegisterActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -65,7 +69,7 @@ public class Control  {
     private static Bitmap bitmap;
     private static Uri filePath;
     private Calendar c;
-
+    private SessionManager session;
 
     private void showFileChooser(Activity activity) {
         Intent intent = new Intent();
@@ -424,5 +428,110 @@ public class Control  {
         inputMethodManager.hideSoftInputFromWindow( context.getCurrentFocus().getWindowToken(), 0);
     }
 
+    public void toolBarDown(final Activity activity, final View v){
+            ImageButton catalogo, favoritos, historial,noticias;
+            catalogo = (ImageButton)v.findViewById(R.id.catalogoToolbar);
+            catalogo.setColorFilter(ContextCompat.getColor(activity.getApplicationContext(),R.color.colorAccent));
+            catalogo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //  if (control.isOnline()) {
+                     activity.finish(); // close this activity and return to preview activity (if there is any)
+                     activity.startActivity(new Intent(activity.getApplicationContext(), CategoryActivity.class));
+                     activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+            });
+            noticias = (ImageButton)v.findViewById(R.id.noticiasToolbar);
+            noticias.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //   if (control.isOnline()) {
+                    activity.finish(); // close this activity and return to preview activity (if there is any)
+                    activity.startActivity(new Intent(activity.getApplicationContext(), NewsActivity.class));
+                    activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+            });
+            favoritos  = (ImageButton)v.findViewById(R.id.favoritosToolbar);
+            favoritos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //  if (control.isOnline()) {
+                    if(LoginActivity.guestFlag == 1){
+                        alertGuest(activity);
+                    }
+                    else
+                    {
+                        activity.finish(); // close this activity and return to preview activity (if there is any)
+                        activity.startActivity(new Intent(activity.getApplicationContext(), FavoriteActivity.class));
+                        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    }
+
+                }
+            });
+            historial = (ImageButton)v.findViewById(R.id.historialToolbar);
+            historial.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //   if (control.isOnline()) {
+                    if(LoginActivity.guestFlag == 1){
+                        alertGuest(activity);
+                    }
+                    else{
+                        activity.finish(); // close this activity and return to preview activity (if there is any)
+                        activity.startActivity(new Intent(activity.getApplicationContext(), HistoryActivity.class));
+                        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    }
+                }
+            });
+    }
+    public void alertGuest(final Activity activity) {
+        new AlertDialog.Builder(activity.getApplicationContext())
+                .setTitle("Invitado")
+                .setMessage("Gracias por visitar la aplicación de KangUp!! Para realizar la siguiente acción necesita estar registrado.")
+                .setIcon(R.drawable.perfil_icon)
+                .setPositiveButton("Registrar",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent setIntent = new Intent(activity, RegisterActivity.class);
+                                activity.startActivity(setIntent);
+                                activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                activity. finish();
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    public void alertLogOut(final Activity activity) {
+        session = new SessionManager(activity.getApplicationContext());
+        new AlertDialog.Builder(activity.getApplicationContext())
+                .setTitle("Cerrar sesion")
+                .setMessage("¿Desea cerrar sesión?")
+                .setIcon(R.drawable.ic_close_light)
+                .setPositiveButton("Si",
+                        new DialogInterface.OnClickListener() {
+                            @TargetApi(11)
+                            public void onClick(DialogInterface dialog, int id) {
+                                session.logoutUser();
+                                Intent setIntent = new Intent(activity.getApplicationContext(),LoginActivity.class);
+                                activity.startActivity(setIntent);
+                                activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                activity.finish();
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
 }
 

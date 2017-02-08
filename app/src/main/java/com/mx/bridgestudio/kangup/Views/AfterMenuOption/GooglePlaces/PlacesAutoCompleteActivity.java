@@ -1,24 +1,8 @@
 package com.mx.bridgestudio.kangup.Views.AfterMenuOption.GooglePlaces;
 
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.maps.android.SphericalUtil;
-import com.mx.bridgestudio.kangup.Controllers.Interfaces.OnDataSendRutas;
-import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
-import com.mx.bridgestudio.kangup.Models.Lists.ListRoutes;
-import com.mx.bridgestudio.kangup.Models.Reservacion;
-import com.mx.bridgestudio.kangup.R;
-import com.mx.bridgestudio.kangup.Views.AfterMenuOption.ReservacionRutasActivity;
-import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
-
-/**
- * Created by USUARIO on 16/12/2016.
- */
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -27,11 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,16 +22,22 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.mx.bridgestudio.kangup.Adapters.PlacesAutoCompleteAdapter;
 import com.mx.bridgestudio.kangup.Controllers.RecyclerItemClickListener;
+import com.mx.bridgestudio.kangup.Controllers.SqlLite.SqliteController;
 import com.mx.bridgestudio.kangup.Models.Constants;
-import com.mx.bridgestudio.kangup.Views.MenuActivity.CategoryActivity;
+import com.mx.bridgestudio.kangup.Models.Reservacion;
+import com.mx.bridgestudio.kangup.R;
+import com.mx.bridgestudio.kangup.Views.LeftSide.DrawerActivity;
 
-import java.util.ArrayList;
+/**
+ * Created by USUARIO on 16/12/2016.
+ */
 
 
 public class PlacesAutoCompleteActivity extends DrawerActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -78,10 +67,10 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     private static String destino;
     private Button addruta;
     int option;
+    private TextView empty;
     //OnDataSendRutas rutas;
     /*public PlacesAutoCompleteActivity(OnDataSendRutas rutas){
         this.rutas = rutas;
-
     }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,27 +80,12 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
         mAutocompleteView = (EditText)findViewById(R.id.autocomplete_places);
         mAutocompleteView_destino = (EditText)findViewById(R.id.autocomplete_places_destino);
         addruta = (Button) findViewById(R.id.addRutaPlaces);
-
-
+        empty = (TextView) findViewById(R.id.empty_view_google);
         addruta.setOnClickListener(this);
 
-        /*
-        addruta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mAutocompleteView.getText().toString().equals("") || mAutocompleteView_destino.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(),mAutocompleteView.getText().toString() + mAutocompleteView_destino.getText().toString() ,Toast.LENGTH_SHORT).show();
-
-                }else{
-
-                }
-
-            }
-        });
-        */
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
-             option = bundle.getInt("option");
+            option = bundle.getInt("option");
         }
         delete=(ImageView)findViewById(R.id.cross);
         deleted=(ImageView)findViewById(R.id.crosss);
@@ -173,31 +147,34 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
 
         mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this,new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
+                    @Override
                     public void onItemClick(View view, int position) {
                         item = mAutoCompleteAdapter.getItem(position);
                         final String placeId = String.valueOf(item.placeId);
 
                         Log.i("TAG", "Autocomplete item selected: " + item.description);
-                            Toast.makeText(getApplicationContext(), item.description,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), item.description,Toast.LENGTH_SHORT).show();
 
 
-                            if(flag == 1){
-                                origen = ""+item.description;
-                                mAutocompleteView.setText(""+item.description);
-                                flagFill = 1;
-                                mAutoCompleteAdapter.getFilter().filter(" ");
+                        if(flag == 1){
+                            origen = ""+item.description;
+                            mAutocompleteView.setText(""+item.description);
+                            flagFill = 1;
+                          //  mAutoCompleteAdapter.getFilter().filter(" ");
+                            mAutoCompleteAdapter.clear();
+                            mAutoCompleteAdapter.notifyDataSetChanged();
+                            //notifyDataSetChanged();
 
-
-                            }else if(flag == 2){
-                                destino = ""+item.description;
-                                mAutocompleteView_destino.setText(""+item.description);
-                                flagFillDestino = 1;
-                                mAutoCompleteAdapter.getFilter().filter(" ");
-
-                            }
+                        }else if(flag == 2){
+                            destino = ""+item.description;
+                            mAutocompleteView_destino.setText(""+item.description);
+                            flagFillDestino = 1;
+                        //    mAutoCompleteAdapter.getFilter().filter(" ");
+                            mAutoCompleteAdapter.clear();
+                            mAutoCompleteAdapter.notifyDataSetChanged();
+                            //notifyDataSetChanged();
+                        }
                         /*        Toast.makeText(this, Constants.API_NOT_CONNECTED,Toast.LENGTH_SHORT).show();
-
                              Issue a request to the Places Geo Data API to retrieve a Place object with additional details about the place.
                          */
 
@@ -214,16 +191,26 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
                                 }
                             }
                         });
+                        if(item.description.length() == 0){
+                            mRecyclerView.setVisibility(View.GONE);
+                                empty.setVisibility(View.VISIBLE);
+                            }
+                            else{
+                            mRecyclerView.setVisibility(View.VISIBLE);
+                                empty.setVisibility(View.GONE);
+
+                        }
+
                         Log.i("TAG", "Clicked: " + item.description);
-                            Reservacion ruta= new Reservacion();
-                            ruta.setOrigen(item.description.toString());
-                            sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
-                            sql.Connect();
-                            //sql.in(item.description.toString(),"");
-                            sql.Close();
+                        Reservacion ruta= new Reservacion();
+                        ruta.setOrigen(item.description.toString());
+                        sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
+                        sql.Connect();
+                        //sql.in(item.description.toString(),"");
+                        sql.Close();
 
 
-                          //  onBackPressed();
+                        //  onBackPressed();
 
                         Log.i("TAG", "Called getPlaceById to get Place details for " + item.placeId);
                     }
@@ -293,16 +280,18 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
         }
         if(v.getId() == R.id.addRutaPlaces){
             if(mAutocompleteView.getText().toString().equals("") || mAutocompleteView_destino.getText().toString().equals("")){
-
+                Snackbar snackbar = Snackbar.make(v,"Selecciona las rutas de origen y destino", Snackbar.LENGTH_SHORT);
+                snackbar.show();
             }else{
-                Toast.makeText(getApplicationContext(),mAutocompleteView.getText().toString() + mAutocompleteView_destino.getText().toString() ,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),mAutocompleteView.getText().toString() + mAutocompleteView_destino.getText().toString() ,Toast.LENGTH_SHORT).show();
                 sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
                 sql.Connect();
                 int id_reservacion = sql.getReservacionIdNext();
                 sql.insertRutas(mAutocompleteView.getText().toString(),mAutocompleteView_destino.getText().toString(),id_reservacion,1);
                 sql.Close();
 
-
+                Snackbar snackbar = Snackbar.make(v,"Ruta Agregada", Snackbar.LENGTH_SHORT);
+                snackbar.show();
               /*  sql = new SqliteController(PlacesAutoCompleteActivity.this, "kangup",null, 1);
                 sql.Connect();
                   ArrayList<ListRoutes> itemsRoutes;
@@ -345,8 +334,9 @@ public class PlacesAutoCompleteActivity extends DrawerActivity implements Google
     @Override
     public void onBackPressed()
     {
-      super.onBackPressed();
+        super.onBackPressed();
     }
+
 
 
 

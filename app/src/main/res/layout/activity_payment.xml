@@ -9,8 +9,8 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:layout_height="48dp"
+        android:background="#29235b"
         android:theme="?attr/actionBarTheme"
         android:minHeight="?attr/actionBarSize"
         android:id="@+id/toolbarPay"
@@ -51,6 +51,18 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/include5"
         app:layout_constraintTop_toBottomOf="@+id/toolbarPay" />
+
+    <TextView
+        android:id="@+id/empty_view_payment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="No tienes metodos de pago"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarPay"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <include
         android:layout_height="wrap_content"
